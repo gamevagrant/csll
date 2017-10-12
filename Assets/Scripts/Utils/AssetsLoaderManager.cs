@@ -65,7 +65,7 @@ public class AssetsLoaderManager:MonoBehaviour
 
 		path = FilePathTools.normalizePath(path);
 		Object res;
-		if (isCache != null && cache.TryGetValue(path, out res) && res != null)
+		if (callback != null && cache.TryGetValue(path, out res) && res != null)
 		{
 			callback(res as T);
 		}

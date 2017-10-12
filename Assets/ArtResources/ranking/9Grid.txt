@@ -1,0 +1,1 @@
+wheel_paihang_01_06: scale9Grid = new egret.Rectangle(32, 0, 2, 50);

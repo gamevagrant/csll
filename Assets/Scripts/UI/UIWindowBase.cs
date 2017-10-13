@@ -6,6 +6,7 @@ using DG.Tweening;
 
 public class UIWindowBase : MonoBehaviour {
 
+    protected UIWindowData _windowData;
     public virtual UIWindowData windowData
     {
         get
@@ -55,7 +56,7 @@ public class UIWindowBase : MonoBehaviour {
 
     }
 
-    private void enterAnimation(Action onComplete)
+    protected virtual void enterAnimation(Action onComplete)
     {
         transform.localScale = Vector3.zero;
         transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutElastic).OnComplete(()=> 
@@ -65,7 +66,7 @@ public class UIWindowBase : MonoBehaviour {
 
     }
 
-    private void exitAnimation(Action onComplete)
+    protected  virtual void exitAnimation(Action onComplete)
     {
         transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InElastic).OnComplete(()=>
         {

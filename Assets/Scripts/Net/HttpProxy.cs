@@ -1,4 +1,4 @@
-﻿
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System;
 using LitJson;
@@ -35,37 +35,43 @@ public class HttpProxy {
         LastTime = DateTime.Now;
     }
 
-    private static HTTPRequest MakePostRequest<T>(string url, string data, Action<bool, T> callback = null) where T : NetMessage
+    private static HTTPRequest MakePostRequest<T>(string url, Dictionary<string,string> data, Action<bool, T> callback = null) where T : NetMessage
     {
         HTTPRequest req = new HTTPRequest(new Uri(url), HTTPMethods.Post, (request, reponse) =>
         {
             bool ret = request.State == HTTPRequestStates.Finished;
             if (!ret)
             {
-                Debug.LogErrorFormat("request.State = {0} [{1}]", request.State.ToString(), url);
+                Debug.LogErrorFormat("消息发送失败 request.State = {0} [{1}]", request.State.ToString(), url);
+            }else
+            {
+                string msgStr = (reponse != null && !string.IsNullOrEmpty(reponse.DataAsText)) ? reponse.DataAsText : "";
+
+                if (GameSetting.isDebug)
+                    Debug.Log(msgStr);
+
+                if (callback != null)
+                {
+                    try
+                    {
+                        T msg = JsonMapper.ToObject<T>(msgStr);
+                        callback(ret, msg);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.LogError(ex.ToString());
+                    }
+                }
             }
 
-            string msgStr = (reponse != null && !string.IsNullOrEmpty(reponse.DataAsText)) ? reponse.DataAsText : "";
-            msgStr = msgStr.Replace(" ","");
-            msgStr = msgStr.Replace("\n", "");
- 
-            Debug.Log(msgStr);
-            if (callback != null)
-            {
-                try
-                {
-                    T msg = JsonMapper.ToObject<T>(msgStr);
-                    callback(ret, msg);
-                }
-                catch (Exception ex)
-                {
-                    Debug.LogError(ex.ToString());
-                }
-            }
         });
-       // req.AddHeader(JsonHeaderType, JsonHeaderValue);
-       // req.RawData = Encoding.UTF8.GetBytes(data);
-        req.AddField("userId","6");
+        //req.AddHeader(JsonHeaderType, JsonHeaderValue);
+        //req.RawData = Encoding.UTF8.GetBytes("6");
+        //req.AddField("userId","6");
+        foreach(string key in data.Keys)
+        {
+            req.AddField(key, data[key], Encoding.UTF8);
+        }
         return req;
     }
 
@@ -77,29 +83,32 @@ public class HttpProxy {
             if (!ret)
             {
                 Debug.LogErrorFormat("request.State = {0} [{1}]", request.State.ToString(), url);
+            }else
+            {
+                string msgStr = (reponse != null && !string.IsNullOrEmpty(reponse.DataAsText)) ? reponse.DataAsText : "";
+                Debug.Log("<<=get=" + url + "==>>" + msgStr);
+                if (callback != null)
+                {
+                    try
+                    {
+                        T msg = JsonMapper.ToObject<T>(msgStr);
+                        callback(ret, msg);
+                    }
+                    catch (JsonException ex)
+                    {
+                        Debug.LogWarning(ex.ToString());
+                    }
+                }
             }
 
-            string msgStr = (reponse != null && !string.IsNullOrEmpty(reponse.DataAsText)) ? reponse.DataAsText : "";
-            Debug.Log("<<=get=" + url + "==>>" + msgStr);
-            if (callback != null)
-            {
-                try
-                {
-                    T msg = JsonMapper.ToObject<T>(msgStr);
-                    callback(ret, msg);
-                }
-                catch (JsonException ex)
-                {
-                    Debug.LogWarning(ex.ToString());
-                }
-            }
+            
         });
         req.AddHeader(JsonHeaderType, JsonHeaderValue);
         req.Timeout = new TimeSpan(0, 0, 0, 5);
         return req;
     }
 
-    public static bool SendPostRequest<T>(string url, string data, Action<bool, T> callback = null) where T : NetMessage
+    public static bool SendPostRequest<T>(string url, Dictionary<string,string> data, Action<bool, T> callback = null) where T : NetMessage
     {
         if (!CheckMinTime(url))
         {

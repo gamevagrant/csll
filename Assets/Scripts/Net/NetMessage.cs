@@ -7,7 +7,7 @@ public class NetMessage {
     public int errcode;   // 错误代码
     public string errmsg;    // 错误信息
 
-    public bool res
+    public bool isOK
     {
         get
         {

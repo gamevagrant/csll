@@ -26,14 +26,16 @@ public class UIManager : MonoBehaviour {
     private void Awake()
     {
         allWindows = new Dictionary<UISettings.UIWindowID, UIWindowBase>();
+        showingWindows = new Dictionary<UISettings.UIWindowID, UIWindowBase>();
         backSequence = new Stack<UIWindowBase>();
 
         //添加模态窗口的背板
-        windowCollider = ApplationUtils.createGameObject(PopUpRoot.gameObject, "PopUpWindwCollider");
-        (windowCollider.transform as RectTransform).anchorMin = Vector2.zero;
-        (windowCollider.transform as RectTransform).anchorMax = Vector2.one;
-        (windowCollider.transform as RectTransform).offsetMin = Vector2.zero;
-        (windowCollider.transform as RectTransform).offsetMax = Vector2.zero;
+        windowCollider = GameUtils.createGameObject(PopUpRoot.gameObject, "PopUpWindwCollider");
+        RectTransform rt = windowCollider.AddComponent<RectTransform>();
+        rt.anchorMin = Vector2.zero;
+        rt.anchorMax = Vector2.one;
+        rt.offsetMin = Vector2.zero;
+        rt.offsetMax = Vector2.zero;
         windowCollider.AddComponent<Image>().color = new Color(0.8f,0.8f,0.8f,0.5f);
 
         EventTrigger eventTrigger = windowCollider.AddComponent<EventTrigger>();
@@ -48,6 +50,10 @@ public class UIManager : MonoBehaviour {
         eventTrigger.triggers.Add(entry);
         windowCollider.SetActive(false);
 
+    }
+    private void Start()
+    {
+        
     }
 
     public void openWindow(UISettings.UIWindowID id)
@@ -127,7 +133,7 @@ public class UIManager : MonoBehaviour {
     private void loadWindow(UISettings.UIWindowID id)
     {
         string path = FilePathTools.getUIPath(UISettings.getWindowName(id));
-        AssetsLoaderManager.Instance.LoadAsset<GameObject>(path,(go)=> {
+        AssetBundleLoadManager.Instance.LoadAsset<GameObject>(path,(go)=> {
             GameObject windowGO = GameObject.Instantiate(go);
             UIWindowBase window = windowGO.GetComponent<UIWindowBase>();
             UIWindowData windowData = window.windowData;

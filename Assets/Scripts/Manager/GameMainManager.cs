@@ -2,34 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameMainManager : MonoBehaviour {
+public class GameMainManager {
 
-	// Use this for initialization
-	void Start () {
-        init();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
-    private void init()
+    private static GameMainManager _instance;
+    public static GameMainManager instance
     {
-        login();
-    }
-
-    private void login()
-    {
-        NetManager.instance.login("899836", (res, data) => {
-            if(data.isOK)
+        get
+        {
+            if(_instance == null)
             {
-                GameModel.userData = data.data;
-                EventDispatcher.instance.dispatchEvent(EventEnum.UPDATE_USERDATA, data.data);
-            }else
-            {
-                Debug.Log("登录失败:"+data.errmsg);
+                _instance = new GameMainManager();
             }
-        });
+            return _instance;
+        }
     }
+
+    public IUIManager uiManager;
+    public INetManager netManager;
+    public GameModel model;
+
+    public GameMainManager()
+    {
+        netManager = new NetManager();
+        uiManager = GameObject.Find("UIRoot").GetComponent<UIManager>();//暂时这样 之后改成UIRoot从UIManager自动创建
+        model = new GameModel();
+    }
+
+   
 }

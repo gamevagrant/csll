@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class GameModel {
 
-    public static UserData userData;
+    public UserData userData;
 	
 }

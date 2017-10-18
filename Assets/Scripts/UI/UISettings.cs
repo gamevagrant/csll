@@ -6,7 +6,8 @@ public class UISettings  {
 
     public enum UIWindowID
     {
-        UIWheel,
+        UIWheelWindow,
+        UIBuildingWindow,
     }
 
     public enum UIWindowType
@@ -39,7 +40,8 @@ public class UISettings  {
     //public static string UIPrefabPath = "UIPrefab/";
     private static Dictionary<UIWindowID, string> windowPrefabPath = new Dictionary<UIWindowID, string>()
     {
-        { UIWindowID.UIWheel,"UIWheel"},
+        { UIWindowID.UIWheelWindow,"UIWheelWindow"},
+         { UIWindowID.UIBuildingWindow,"UIBuildingWindow"},
     };
 
     public static string getWindowName(UIWindowID id)

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.U2D;
 
-
-public class UIManager : MonoBehaviour {
+public class UIManager : MonoBehaviour,IUIManager {
 
     [SerializeField]
     private Transform FixedRoot;//固定UI根节点
@@ -23,13 +23,16 @@ public class UIManager : MonoBehaviour {
     private GameObject windowCollider;//模态窗口的遮挡面板
     private UIWindowBase curWindow;//当前打开的窗口
 
+
+
+
     private void Awake()
     {
         allWindows = new Dictionary<UISettings.UIWindowID, UIWindowBase>();
         showingWindows = new Dictionary<UISettings.UIWindowID, UIWindowBase>();
         backSequence = new Stack<UIWindowBase>();
 
-        //添加模态窗口的背板
+        //-------------------------添加模态窗口的背板start--------------------
         windowCollider = GameUtils.createGameObject(PopUpRoot.gameObject, "PopUpWindwCollider");
         RectTransform rt = windowCollider.AddComponent<RectTransform>();
         rt.anchorMin = Vector2.zero;
@@ -42,21 +45,31 @@ public class UIManager : MonoBehaviour {
         EventTrigger.Entry entry = new EventTrigger.Entry();
         entry.eventID = EventTriggerType.PointerUp;//设置监听事件类型
         entry.callback.AddListener((evt)=> {
-            if(curWindow.windowData.type == UISettings.UIWindowType.PopUp && curWindow.windowData.colliderMode == UISettings.UIWindowColliderMode.TouchClose)
+            if(curNavWindow != null && curWindow.windowData.type == UISettings.UIWindowType.PopUp && curWindow.windowData.colliderMode == UISettings.UIWindowColliderMode.TouchClose)
             {
-                closeWindow(curWindow.windowData.id);
+                CloseWindow(curWindow.windowData.id);
             }
         });
         eventTrigger.triggers.Add(entry);
         windowCollider.SetActive(false);
-
+        //---------------添加模态窗口的背板end----------------------------
+        
+        SpriteAtlasManager.atlasRequested += (tag, act) => {
+            Debug.Log("开始加载[" + tag + "]图集");
+            string path = FilePathTools.getSpriteAtlasPath(tag);
+            AssetBundleLoadManager.Instance.LoadAsset<SpriteAtlas>(path, (sa) => {
+                act(sa);
+                Debug.Log(sa);
+            });
+        };
+        
     }
     private void Start()
     {
         
     }
 
-    public void openWindow(UISettings.UIWindowID id)
+    public void OpenWindow(UISettings.UIWindowID id,bool needTransform = true, object data = null)
     {
         UIWindowBase window;
         allWindows.TryGetValue(id, out window);
@@ -68,8 +81,9 @@ public class UIManager : MonoBehaviour {
 
             }else if(windowdata.type == UISettings.UIWindowType.PopUp)
             {
+                windowCollider.transform.SetSiblingIndex(0);
                 windowCollider.SetActive(true);
-                
+                windowCollider.GetComponent<Image>().color = new Color(0.8f,0.8f,0.8f,0.5f);
             }
             else if(windowdata.type == UISettings.UIWindowType.Normal)
             {
@@ -86,7 +100,7 @@ public class UIManager : MonoBehaviour {
             window.showWindow(()=> 
             {
 
-            });
+            },needTransform);
         }
         else
         {
@@ -94,7 +108,7 @@ public class UIManager : MonoBehaviour {
         }
     }
 
-    public void closeWindow(UISettings.UIWindowID id)
+    public void CloseWindow(UISettings.UIWindowID id,bool needTransform = true)
     {
         UIWindowBase window;
         allWindows.TryGetValue(id, out window);
@@ -109,25 +123,42 @@ public class UIManager : MonoBehaviour {
            
             window.hideWindow(() =>
             {
+                UIWindowData windowdata = window.windowData;
+                if (windowdata.type == UISettings.UIWindowType.Fixed)
+                {
 
-            });
+                }
+                else if (windowdata.type == UISettings.UIWindowType.PopUp)
+                {
+                    windowCollider.SetActive(false);
 
-            UIWindowData windowdata = window.windowData;
-            if (windowdata.type == UISettings.UIWindowType.Fixed)
-            {
+                }
+                else if (windowdata.type == UISettings.UIWindowType.Normal)
+                {
+                    hideNavigationWindow(window);
+                }
+            },needTransform);
 
-            }
-            else if (windowdata.type == UISettings.UIWindowType.PopUp)
-            {
-                windowCollider.SetActive(false);
-
-            }
-            else if (windowdata.type == UISettings.UIWindowType.Normal)
-            {
-                hideNavigationWindow(window);
-            }
+            
         }
        
+    }
+
+    /// <summary>
+    /// 允许界面操作
+    /// </summary>
+    public void EnableOperation()
+    {
+        windowCollider.SetActive(false);
+    }
+    /// <summary>
+    /// 禁止界面操作
+    /// </summary>
+    public void DisableOperation()
+    {
+        windowCollider.GetComponent<Image>().color = new Color(0,0,0,0);
+        windowCollider.SetActive(true);
+        windowCollider.transform.SetSiblingIndex(windowCollider.transform.parent.childCount);
     }
 
     private void loadWindow(UISettings.UIWindowID id)
@@ -155,7 +186,7 @@ public class UIManager : MonoBehaviour {
                 Debug.LogError("加载的window id和目标id不符");
             }
             allWindows.Add(windowData.id, window);
-            openWindow(id);
+            OpenWindow(id);
         });
     }
 

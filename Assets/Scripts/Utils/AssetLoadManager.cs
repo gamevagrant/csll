@@ -4,6 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 using Object = UnityEngine.Object;
 
+/// <summary>
+/// 本地和网络资源的加载器，不能用以加载AssetBundle资源，要加载AssetBundle请使用AssetBundleLoadManager。
+/// </summary>
 public class AssetLoadManager:MonoBehaviour
 {
 
@@ -30,7 +33,7 @@ public class AssetLoadManager:MonoBehaviour
 
 	}
 
-	public void Start()
+	public void Awake()
 	{
 		_instance = this;
 	}

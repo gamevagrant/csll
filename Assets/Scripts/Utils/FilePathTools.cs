@@ -25,7 +25,7 @@ public class FilePathTools
 		{
 			if(!GameSetting.isUseAssetBundle)
 			{
-				return assetsRootPath;
+                return assetsRootPath;
 			}else if(GameSetting.isUseLocalAssetBundle)
             {
                 return exportRoot;
@@ -191,7 +191,7 @@ public class FilePathTools
 
     public static string getUIPath(string prefabName)
     {
-        string str = "/UI/" + prefabName;
+        string str = "/Prefabs/UI/" + prefabName;
         if (GameSetting.isUseAssetBundle)
         {
             str = str.ToLower();
@@ -203,7 +203,26 @@ public class FilePathTools
         return root + str;
     }
 
-	public static string getScenePath(string prefabName)
+    /// <summary>
+    /// 获取特效prefab路径
+    /// </summary>
+    /// <returns>The effect path.</returns>
+    /// <param name="name">Name.</param>
+    public static string getEffectPath(string name)
+    {
+        string str = "/Prefabs/Effect/" + name;
+        if (GameSetting.isUseAssetBundle)
+        {
+            str = str.ToLower();
+        }
+        else
+        {
+            str = str + ".prefab";
+        }
+        return root + str;
+    }
+
+    public static string getScenePath(string prefabName)
 	{
 		string str = "/Scenes/" + prefabName;
 		if(GameSetting.isUseAssetBundle)
@@ -216,18 +235,7 @@ public class FilePathTools
 		return root + str;
 	}
 
-	public static string getPanelPath(string name)
-	{
-		string str = "/Prefabs/UI/" + name;
-		if(GameSetting.isUseAssetBundle)
-		{
-			str = str.ToLower();
-		}else
-		{
-			str = str+".prefab";
-		}
-		return root + str;
-	}
+
 
 	public static string getConfigPath(string name)
 	{
@@ -242,9 +250,9 @@ public class FilePathTools
 		return root + str;
 	}
 
-	public static string getMusicPath(string name)
+	public static string getAudioPath(string name)
 	{
-		string str = "/Audios/Music/" + name;
+		string str = "/Audios/" + name;
 		if(GameSetting.isUseAssetBundle)
 		{
 			str = str.ToLower();
@@ -255,125 +263,20 @@ public class FilePathTools
 		return root + str;
 	}
 
-	public static string getPokerCoverPath()
-	{
-		string str = "/Prefabs/UI/PokersCover";
-		if(GameSetting.isUseAssetBundle)
-		{
-			str = str.ToLower();
-		}else
-		{
-			str = str+".prefab";
-		}
-		return root + str;
-	}
+    public static string getSpriteAtlasPath(string name)
+    {
+        string str = "/SpriteAtlas/" + name;
+        if (GameSetting.isUseAssetBundle)
+        {
+            str = str.ToLower();
+        }
+        else
+        {
+            str = str + ".spriteatlas";
+        }
+        return root + str;
+    }
 
-	public static string getOtherPrefabPath(string name)
-	{
-		string str = "/Prefabs/Other/"+name;
-		if(GameSetting.isUseAssetBundle)
-		{
-			str = str.ToLower();
-		}else
-		{
-			str = str+".prefab";
-		}
-		return root + str;
-	}
 
-	public static string getCharacterPrefabPath(string name)
-	{
-		string str = "/Prefabs/Character/"+name;
-		if(GameSetting.isUseAssetBundle)
-		{
-			str = str.ToLower();
-		}else
-		{
-			str = str+".prefab";
-		}
-		return root + str;
-	}
-	/// <summary>
-	/// 获取男性出牌的音效
-	/// </summary>
-	/// <returns>The man play audio.</returns>
-	public static string getManPlayAudioPath(string name)
-	{
-		string str = "/Audios/Man/Man_"+name;
-		if(GameSetting.isUseAssetBundle)
-		{
-			str = str.ToLower();
-		}else
-		{
-			str = str+".ogg";
-		}
-		return root + str;
-	}
-	/// <summary>
-	/// 获取女性出牌的音效
-	/// </summary>
-	/// <returns>The woman play audio.</returns>
-	public static string getWomanPlayAudioPath(string name)
-	{
-		string str = "/Audios/Woman/Woman_"+name;
-		if(GameSetting.isUseAssetBundle)
-		{
-			str = str.ToLower();
-		}else
-		{
-			str = str+".ogg";
-		}
-		return root + str;
-	}
-	/// <summary>
-	/// 获取特效音效路径
-	/// </summary>
-	/// <returns>The effect audio path.</returns>
-	/// <param name="name">Name.</param>
-	public static string getEffectAudioPath(string name)
-	{
-		string str = "/Audios/Effect/"+name;
-		if(GameSetting.isUseAssetBundle)
-		{
-			str = str.ToLower();
-		}else
-		{
-			str = str+".ogg";
-		}
-		return root + str;
-	}
-	/// <summary>
-	/// 获取物体的prefab路径 /Prefabs/Object/
-	/// </summary>
-	/// <returns>The object path.</returns>
-	/// <param name="name">Name.</param>
-	public static string getObjectPath(string name)
-	{
-		string str = "/Prefabs/Object/"+name;
-		if(GameSetting.isUseAssetBundle)
-		{
-			str = str.ToLower();
-		}else
-		{
-			str = str+".prefab";
-		}
-		return root + str;
-	}
-	/// <summary>
-	/// 获取特效prefab路径
-	/// </summary>
-	/// <returns>The effect path.</returns>
-	/// <param name="name">Name.</param>
-	public static string getEffectPath(string name)
-	{
-		string str = "/Prefabs/Effect/"+name;
-		if(GameSetting.isUseAssetBundle)
-		{
-			str = str.ToLower();
-		}else
-		{
-			str = str+".prefab";
-		}
-		return root + str;
-	}
+
 }

@@ -4,15 +4,13 @@ using UnityEngine;
 using System;
 using DG.Tweening;
 
-public class UIWindowBase : MonoBehaviour {
+public abstract class UIWindowBase : MonoBehaviour {
 
     protected UIWindowData _windowData;
-    public virtual UIWindowData windowData
+    public abstract UIWindowData windowData
     {
-        get
-        {
-            return new UIWindowData();
-        }
+        get;
+        
     }
 
     public bool isOpen
@@ -28,22 +26,37 @@ public class UIWindowBase : MonoBehaviour {
 		
 	}
 	
-	public void showWindow(Action onComplate = null)
+	public void showWindow(Action onComplate = null,bool needTransform = true)
     {
+        gameObject.transform.localScale = Vector3.one;
         gameObject.SetActive(true);
         startShowWindow();
-        enterAnimation(()=> {
+        if(needTransform)
+        {
+            enterAnimation(() => {
+                onComplate();
+            });
+        }else
+        {
             onComplate();
-        });
+        }
+        
     }
 
-    public void hideWindow(Action onComplate = null)
+    public void hideWindow(Action onComplate = null, bool needTransform = true)
     {
         startHideWindow();
-        exitAnimation(()=> {
+        if(needTransform)
+        {
+            exitAnimation(() => {
+                onComplate();
+                gameObject.SetActive(false);
+            });
+        }else
+        {
             onComplate();
-            gameObject.SetActive(false);
-        });
+        }
+        
     }
 
     protected virtual void startShowWindow()
@@ -58,8 +71,14 @@ public class UIWindowBase : MonoBehaviour {
 
     protected virtual void enterAnimation(Action onComplete)
     {
-        transform.localScale = Vector3.zero;
-        transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutElastic).OnComplete(()=> 
+        if(windowData.type == UISettings.UIWindowType.Fixed)
+        {
+            onComplete();
+            return;
+        }
+
+        transform.localScale = new Vector3(0.5f,0.5f,1);
+        transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack).OnComplete(()=> 
         {
             onComplete();
         });
@@ -68,9 +87,20 @@ public class UIWindowBase : MonoBehaviour {
 
     protected  virtual void exitAnimation(Action onComplete)
     {
-        transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InElastic).OnComplete(()=>
+        if (windowData.type == UISettings.UIWindowType.Fixed)
+        {
+            onComplete();
+            return;
+        }
+
+        transform.DOScale(new Vector3(0.5f, 0.5f, 1), 0.5f).SetEase(Ease.InBack).OnComplete(()=>
         {
             onComplete();
         });
+    }
+
+    public void OnClickClose()
+    {
+        GameMainManager.instance.uiManager.CloseWindow(windowData.id);
     }
 }

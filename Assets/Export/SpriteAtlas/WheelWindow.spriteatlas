@@ -1,0 +1,99 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: WheelWindow
+  m_EditorData:
+    textureSettings:
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 1
+      colorSpace: 1
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+    platformSettings: []
+    packingParameters:
+      paddingPower: 2
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    packedHash:
+      serializedVersion: 2
+      Hash: d074ea04edf3ed374dac975990d9aa92
+    variantMultiplier: 1
+    bindAsDefault: 1
+    finalFormat: 47
+    hashString: d074ea04edf3ed374dac975990d9aa92
+    totalSpriteSurfaceArea: 2318470
+    packables:
+    - {fileID: 102900000, guid: 9e3d56e820801f94496b9739c24ecab7, type: 3}
+    packedSpriteRenderDataKeys:
+    - 3ab91eb12a7a3c54993237e348888638: 21300000
+    - 032552d5c1563db41a379d6a8cf1966a: 21300000
+    - e824e80f36920db469525902ab1fa12d: 21300000
+    - 0911c3b1cbb6fbd40a772b1f9e6d3ea1: 21300000
+    - d78edbb9a874ff1469d7aa63a8d13036: 21300000
+    - 8b0aa5c1414776344b7a1d33fa790187: 21300000
+    - 3aa6210a7b1b7ff4f8272a3855bf2eae: 21300000
+    - d7aa98ffad1b4f04e980fed834f5e992: 21300000
+    - a624847d9652b2e47a454c90e4648046: 21300000
+    - 1fc1c47340b343c43a02875f2d111849: 21300000
+    - 38e045f370ecbb34fa8872a81fc5bc9b: 21300000
+    - 3a6a40e33503d36479b3c44163f97266: 21300000
+    - 9933e768166ff4748b0cbeff0528e438: 21300000
+    - 86edadec90efa264e9a823ec2565c350: 21300000
+    - 8c34f6eca6f7cf340aad2d7baccf2910: 21300000
+    - 4c1b12f0e663f3944a7c92c1bd550702: 21300000
+    - 697a4ff558b484a449ec4108fea84920: 21300000
+    - d6dd76bb73d34b946956795c14450299: 21300000
+    - 06b9d4bf8bdc44049a86fe4bd949e3f3: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 3ab91eb12a7a3c54993237e348888638, type: 3}
+  - {fileID: 21300000, guid: 032552d5c1563db41a379d6a8cf1966a, type: 3}
+  - {fileID: 21300000, guid: e824e80f36920db469525902ab1fa12d, type: 3}
+  - {fileID: 21300000, guid: 0911c3b1cbb6fbd40a772b1f9e6d3ea1, type: 3}
+  - {fileID: 21300000, guid: d78edbb9a874ff1469d7aa63a8d13036, type: 3}
+  - {fileID: 21300000, guid: 8b0aa5c1414776344b7a1d33fa790187, type: 3}
+  - {fileID: 21300000, guid: 3aa6210a7b1b7ff4f8272a3855bf2eae, type: 3}
+  - {fileID: 21300000, guid: d7aa98ffad1b4f04e980fed834f5e992, type: 3}
+  - {fileID: 21300000, guid: a624847d9652b2e47a454c90e4648046, type: 3}
+  - {fileID: 21300000, guid: 1fc1c47340b343c43a02875f2d111849, type: 3}
+  - {fileID: 21300000, guid: 38e045f370ecbb34fa8872a81fc5bc9b, type: 3}
+  - {fileID: 21300000, guid: 3a6a40e33503d36479b3c44163f97266, type: 3}
+  - {fileID: 21300000, guid: 9933e768166ff4748b0cbeff0528e438, type: 3}
+  - {fileID: 21300000, guid: 86edadec90efa264e9a823ec2565c350, type: 3}
+  - {fileID: 21300000, guid: 8c34f6eca6f7cf340aad2d7baccf2910, type: 3}
+  - {fileID: 21300000, guid: 4c1b12f0e663f3944a7c92c1bd550702, type: 3}
+  - {fileID: 21300000, guid: 697a4ff558b484a449ec4108fea84920, type: 3}
+  - {fileID: 21300000, guid: d6dd76bb73d34b946956795c14450299, type: 3}
+  - {fileID: 21300000, guid: 06b9d4bf8bdc44049a86fe4bd949e3f3, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - wheelWrap
+  - pointer
+  - wheelRound_001
+  - wheelRound
+  - light
+  - wheel_turn_mask
+  - energy
+  - shield
+  - main_btn_1
+  - main_btn_2
+  - build_btn
+  - main_btn1
+  - build_hammer
+  - build_wheel
+  - main_island
+  - main_wheel_physical
+  - main_wheel_steal
+  - main_wheel_shield
+  - main_wheel_attack
+  m_Tag: WheelWindow
+  m_IsVariant: 0

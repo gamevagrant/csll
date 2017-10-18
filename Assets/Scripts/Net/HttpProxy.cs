@@ -35,7 +35,7 @@ public class HttpProxy {
         LastTime = DateTime.Now;
     }
 
-    private static HTTPRequest MakePostRequest<T>(string url, Dictionary<string,string> data, Action<bool, T> callback = null) where T : NetMessage
+    private static HTTPRequest MakePostRequest<T>(string url, Dictionary<string,object> data, Action<bool, T> callback = null) where T : NetMessage
     {
         HTTPRequest req = new HTTPRequest(new Uri(url), HTTPMethods.Post, (request, reponse) =>
         {
@@ -70,7 +70,7 @@ public class HttpProxy {
         //req.AddField("userId","6");
         foreach(string key in data.Keys)
         {
-            req.AddField(key, data[key], Encoding.UTF8);
+            req.AddField(key, data[key].ToString(), Encoding.UTF8);
         }
         return req;
     }
@@ -108,7 +108,7 @@ public class HttpProxy {
         return req;
     }
 
-    public static bool SendPostRequest<T>(string url, Dictionary<string,string> data, Action<bool, T> callback = null) where T : NetMessage
+    public static bool SendPostRequest<T>(string url, Dictionary<string,object> data, Action<bool, T> callback = null) where T : NetMessage
     {
         if (!CheckMinTime(url))
         {

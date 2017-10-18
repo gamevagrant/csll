@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class EventDispatcher :IEventDispatcher{
 
@@ -16,14 +17,14 @@ public class EventDispatcher :IEventDispatcher{
 			return _instance;
 		}
 	}
-	private Dictionary<string, EventHandle> dicEvent;
+	private Dictionary<string, Action<BaseEvent>> dicEvent;
 
 	public EventDispatcher()
 	{
-		dicEvent = new Dictionary<string, EventHandle>();
+		dicEvent = new Dictionary<string, Action<BaseEvent>>();
 	}
 
-	public void addEventListener(string type, EventHandle listener)
+	public void AddEventListener(string type, Action<BaseEvent> listener)
 	{
 
 		if (dicEvent.ContainsKey(type))
@@ -40,7 +41,7 @@ public class EventDispatcher :IEventDispatcher{
 		}
 	}
 
-	public void removeEventListener(string type, EventHandle listener)
+	public void RemoveEventListener(string type, Action<BaseEvent> listener)
 	{
 
 		if (dicEvent.ContainsKey(type))
@@ -55,17 +56,30 @@ public class EventDispatcher :IEventDispatcher{
 		}
 	}
 
-	public bool dispatchEvent(string type,params object[] datas)
+	public bool DispatchEvent(string type,params object[] datas)
 	{
 		if (dicEvent.ContainsKey(type) && dicEvent[type] != null)
 		{
-			EventHandle fun = dicEvent[type];
-			fun(datas);
+            Action<BaseEvent> fun = dicEvent[type];
+            BaseEvent evt = new BaseEvent(type,datas);
+			fun(evt);
 			return true;
 		}
 
 		return false;
 	}
+
+    public bool DispatchEvent(BaseEvent evt)
+    {
+        if (dicEvent.ContainsKey(evt.type) && dicEvent[evt.type] != null)
+        {
+            Action<BaseEvent> fun = dicEvent[evt.type];
+            fun(evt);
+            return true;
+        }
+
+        return false;
+    }
 
 	public void clearEvent()
 	{

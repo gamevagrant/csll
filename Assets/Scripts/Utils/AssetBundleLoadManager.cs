@@ -5,15 +5,19 @@ using System;
 using System.IO;
 using Object = UnityEngine.Object;
 
-
+/// <summary>
+/// 用以加载本地AssetBundle加载器，只能用于加载AssetBundle。
+/// 当GameSetting.isUseAssetBundle==false时，会使用AssetDatabase.LoadAssetAtPath从项目路径直接加载资源
+/// 这样在修改资源后不用重新打包就能看到资源的变化
+/// </summary>
 public class AssetBundleLoadManager : MonoBehaviour {
 
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN
 	string prefix = "file:///";
 #elif UNITY_IPHONE
-	string prefix = "";
-#else
     string prefix = "file://";
+#else
+    string prefix = "";
 #endif
 
     private const int RECOVERY_TIME = 180;//这个时间后没有被请求就自动销毁
@@ -107,7 +111,7 @@ public class AssetBundleLoadManager : MonoBehaviour {
         isLoading = true;
 
         path = FilePathTools.normalizePath(path);
-        Debug.Log("AssetBundleLoader.loadAsync----------------------:开始异步加载资源：" + path);
+        Debug.Log("AssetBundleLoader.loadAsync----------------------:start loadAsync:" + path);
         string assetBundleName = FilePathTools.getAssetBundleNameWithPath(path);
 
         bool isUseAssetBundle = GameSetting.isUseAssetBundle;
@@ -123,7 +127,7 @@ public class AssetBundleLoadManager : MonoBehaviour {
 				Debug.LogError ("Asset not found at path:" + path);
 			}
             callback((T)Obj);
-			yield break;
+			//yield break;
 #endif
         }
         else
@@ -136,7 +140,7 @@ public class AssetBundleLoadManager : MonoBehaviour {
             if (manifest == null)
             {
                 string manifestPath = FilePathTools.manifestPath;
-
+                Debug.Log("===================start load Manifest " + prefix + manifestPath);
                 www = new WWW(prefix + manifestPath);
                 yield return www;
                 if (string.IsNullOrEmpty(www.error))
@@ -191,7 +195,8 @@ public class AssetBundleLoadManager : MonoBehaviour {
                 Object obj = assetRequest.asset;
                 callback((T)obj);
 
-                dicCacheObject.Add(path, new CacheObject(obj, Time.time));
+                addCache(path,obj);
+               
                 //5释放目标资源
                 assetBundle.Unload(false);
                 assetBundle = null;
@@ -216,6 +221,14 @@ public class AssetBundleLoadManager : MonoBehaviour {
             tryClearCache();
         }
         isLoading = false;
+    }
+
+    private void addCache(string path ,Object obj)
+    {
+        if (!dicCacheObject.ContainsKey(path))
+        {
+            dicCacheObject.Add(path, new CacheObject(obj, Time.time));
+        }
     }
 
     private class CacheObject

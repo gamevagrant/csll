@@ -111,7 +111,7 @@ public class AssetBundleLoadManager : MonoBehaviour {
         isLoading = true;
 
         path = FilePathTools.normalizePath(path);
-        Debug.Log("AssetBundleLoader.loadAsync----------------------:start loadAsync:" + path);
+        Debug.Log("============start loadAsync:AssetBundleLoader.loadAsync" + path);
         string assetBundleName = FilePathTools.getAssetBundleNameWithPath(path);
 
         bool isUseAssetBundle = GameSetting.isUseAssetBundle;
@@ -140,7 +140,7 @@ public class AssetBundleLoadManager : MonoBehaviour {
             if (manifest == null)
             {
                 string manifestPath = FilePathTools.manifestPath;
-                Debug.Log("===================start load Manifest " + prefix + manifestPath);
+                Debug.Log("---start load Manifest " + prefix + manifestPath);
                 www = new WWW(prefix + manifestPath);
                 yield return www;
                 if (string.IsNullOrEmpty(www.error))
@@ -153,7 +153,7 @@ public class AssetBundleLoadManager : MonoBehaviour {
                 }
                 else
                 {
-                    Debug.Log("===================Manifest加载出错" + www.error);
+                    Debug.Log("---Manifest加载出错" + www.error);
                 }
 
             }
@@ -164,11 +164,11 @@ public class AssetBundleLoadManager : MonoBehaviour {
 
             //3加载依赖资源
             Dictionary<string, AssetBundle> dependencyAssetBundles = new Dictionary<string, AssetBundle>();
-            Debug.Log("AssetBundleLoader.loadAsync----------------------:开始加载依赖资源：" + dependencies.Length.ToString());
+            Debug.Log("---开始加载依赖资源:" + dependencies.Length.ToString());
             foreach (string fileName in dependencies)
             {
                 string dependencyPath = FilePathTools.root + "/" + fileName;
-                Debug.Log("AssetBundleLoader.loadAsync----------------------:开始加载依赖资源：" + dependencyPath);
+                Debug.Log("---开始加载依赖资源:" + dependencyPath);
 
 
                 www = new WWW(prefix + dependencyPath);
@@ -184,7 +184,8 @@ public class AssetBundleLoadManager : MonoBehaviour {
 
             }
             //4加载目标资源
-
+            Object obj = null;
+            Debug.Log("---开始加载目标资源:" + prefix + path);
             www = new WWW(prefix + path);
             yield return www;
             if (string.IsNullOrEmpty(www.error))
@@ -192,12 +193,12 @@ public class AssetBundleLoadManager : MonoBehaviour {
                 AssetBundle assetBundle = www.assetBundle;
                 yield return assetRequest = assetBundle.LoadAssetAsync(Path.GetFileNameWithoutExtension(path), typeof(T));
 
-                Object obj = assetRequest.asset;
-                callback((T)obj);
+                obj = assetRequest.asset;
 
                 addCache(path,obj);
-               
+
                 //5释放目标资源
+                Debug.Log("---释放目标资源:" + prefix + path);
                 assetBundle.Unload(false);
                 assetBundle = null;
             }
@@ -211,15 +212,16 @@ public class AssetBundleLoadManager : MonoBehaviour {
                 //6释放依赖资源
                 foreach (string key in dependencyAssetBundles.Keys)
                 {
+                    Debug.Log("---释放依赖资源:" + key);
                     AssetBundle dependencyAB = dependencyAssetBundles[key];
                     dependencyAB.Unload(false);
                 }
             }
 
-
-
             tryClearCache();
+            callback((T)obj);
         }
+        Debug.Log("============end loadAsync:AssetBundleLoader.loadAsync" + path);
         isLoading = false;
     }
 

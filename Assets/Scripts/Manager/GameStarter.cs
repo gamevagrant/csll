@@ -7,20 +7,26 @@ using UnityEngine;
 public class GameStarter : MonoBehaviour {
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
         init();
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    private void Start()
+    {
+        
+    }
+    // Update is called once per frame
+    void Update () {
 		
 	}
 
     private void init()
     {
         gameObject.AddComponent<AssetBundleLoadManager>();
-        gameObject.AddComponent<AssetBundleLoadManager>();
-        login();
+        gameObject.AddComponent<AssetLoadManager>();
+
+        Invoke("login", 5);
+       // login();
     }
 
     private void login()

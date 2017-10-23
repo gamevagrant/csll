@@ -8,8 +8,8 @@ using DG.Tweening;
 public class UIBuildPanel : MonoBehaviour {
 
     public Text cityName;
-    public Image[] buildItem;
     public GameObject buildingAnimation;
+    public IslandFactory islandFactory;
 
     [SerializeField]
     private GameObject buildBtn;
@@ -23,6 +23,7 @@ public class UIBuildPanel : MonoBehaviour {
     private Vector2 buildBtnOriginalValue;//roll点按钮位置原始值 下同
     private Vector2 switchOriginalValue;
     private Vector2 panelLocalOriginalValue;
+    private int islandID;
 
     private void Awake()
     {
@@ -55,52 +56,36 @@ public class UIBuildPanel : MonoBehaviour {
 
     public void setData(int islandID,BuildingData[] data)
     {
-        string path = FilePathTools.getSpriteAtlasPath("City_" + islandID.ToString());
-        AssetBundleLoadManager.Instance.LoadAsset<SpriteAtlas>(path, (sa)=>{
-            spriteAtlas = sa;
-            string isLandName = "island_city";
-            Sprite isLandSprite = spriteAtlas.GetSprite(isLandName);
-            setCityItemSprite(0,isLandSprite);
+        this.islandID = islandID;
+        islandFactory.UpdateCityData(islandID, data);
 
-            buildItem[0].sprite = isLandSprite;
 
-            for (int i = 0;i<data.Length;i++)
-            {
-                BuildingData bd = data[i];
-                if(i+1<buildItem.Length)
-                {
-
-                    updateCitySprite(spriteAtlas,i+1,bd.level,bd.status);
-                }
-               
-
-            }
-        });
-        
     }
 
-
-
-    public void hidePanel()
+    /// <summary>
+    /// 切换到显示转盘界面时
+    /// </summary>
+    public void enterToWheelPanelState()
     {
         RectTransform buildBtnTF = buildBtn.transform as RectTransform;
-        //DOTween.To(() => buildBtnTF.offsetMin, min => buildBtnTF.offsetMin = min, new Vector2(buildBtnTF.offsetMin.x ,- 500), 1
         DOTween.To(() => buildBtnTF.anchoredPosition, p => buildBtnTF.anchoredPosition = p, new Vector2(buildBtnTF.anchoredPosition.x, -300), 1).SetEase(Ease.OutQuint); ;
-        //DOTween.To(() => buildBtnTF.localScale, x => buildBtnTF.localScale = x, new Vector3(1.5f, 1.5f, 1), 1);
 
         RectTransform switchBtnTF = switchBtn.transform as RectTransform;
-        //DOTween.To(() => switchBtnTF.offsetMin, min => switchBtnTF.offsetMin = min, new Vector2(-300, switchBtnTF.offsetMin.y), 1);
         DOTween.To(() => switchBtnTF.anchoredPosition, p => switchBtnTF.anchoredPosition = p, new Vector2(-200, switchBtnTF.anchoredPosition.y), 1);
 
         RectTransform buildPanelTF = panel.transform as RectTransform;
         DOTween.To(() => buildPanelTF.anchoredPosition, x => buildPanelTF.anchoredPosition = x, new Vector2(200, -150), 1);
         DOTween.To(() => buildPanelTF.localScale, x => buildPanelTF.localScale = x, new Vector3(0.5f,0.5f,1), 1).onComplete = () => {
 
-
+            buildBtn.SetActive(false);
+            switchBtn.SetActive(false);
         };
     }
 
-    public void showPanel()
+    /// <summary>
+    /// 切换到显示建造界面时
+    /// </summary>
+    public void enterToBuildPanelState()
     {
         GameMainManager.instance.uiManager.DisableOperation();
         buildBtn.SetActive(true);
@@ -121,30 +106,61 @@ public class UIBuildPanel : MonoBehaviour {
         };
     }
 
+    /// <summary>
+    /// 窗口关闭时调用
+    /// </summary>
+    public void ClosePanel(System.Action onComplate)
+    {
+        RectTransform buildBtnTF = buildBtn.transform as RectTransform;
+        RectTransform switchBtnTF = switchBtn.transform as RectTransform;
+        RectTransform buildPanelTF = panel.transform as RectTransform;
+
+        Sequence sq = DOTween.Sequence();
+        sq.Append(DOTween.To(() => buildBtnTF.anchoredPosition, p => buildBtnTF.anchoredPosition = p, new Vector2(buildBtnTF.anchoredPosition.x, -300), 1).SetEase(Ease.OutExpo));
+        sq.Insert(0.5f,DOTween.To(() => switchBtnTF.anchoredPosition, p => switchBtnTF.anchoredPosition = p, new Vector2(-200, switchBtnTF.anchoredPosition.y), 1).SetEase(Ease.OutCubic));
+        sq.Insert(0.5f, DOTween.To(() => buildPanelTF.anchoredPosition, x => buildPanelTF.anchoredPosition = x, new Vector2(500, -150), 1).SetEase(Ease.OutCubic));
+        sq.onComplete += () => {
+            buildBtn.SetActive(false);
+            switchBtn.SetActive(false);
+            panel.SetActive(false);
+            onComplate();
+        };
+        
+
+    }
+
+    /// <summary>
+    /// 窗口打开时的初始化
+    /// </summary>
+    public void OpenPanel(System.Action onComplate)
+    {
+        GameMainManager.instance.uiManager.DisableOperation();
+        buildBtn.SetActive(false);
+        switchBtn.SetActive(false);
+        panel.SetActive(true);
+
+        RectTransform buildBtnTF = buildBtn.transform as RectTransform;
+        RectTransform switchBtnTF = switchBtn.transform as RectTransform;
+        RectTransform buildPanelTF = panel.transform as RectTransform;
+
+        buildBtnTF.anchoredPosition = new Vector2(buildBtnTF.anchoredPosition.x, -300);
+        switchBtnTF.anchoredPosition = new Vector2(-200, switchBtnTF.anchoredPosition.y);
+        buildPanelTF.anchoredPosition = new Vector2(400, -150);
+        buildPanelTF.localScale = new Vector3(0.5f, 0.5f, 1);
+
+        DOTween.To(() => buildPanelTF.anchoredPosition, x => buildPanelTF.anchoredPosition = x, new Vector2(200, -150), 1).SetEase(Ease.OutCubic).onComplete+=()=> {
+            GameMainManager.instance.uiManager.EnableOperation();
+            onComplate();
+        };
+
+    }
+
     public void onClickBuildBtn()
     {
         GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIBuildingWindow);
     }
 
-    private void updateCitySprite(SpriteAtlas sa ,int index,int level,int status = 0)
-    {
-        string name = string.Format("city_{0}_{1}_{2}", index.ToString(), level.ToString(), status.ToString());
-        Sprite sp = spriteAtlas.GetSprite(name);
-        setCityItemSprite(index, sp);
-    }
 
-    private void setCityItemSprite(int index, Sprite sprite)
-    {
-        if (sprite == null)
-        {
-            buildItem[index].enabled = false;
-        }
-        else
-        {
-            buildItem[index].enabled = true;
-            buildItem[index].sprite = sprite;
-        }
-    }
 
     private void OnBuildComplateHandle(BaseEvent e)
     {
@@ -157,12 +173,16 @@ public class UIBuildPanel : MonoBehaviour {
 
     private IEnumerator showBuildAnimation(int index,int level)
     {
-        buildingAnimation.transform.position = buildItem[index].transform.GetChild(0).position;
-        buildItem[index].gameObject.SetActive(false);
+
+        buildingAnimation.transform.position = islandFactory.getBuildTransform(index).position;
+        islandFactory.HideBuild(index);
         buildingAnimation.SetActive(true);
         yield return new WaitForSeconds(3);
         buildingAnimation.SetActive(false);
-        updateCitySprite(spriteAtlas, index, level,0);
-        buildItem[index].gameObject.SetActive(true);
+        BuildingData bd = new BuildingData();
+        bd.level = level;
+        bd.status = 0;
+        islandFactory.UpdateBuildingData(islandID, index, bd);
+        islandFactory.ShowBuild(index);
     }
 }

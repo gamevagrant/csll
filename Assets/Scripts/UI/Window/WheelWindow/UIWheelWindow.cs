@@ -28,7 +28,7 @@ public class UIWheelWindow : UIWindowBase {
 
     private void Awake()
     {
-        EventDispatcher.instance.AddEventListener(EventEnum.UPDATE_USERDATA, onUpdateUserData);
+        EventDispatcher.instance.AddEventListener(EventEnum.LOGIN_COMPLATE, onUpdateUserData);
 
     }
 
@@ -40,7 +40,7 @@ public class UIWheelWindow : UIWindowBase {
 
     private void OnDestroy()
     {
-        EventDispatcher.instance.RemoveEventListener(EventEnum.UPDATE_USERDATA, onUpdateUserData);
+        EventDispatcher.instance.RemoveEventListener(EventEnum.LOGIN_COMPLATE, onUpdateUserData);
     }
 
 
@@ -59,25 +59,58 @@ public class UIWheelWindow : UIWindowBase {
 
     }
 
-    protected override void startShowWindow()
+    protected override void StartShowWindow(object[] data)
     {
-        RectTransform rtf = transform as RectTransform;
-        rtf.anchorMin = Vector2.zero;
-        rtf.anchorMax = Vector2.one;
-        rtf.offsetMin = Vector2.zero;
-        rtf.offsetMax = Vector2.zero;
+
+    }
+
+    protected override void EnterAnimation(Action onComplete)
+    {
+        int count = 0;
+        wheelPanel.OpenPanel(()=> {
+            count++;
+            if(count>1)
+            {
+                onComplete();
+            }
+            });
+        buildPanel.OpenPanel(() => {
+            count++;
+            if (count > 1)
+            {
+                onComplete();
+            }
+        });
+    }
+    protected override void ExitAnimation(Action onComplete)
+    {
+        int count = 0;
+        wheelPanel.ClosePanel(() => {
+            count++;
+            if (count > 1)
+            {
+                onComplete();
+            }
+        });
+        buildPanel.ClosePanel(() => {
+            count++;
+            if (count > 1)
+            {
+                onComplete();
+            }
+        });
     }
 
     public void onClickShowBuildBtn()
     {
-        wheelPanel.hidePanel();
-        buildPanel.showPanel();
+        wheelPanel.enterToBuildPanelState();
+        buildPanel.enterToBuildPanelState();
     }
 
     public void onClickShowWheelBtn()
     {
-        wheelPanel.showPanel();
-        buildPanel.hidePanel();
+        wheelPanel.enterToWheelPanelState();
+        buildPanel.enterToWheelPanelState();
     }
 
 

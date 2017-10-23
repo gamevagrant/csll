@@ -32,7 +32,7 @@ public class UIBuildingWindow : UIWindowBase {
         foreach (BuildingWindowItem item in items)
         {
             item.onBuild += (index) => {
-                GameMainManager.instance.netManager.Build(userData.uid, userData.islandId, index - 1, (ret, data) => {
+                GameMainManager.instance.netManager.Build( userData.islandId, index - 1, (ret, data) => {
                     if (ret && data.isOK)
                     {
                         BuildComplateEvent evt = new BuildComplateEvent();
@@ -53,7 +53,7 @@ public class UIBuildingWindow : UIWindowBase {
         
     }
 
-    protected override void startShowWindow()
+    protected override void StartShowWindow(object[] data)
     {
         userData = GameMainManager.instance.model.userData;
         if (spriteAtlas!=null && userData.islandId == islandID)

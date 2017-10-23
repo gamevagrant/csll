@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 198351817640285228}
   - component: {fileID: 199252953442876632}
   m_Layer: 0
-  m_Name: SU Coin 5x5 Burst Multi
+  m_Name: Gold
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

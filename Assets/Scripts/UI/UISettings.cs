@@ -8,6 +8,8 @@ public class UISettings  {
     {
         UIWheelWindow,
         UIBuildingWindow,
+        UIAttackWindow,
+        UIStealWindow,
     }
 
     public enum UIWindowType
@@ -42,6 +44,8 @@ public class UISettings  {
     {
         { UIWindowID.UIWheelWindow,"UIWheelWindow"},
          { UIWindowID.UIBuildingWindow,"UIBuildingWindow"},
+          { UIWindowID.UIAttackWindow,"UIAttackWindow"},
+           { UIWindowID.UIStealWindow,"UIStealWindow"},
     };
 
     public static string getWindowName(UIWindowID id)

@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// 岛屿信息
+/// 可偷取岛屿的信息
 /// </summary>
 public class StealIslandData  {
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BuildData {
 
-    public int money;                   // 金币数量
+    public long money;                   // 金币数量
     public int maxEnergy;                     // 最大体力值
     public int energy;                       // 当前剩余体力值
     public int recoverEnergy;                // 体力恢复值

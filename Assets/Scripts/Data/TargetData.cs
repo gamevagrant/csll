@@ -9,6 +9,6 @@ public class TargetData {
     public string headImg;        // 用户头像url
     public int crowns;     // 星星数量
     public bool isVip;    // 暂时未用到
-    public int money;      // 金钱数量
+    public long money;      // 金钱数量
     public bool isRichMan;     // 是不是富豪
 }

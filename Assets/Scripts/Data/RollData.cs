@@ -3,7 +3,7 @@
 /// </summary>
 public class RollData {
 
-    public int money;                          // 金钱数量
+    public long money;                          // 金钱数量
     public int maxEnergy;                    // 最大体力
     public int energy;                        // 当前剩余体力
     public int recoverEnergy;                   // 体力恢复值

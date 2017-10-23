@@ -5,6 +5,9 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.U2D;
 
+/// <summary>
+/// UI管理类 
+/// </summary>
 public class UIManager : MonoBehaviour,IUIManager {
 
     [SerializeField]
@@ -21,7 +24,7 @@ public class UIManager : MonoBehaviour,IUIManager {
 
     private UIWindowData curNavWindow;//当前导航窗口
     private GameObject windowCollider;//模态窗口的遮挡面板
-    private UIWindowBase curWindow;//当前打开的窗口
+    private UIWindowBase curPopUpWindow;//当前打开的窗口
 
 
 
@@ -45,9 +48,9 @@ public class UIManager : MonoBehaviour,IUIManager {
         EventTrigger.Entry entry = new EventTrigger.Entry();
         entry.eventID = EventTriggerType.PointerUp;//设置监听事件类型
         entry.callback.AddListener((evt)=> {
-            if(curNavWindow != null && curWindow.windowData.type == UISettings.UIWindowType.PopUp && curWindow.windowData.colliderMode == UISettings.UIWindowColliderMode.TouchClose)
+            if(curNavWindow != null && curPopUpWindow.windowData.colliderMode == UISettings.UIWindowColliderMode.TouchClose)
             {
-                CloseWindow(curWindow.windowData.id);
+                CloseWindow(curPopUpWindow.windowData.id);
             }
         });
         eventTrigger.triggers.Add(entry);
@@ -59,7 +62,7 @@ public class UIManager : MonoBehaviour,IUIManager {
             string path = FilePathTools.getSpriteAtlasPath(tag);
             AssetBundleLoadManager.Instance.LoadAsset<SpriteAtlas>(path, (sa) => {
                 act(sa);
-                Debug.Log(sa);
+                Debug.Log("图集加载完毕："+sa);
             });
         };
         
@@ -68,8 +71,11 @@ public class UIManager : MonoBehaviour,IUIManager {
     {
         
     }
-
-    public void OpenWindow(UISettings.UIWindowID id,bool needTransform = true, object data = null)
+    public void OpenWindow(UISettings.UIWindowID id, params object[] data)
+    {
+        OpenWindow(id,true,data);
+    }
+    public void OpenWindow(UISettings.UIWindowID id,bool needTransform = true,params object[] data)
     {
         UIWindowBase window;
         allWindows.TryGetValue(id, out window);
@@ -78,8 +84,9 @@ public class UIManager : MonoBehaviour,IUIManager {
             UIWindowData windowdata = window.windowData;
             if(windowdata.type == UISettings.UIWindowType.Fixed)
             {
-
-            }else if(windowdata.type == UISettings.UIWindowType.PopUp)
+                curPopUpWindow = window;
+            }
+            else if(windowdata.type == UISettings.UIWindowType.PopUp)
             {
                 windowCollider.transform.SetSiblingIndex(0);
                 windowCollider.SetActive(true);
@@ -91,20 +98,20 @@ public class UIManager : MonoBehaviour,IUIManager {
                
             }
 
-            curWindow = window;
+            
             if (!showingWindows.ContainsKey(id))
             {
                 showingWindows.Add(id,window);
             }
 
-            window.showWindow(()=> 
+            window.ShowWindow(()=> 
             {
 
-            },needTransform);
+            },needTransform, data);
         }
         else
         {
-            loadWindow(id);
+            loadWindow(id, needTransform,data);
         }
     }
 
@@ -114,14 +121,14 @@ public class UIManager : MonoBehaviour,IUIManager {
         allWindows.TryGetValue(id, out window);
         if (window != null)
         {
- 
-            curWindow = null;
+
+           
             if (showingWindows.ContainsKey(id))
             {
                 showingWindows.Remove(id);
             }
            
-            window.hideWindow(() =>
+            window.HideWindow(() =>
             {
                 UIWindowData windowdata = window.windowData;
                 if (windowdata.type == UISettings.UIWindowType.Fixed)
@@ -131,6 +138,7 @@ public class UIManager : MonoBehaviour,IUIManager {
                 else if (windowdata.type == UISettings.UIWindowType.PopUp)
                 {
                     windowCollider.SetActive(false);
+                    curPopUpWindow = null;
 
                 }
                 else if (windowdata.type == UISettings.UIWindowType.Normal)
@@ -142,6 +150,11 @@ public class UIManager : MonoBehaviour,IUIManager {
             
         }
        
+    }
+
+    public void ChangeState(UIStateChangeBase state)
+    {
+        state.ChangeState(showingWindows);
     }
 
     /// <summary>
@@ -161,7 +174,7 @@ public class UIManager : MonoBehaviour,IUIManager {
         windowCollider.transform.SetSiblingIndex(windowCollider.transform.parent.childCount);
     }
 
-    private void loadWindow(UISettings.UIWindowID id)
+    private void loadWindow(UISettings.UIWindowID id, bool needTransform = true, params object[] data)
     {
         string path = FilePathTools.getUIPath(UISettings.getWindowName(id));
         AssetBundleLoadManager.Instance.LoadAsset<GameObject>(path,(go)=> {
@@ -172,6 +185,11 @@ public class UIManager : MonoBehaviour,IUIManager {
             {
                 case UISettings.UIWindowType.Fixed:
                     windowGO.transform.parent = FixedRoot;
+                    RectTransform rt = windowGO.transform as RectTransform;
+                    rt.anchorMin = Vector2.zero;
+                    rt.anchorMax = Vector2.one;
+                    rt.offsetMin = Vector2.zero;
+                    rt.offsetMax = Vector2.one;
                     break;
                 case UISettings.UIWindowType.Normal:
                     windowGO.transform.parent = NormalRoot;
@@ -181,12 +199,13 @@ public class UIManager : MonoBehaviour,IUIManager {
                     break;
             }
             windowGO.transform.localPosition = Vector3.zero;
-            if(windowData.id != id)
+            windowGO.transform.localScale = Vector3.one;
+            if (windowData.id != id)
             {
                 Debug.LogError("加载的window id和目标id不符");
             }
             allWindows.Add(windowData.id, window);
-            OpenWindow(id);
+            OpenWindow(id, needTransform,data);
         });
     }
 
@@ -199,7 +218,7 @@ public class UIManager : MonoBehaviour,IUIManager {
                 UIWindowBase preWindow = backSequence.Peek();
                 if(preWindow.isOpen)
                 {
-                    preWindow.hideWindow();
+                    preWindow.HideWindow();
                 }
             }
             backSequence.Push(window);
@@ -218,7 +237,7 @@ public class UIManager : MonoBehaviour,IUIManager {
             if (backSequence.Count > 0)
             {
                 UIWindowBase backWindow = backSequence.Peek();
-                backWindow.showWindow();
+                backWindow.ShowWindow();
 
             }
         }

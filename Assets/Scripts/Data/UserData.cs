@@ -14,7 +14,7 @@ public class UserData {
     public string platformId;                      // openid
     public int platform;                      // 最后一次登录的平台 0 公众号 1 微信扫码 2 游客
     public long tutorial;                       // 新手教程  数值大于等于18表示已完成新手教程，否则未完成
-    public int money;                   // 金钱数量
+    public long money;                   // 金钱数量
     public int maxEnergy;              // 最大体力值
     public int energy;              // 当前体力值
     public int recoverEnergy;            // 体力恢复值

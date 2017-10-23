@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using DG.Tweening;
-
+/// <summary>
+/// 所有fixed类型的窗口都会被强制拉升固定在界面的四角，要做过度动画使用内部控件或者在外面再套一层
+/// </summary>
 public abstract class UIWindowBase : MonoBehaviour {
 
     protected UIWindowData _windowData;
@@ -26,15 +28,17 @@ public abstract class UIWindowBase : MonoBehaviour {
 		
 	}
 	
-	public void showWindow(Action onComplate = null,bool needTransform = true)
+	public void ShowWindow(Action onComplate = null,  bool needTransform = true,params object[] data)
     {
-        gameObject.transform.localScale = Vector3.one;
+        
         gameObject.SetActive(true);
-        startShowWindow();
+        StartShowWindow(data);
         if(needTransform)
         {
-            enterAnimation(() => {
+            GameMainManager.instance.uiManager.DisableOperation();
+            EnterAnimation(() => {
                 onComplate();
+                GameMainManager.instance.uiManager.EnableOperation();
             });
         }else
         {
@@ -43,33 +47,37 @@ public abstract class UIWindowBase : MonoBehaviour {
         
     }
 
-    public void hideWindow(Action onComplate = null, bool needTransform = true)
+    public void HideWindow(Action onComplate = null, bool needTransform = true)
     {
-        startHideWindow();
+        StartHideWindow();
         if(needTransform)
         {
-            exitAnimation(() => {
+            GameMainManager.instance.uiManager.DisableOperation();
+            ExitAnimation(() => {
+                
+                GameMainManager.instance.uiManager.EnableOperation();
                 onComplate();
                 gameObject.SetActive(false);
             });
         }else
         {
             onComplate();
+            gameObject.SetActive(false);
         }
         
     }
 
-    protected virtual void startShowWindow()
+    protected virtual void StartShowWindow(object[] data)
     {
 
     }
 
-    protected virtual void startHideWindow()
+    protected virtual void StartHideWindow()
     {
 
     }
 
-    protected virtual void enterAnimation(Action onComplete)
+    protected virtual void EnterAnimation(Action onComplete)
     {
         if(windowData.type == UISettings.UIWindowType.Fixed)
         {
@@ -85,7 +93,7 @@ public abstract class UIWindowBase : MonoBehaviour {
 
     }
 
-    protected  virtual void exitAnimation(Action onComplete)
+    protected  virtual void ExitAnimation(Action onComplete)
     {
         if (windowData.type == UISettings.UIWindowType.Fixed)
         {

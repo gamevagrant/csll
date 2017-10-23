@@ -88,16 +88,14 @@ public class UIWheelPanel : MonoBehaviour {
         }
     }
 
-    public void hidePanel()
+    public void enterToBuildPanelState()
     {
-        //rollBtn.transform.DOLocalMoveY(-300, 0.5f);
         RectTransform rollBtnTF = rollBtn.transform as RectTransform;
-       // DOTween.To(() => rollBtnTF.offsetMin, min => rollBtnTF.offsetMin = min, new Vector2(rollBtnTF.offsetMin.x,-800), 1);
+
         DOTween.To(() => rollBtnTF.anchoredPosition, p => rollBtnTF.anchoredPosition = p, new Vector2(rollBtnTF.anchoredPosition.x, -300), 1).SetEase(Ease.InQuint);
         DOTween.To(() => rollBtnTF.localScale, x => rollBtnTF.localScale = x, new Vector3(1.5f,1.5f,1), 1);
 
         RectTransform switchBtnTF = switchBtn.transform as RectTransform;
-        //DOTween.To(() => switchBtnTF.offsetMax, max => switchBtnTF.offsetMax = max,new Vector2(500,switchBtnTF.offsetMax.y) , 1);
         DOTween.To(() => switchBtnTF.anchoredPosition, p => switchBtnTF.anchoredPosition = p, new Vector2(200, switchBtnTF.anchoredPosition.y), 1);
 
         RectTransform rollPanelTF = panel.transform as RectTransform;
@@ -110,7 +108,7 @@ public class UIWheelPanel : MonoBehaviour {
         };
     }
 
-    public void showPanel()
+    public void enterToWheelPanelState()
     {
         GameMainManager.instance.uiManager.DisableOperation();
         rollBtn.SetActive(true);
@@ -132,6 +130,51 @@ public class UIWheelPanel : MonoBehaviour {
         };
     }
 
+    public void ClosePanel(System.Action onComplate)
+    {
+        RectTransform rollBtnTF = rollBtn.transform as RectTransform;
+        RectTransform switchBtnTF = switchBtn.transform as RectTransform;
+        RectTransform rollPanelTF = panel.transform as RectTransform;
+
+        Sequence sq = DOTween.Sequence();
+        sq.Append(DOTween.To(() => rollBtnTF.anchoredPosition, p => rollBtnTF.anchoredPosition = p, new Vector2(rollBtnTF.anchoredPosition.x, -300), 1f).SetEase(Ease.OutExpo));
+        sq.Insert(0.5f,DOTween.To(() => switchBtnTF.anchoredPosition, p => switchBtnTF.anchoredPosition = p, new Vector2(200, switchBtnTF.anchoredPosition.y), 1).SetEase(Ease.OutCubic));
+        sq.Insert(0.5f, DOTween.To(() => rollPanelTF.anchoredPosition, x => rollPanelTF.anchoredPosition = x, new Vector2(-600, rollPanelTF.anchoredPosition.y), 2));
+        sq.onComplete+= () => {
+
+            rollBtn.SetActive(false);
+            switchBtn.SetActive(false);
+            panel.SetActive(false);
+            onComplate();
+        };
+    }
+
+    public void OpenPanel(System.Action onComplate)
+    {
+        GameMainManager.instance.uiManager.DisableOperation();
+        rollBtn.SetActive(true);
+        switchBtn.SetActive(true);
+        panel.SetActive(true);
+
+        RectTransform rollBtnTF = rollBtn.transform as RectTransform;
+        RectTransform switchBtnTF = switchBtn.transform as RectTransform;
+        RectTransform rollPanelTF = panel.transform as RectTransform;
+
+        rollBtnTF.anchoredPosition = new Vector2(rollBtnTF.anchoredPosition.x, -300);
+        switchBtnTF.anchoredPosition = new Vector2(200, switchBtnTF.anchoredPosition.y);
+        rollPanelTF.anchoredPosition = new Vector2(-600, rollPanelTF.anchoredPosition.y);
+
+        Sequence sq = DOTween.Sequence();
+        sq.Append(DOTween.To(() => rollBtnTF.anchoredPosition, p => rollBtnTF.anchoredPosition = p, rollBtnOriginalValue, 1f).SetEase(Ease.OutExpo));
+        sq.Insert(0,DOTween.To(() => switchBtnTF.anchoredPosition, p => switchBtnTF.anchoredPosition = p, switchOriginalValue, 1).SetEase(Ease.OutCubic));
+        sq.Insert(0, DOTween.To(() => rollPanelTF.anchoredPosition, x => rollPanelTF.anchoredPosition = x, panelLocalOriginalValue, 1));
+        sq.onComplete += () => {
+
+            GameMainManager.instance.uiManager.EnableOperation();
+            onComplate();
+        };
+    }
+
     public void onClickRollBtn()
     {
         startRotate();
@@ -143,10 +186,13 @@ public class UIWheelPanel : MonoBehaviour {
         {
             isWorking = true;
             GameMainManager.instance.uiManager.DisableOperation();
-            GameMainManager.instance.netManager.Roll(GameMainManager.instance.model.userData.uid, (ret, data) => {
+            GameMainManager.instance.netManager.Roll((ret, data) => {
                 if(data.isOK)
                 {
-                    StartCoroutine(rotateWheel(data.data.rollerItem));
+                    StartCoroutine(rotateWheel(data.data.rollerItem,()=> {
+
+                        showResault(data.data);
+                    }));
                 }else
                 {
                     GameMainManager.instance.uiManager.EnableOperation();
@@ -156,20 +202,21 @@ public class UIWheelPanel : MonoBehaviour {
         }
     }
 
-    private IEnumerator rotateWheel(RollerItemData rollItem)
+    private IEnumerator rotateWheel(RollerItemData rollItem,System.Action callback)
     {
         reflective.gameObject.SetActive(true);
         wheel.DOLocalRotate(new Vector3(0, 0, -(360 * 6 + 36 * rollItem.index)), 4, RotateMode.FastBeyond360).SetEase(Ease.OutQuart).OnComplete(() => {
             isWorking = false;
-            showResault(rollItem);
+            callback();
            
         });
         yield return new WaitForSeconds(1.5f);
         reflective.gameObject.SetActive(false);
     }
 
-    private void showResault(RollerItemData rollItem)
+    private void showResault(RollData rollData)
     {
+        RollerItemData rollItem = rollData.rollerItem;
         if (rollItem.type == "coin")
         {
             if(rollItem.code<10000)
@@ -206,11 +253,17 @@ public class UIWheelPanel : MonoBehaviour {
             sq.AppendCallback(() => {
                 beaver.SetActive(false);
                 GameMainManager.instance.uiManager.EnableOperation();
+                Dictionary<UISettings.UIWindowID, object> stateData = new Dictionary<UISettings.UIWindowID, object>();
+                stateData.Add(UISettings.UIWindowID.UIStealWindow, rollData.stealIslands);
+                GameMainManager.instance.uiManager.ChangeState(new UIStateChangeBase(stateData));
             });
         }
         else if (rollItem.type == "shoot")
         {
             GameMainManager.instance.uiManager.EnableOperation();
+            Dictionary<UISettings.UIWindowID, object> stateData = new Dictionary<UISettings.UIWindowID, object>();
+            stateData.Add(UISettings.UIWindowID.UIAttackWindow, rollData.attackTarget);
+            GameMainManager.instance.uiManager.ChangeState(new UIStateChangeBase(stateData));
         }
     }
 

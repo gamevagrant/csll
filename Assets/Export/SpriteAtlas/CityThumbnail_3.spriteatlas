@@ -26,11 +26,11 @@ SpriteAtlas:
       enableTightPacking: 0
     packedHash:
       serializedVersion: 2
-      Hash: 8b5aa48fc8eda95427bbdbe7694e8657
+      Hash: 9548fbbabb85ec742004503c406b2cf2
     variantMultiplier: 1
     bindAsDefault: 0
     finalFormat: 4
-    hashString: 8b5aa48fc8eda95427bbdbe7694e8657
+    hashString: 9548fbbabb85ec742004503c406b2cf2
     totalSpriteSurfaceArea: 235684
     packables:
     - {fileID: 102900000, guid: 86fb5dea56d728345979bb460e255384, type: 3}
@@ -149,14 +149,14 @@ SpriteAtlas:
   - thumb_gray_4_3@2x
   - thumb_gray_1_3@2x
   - thumb_4_4@2x
-  - thumb_gray_3_4
+  - thumb_gray_3_4@2x
   - thumb_3_5@2x
   - thumb_4_3@2x
   - thumb_1_3@2x
   - thumb_gray_4_2@2x
   - thumb_gray_1_2@2x
   - thumb_3_4@2x
-  - thumb_gray_2_5
+  - thumb_gray_2_5@2x
   - thumb_gray_2_4@2x
   - thumb_4_2@2x
   - thumb_gray_4_1@2x

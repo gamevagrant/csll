@@ -192,11 +192,9 @@ public class AssetBundleLoadManager : MonoBehaviour {
             {
                 AssetBundle assetBundle = www.assetBundle;
                 yield return assetRequest = assetBundle.LoadAssetAsync(Path.GetFileNameWithoutExtension(path), typeof(T));
-
                 obj = assetRequest.asset;
 
                 addCache(path,obj);
-
                 //5释放目标资源
                 Debug.Log("---释放目标资源:" + prefix + path);
                 assetBundle.Unload(false);

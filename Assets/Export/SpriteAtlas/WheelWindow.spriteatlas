@@ -11,7 +11,7 @@ SpriteAtlas:
       anisoLevel: 1
       compressionQuality: 50
       maxTextureSize: 2048
-      textureCompression: 1
+      textureCompression: 0
       colorSpace: 1
       filterMode: 1
       generateMipMaps: 0
@@ -22,16 +22,16 @@ SpriteAtlas:
       paddingPower: 2
       blockOffset: 1
       allowAlphaSplitting: 0
-      enableRotation: 1
+      enableRotation: 0
       enableTightPacking: 0
     packedHash:
       serializedVersion: 2
-      Hash: 3609ac03b1bd92e2cd8e1347d0d4f925
+      Hash: 32cf9244330eef6d3af723f67eab68e4
     variantMultiplier: 1
     bindAsDefault: 1
-    finalFormat: 47
-    hashString: 3609ac03b1bd92e2cd8e1347d0d4f925
-    totalSpriteSurfaceArea: 2436870
+    finalFormat: 4
+    hashString: 32cf9244330eef6d3af723f67eab68e4
+    totalSpriteSurfaceArea: 2439174
     packables:
     - {fileID: 102900000, guid: 9e3d56e820801f94496b9739c24ecab7, type: 3}
     packedSpriteRenderDataKeys:
@@ -56,6 +56,7 @@ SpriteAtlas:
     - 697a4ff558b484a449ec4108fea84920: 21300000
     - d6dd76bb73d34b946956795c14450299: 21300000
     - 06b9d4bf8bdc44049a86fe4bd949e3f3: 21300000
+    - 43f98ac6336bdd942bdebb95511b337d: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: 3ab91eb12a7a3c54993237e348888638, type: 3}
@@ -79,6 +80,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 697a4ff558b484a449ec4108fea84920, type: 3}
   - {fileID: 21300000, guid: d6dd76bb73d34b946956795c14450299, type: 3}
   - {fileID: 21300000, guid: 06b9d4bf8bdc44049a86fe4bd949e3f3, type: 3}
+  - {fileID: 21300000, guid: 43f98ac6336bdd942bdebb95511b337d, type: 3}
   m_PackedSpriteNamesToIndex:
   - wheelWrap
   - pointer
@@ -101,5 +103,6 @@ SpriteAtlas:
   - main_wheel_steal
   - main_wheel_shield
   - main_wheel_attack
+  - xiaoquan
   m_Tag: WheelWindow
   m_IsVariant: 0

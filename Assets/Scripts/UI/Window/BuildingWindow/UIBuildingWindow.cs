@@ -38,6 +38,8 @@ public class UIBuildingWindow : UIWindowBase {
                         BuildComplateEvent evt = new BuildComplateEvent();
                         evt.buildIndex = index;
                         evt.level = data.data.buildings[index - 1].level;
+                        evt.islandID = data.data.islandId;
+                        evt.isUpgrade = data.data.playUpgradeAnimation;
                         EventDispatcher.instance.DispatchEvent(evt);
                         Debug.Log("DispatchEvent");
                         GameMainManager.instance.uiManager.CloseWindow(windowData.id);

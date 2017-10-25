@@ -23,10 +23,6 @@ public abstract class UIWindowBase : MonoBehaviour {
         }
     }
 
-	// Use this for initialization
-	void Start () {
-		
-	}
 	
 	public void ShowWindow(Action onComplate = null,  bool needTransform = true,params object[] data)
     {
@@ -37,12 +33,18 @@ public abstract class UIWindowBase : MonoBehaviour {
         {
             GameMainManager.instance.uiManager.DisableOperation();
             EnterAnimation(() => {
-                onComplate();
+                if (onComplate != null)
+                {
+                    onComplate();
+                }
                 GameMainManager.instance.uiManager.EnableOperation();
             });
         }else
         {
-            onComplate();
+            if (onComplate != null)
+            {
+                onComplate();
+            }
         }
         
     }
@@ -56,12 +58,19 @@ public abstract class UIWindowBase : MonoBehaviour {
             ExitAnimation(() => {
                 
                 GameMainManager.instance.uiManager.EnableOperation();
-                onComplate();
+                if (onComplate != null)
+                {
+                    onComplate();
+                }
                 gameObject.SetActive(false);
             });
         }else
         {
-            onComplate();
+            if(onComplate != null)
+            {
+                onComplate();
+            }
+           
             gameObject.SetActive(false);
         }
         
@@ -85,7 +94,7 @@ public abstract class UIWindowBase : MonoBehaviour {
             return;
         }
 
-        transform.localScale = new Vector3(0.5f,0.5f,1);
+        transform.localScale = new Vector3(0.2f,0.2f,0.2f);
         transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack).OnComplete(()=> 
         {
             onComplete();
@@ -101,7 +110,7 @@ public abstract class UIWindowBase : MonoBehaviour {
             return;
         }
 
-        transform.DOScale(new Vector3(0.5f, 0.5f, 1), 0.5f).SetEase(Ease.InBack).OnComplete(()=>
+        transform.DOScale(new Vector3(0.2f, 0.2f, 0.2f), 0.5f).SetEase(Ease.InBack).OnComplete(()=>
         {
             onComplete();
         });

@@ -22,16 +22,16 @@ SpriteAtlas:
       paddingPower: 2
       blockOffset: 1
       allowAlphaSplitting: 0
-      enableRotation: 1
+      enableRotation: 0
       enableTightPacking: 0
     packedHash:
       serializedVersion: 2
-      Hash: 48a66b72feec52cef563ada0840269a5
+      Hash: bb80250f0f0b9ec1b81cc7f890fe99e3
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 4
-    hashString: 48a66b72feec52cef563ada0840269a5
-    totalSpriteSurfaceArea: 619899
+    hashString: bb80250f0f0b9ec1b81cc7f890fe99e3
+    totalSpriteSurfaceArea: 625743
     packables:
     - {fileID: 102900000, guid: a7a241b2261ce9546960aed26392bebd, type: 3}
     packedSpriteRenderDataKeys:
@@ -52,11 +52,14 @@ SpriteAtlas:
     - a437c957682cdb340af6564ef45f5519: 21300000
     - 03be405ffcbd139469af3a87637982c2: 21300000
     - 8ee7f05541fa1ec429495e46140f639d: 21300000
+    - 8247cb3aae3de3140b3cc72331bc0f5f: 21300000
+    - 81e6dbe812938364585352c7dc787f35: 21300000
     - adb3a2c7fcb5e11499c98e6502b2788b: 21300000
     - 93598e1463f013a4d9a355c1de0faf5d: 21300000
     - 4827487ab54d45a469a56de42993cabc: 21300000
     - 1bf56e8a97b945d41b921292b3106d97: 21300000
     - e9608574912c9c9458b4b5bf60e874c0: 21300000
+    - 88427a5df181db54bae02377e88c51bf: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: 8ec6d49d84cd6ae4f873c123b8de219d, type: 3}
@@ -76,11 +79,14 @@ SpriteAtlas:
   - {fileID: 21300000, guid: a437c957682cdb340af6564ef45f5519, type: 3}
   - {fileID: 21300000, guid: 03be405ffcbd139469af3a87637982c2, type: 3}
   - {fileID: 21300000, guid: 8ee7f05541fa1ec429495e46140f639d, type: 3}
+  - {fileID: 21300000, guid: 8247cb3aae3de3140b3cc72331bc0f5f, type: 3}
+  - {fileID: 21300000, guid: 81e6dbe812938364585352c7dc787f35, type: 3}
   - {fileID: 21300000, guid: adb3a2c7fcb5e11499c98e6502b2788b, type: 3}
   - {fileID: 21300000, guid: 93598e1463f013a4d9a355c1de0faf5d, type: 3}
   - {fileID: 21300000, guid: 4827487ab54d45a469a56de42993cabc, type: 3}
   - {fileID: 21300000, guid: 1bf56e8a97b945d41b921292b3106d97, type: 3}
   - {fileID: 21300000, guid: e9608574912c9c9458b4b5bf60e874c0, type: 3}
+  - {fileID: 21300000, guid: 88427a5df181db54bae02377e88c51bf, type: 3}
   m_PackedSpriteNamesToIndex:
   - attack_dun
   - cannon
@@ -99,10 +105,13 @@ SpriteAtlas:
   - pet
   - attack
   - attack_btn3_nor
+  - xiaoquan
+  - menu_attack_02_10
   - attack_friend
   - attack_enemy
   - attack_enemy1
   - attack_friend1
   - 300k
+  - menu_attack_02_11
   m_Tag: AttackWindow
   m_IsVariant: 0

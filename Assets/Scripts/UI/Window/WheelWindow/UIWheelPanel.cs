@@ -18,6 +18,14 @@ public class UIWheelPanel : MonoBehaviour {
     public GameObject light;
     public GameObject beaver;
 
+    public RawImage stealHead;
+    public Text stealNameLabel;
+    public Text stealMoneyLabel;
+    public Text countDownLabel;
+    public Text addEnergyCountLabel;
+    public Text energyLabel;
+    public Slider energyProgressSlider;
+
     [SerializeField]
     private GameObject rollBtn;
     [SerializeField]
@@ -32,16 +40,16 @@ public class UIWheelPanel : MonoBehaviour {
     private Vector2 switchOriginalValue;
     private Vector2 panelLocalOriginalValue;
 
-	// Use this for initialization
-	void Awake ()
+
+    // Use this for initialization
+    void Awake ()
     {
         rollBtnOriginalValue = (rollBtn.transform as RectTransform).anchoredPosition;
         switchOriginalValue = (switchBtn.transform as RectTransform).anchoredPosition;
         panelLocalOriginalValue = (panel.transform as RectTransform).anchoredPosition;
 
         reflective.gameObject.SetActive(false);
-        
-       
+
     }
 
    
@@ -49,9 +57,26 @@ public class UIWheelPanel : MonoBehaviour {
     private void Start()
     {
         isWorking = false;
-        
     }
 
+
+    public void SetEnergyData(int maxEnergy,int energy,int recoverEnergy,long timeToRecover)
+    {
+        energyLabel.text = string.Format("{0}/{1}", energy, maxEnergy);
+        addEnergyCountLabel.text = "+ "+recoverEnergy.ToString();
+        countDownLabel.text = GameUtils.TimestampToDateTime(timeToRecover).ToString("mm:ss");
+        energyProgressSlider.value = energy / (float)maxEnergy;
+    }
+
+    public void SetStealerData(TargetData target)
+    {
+        stealNameLabel.text = target.name;
+        stealMoneyLabel.text = GameUtils.GetCurrencyString(target.money);
+        AssetLoadManager.Instance.LoadAsset<Texture2D>(target.headImg, (text) =>
+        {
+            stealHead.texture = text;
+        });
+    }
 
     public void setData(RollerItemData[] datas)
     {
@@ -139,7 +164,7 @@ public class UIWheelPanel : MonoBehaviour {
         Sequence sq = DOTween.Sequence();
         sq.Append(DOTween.To(() => rollBtnTF.anchoredPosition, p => rollBtnTF.anchoredPosition = p, new Vector2(rollBtnTF.anchoredPosition.x, -300), 1f).SetEase(Ease.OutExpo));
         sq.Insert(0.5f,DOTween.To(() => switchBtnTF.anchoredPosition, p => switchBtnTF.anchoredPosition = p, new Vector2(200, switchBtnTF.anchoredPosition.y), 1).SetEase(Ease.OutCubic));
-        sq.Insert(0.5f, DOTween.To(() => rollPanelTF.anchoredPosition, x => rollPanelTF.anchoredPosition = x, new Vector2(-600, rollPanelTF.anchoredPosition.y), 2));
+        sq.Insert(0.5f, DOTween.To(() => rollPanelTF.anchoredPosition, x => rollPanelTF.anchoredPosition = x, new Vector2(-600, rollPanelTF.anchoredPosition.y), 1));
         sq.onComplete+= () => {
 
             rollBtn.SetActive(false);

@@ -100,7 +100,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 1005065404
+  randomSeed: -1494347605
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -1122,14 +1122,14 @@ ParticleSystem:
     flipV: 0
     randomRow: 1
     sprites:
-    - sprite: {fileID: 21300000, guid: ffa5d2412839df141ada6ef6a6a0ea68, type: 3}
-    - sprite: {fileID: 21300006, guid: ffa5d2412839df141ada6ef6a6a0ea68, type: 3}
-    - sprite: {fileID: 21300008, guid: ffa5d2412839df141ada6ef6a6a0ea68, type: 3}
-    - sprite: {fileID: 21300002, guid: ffa5d2412839df141ada6ef6a6a0ea68, type: 3}
-    - sprite: {fileID: 21300012, guid: ffa5d2412839df141ada6ef6a6a0ea68, type: 3}
-    - sprite: {fileID: 21300014, guid: ffa5d2412839df141ada6ef6a6a0ea68, type: 3}
-    - sprite: {fileID: 21300010, guid: ffa5d2412839df141ada6ef6a6a0ea68, type: 3}
-    - sprite: {fileID: 21300004, guid: ffa5d2412839df141ada6ef6a6a0ea68, type: 3}
+    - sprite: {fileID: 21300006, guid: d5cde6661ff627b499f981307a444c8f, type: 3}
+    - sprite: {fileID: 21300000, guid: d5cde6661ff627b499f981307a444c8f, type: 3}
+    - sprite: {fileID: 21300002, guid: d5cde6661ff627b499f981307a444c8f, type: 3}
+    - sprite: {fileID: 21300014, guid: d5cde6661ff627b499f981307a444c8f, type: 3}
+    - sprite: {fileID: 21300004, guid: d5cde6661ff627b499f981307a444c8f, type: 3}
+    - sprite: {fileID: 21300016, guid: d5cde6661ff627b499f981307a444c8f, type: 3}
+    - sprite: {fileID: 21300010, guid: d5cde6661ff627b499f981307a444c8f, type: 3}
+    - sprite: {fileID: 21300008, guid: d5cde6661ff627b499f981307a444c8f, type: 3}
   VelocityModule:
     enabled: 1
     x:

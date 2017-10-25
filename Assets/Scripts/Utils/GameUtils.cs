@@ -73,10 +73,36 @@ public class GameUtils
     /// </summary>  
     /// <param name="time">时间</param>  
     /// <returns>long</returns>  
-    public static long ConvertDateTimeToInt(System.DateTime time)
+    public static long DateTimeToTimestamp(System.DateTime time)
     {
         System.DateTime startTime = System.TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1, 0, 0, 0, 0));
-        long t = (time.Ticks - startTime.Ticks) / 10000;   //除10000调整为13位      
+        long t = (long)(time - startTime).TotalSeconds;   //除10000调整为13位      
         return t;
+    }
+
+    /// <summary>
+    /// unix时间戳转DateTime
+    /// </summary>
+    /// <param name="timestamp"></param>
+    /// <returns></returns>
+    public static System.DateTime TimestampToDateTime(long timestamp)
+    {
+
+        System.DateTime startTime = System.TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1)); // 当地时区
+
+        System.DateTime dt = startTime.AddSeconds(timestamp);
+
+        return dt;
+
+    }
+
+    /// <summary>
+    /// 获取数字的货币表现形式的字符串
+    /// </summary>
+    /// <param name="money"></param>
+    /// <returns></returns>
+    public static string GetCurrencyString(long money)
+    {
+        return string.Format("{0:N0}", money);
     }
 }

@@ -7,19 +7,22 @@ using UnityEngine.UI;
 
 public class UIAttackWindow :UIWindowBase {
 
-    public RectTransform topBar;
-    public RectTransform artillery;
-    public Image aimIcon;
-    public IslandFactory island;
-    public RectTransform shield;
-    public RectTransform boomAnimation;
-    public RectTransform particSys;
-    public GameObject btnRoot;
-    public RectTransform shell;
-    public RectTransform bottomBar;
-    public Text tips;
+    public UIAttackTopBar topBar;
+    public IslandFactory island;//岛屿
 
-    private AttackTargetUserData attackTargetUser;
+    public Button[] btns;//选择建筑的按钮
+    public GameObject btnRoot;//选择目标按钮根节点
+    public Image aimIcon;//瞄准器
+    public RectTransform artillery;//炮
+    public RectTransform shield;//护盾
+    public RectTransform boomAnimation;//爆炸序列帧
+    public RectTransform particSys;//萨金币特效
+    public RectTransform shell;//炮弹
+    public RectTransform bottomBar;//底部对话框
+    public Text tips;//提示文字
+
+    private AttackTargetUserData attackTargetUser;//随机攻击目标
+
 
     public override UIWindowData windowData
     {
@@ -37,9 +40,16 @@ public class UIAttackWindow :UIWindowBase {
         }
     }
 
+    private void Start()
+    {
+        topBar.onSelectTarget += (data) => {
+
+            ChangeIsland(data.islandId, data.buildings);
+        };
+    }
+
     protected override void StartShowWindow(object[] data)
     {
-        topBar.anchoredPosition = new Vector2(0, 150);
         artillery.anchoredPosition = new Vector2(0, -250);
         artillery.localRotation = Quaternion.identity;
         (island.transform as RectTransform).anchoredPosition = new Vector2(600, 0);
@@ -55,15 +65,25 @@ public class UIAttackWindow :UIWindowBase {
 
         attackTargetUser = data[0] as AttackTargetUserData;
         island.UpdateCityData(attackTargetUser.islandId, attackTargetUser.buildings);
+        SetSelectBtn(attackTargetUser.buildings);
+
+        GameMainManager.instance.netManager.Vengeance((ret,res)=> {
+            if(res.isOK)
+            {
+                topBar.SetEnemysData(res.data.enemies, attackTargetUser);
+                topBar.SetFriendsData(GameMainManager.instance.model.userData.friendInfo);
+            }
+        });
 
     }
+
 
     protected override void EnterAnimation(Action onComplete)
     {
         Sequence sq = DOTween.Sequence();
         sq.Append(DOTween.To(() => artillery.anchoredPosition,x => artillery.anchoredPosition = x,new Vector2(0,0),0.5f).SetEase(Ease.OutBack));
         sq.Append(DOTween.To(() => (island.transform as RectTransform).anchoredPosition, x => (island.transform as RectTransform).anchoredPosition = x, new Vector2(0, 0), 2));
-        sq.Append(DOTween.To(() => topBar.anchoredPosition, x => topBar.anchoredPosition = x, new Vector2(0, 0), 1).SetEase(Ease.OutQuint));
+        sq.AppendCallback(() => { topBar.ShowBar(); });
         sq.Insert(2.5f,DOTween.To(() => island.transform.localScale, x => island.transform.localScale = x, Vector3.one, 1).SetEase(Ease.OutBack));
         sq.onComplete += () => {
             btnRoot.SetActive(true);
@@ -79,7 +99,7 @@ public class UIAttackWindow :UIWindowBase {
         Sequence sq = DOTween.Sequence();
         sq.Append(DOTween.To(() => artillery.anchoredPosition, x => artillery.anchoredPosition = x, new Vector2(0, -250), 0.5f).SetEase(Ease.OutBack));
         sq.Insert(0,DOTween.To(() => (island.transform as RectTransform).anchoredPosition, x => (island.transform as RectTransform).anchoredPosition = x, new Vector2(600, 0), 1).SetEase(Ease.OutQuint));
-        sq.Insert(0,DOTween.To(() => topBar.anchoredPosition, x => topBar.anchoredPosition = x, new Vector2(0, 150), 1).SetEase(Ease.OutBack));
+        sq.InsertCallback(0,()=> { topBar.HideBar(); });
         sq.Insert(0,DOTween.To(() => bottomBar.anchoredPosition, x => bottomBar.anchoredPosition = x, new Vector2(0, -350), 1).SetEase(Ease.OutBack));
         sq.onComplete += () => {
             onComplete();
@@ -126,7 +146,7 @@ public class UIAttackWindow :UIWindowBase {
 
         if (!data.isShielded && !data.isMiniShielded)
         {
-            tips.text = string.Format("您成功损坏了<color=red>{0}</color>的建筑，获得了<color=red>{1}</color>金币", data.attackTarget.name,data.reward);
+            tips.text = string.Format("您成功损坏了<color=red>{0}</color>的建筑，获得了<color=red>{1}</color>金币", data.attackTarget.name,GameUtils.GetCurrencyString(data.reward) );
 
             Sequence sq = DOTween.Sequence();
             sq.Append(artillery.DORotate(new Vector3(0, 0, angle), 0.5f));
@@ -155,7 +175,7 @@ public class UIAttackWindow :UIWindowBase {
         }
         else
         {
-            tips.text = string.Format("您的攻击被<color=red>{0}</color>的盾牌阻挡了，获得了<color=red>{1}</color>金币", data.attackTarget.name, data.reward);
+            tips.text = string.Format("您的攻击被<color=red>{0}</color>的盾牌阻挡了，获得了<color=red>{1}</color>金币", data.attackTarget.name, GameUtils.GetCurrencyString(data.reward) );
 
             Sequence sq = DOTween.Sequence();
             sq.Append(artillery.DORotate(new Vector3(0, 0, angle), 0.5f));
@@ -184,6 +204,46 @@ public class UIAttackWindow :UIWindowBase {
             {
                 shell.gameObject.SetActive(false);
             };
+        }
+    }
+
+    private void ChangeIsland(int islandID,BuildingData[] buildings)
+    {
+       
+        GameMainManager.instance.uiManager.DisableOperation();
+        Sequence sq = DOTween.Sequence();
+        sq.AppendInterval(0.5f);
+        sq.AppendCallback(()=> {
+            btnRoot.SetActive(false);
+        });
+        sq.Append((island.transform as RectTransform).DOAnchorPos(new Vector2(-600, 0), 0.8f).SetEase(Ease.InBack));
+        sq.AppendCallback(() =>
+        {
+            island.UpdateCityData(islandID, buildings);
+            SetSelectBtn( buildings);
+            (island.transform as RectTransform).anchoredPosition = new Vector2(600,0);
+        });
+        sq.AppendInterval(0.1f);
+        sq.Append((island.transform as RectTransform).DOAnchorPos(Vector2.zero, 0.8f).SetEase(Ease.OutBack));
+        sq.OnComplete(()=> {
+            btnRoot.SetActive(true);
+            GameMainManager.instance.uiManager.EnableOperation();
+        });
+
+    }
+
+    private void SetSelectBtn(BuildingData[] buildings)
+    {
+        for(int i = 0;i<buildings.Length;i++)
+        {
+            BuildingData build = buildings[i];
+            if(build.level==0 || build.status == 2)
+            {
+                btns[i].gameObject.SetActive(false);
+            }else
+            {
+                btns[i].gameObject.SetActive(true);
+            }
         }
     }
 }

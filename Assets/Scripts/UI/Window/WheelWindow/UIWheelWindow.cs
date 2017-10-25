@@ -2,12 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.U2D;
 
 
 public class UIWheelWindow : UIWindowBase {
 
     public UIWheelPanel wheelPanel;
     public UIBuildPanel buildPanel;
+
+    private UserData user;
+
+    private long energyTimeToRecover;//增加体力剩余时间
+    private float energyTimeToRecoverTag;// 获取体力剩余时间时的标记
 
     public override UIWindowData windowData
     {
@@ -34,8 +40,13 @@ public class UIWheelWindow : UIWindowBase {
 
     private void Start()
     {
-        UserData ud = GameMainManager.instance.model.userData;
-        updateUserData(ud);
+        user = GameMainManager.instance.model.userData;
+        updateUserData(user);
+    }
+
+    private void Update()
+    {
+        wheelPanel.SetEnergyData(user.maxEnergy, user.energy, user.recoverEnergy, energyTimeToRecover - (long)(Time.time - energyTimeToRecoverTag));
     }
 
     private void OnDestroy()
@@ -53,7 +64,11 @@ public class UIWheelWindow : UIWindowBase {
     {
         if(ud!=null)
         {
+            energyTimeToRecover = ud.timeToRecover;
+            energyTimeToRecoverTag = Time.time;
+           
             wheelPanel.setData(ud.rollerItems);
+            wheelPanel.SetStealerData(ud.stealTarget);
             buildPanel.setData(ud.islandId, ud.buildings);
         }
 

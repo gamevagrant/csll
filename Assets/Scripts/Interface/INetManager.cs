@@ -1,7 +1,8 @@
 ﻿
 using System;
 
-public interface INetManager {
+public interface INetManager
+{
 
     bool Login(long userid, Action<bool, LoginMessage> callBack);
     /// <summary>
@@ -31,5 +32,19 @@ public interface INetManager {
     /// </summary>
     /// <param name="idx">偷取对象索引</param>
     /// <returns></returns>
-    bool Steal(int idx,Action<bool, StealMessage> callBack);
+    bool Steal(int idx, Action<bool, StealMessage> callBack);
+
+    /// <summary>
+    /// 获取恶人列表
+    /// </summary>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool Enemy(Action<bool, BadGuyMessage> callBack);
+    /// <summary>
+    /// 获取仇人列表
+    /// </summary>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool Vengeance(Action<bool, VengeanceMessage> callBack);
 }
+

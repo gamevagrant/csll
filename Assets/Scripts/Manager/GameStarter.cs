@@ -8,6 +8,7 @@ public class GameStarter : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
+        
         init();
 	}
 
@@ -24,22 +25,27 @@ public class GameStarter : MonoBehaviour {
     {
         gameObject.AddComponent<AssetBundleLoadManager>();
         gameObject.AddComponent<AssetLoadManager>();
-
-        Invoke("login", 5);
-       // login();
+       
+        login();
     }
 
     private void login()
     {
-        GameMainManager.instance.netManager.Login(1, (res, data) => {
+        GameMainManager.instance.netManager.Login(899836, (res, data) => {
             if (data.isOK)
             {
-                GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIWheelWindow);
+                StartCoroutine(OpenUI());
             }
             else
             {
                 Debug.Log("登录失败:" + data.errmsg);
             }
         });
+    }
+
+    private IEnumerator OpenUI()
+    {
+        yield return new WaitForSeconds(1);
+        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIWheelWindow);
     }
 }

@@ -51,6 +51,10 @@ public class IslandFactory : MonoBehaviour {
 
     public void UpdateCityData(int islandID, BuildingData[] data)
     {
+        if(islandID > 3)
+        {
+            islandID = 3;
+        }
         if(islandID == this.islandID)
         {
             UpdateAllSprite(spriteAtlas, data);
@@ -107,7 +111,7 @@ public class IslandFactory : MonoBehaviour {
     {
         
         string isLandName = "island_city";
-        Sprite isLandSprite = spriteAtlas.GetSprite(isLandName);
+        Sprite isLandSprite = sa.GetSprite(isLandName);
         SetCityItemSprite(0, isLandSprite);
 
 
@@ -117,18 +121,18 @@ public class IslandFactory : MonoBehaviour {
             if (i + 1 < citySprites.Length)
             {
 
-                UpdateCitySprite(spriteAtlas, i + 1, bd);
+                UpdateCitySprite(sa, i + 1, bd);
             }
 
 
         }
     }
 
-    private void UpdateCitySprite(SpriteAtlas spriteAtlas, int index, BuildingData bd)
+    private void UpdateCitySprite(SpriteAtlas sa, int index, BuildingData bd)
     {
 
         string name = string.Format("city_{0}_{1}_{2}", index.ToString(), bd.level.ToString(), bd.status.ToString());
-        Sprite sp = spriteAtlas.GetSprite(name);
+        Sprite sp = sa.GetSprite(name);
         SetCityItemSprite(index, sp);
     }
 

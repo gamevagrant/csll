@@ -6,8 +6,6 @@ using System;
 public class NetManager:INetManager
 {
 
-
-
     private string APIDomain
     {
         get
@@ -37,7 +35,7 @@ public class NetManager:INetManager
     {
         get
         {
-            return GameUtils.ConvertDateTimeToInt(DateTime.Now);
+            return GameUtils.DateTimeToTimestamp(DateTime.Now);
         }
     }
 
@@ -58,7 +56,7 @@ public class NetManager:INetManager
             {
                 GameMainManager.instance.model.userData = res.data;
                 EventDispatcher.instance.DispatchEvent(EventEnum.LOGIN_COMPLATE, res.data);
-                //UIManager.Instance.openWindow(UISettings.UIWindowID.UIWheel);
+
             }
             else
             {
@@ -78,8 +76,8 @@ public class NetManager:INetManager
         data.Add("t", time.ToString());
         return HttpProxy.SendPostRequest<RollMessage>(url, data, (ret, res) => {
             //---攻击---
-            //string jiashuju = "{\"data\":{\"money\":764158,\"maxEnergy\":50,\"energy\":49373,\"recoverEnergy\":6,\"timeToRecover\":3600,\"shields\":3,\"stealIslands\":null,\"attackTarget\":{\"uid\":232,\"name\":\"原来如此\",\"headImg\":\"http://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIUKt2UaM9cibOM5RsVDyibbbr1tUHia1jR1eibsjGgmXm2BBAFQbosuBPx4sX4hY50j0Jzhu3y4hx2rQ/0\",\"crowns\":66,\"gender\":1,\"isVip\":false,\"signature\":\"\",\"islandId\":3,\"buildings\":[{\"level\":5,\"status\":0,\"isShield\":true},{\"level\":4,\"status\":0,\"isShield\":true},{\"level\":5,\"status\":0,\"isShield\":true},{\"level\":1,\"status\":0,\"isShield\":true},{\"level\":1,\"status\":0,\"isShield\":true}],\"head_frame\":0},\"FriendOfFriends\":null,\"rollerItem\":{\"index\":8,\"type\":\"shoot\",\"value\":65,\"code\":1,\"name\":\"攻击\"},\"timeToRecoverInterval\":3600,\"tutorial\":18},\"errcode\":0,\"errmsg\":\"\"}";
-            //res = LitJson.JsonMapper.ToObject<RollMessage>(jiashuju);
+            string jiashuju = "{\"data\":{\"money\":764158,\"maxEnergy\":50,\"energy\":30,\"recoverEnergy\":6,\"timeToRecover\":3600,\"shields\":3,\"stealIslands\":null,\"attackTarget\":{\"uid\":232,\"name\":\"原来如此\",\"headImg\":\"http://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIUKt2UaM9cibOM5RsVDyibbbr1tUHia1jR1eibsjGgmXm2BBAFQbosuBPx4sX4hY50j0Jzhu3y4hx2rQ/0\",\"crowns\":66,\"gender\":1,\"isVip\":false,\"signature\":\"\",\"islandId\":3,\"buildings\":[{\"level\":5,\"status\":0,\"isShield\":true},{\"level\":0,\"status\":0,\"isShield\":true},{\"level\":5,\"status\":2,\"isShield\":true},{\"level\":1,\"status\":1,\"isShield\":true},{\"level\":1,\"status\":0,\"isShield\":true}],\"head_frame\":0},\"FriendOfFriends\":null,\"rollerItem\":{\"index\":8,\"type\":\"shoot\",\"value\":65,\"code\":1,\"name\":\"攻击\"},\"timeToRecoverInterval\":3600,\"tutorial\":18},\"errcode\":0,\"errmsg\":\"\"}";
+            res = LitJson.JsonMapper.ToObject<RollMessage>(jiashuju);
             //--偷窃--
             //string jiashuju = "{\"data\":{\"money\":2710788,\"maxEnergy\":50,\"energy\":49230,\"recoverEnergy\":6,\"timeToRecover\":3600,\"shields\":3,\"stealIslands\":[{\"islandId\":3,\"buildings\":[{\"level\":1,\"status\":0,\"isShield\":false},{\"level\":1,\"status\":0,\"isShield\":false},{\"level\":1,\"status\":2,\"isShield\":false},{\"level\":1,\"status\":2,\"isShield\":false},{\"level\":5,\"status\":2,\"isShield\":false}],\"crowns\":0},{\"islandId\":2,\"buildings\":[{\"level\":0,\"status\":0,\"isShield\":true},{\"level\":0,\"status\":0,\"isShield\":true},{\"level\":0,\"status\":0,\"isShield\":true},{\"level\":0,\"status\":0,\"isShield\":true},{\"level\":0,\"status\":0,\"isShield\":true}],\"crowns\":0},{\"islandId\":1,\"buildings\":[{\"level\":1,\"status\":0,\"isShield\":false},{\"level\":1,\"status\":0,\"isShield\":false},{\"level\":1,\"status\":0,\"isShield\":false},{\"level\":1,\"status\":0,\"isShield\":false},{\"level\":2,\"status\":0,\"isShield\":false}],\"crowns\":0}],\"attackTarget\":null,\"FriendOfFriends\":null,\"rollerItem\":{\"index\":1,\"type\":\"steal\",\"value\":40,\"code\":1,\"name\":\"偷取\"},\"timeToRecoverInterval\":3600,\"tutorial\":18},\"errcode\":0,\"errmsg\":\"\"}";
            // res = LitJson.JsonMapper.ToObject<RollMessage>(jiashuju);
@@ -96,8 +94,7 @@ public class NetManager:INetManager
                 user.stealIslands = res.data.stealIslands;
                 user.timeToRecoverInterval = res.data.timeToRecoverInterval;
                 EventDispatcher.instance.DispatchEvent(EventEnum.UPDATE_USERDATA, user);
-                //UIManager.Instance.openWindow(UISettings.UIWindowID.UIWheel);
-                
+                Debug.Log(user.timeToRecover);
             }
             else
             {
@@ -132,7 +129,6 @@ public class NetManager:INetManager
                 user.rollerItems = res.data.rollerItems==null? user.rollerItems: res.data.rollerItems;
        
                 EventDispatcher.instance.DispatchEvent(EventEnum.UPDATE_USERDATA, user);
-                //UIManager.Instance.openWindow(UISettings.UIWindowID.UIWheel);
             }
             else
             {
@@ -193,6 +189,48 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("偷取失败:" + res.errmsg);
+            }
+            callBack(ret, res);
+        });
+    }
+
+    public bool Enemy(Action<bool, BadGuyMessage> callBack)
+    {
+        string url = MakeUrl(APIDomain, "/game/rank/enemy");
+        Dictionary<string, object> data = new Dictionary<string, object>();
+        data.Add("uid", uid);
+        data.Add("token", token);
+        data.Add("t", time.ToString());
+        return HttpProxy.SendPostRequest<BadGuyMessage>(url, data, (ret, res) => {
+
+            if (res.isOK)
+            {
+
+            }
+            else
+            {
+                Debug.Log("获取恶人失败:" + res.errmsg);
+            }
+            callBack(ret, res);
+        });
+    }
+
+    public bool Vengeance(Action<bool, VengeanceMessage> callBack)
+    {
+        string url = MakeUrl(APIDomain, "/game/rank/vengeance");
+        Dictionary<string, object> data = new Dictionary<string, object>();
+        data.Add("uid", uid);
+        data.Add("token", token);
+        data.Add("t", time.ToString());
+        return HttpProxy.SendPostRequest<VengeanceMessage>(url, data, (ret, res) => {
+
+            if (res.isOK)
+            {
+
+            }
+            else
+            {
+                Debug.Log("获取仇人失败:" + res.errmsg);
             }
             callBack(ret, res);
         });

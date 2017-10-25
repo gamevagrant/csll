@@ -28,7 +28,7 @@ SpriteAtlas:
       serializedVersion: 2
       Hash: b36fe8fad6063633267e00b66d93d74c
     variantMultiplier: 1
-    bindAsDefault: 0
+    bindAsDefault: 1
     finalFormat: 4
     hashString: b36fe8fad6063633267e00b66d93d74c
     totalSpriteSurfaceArea: 975907

@@ -58,68 +58,68 @@ public class BuildingWindowItem : MonoBehaviour,IPointerClickHandler {
                 icon.sprite = sp;
                 icon.SetNativeSize();
             }
+
+            int needMoney = 0;
             if(bd.status != 0)
             {
-                price.text = repairCost[index-1][level-1].ToString();
+                needMoney = repairCost[index - 1][level - 1];
+                
             }else
             {
-                price.text = buildingCost[index - 1][level - 1].ToString();
+                needMoney = buildingCost[index - 1][level - 1];
             }
+            price.text = needMoney.ToString();
 
-            if (bd.status != 0)
+            if (level == bd.level && bd.status != 0)
             {
-                changeState(BuildState.damage);
+                if (GameMainManager.instance.model.userData.money >= needMoney)
+                {
+                    price.color = Color.yellow;
+                }
+                else
+                {
+                    price.color = Color.black;
+                }
+                price.gameObject.SetActive(true);
+                repair.gameObject.SetActive(true);
+                upgraded.gameObject.SetActive(false);
+                this.state = BuildState.damage;
             }
             else if (level == bd.level + 1)
             {
-                changeState(BuildState.canBuild);
+                if(GameMainManager.instance.model.userData.money >= needMoney)
+                {
+                    price.color = Color.yellow;
+                }else
+                {
+                    price.color = Color.black;
+                }
+               
+                price.gameObject.SetActive(true);
+                repair.gameObject.SetActive(false);
+                upgraded.gameObject.SetActive(false);
+                this.state = BuildState.canBuild;
             }
             else if (level > bd.level)
             {
-                changeState(BuildState.cantBuild);
-            }
-            else
-            {
-                changeState(BuildState.upgraded);
-            }
-        }
-       
-    }
-
-    private void changeState(BuildState state)
-    {
-        switch (state)
-        {
-            case BuildState.cantBuild:
                 price.color = Color.black;
                 price.gameObject.SetActive(true);
                 repair.gameObject.SetActive(false);
                 upgraded.gameObject.SetActive(false);
                 this.state = BuildState.cantBuild;
-                break;
-            case BuildState.canBuild:
-                price.color = Color.yellow;
-                price.gameObject.SetActive(true);
-                repair.gameObject.SetActive(false);
-                upgraded.gameObject.SetActive(false);
-                this.state = BuildState.canBuild;
-                break;
-            case BuildState.upgraded:
+            }
+            else
+            {
                 price.gameObject.SetActive(false);
                 repair.gameObject.SetActive(false);
                 upgraded.gameObject.SetActive(true);
                 this.state = BuildState.upgraded;
-                break;
-            case BuildState.damage:
-                price.color = Color.yellow;
-                price.gameObject.SetActive(true);
-                repair.gameObject.SetActive(true);
-                upgraded.gameObject.SetActive(false);
-                this.state = BuildState.damage;
-                break;
+            }
         }
-
+       
     }
+
+
 
 
 }

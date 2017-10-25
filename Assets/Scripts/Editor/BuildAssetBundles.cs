@@ -19,17 +19,44 @@ public class BuildAssetBundles {
 	static string buildRootPath = FilePathTools.assetsRootPath;//需要打包的文件夹的根目录
 	static string exportPath = FilePathTools.exportRoot;//assetbundle输出路径
 
-	[@MenuItem("Build/打包所有资源")]
+	[@MenuItem("Build/提取依赖资源并打包")]
 	public static void buildAllAsset()
 	{
 		AssetBundleBuild[] buildMap = getBuildFileList (buildRootPath);
 		FilePathTools.createFolder (exportPath);
 		BuildPipeline.BuildAssetBundles (exportPath,buildMap,BuildAssetBundleOptions.DeterministicAssetBundle,buildTarget);
-//		BuildPipeline.BuildAssetBundles (exportPath,BuildAssetBundleOptions.DeterministicAssetBundle,buildTarget);
 	}
-	
-	//获取所有需要打包的文件
-	static AssetBundleBuild[] getBuildFileList(string buildRoot)
+    [@MenuItem("Build/直接打包所有资源")]
+    public static void TestBuildAllAsset()
+    {
+        AssetBundleBuild[] buildMap = GetBuildFileListNew(buildRootPath);
+        FilePathTools.createFolder(exportPath);
+        BuildPipeline.BuildAssetBundles(exportPath,buildMap, BuildAssetBundleOptions.DeterministicAssetBundle, buildTarget);
+    }
+
+    static AssetBundleBuild[] GetBuildFileListNew(string buildRoot)
+    {
+        //获取所有固定打包的文件
+        FileInfo[] files = FilePathTools.getFiles(buildRoot);
+        List<string> fixedPaths = new List<string>();
+        List<AssetBundleBuild> buildMap = new List<AssetBundleBuild>();
+        for (int i = 0; i < files.Length; i++)
+        {
+            //获取相对于asset目录的相对路径
+            string path = FilePathTools.getRelativePath(files[i].FullName);
+
+            AssetBundleBuild build = new AssetBundleBuild();
+            build.assetBundleName = getAssetBundleNameWithPath(path);
+            build.assetNames = new string[1] { path };
+            buildMap.Add(build);
+        }
+
+
+        return buildMap.ToArray();
+    }
+
+    //获取所有需要打包的文件
+    static AssetBundleBuild[] getBuildFileList(string buildRoot)
 	{
 		//获取所有固定打包的文件
 		FileInfo[] files = FilePathTools.getFiles (buildRoot);
@@ -46,6 +73,9 @@ public class BuildAssetBundles {
 		Dictionary<string,int> dependenciesCount = new Dictionary<string, int> ();//依赖计数用字典
 		foreach(string path in allDependencies)
 		{
+            if (Path.GetExtension(path) == ".spriteatlas")
+                continue;
+
 			string[] dependencie = AssetDatabase.GetDependencies (path,false);
 			foreach(string p in dependencie)
 			{

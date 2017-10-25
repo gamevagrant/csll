@@ -31,10 +31,6 @@ public class UIManager : MonoBehaviour,IUIManager {
 
     private void Awake()
     {
-        allWindows = new Dictionary<UISettings.UIWindowID, UIWindowBase>();
-        showingWindows = new Dictionary<UISettings.UIWindowID, UIWindowBase>();
-        backSequence = new Stack<UIWindowBase>();
-
         //-------------------------添加模态窗口的背板start--------------------
         windowCollider = GameUtils.createGameObject(PopUpRoot.gameObject, "PopUpWindwCollider");
         RectTransform rt = windowCollider.AddComponent<RectTransform>();
@@ -57,19 +53,38 @@ public class UIManager : MonoBehaviour,IUIManager {
         windowCollider.SetActive(false);
         //---------------添加模态窗口的背板end----------------------------
         
+        
+        
+    }
+
+
+    private void Start()
+    {
+        Init();
+    }
+    private void Init()
+    {
+        allWindows = new Dictionary<UISettings.UIWindowID, UIWindowBase>();
+        showingWindows = new Dictionary<UISettings.UIWindowID, UIWindowBase>();
+        backSequence = new Stack<UIWindowBase>();
+
+        UIWindowBase[] windows = transform.GetComponentsInChildren<UIWindowBase>(true);
+        foreach(UIWindowBase window in windows)
+        {
+            allWindows.Add(window.windowData.id, window);
+            window.HideWindow(null, false);
+        }
+
         SpriteAtlasManager.atlasRequested += (tag, act) => {
             Debug.Log("开始加载[" + tag + "]图集");
             string path = FilePathTools.getSpriteAtlasPath(tag);
             AssetBundleLoadManager.Instance.LoadAsset<SpriteAtlas>(path, (sa) => {
+
                 act(sa);
-                Debug.Log("图集加载完毕："+sa);
+
+                Debug.Log("图集加载完毕：" + sa);
             });
         };
-        
-    }
-    private void Start()
-    {
-        
     }
     public void OpenWindow(UISettings.UIWindowID id, params object[] data)
     {
@@ -174,40 +189,54 @@ public class UIManager : MonoBehaviour,IUIManager {
         windowCollider.transform.SetSiblingIndex(windowCollider.transform.parent.childCount);
     }
 
+
+
     private void loadWindow(UISettings.UIWindowID id, bool needTransform = true, params object[] data)
     {
         string path = FilePathTools.getUIPath(UISettings.getWindowName(id));
         AssetBundleLoadManager.Instance.LoadAsset<GameObject>(path,(go)=> {
             GameObject windowGO = GameObject.Instantiate(go);
+            windowGO.SetActive(false);
             UIWindowBase window = windowGO.GetComponent<UIWindowBase>();
             UIWindowData windowData = window.windowData;
-            switch(windowData.type)
-            {
-                case UISettings.UIWindowType.Fixed:
-                    windowGO.transform.parent = FixedRoot;
-                    RectTransform rt = windowGO.transform as RectTransform;
-                    rt.anchorMin = Vector2.zero;
-                    rt.anchorMax = Vector2.one;
-                    rt.offsetMin = Vector2.zero;
-                    rt.offsetMax = Vector2.one;
-                    break;
-                case UISettings.UIWindowType.Normal:
-                    windowGO.transform.parent = NormalRoot;
-                    break;
-                case UISettings.UIWindowType.PopUp:
-                    windowGO.transform.parent = PopUpRoot;
-                    break;
-            }
-            windowGO.transform.localPosition = Vector3.zero;
-            windowGO.transform.localScale = Vector3.one;
             if (windowData.id != id)
             {
                 Debug.LogError("加载的window id和目标id不符");
             }
             allWindows.Add(windowData.id, window);
-            OpenWindow(id, needTransform,data);
+            StartCoroutine(DelayOpen(id,needTransform,data,0));
         });
     }
+
+    IEnumerator DelayOpen(UISettings.UIWindowID id,bool needTransform,object[] data,float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        UIWindowBase window = allWindows[id];
+
+
+        switch (window.windowData.type)
+        {
+            case UISettings.UIWindowType.Fixed:
+                window.gameObject.transform.parent = FixedRoot;
+                RectTransform rt = window.transform as RectTransform;
+                rt.anchorMin = Vector2.zero;
+                rt.anchorMax = Vector2.one;
+                rt.offsetMin = Vector2.zero;
+                rt.offsetMax = Vector2.one;
+                break;
+            case UISettings.UIWindowType.Normal:
+                window.transform.parent = NormalRoot;
+                break;
+            case UISettings.UIWindowType.PopUp:
+                window.transform.parent = PopUpRoot;
+                break;
+        }
+        window.transform.localPosition = Vector3.zero;
+        window.transform.localScale = Vector3.one;
+       
+        OpenWindow(id, needTransform, data);
+    }
+
 
     private void showNavigationWindow(UIWindowBase window)
     {

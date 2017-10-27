@@ -51,6 +51,7 @@ public class IslandFactory : MonoBehaviour {
 
     public void UpdateCityData(int islandID, BuildingData[] data)
     {
+        Debug.Log("===="+islandID);
         if(islandID > 3)
         {
             islandID = 3;
@@ -62,6 +63,7 @@ public class IslandFactory : MonoBehaviour {
         else
         {
             string path = FilePathTools.getSpriteAtlasPath("City_" + islandID.ToString());
+            Debug.Log(path);
             AssetBundleLoadManager.Instance.LoadAsset<SpriteAtlas>(path, (sa) => {
 
                 this.islandID = islandID;
@@ -81,6 +83,10 @@ public class IslandFactory : MonoBehaviour {
         }
         else
         {
+            if (islandID > 3)
+            {
+                islandID = 3;
+            }
             string path = FilePathTools.getSpriteAtlasPath("City_" + islandID.ToString());
             AssetBundleLoadManager.Instance.LoadAsset<SpriteAtlas>(path, (sa) => {
 

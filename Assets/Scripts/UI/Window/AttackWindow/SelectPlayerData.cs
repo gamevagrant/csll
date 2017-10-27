@@ -10,7 +10,7 @@ public class SelectPlayerData {
     public string name;// 昵称
     public int crowns; // 星星数量
     public int attactTimes = 0; // 攻击次数
-    public int stealMoney = 0; // 偷取金钱数量
+    public long stealMoney = 0; // 偷取金钱数量
     public int islandId; // 岛屿ID
     public bool isRandomUser;//是否时随机用户
     public bool isSelected;//是否是当前选中的

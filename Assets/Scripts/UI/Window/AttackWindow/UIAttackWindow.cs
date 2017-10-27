@@ -121,7 +121,7 @@ public class UIAttackWindow :UIWindowBase {
     {
         btnRoot.SetActive(false);
         topBar.HideBar();
-        GameMainManager.instance.netManager.Attack(attackTargetUser.uid, index, (ret, res) =>
+        GameMainManager.instance.netManager.Attack(attackTargetUser.uid, index - 1, (ret, res) =>
         {
             if(res.isOK)
             {
@@ -134,7 +134,9 @@ public class UIAttackWindow :UIWindowBase {
     public void OnClickOkBtn()
     {
         Dictionary<UISettings.UIWindowID, object> data = new Dictionary<UISettings.UIWindowID, object>();
+        data.Add(UISettings.UIWindowID.UITopBarWindow, null);
         data.Add(UISettings.UIWindowID.UIWheelWindow, null);
+        data.Add(UISettings.UIWindowID.UISideBarWindow, null);
         GameMainManager.instance.uiManager.ChangeState(new UIStateChangeBase(data,null,2));
     }
 

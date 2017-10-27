@@ -1,0 +1,120 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: LeftDatail
+  m_EditorData:
+    textureSettings:
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      colorSpace: 1
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+    platformSettings: []
+    packingParameters:
+      paddingPower: 2
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    packedHash:
+      serializedVersion: 2
+      Hash: 7777a809f5607faf06865f345a387d2e
+    variantMultiplier: 1
+    bindAsDefault: 1
+    finalFormat: 4
+    hashString: 7777a809f5607faf06865f345a387d2e
+    totalSpriteSurfaceArea: 560411
+    packables:
+    - {fileID: 102900000, guid: 8b75ce511bcd1564cb58c09924c006ee, type: 3}
+    packedSpriteRenderDataKeys:
+    - 48a51b9e0a0d80a4c9234accbc279dec: 21300000
+    - 419ef8439fc6ec240a30cc4667ebd5aa: 21300000
+    - 1e58ab52f0d6e72448596dbad3a03af5: 21300000
+    - 82aea9ade3528a34082c6880a5fadecb: 21300000
+    - 8cb112ae47c5d634c8cf5a256478d771: 21300000
+    - 28c591e0d61df82418474a2b5e948b9f: 21300000
+    - 307e460501a979742a2dc2ad01fb7f12: 21300000
+    - 299af8aea1134cf4a8284a6c88b4dbcc: 21300000
+    - 326ad21b161927a4193cea9cdc491d91: 21300000
+    - 2b98215efec896f4aa08d9a80b0187cf: 21300000
+    - 499c8262e5978b84c848a8dc4b177c1e: 21300000
+    - d6f33de7181d1464ca998fd171ea9ebb: 21300000
+    - 8fc0101bfd4d001409402ce59565ae78: 21300000
+    - e04a265c4ed501045b8921487983d657: 21300000
+    - 754693c1d7644a14f821615ed647a76d: 21300000
+    - 7ad71c666ec9794458a931515c9ea153: 21300000
+    - 386c51113ac5ffb429d44a29fbc700c4: 21300000
+    - d5a40599796636941926b7e13c63d4f7: 21300000
+    - c6ca1f3de0cd78f47bfd96cac07506bf: 21300000
+    - 10d8637a0dbc94b4b89f8949c96845ae: 21300000
+    - b1ee4bfcd424a02498126c37a26da5b0: 21300000
+    - 2fcc3ed6acf56574a8b6de745562fa58: 21300000
+    - 17a3d8a689610234dab9ab40161ae92f: 21300000
+    - 892fc9eae018eac4ca2b91a79fd4d6c9: 21300000
+    - 8768265d8745b574dbc11bec7106545e: 21300000
+    - 0dc3a435ba7c8654ea4e86cc2e50af78: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 48a51b9e0a0d80a4c9234accbc279dec, type: 3}
+  - {fileID: 21300000, guid: 419ef8439fc6ec240a30cc4667ebd5aa, type: 3}
+  - {fileID: 21300000, guid: 1e58ab52f0d6e72448596dbad3a03af5, type: 3}
+  - {fileID: 21300000, guid: 82aea9ade3528a34082c6880a5fadecb, type: 3}
+  - {fileID: 21300000, guid: 8cb112ae47c5d634c8cf5a256478d771, type: 3}
+  - {fileID: 21300000, guid: 28c591e0d61df82418474a2b5e948b9f, type: 3}
+  - {fileID: 21300000, guid: 307e460501a979742a2dc2ad01fb7f12, type: 3}
+  - {fileID: 21300000, guid: 299af8aea1134cf4a8284a6c88b4dbcc, type: 3}
+  - {fileID: 21300000, guid: 326ad21b161927a4193cea9cdc491d91, type: 3}
+  - {fileID: 21300000, guid: 2b98215efec896f4aa08d9a80b0187cf, type: 3}
+  - {fileID: 21300000, guid: 499c8262e5978b84c848a8dc4b177c1e, type: 3}
+  - {fileID: 21300000, guid: d6f33de7181d1464ca998fd171ea9ebb, type: 3}
+  - {fileID: 21300000, guid: 8fc0101bfd4d001409402ce59565ae78, type: 3}
+  - {fileID: 21300000, guid: e04a265c4ed501045b8921487983d657, type: 3}
+  - {fileID: 21300000, guid: 754693c1d7644a14f821615ed647a76d, type: 3}
+  - {fileID: 21300000, guid: 7ad71c666ec9794458a931515c9ea153, type: 3}
+  - {fileID: 21300000, guid: 386c51113ac5ffb429d44a29fbc700c4, type: 3}
+  - {fileID: 21300000, guid: d5a40599796636941926b7e13c63d4f7, type: 3}
+  - {fileID: 21300000, guid: c6ca1f3de0cd78f47bfd96cac07506bf, type: 3}
+  - {fileID: 21300000, guid: 10d8637a0dbc94b4b89f8949c96845ae, type: 3}
+  - {fileID: 21300000, guid: b1ee4bfcd424a02498126c37a26da5b0, type: 3}
+  - {fileID: 21300000, guid: 2fcc3ed6acf56574a8b6de745562fa58, type: 3}
+  - {fileID: 21300000, guid: 17a3d8a689610234dab9ab40161ae92f, type: 3}
+  - {fileID: 21300000, guid: 892fc9eae018eac4ca2b91a79fd4d6c9, type: 3}
+  - {fileID: 21300000, guid: 8768265d8745b574dbc11bec7106545e, type: 3}
+  - {fileID: 21300000, guid: 0dc3a435ba7c8654ea4e86cc2e50af78, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - menu_bg
+  - head_bg
+  - head_bg_vip
+  - menu_btn_nor
+  - menu_news
+  - menu_bomb
+  - menu_wheel
+  - menu_shop
+  - menu_map
+  - menu_notice
+  - menu_friends
+  - menu_hammer
+  - copy_nor
+  - setup_nor
+  - menu_btn_sel
+  - menu_friends_word
+  - menu_shop_word
+  - menu_wheel_word
+  - menu_news_word
+  - menu_bomb_word
+  - menu_hammer_word
+  - menu_notice_word
+  - menu_map_word
+  - main_tishi
+  - setup_sel
+  - copy_sel
+  m_Tag: LeftDatail
+  m_IsVariant: 0

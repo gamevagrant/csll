@@ -6,7 +6,7 @@ public class MessageResponseData {
     public long uid;                     // 用户ID
     public long toid;                    // 暂时未用到
     public int action;              // 1 表示摧毁建筑 2 表示偷取
-    public int result;              // 暂时未用到
+    public long result;              // 暂时未用到
     public string time;                // 时间
     public string name;                // 昵称
     public string headImg;              // 头像url

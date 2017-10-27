@@ -215,7 +215,9 @@ public class UIStealWindow : UIWindowBase {
     public void OnClickOkBtn()
     {
         Dictionary<UISettings.UIWindowID, object> data = new Dictionary<UISettings.UIWindowID, object>();
+        data.Add(UISettings.UIWindowID.UITopBarWindow, null);
         data.Add(UISettings.UIWindowID.UIWheelWindow, null);
+        data.Add(UISettings.UIWindowID.UISideBarWindow, null);
         GameMainManager.instance.uiManager.ChangeState(new UIStateChangeBase(data,null,3));
     }
 

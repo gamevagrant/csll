@@ -138,5 +138,8 @@ public class UIWheelWindow : UIWindowBase {
         buildPanel.enterToWheelPanelState();
     }
 
-
+    public void OnClickLeftDatailBtn()
+    {
+        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UILeftDatailWindow);
+    }
 }

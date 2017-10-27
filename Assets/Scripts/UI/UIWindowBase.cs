@@ -26,7 +26,7 @@ public abstract class UIWindowBase : MonoBehaviour {
 	
 	public void ShowWindow(Action onComplate = null,  bool needTransform = true,params object[] data)
     {
-        
+        transform.SetSiblingIndex(100);
         gameObject.SetActive(true);
         StartShowWindow(data);
         if(needTransform)

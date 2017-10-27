@@ -118,7 +118,6 @@ public class UIManager : MonoBehaviour,IUIManager {
             {
                 showingWindows.Add(id,window);
             }
-
             window.ShowWindow(()=> 
             {
 

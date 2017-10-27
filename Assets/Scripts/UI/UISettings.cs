@@ -10,6 +10,9 @@ public class UISettings  {
         UIBuildingWindow,
         UIAttackWindow,
         UIStealWindow,
+        UILeftDatailWindow,
+        UITopBarWindow,
+        UISideBarWindow,
     }
 
     public enum UIWindowType
@@ -46,6 +49,9 @@ public class UISettings  {
          { UIWindowID.UIBuildingWindow,"UIBuildingWindow"},
           { UIWindowID.UIAttackWindow,"UIAttackWindow"},
            { UIWindowID.UIStealWindow,"UIStealWindow"},
+           { UIWindowID.UILeftDatailWindow,"UILeftDatailWindow"},
+           { UIWindowID.UITopBarWindow,"UITopBarWindow"},
+           { UIWindowID.UISideBarWindow,"UISideBarWindow"},
     };
 
     public static string getWindowName(UIWindowID id)

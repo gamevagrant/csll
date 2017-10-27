@@ -31,7 +31,7 @@ public class GameStarter : MonoBehaviour {
 
     private void login()
     {
-        GameMainManager.instance.netManager.Login(899836, (res, data) => {
+        GameMainManager.instance.netManager.Login(1, (res, data) => {
             if (data.isOK)
             {
                 StartCoroutine(OpenUI());
@@ -46,6 +46,12 @@ public class GameStarter : MonoBehaviour {
     private IEnumerator OpenUI()
     {
         yield return new WaitForSeconds(1);
-        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIWheelWindow);
+        //GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIWheelWindow);
+
+        Dictionary<UISettings.UIWindowID, object> stateData = new Dictionary<UISettings.UIWindowID, object>();
+        stateData.Add(UISettings.UIWindowID.UITopBarWindow, null);
+        stateData.Add(UISettings.UIWindowID.UIWheelWindow, null);
+        stateData.Add(UISettings.UIWindowID.UISideBarWindow, null);
+        GameMainManager.instance.uiManager.ChangeState(new UIStateChangeBase(stateData, null));
     }
 }

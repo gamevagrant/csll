@@ -99,7 +99,7 @@ public class UIBuildPanel : MonoBehaviour {
         DOTween.To(() => switchBtnTF.anchoredPosition, p => switchBtnTF.anchoredPosition = p, switchOriginalValue, 1);
 
         RectTransform buildPanelTF = panel.transform as RectTransform;
-        DOTween.To(() => buildPanelTF.anchoredPosition, x => buildPanelTF.anchoredPosition = x,panelLocalOriginalValue, 1);
+        DOTween.To(() => buildPanelTF.anchoredPosition, x => buildPanelTF.anchoredPosition = x,panelLocalOriginalValue, 1).SetEase(Ease.InQuint);
         DOTween.To(() => buildPanelTF.localScale, x => buildPanelTF.localScale = x, Vector3.one, 1).onComplete = () => {
 
             GameMainManager.instance.uiManager.EnableOperation();
@@ -118,7 +118,7 @@ public class UIBuildPanel : MonoBehaviour {
         Sequence sq = DOTween.Sequence();
         sq.Append(DOTween.To(() => buildBtnTF.anchoredPosition, p => buildBtnTF.anchoredPosition = p, new Vector2(buildBtnTF.anchoredPosition.x, -300), 1).SetEase(Ease.OutExpo));
         sq.Insert(0.5f,DOTween.To(() => switchBtnTF.anchoredPosition, p => switchBtnTF.anchoredPosition = p, new Vector2(-200, switchBtnTF.anchoredPosition.y), 1).SetEase(Ease.OutCubic));
-        sq.Insert(0.5f, DOTween.To(() => buildPanelTF.anchoredPosition, x => buildPanelTF.anchoredPosition = x, new Vector2(500, -150), 1).SetEase(Ease.OutCubic));
+        sq.Insert(0.5f, DOTween.To(() => buildPanelTF.anchoredPosition, x => buildPanelTF.anchoredPosition = x, new Vector2(500, -150), 1).SetEase(Ease.OutBack));
         sq.onComplete += () => {
             buildBtn.SetActive(false);
             switchBtn.SetActive(false);
@@ -173,11 +173,12 @@ public class UIBuildPanel : MonoBehaviour {
 
     private IEnumerator showBuildAnimation(int index,int level)
     {
-
+        yield return new WaitForSeconds(0.5f);
+        GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.building_upgrade);
         buildingAnimation.transform.position = islandFactory.getBuildTransform(index).position;
         islandFactory.HideBuild(index);
         buildingAnimation.SetActive(true);
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1);
         buildingAnimation.SetActive(false);
         BuildingData bd = new BuildingData();
         bd.level = level;

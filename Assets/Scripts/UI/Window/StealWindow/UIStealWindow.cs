@@ -29,8 +29,10 @@ public class UIStealWindow : UIWindowBase {
     public RectTransform islandRoot;
     public RectTransform topBar;
     public RectTransform bottomBar;
+    public HeadIcon targetHead;
     public Text bottomBarTips;
     public Text stealTips;
+    public Text targetMooneyLabel;
     public RectTransform victoryTip;
     public RectTransform effect;
 
@@ -64,6 +66,11 @@ public class UIStealWindow : UIWindowBase {
         islandRoot.localScale = new Vector3(0.3f,0.3f,0.3f);
         islandRoot.gameObject.SetActive(false);
         islandRoot.anchoredPosition = new Vector2(500, 0);
+
+        TargetData target = GameMainManager.instance.model.userData.stealTarget;
+        targetHead.setData(target.name,target.headImg,target.crowns,target.isVip);
+        targetMooneyLabel.text = GameUtils.GetCurrencyString(target.money);
+
         for (int i =0;i<stealTargets.Length;i++)
         {
             StealIslandData stealData = stealTargets[i];
@@ -84,11 +91,15 @@ public class UIStealWindow : UIWindowBase {
         islandRoot.gameObject.SetActive(true);
         topBar.gameObject.SetActive(true);
 
+        GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.shoot_island_come);
         Sequence sq = DOTween.Sequence();
-        sq.AppendInterval(2);
-        sq.Append(islandRoot.DOAnchorPos(new Vector2(0, 0), 2));
-        sq.Append(islandRoot.DOScale(Vector3.one, 2).SetEase(Ease.OutBack));
-        sq.InsertCallback(4f,() => { effect.gameObject.SetActive(true); });
+        sq.Append(islandRoot.DOAnchorPos(new Vector2(0, 0), 1));
+        sq.Insert(0,topBar.DOAnchorPos(Vector2.zero, 0.5f).SetEase(Ease.OutCubic));
+        sq.AppendCallback(() =>
+        {
+            effect.gameObject.SetActive(true);
+        });
+        sq.Append(islandRoot.DOScale(Vector3.one, 1).SetEase(Ease.OutBack));
         sq.AppendCallback(() =>
         {
             stealTips.gameObject.SetActive(true);
@@ -99,7 +110,7 @@ public class UIStealWindow : UIWindowBase {
                 
             }
         });
-        sq.Append(topBar.DOAnchorPos(Vector2.zero, 0.5f).SetEase(Ease.OutCubic));
+        
         sq.onComplete += () => {
             onComplete();
         };
@@ -109,7 +120,7 @@ public class UIStealWindow : UIWindowBase {
     {
         stealTips.gameObject.SetActive(false);
         victoryTip.gameObject.SetActive(false);
-        effect.gameObject.SetActive(true);
+        
         for (int i = 0; i < buttons.Length; i++)
         {
             buttons[i].gameObject.SetActive(false);
@@ -117,9 +128,24 @@ public class UIStealWindow : UIWindowBase {
         topBar.DOAnchorPos(new Vector2(0, 150), 0.5f).SetEase(Ease.OutCubic);
         bottomBar.DOAnchorPos(new Vector2(0, -350), 0.5f).SetEase(Ease.OutCubic);
         Sequence sq = DOTween.Sequence();
-        sq.Append(islands[selectedIndex-1].transform.DOScale(Vector3.one, 2));
-        sq.AppendCallback(() => { effect.gameObject.SetActive(false); });
-        sq.Append((islands[selectedIndex - 1].transform as RectTransform).DOAnchorPos(new Vector2(800, 0), 2));
+        for (int i = 0; i < islands.Length; i++)
+        {
+            sq.Insert(0, (islands[i].transform as RectTransform).DOAnchorPos(islandPos[i], 0.5f));
+            sq.Insert(0, (islands[i].transform as RectTransform).DOScale(Vector3.one, 0.5f));
+        }
+        
+        sq.AppendCallback(() =>
+        {
+            effect.gameObject.SetActive(true);
+            GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.shoot_island_come);
+            
+        });
+        sq.Append(islandRoot.DOScale(new Vector3(0.3f,0.3f,0.3f), 1).SetEase(Ease.OutCubic));
+        sq.AppendCallback(() =>
+        {
+            effect.gameObject.SetActive(false);
+        });
+        sq.Append(islandRoot.DOAnchorPos(new Vector2(500, 0), 1));
         sq.onComplete += () => {
             onComplete();
         };
@@ -140,7 +166,9 @@ public class UIStealWindow : UIWindowBase {
             if (res.isOK)
             {
                 StealData stealData = res.data;
+                TargetData selectedTarget = stealData.targets[index - 1];
 
+                GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.steal_result);
                 Sequence sq = DOTween.Sequence();
                 sq.Append(topBar.DOAnchorPos(new Vector2(0, 150), 0.5f).SetEase(Ease.OutCubic));
                 for (int i = 0; i < islands.Length; i++)
@@ -148,31 +176,37 @@ public class UIStealWindow : UIWindowBase {
                     if (i != index - 1)
                     {
                         islands[i].setData(stealData.targets[i]);
-                        sq.Insert(2, (islands[i].transform as RectTransform).DOAnchorPos(goAwayPos[i], 2));
+                        sq.Insert(2, (islands[i].transform as RectTransform).DOAnchorPos(goAwayPos[i], 1));
                     }
                     else
                     {
-                        sq.Insert(2, (islands[i].transform as RectTransform).DOAnchorPos(new Vector2(0, -100), 2));
-                        sq.Insert(2, (islands[i].transform as RectTransform).DOScale(new Vector3(2,2,2), 2));
+                        sq.Insert(2, (islands[i].transform as RectTransform).DOAnchorPos(new Vector2(0, -100), 1));
+                        sq.Insert(2, (islands[i].transform as RectTransform).DOScale(new Vector3(2,2,2), 1));
                     }
                 }
-                sq.Insert(6,bottomBar.DOAnchorPos(Vector2.zero,0.5f).SetEase(Ease.OutCubic));
-               // sq.AppendInterval(5);
+                
                 sq.InsertCallback(2f, () =>
                 {
                     effect.gameObject.SetActive(true);
 
                 });
-                sq.InsertCallback(5, () =>
+                sq.InsertCallback(4, () =>
                 {
 
                     effect.gameObject.SetActive(false);
-                    islands[index-1].setData(stealData.stealTarget);
-                    if(stealData.stealTarget.isRichMan)
+                    islands[index-1].setData(selectedTarget);
+                    if(stealData.targets[index - 1].isRichMan)
                     {
+                        GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.steal_got_king);
                         victoryTip.gameObject.SetActive(true);
+                        bottomBarTips.text = string.Format("恭喜你猜到富豪！\n获得{0}金币",GameUtils.GetCurrencyString(selectedTarget.money));
+                    }else
+                    {
+                        GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.steal_miss_king);
+                        bottomBarTips.text = string.Format("很遗憾没有猜到富豪！\n获得{0}金币", GameUtils.GetCurrencyString(selectedTarget.money));
                     }
                 });
+                sq.Insert(6, bottomBar.DOAnchorPos(Vector2.zero, 0.5f).SetEase(Ease.OutCubic));
 
             }
         });

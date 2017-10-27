@@ -97,6 +97,7 @@ public class UIAttackTopBar : MonoBehaviour {
     {
         if (value)
         {
+            GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.button_click);
             ShowPanel(enemys);
         }else if(!friendToggle.isOn)
         {
@@ -107,6 +108,7 @@ public class UIAttackTopBar : MonoBehaviour {
     {
         if (value)
         {
+            GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.button_click);
             ShowPanel(friends);
         }
         else if (!enemyToggle.isOn)
@@ -140,7 +142,7 @@ public class UIAttackTopBar : MonoBehaviour {
     {
         topBar.gameObject.SetActive(true);
         topBar.DOAnchorPos(Vector2.zero, 0.5f).SetEase(Ease.OutCubic);
-
+        
     }
 
     public void HideBar()
@@ -155,9 +157,11 @@ public class UIAttackTopBar : MonoBehaviour {
         if (panelIsOpend)
         {
             Sequence sq = DOTween.Sequence();
+            GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.panel_out);
             sq.Append(panel.DOAnchorPos(new Vector2(0, 1000), 0.5f).SetEase(Ease.OutBack));
             sq.AppendCallback(() =>
             {
+                GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.panel_in);
                 SendSelectTargetData(list);
             });
             sq.Append(panel.DOAnchorPos(Vector2.zero, 0.5f).SetEase(Ease.OutBack));
@@ -166,6 +170,7 @@ public class UIAttackTopBar : MonoBehaviour {
         }
         else
         {
+            GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.panel_in);
             panel.gameObject.SetActive(true);
             SendSelectTargetData(list);
             panel.DOAnchorPos(Vector2.zero, 0.5f).SetEase(Ease.OutBack);
@@ -185,6 +190,7 @@ public class UIAttackTopBar : MonoBehaviour {
 
     private void HidePanel()
     {
+        GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.panel_out);
         panel.DOAnchorPos(new Vector2(0, 1000), 0.5f).SetEase(Ease.OutBack).OnComplete(()=> {
             panel.gameObject.SetActive(false);
         });

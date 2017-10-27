@@ -19,12 +19,16 @@ public class GameMainManager {
 
     public IUIManager uiManager;
     public INetManager netManager;
+    public IAudioManager audioManager;
     public GameModel model;
 
     public GameMainManager()
     {
         netManager = new NetManager();
         uiManager = GameObject.Find("UIRoot").GetComponent<UIManager>();//暂时这样 之后改成UIRoot从UIManager自动创建
+        audioManager = AudioManager.instance;
+        audioManager.SetSoundPathProxy (FilePathTools.getAudioPath);
+        audioManager.SetMusicPathProxy(FilePathTools.getAudioPath);
         model = new GameModel();
     }
 

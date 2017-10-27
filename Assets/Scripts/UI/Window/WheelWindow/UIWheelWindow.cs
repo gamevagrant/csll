@@ -40,13 +40,16 @@ public class UIWheelWindow : UIWindowBase {
 
     private void Start()
     {
-        user = GameMainManager.instance.model.userData;
-        updateUserData(user);
+
     }
 
     private void Update()
     {
-        wheelPanel.SetEnergyData(user.maxEnergy, user.energy, user.recoverEnergy, energyTimeToRecover - (long)(Time.time - energyTimeToRecoverTag));
+        if(user != null)
+        {
+            wheelPanel.SetEnergyData(user.maxEnergy, user.energy, user.recoverEnergy, energyTimeToRecover - (long)(Time.time - energyTimeToRecoverTag));
+        }
+       
     }
 
     private void OnDestroy()
@@ -57,7 +60,8 @@ public class UIWheelWindow : UIWindowBase {
 
     private void onUpdateUserData(BaseEvent e)
     {
-        updateUserData(e.datas[0] as UserData);
+        user = e.datas[0] as UserData;
+        updateUserData(user);
     }
 
     private void updateUserData(UserData ud)
@@ -76,11 +80,17 @@ public class UIWheelWindow : UIWindowBase {
 
     protected override void StartShowWindow(object[] data)
     {
+        user = GameMainManager.instance.model.userData;
+        if (user != null)
+        {
+            updateUserData(user);
+        }
 
     }
 
     protected override void EnterAnimation(Action onComplete)
     {
+        GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_come);
         int count = 0;
         wheelPanel.OpenPanel(()=> {
             count++;

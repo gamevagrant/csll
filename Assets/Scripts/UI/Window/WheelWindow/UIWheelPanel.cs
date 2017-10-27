@@ -21,10 +21,12 @@ public class UIWheelPanel : MonoBehaviour {
     public RawImage stealHead;
     public Text stealNameLabel;
     public Text stealMoneyLabel;
+
     public Text countDownLabel;
     public Text addEnergyCountLabel;
     public Text energyLabel;
     public Slider energyProgressSlider;
+    public AudioClip[] audioClips;
 
     [SerializeField]
     private GameObject rollBtn;
@@ -40,6 +42,7 @@ public class UIWheelPanel : MonoBehaviour {
     private Vector2 switchOriginalValue;
     private Vector2 panelLocalOriginalValue;
 
+    private TargetData stealTarget;
 
     // Use this for initialization
     void Awake ()
@@ -48,8 +51,7 @@ public class UIWheelPanel : MonoBehaviour {
         switchOriginalValue = (switchBtn.transform as RectTransform).anchoredPosition;
         panelLocalOriginalValue = (panel.transform as RectTransform).anchoredPosition;
 
-        reflective.gameObject.SetActive(false);
-
+        reflective.color = new Color(1, 1, 1, 0);
     }
 
    
@@ -70,12 +72,36 @@ public class UIWheelPanel : MonoBehaviour {
 
     public void SetStealerData(TargetData target)
     {
-        stealNameLabel.text = target.name;
-        stealMoneyLabel.text = GameUtils.GetCurrencyString(target.money);
-        AssetLoadManager.Instance.LoadAsset<Texture2D>(target.headImg, (text) =>
+        if(stealTarget != null && stealTarget.uid != target.uid)
         {
-            stealHead.texture = text;
-        });
+            CanvasGroup canvasGroup = stealHead.transform.parent.GetComponent<CanvasGroup>();
+            Sequence sq = DOTween.Sequence();
+            sq.AppendInterval(2);
+            sq.Append(stealHead.transform.parent.DOScale(new Vector3(1.5f, 1.5f, 1.5f), 1));
+            sq.Insert(2, canvasGroup.DOFade(0, 1));
+            sq.AppendCallback(() =>
+            {
+                stealNameLabel.text = target.name;
+                stealMoneyLabel.text = GameUtils.GetCurrencyString(target.money);
+                AssetLoadManager.Instance.LoadAsset<Texture2D>(target.headImg, (text) =>
+                {
+                    stealHead.texture = text;
+                    stealHead.transform.parent.DOScale(Vector3.one, 1);
+                    canvasGroup.DOFade(1, 1);
+                });
+            });
+
+        }
+        else if(stealTarget == null)
+        {
+            stealNameLabel.text = target.name;
+            stealMoneyLabel.text = GameUtils.GetCurrencyString(target.money);
+            AssetLoadManager.Instance.LoadAsset<Texture2D>(target.headImg, (text) =>
+            {
+                stealHead.texture = text;
+            });
+        }
+        stealTarget = target;
     }
 
     public void setData(RollerItemData[] datas)
@@ -115,6 +141,7 @@ public class UIWheelPanel : MonoBehaviour {
 
     public void enterToBuildPanelState()
     {
+        GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_view_switch_in);
         RectTransform rollBtnTF = rollBtn.transform as RectTransform;
 
         DOTween.To(() => rollBtnTF.anchoredPosition, p => rollBtnTF.anchoredPosition = p, new Vector2(rollBtnTF.anchoredPosition.x, -300), 1).SetEase(Ease.InQuint);
@@ -135,6 +162,7 @@ public class UIWheelPanel : MonoBehaviour {
 
     public void enterToWheelPanelState()
     {
+        GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_view_switch_out);
         GameMainManager.instance.uiManager.DisableOperation();
         rollBtn.SetActive(true);
         switchBtn.SetActive(true);
@@ -202,9 +230,10 @@ public class UIWheelPanel : MonoBehaviour {
 
     public void onClickRollBtn()
     {
-        startRotate();
+        //startRotate();
+        StartCoroutine(StartRoll());
     }
-
+    /*
     private void startRotate()
     {
         if(!isWorking)
@@ -225,10 +254,56 @@ public class UIWheelPanel : MonoBehaviour {
                
             });
         }
-    }
+    }*/
 
+    private IEnumerator StartRoll()
+    {
+        isWorking = true;
+        GameMainManager.instance.uiManager.DisableOperation();
+
+        bool getRes = false;
+        RollerItemData rollItem = null;
+        RollData rollData = null;
+        float timeTag = Time.time;
+        GameMainManager.instance.netManager.Roll((ret, data) => {
+            if (data.isOK)
+            {
+                getRes = true;
+                rollData = data.data;
+                rollItem = data.data.rollerItem;
+            }
+            else
+            {
+                isWorking = false;
+                GameMainManager.instance.uiManager.EnableOperation();
+            }
+
+        });
+        AudioSource audio = GetComponent<AudioSource>();
+        audio.clip = audioClips[0];
+        audio.loop = true;
+        audio.Play();
+        reflective.DOFade(1, 0.5f);
+        while (!getRes || (Time.time - timeTag)<3 )
+        {
+            wheel.Rotate(new Vector3(0, 0, -360 * 4) * Time.deltaTime);
+
+            yield return null;
+        }
+        reflective.DOFade(0, 1f);
+        audio.clip = audioClips[1];
+        audio.loop = false;
+        audio.Play();
+        wheel.DOLocalRotate(new Vector3(0, 0, -(360 * 1 + 36 * rollItem.index)), 2.3f, RotateMode.FastBeyond360).SetEase(Ease.OutCirc).OnComplete(() => {
+            isWorking = false;
+            showResault(rollData);
+            audio.Stop();
+        });
+    }
+    /*
     private IEnumerator rotateWheel(RollerItemData rollItem,System.Action callback)
     {
+
         reflective.gameObject.SetActive(true);
         wheel.DOLocalRotate(new Vector3(0, 0, -(360 * 6 + 36 * rollItem.index)), 4, RotateMode.FastBeyond360).SetEase(Ease.OutQuart).OnComplete(() => {
             isWorking = false;
@@ -237,7 +312,7 @@ public class UIWheelPanel : MonoBehaviour {
         });
         yield return new WaitForSeconds(1.5f);
         reflective.gameObject.SetActive(false);
-    }
+    }*/
 
     private void showResault(RollData rollData)
     {
@@ -247,44 +322,53 @@ public class UIWheelPanel : MonoBehaviour {
             if(rollItem.code<10000)
             {
                 goldEffect.emission.SetBursts(new ParticleSystem.Burst[1]{ new ParticleSystem.Burst(0, 10, 20, 1, 0.01f)});
+                GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_gold_small);
             }else if(rollItem.code <50000)
             {
                 goldEffect.emission.SetBursts(new ParticleSystem.Burst[1] { new ParticleSystem.Burst(0, 20, 50, 1, 0.01f) });
+                GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_gold_med);
             }
             else if(rollItem.code <100000)
             {
                 goldEffect.emission.SetBursts(new ParticleSystem.Burst[1] { new ParticleSystem.Burst(0, 50, 80, 1, 0.01f) });
+                GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_gold_large);
             }
             else
             {
                 goldEffect.emission.SetBursts(new ParticleSystem.Burst[1] { new ParticleSystem.Burst(0, 80, 100, 1, 0.01f) });
+                GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_gold_large);
             }
             goldEffect.Play();
             GameMainManager.instance.uiManager.EnableOperation();
         }
         else if(rollItem.type == "energy")
         {
-            showIcon(energy,light, new Vector3(270, 349, 0) );
+            ShowEnergy();
         }
         else if (rollItem.type == "shield")
         {
-            showIcon(shield, light, new Vector3(-170, 449, 0));
+            ShowShield(GameMainManager.instance.model.userData.shields != rollData.shields);
         }
         else if (rollItem.type == "steal")
         {
             beaver.SetActive(true);
+            GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_steal);
             Sequence sq = DOTween.Sequence();
             sq.AppendInterval(1.3f);
+            sq.InsertCallback(0.5f, () => {
+                GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_steal_gone);
+            });
             sq.AppendCallback(() => {
                 beaver.SetActive(false);
                 GameMainManager.instance.uiManager.EnableOperation();
                 Dictionary<UISettings.UIWindowID, object> stateData = new Dictionary<UISettings.UIWindowID, object>();
                 stateData.Add(UISettings.UIWindowID.UIStealWindow, rollData.stealIslands);
-                GameMainManager.instance.uiManager.ChangeState(new UIStateChangeBase(stateData));
+                GameMainManager.instance.uiManager.ChangeState(new UIStateChangeBase(stateData,null,2));
             });
         }
         else if (rollItem.type == "shoot")
         {
+            GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_attack_prepare);
             GameMainManager.instance.uiManager.EnableOperation();
             Dictionary<UISettings.UIWindowID, object> stateData = new Dictionary<UISettings.UIWindowID, object>();
             stateData.Add(UISettings.UIWindowID.UIAttackWindow, rollData.attackTarget);
@@ -292,26 +376,84 @@ public class UIWheelPanel : MonoBehaviour {
         }
     }
 
-    private void showIcon(GameObject icon,GameObject backLight,Vector3 moveTarget)
+    private void ShowEnergy()
     {
+        GameObject icon = energy;
+
+        GameObject backLight = light;
+        Vector3 moveTarget = new Vector3(270, 349, 0);
+
         icon.transform.localPosition = Vector3.zero;
         icon.transform.localScale = Vector3.zero;
         backLight.transform.localScale = Vector3.one;
         icon.SetActive(true);
         backLight.SetActive(true);
 
+        GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_energy_start);
         Sequence sq = DOTween.Sequence();
         sq.Append(backLight.transform.DOLocalRotate(new Vector3(0, 0, 360), 2f, RotateMode.FastBeyond360));
         sq.Insert(0, icon.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack));
+        sq.InsertCallback(1.5f, () => {
+            GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_energy_transform);
+        });
         sq.Insert(1.5f,backLight.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutQuart));
         sq.Insert(1.5f,icon.transform.DOLocalMove(moveTarget, 1).SetEase(Ease.OutQuart));
         sq.Insert(1.5f, icon.transform.DOScale(new Vector3(0.2f,0.2f,1), 0.5f).SetEase(Ease.OutQuart));
         sq.AppendInterval(0.5f);
         sq.onComplete += () => {
+            GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_energy_change);
             GameMainManager.instance.uiManager.EnableOperation();
             icon.SetActive(false);
             backLight.SetActive(false);
         };
     }
- 
+    private void ShowShield(bool isGet)
+    {
+        GameObject icon = shield;
+
+        GameObject backLight = light;
+        Vector3 moveTarget = new Vector3(-170, 449, 0);
+
+        icon.transform.localPosition = Vector3.zero;
+        icon.transform.localScale = Vector3.zero;
+        backLight.transform.localScale = Vector3.one;
+        icon.SetActive(true);
+        backLight.SetActive(true);
+
+        GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_shiled_start);
+        Sequence sq = DOTween.Sequence();
+        sq.Append(backLight.transform.DOLocalRotate(new Vector3(0, 0, 360), 2f, RotateMode.FastBeyond360));
+        sq.Insert(0, icon.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack));
+        sq.InsertCallback(1.5f, () => {
+            GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_energy_transform);
+        });
+        sq.Insert(1.5f, backLight.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.InQuart));
+        sq.Insert(1.5f, icon.transform.DOLocalMove(moveTarget, 1).SetEase(Ease.InQuart));
+        sq.Insert(1.5f, icon.transform.DOScale(new Vector3(0.2f, 0.2f, 1), 0.8f));
+        sq.AppendCallback(() => {
+
+            Debug.Log(isGet);
+            if(!isGet)
+            {
+                GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_shield_full);
+            }
+            else
+            {
+                GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_shield_got);
+            }
+          
+        });
+        if (!isGet)
+        {
+           
+            sq.Append(icon.transform.DOLocalMove(new Vector3(100, -100, 0), 0.5f).SetRelative(true));
+        }
+        sq.AppendInterval(0.5f);
+        sq.onComplete += () => {
+            
+            GameMainManager.instance.uiManager.EnableOperation();
+            icon.SetActive(false);
+            backLight.SetActive(false);
+        };
+    }
 }

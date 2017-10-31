@@ -58,7 +58,8 @@ public class WebSocketProxy {
             if (ws.InternalRequest.Response != null)
                 errorMsg = string.Format("Status Code from Server: {0} and Message: {1}", ws.InternalRequest.Response.StatusCode, ws.InternalRequest.Response.Message);
 #endif
-            if(onError!=null)
+            errorMsg = string.Format("-An error occured: {0}\n", (ex != null ? ex.Message : "Unknown Error " + errorMsg));
+            if (onError!=null)
             {
                 onError(errorMsg);
             }

@@ -40,8 +40,9 @@ public class UIBuildingWindow : UIWindowBase {
                         evt.level = data.data.buildings[index - 1].level;
                         evt.islandID = data.data.islandId;
                         evt.isUpgrade = data.data.playUpgradeAnimation;
+                        evt.upgradeEnergyReward = data.data.upgradeEnergyAfterReward;
+                        evt.upgradeMoneyReward = data.data.upgradeMoneyAfterReward;
                         EventDispatcher.instance.DispatchEvent(evt);
-                        Debug.Log("DispatchEvent");
                         GameMainManager.instance.uiManager.CloseWindow(windowData.id);
                         
                     }
@@ -65,6 +66,10 @@ public class UIBuildingWindow : UIWindowBase {
         else
         {
             islandID = userData.islandId;
+            if(islandID>3)
+            {
+                islandID = 3;
+            }
             string name = "CityThumbnail_" + islandID.ToString();
             string path = FilePathTools.getSpriteAtlasPath(name);
             AssetBundleLoadManager.Instance.LoadAsset<SpriteAtlas>(path,(sa)=> {
@@ -75,7 +80,7 @@ public class UIBuildingWindow : UIWindowBase {
         }
     }
 
-    private void updateData(SpriteAtlas sa )
+    private void updateData(SpriteAtlas sa )   
     {
         foreach(BuildingWindowItem item in items)
         {

@@ -8,29 +8,31 @@ SpriteAtlas:
   m_Name: CityThumbnail_1
   m_EditorData:
     textureSettings:
+      serializedVersion: 2
       anisoLevel: 1
       compressionQuality: 50
       maxTextureSize: 2048
       textureCompression: 0
-      colorSpace: 1
       filterMode: 1
       generateMipMaps: 0
       readable: 0
       crunchedCompression: 0
+      sRGB: 0
     platformSettings: []
     packingParameters:
-      paddingPower: 2
+      serializedVersion: 2
+      padding: 4
       blockOffset: 1
       allowAlphaSplitting: 0
       enableRotation: 0
       enableTightPacking: 0
     packedHash:
       serializedVersion: 2
-      Hash: 091792add269b40e3ec4f161ac518c65
+      Hash: ba95a7be1599e461858bace026f1a08c
     variantMultiplier: 1
     bindAsDefault: 0
     finalFormat: 4
-    hashString: 091792add269b40e3ec4f161ac518c65
+    hashString: ba95a7be1599e461858bace026f1a08c
     totalSpriteSurfaceArea: 211148
     packables:
     - {fileID: 102900000, guid: b09c06682fc175548ae66af4d5d0ff6c, type: 3}

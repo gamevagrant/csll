@@ -7,7 +7,9 @@ public class BuildComplateEvent : BaseEvent {
     public int islandID;
     public int buildIndex;
     public int level;
-    public bool isUpgrade;
+    public bool isUpgrade;                  //是否升级
+    public int upgradeEnergyReward;        // 升级后能量奖励
+    public long upgradeMoneyReward;        // 升级后金币奖励
 
     public BuildComplateEvent():base(EventEnum.BUILD_COMPLATE)
     {

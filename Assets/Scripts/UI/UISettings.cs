@@ -13,6 +13,8 @@ public class UISettings  {
         UILeftDatailWindow,
         UITopBarWindow,
         UISideBarWindow,
+        UIPopupMessageWindow,
+        UIModalBoxWindow,
     }
 
     public enum UIWindowType
@@ -49,9 +51,11 @@ public class UISettings  {
          { UIWindowID.UIBuildingWindow,"UIBuildingWindow"},
           { UIWindowID.UIAttackWindow,"UIAttackWindow"},
            { UIWindowID.UIStealWindow,"UIStealWindow"},
-           { UIWindowID.UILeftDatailWindow,"UILeftDatailWindow"},
-           { UIWindowID.UITopBarWindow,"UITopBarWindow"},
-           { UIWindowID.UISideBarWindow,"UISideBarWindow"},
+            { UIWindowID.UILeftDatailWindow,"UILeftDatailWindow"},
+             { UIWindowID.UITopBarWindow,"UITopBarWindow"},
+              { UIWindowID.UISideBarWindow,"UISideBarWindow"},
+                { UIWindowID.UIPopupMessageWindow,"UIPopupMessageWindow" },
+        {UIWindowID.UIModalBoxWindow,"UIModalBoxWindow" },
     };
 
     public static string getWindowName(UIWindowID id)

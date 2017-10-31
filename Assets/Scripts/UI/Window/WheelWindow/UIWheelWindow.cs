@@ -73,7 +73,7 @@ public class UIWheelWindow : UIWindowBase {
            
             wheelPanel.setData(ud.rollerItems);
             wheelPanel.SetStealerData(ud.stealTarget);
-            buildPanel.setData(ud.islandId, ud.buildings);
+            buildPanel.setData(ud.islandId, ud.buildings,ud.mapInfo);
         }
 
     }

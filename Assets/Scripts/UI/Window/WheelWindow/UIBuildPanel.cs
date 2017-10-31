@@ -11,6 +11,9 @@ public class UIBuildPanel : MonoBehaviour {
     public GameObject buildingAnimation;
     public IslandFactory islandFactory;
 
+    public GameObject upgradePanel;
+    public GetMoneyBoxAnimation box;
+
     [SerializeField]
     private GameObject buildBtn;
     [SerializeField]
@@ -24,6 +27,7 @@ public class UIBuildPanel : MonoBehaviour {
     private Vector2 switchOriginalValue;
     private Vector2 panelLocalOriginalValue;
     private int islandID;
+    private BuildComplateEvent buildComplateData;
 
     private void Awake()
     {
@@ -42,6 +46,9 @@ public class UIBuildPanel : MonoBehaviour {
         buildBtn.SetActive(false);
         switchBtn.SetActive(false);
         buildingAnimation.SetActive(false);
+
+        upgradePanel.SetActive(false);
+        box.gameObject.SetActive(false);
     }
 
     private void Start()
@@ -54,11 +61,11 @@ public class UIBuildPanel : MonoBehaviour {
         EventDispatcher.instance.RemoveEventListener(EventEnum.BUILD_COMPLATE, OnBuildComplateHandle);
     }
 
-    public void setData(int islandID,BuildingData[] data)
+    public void setData(int islandID,BuildingData[] data,MapInfoData mapInfo)
     {
         this.islandID = islandID;
         islandFactory.UpdateCityData(islandID, data);
-
+        cityName.text = mapInfo.islandNames[islandID-1];
 
     }
 
@@ -160,18 +167,70 @@ public class UIBuildPanel : MonoBehaviour {
         GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIBuildingWindow);
     }
 
+    public void OnClickNextIsland()
+    {
+        UpgradeIsland();
+       
+    }
 
 
     private void OnBuildComplateHandle(BaseEvent e)
     {
-        Debug.Log("get");
         BuildComplateEvent evt = e as BuildComplateEvent;
+        buildComplateData = evt;
+        if (!evt.isUpgrade)
+        {
+            StartCoroutine(showBuildAnimation(evt.buildIndex, evt.level));
+        }else
+        {
+            StartCoroutine(showBuildAnimation(evt.buildIndex, GameMainManager.instance.model.userData.buildings[evt.buildIndex].level+1,()=> 
+            {
+                GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.building_level_up);
+                GameMainManager.instance.uiManager.CloseWindow(UISettings.UIWindowID.UISideBarWindow);
+                GameMainManager.instance.uiManager.CloseWindow(UISettings.UIWindowID.UITopBarWindow);
+                switchBtn.SetActive(false);
+                upgradePanel.SetActive(true);
+            }));
+           
+            buildBtn.SetActive(false);
 
-        StartCoroutine(showBuildAnimation(evt.buildIndex,evt.level));
+        }
+       
     }
 
+    private void UpgradeIsland()
+    {
+        GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.building_island_change);
+        UserData ud = GameMainManager.instance.model.userData;
+        upgradePanel.SetActive(false);
+        Sequence sq = DOTween.Sequence();
+        sq.Append((panel.transform as RectTransform).DOAnchorPos(new Vector2(-800, 0), 1f).SetEase(Ease.InBack));
+        sq.AppendCallback(() =>
+        {
+            islandFactory.UpdateCityData(ud.islandId, ud.buildings);
+            (panel.transform as RectTransform).anchoredPosition = new Vector2(800, 0);
+        });
+        sq.Insert(1.2f,(panel.transform as RectTransform).DOAnchorPos(Vector2.zero, 1f).SetEase(Ease.OutBack));
+        sq.AppendInterval(1);
+        sq.AppendCallback(() =>
+        {
+            box.gameObject.SetActive(true);
+            box.SetData(buildComplateData.upgradeEnergyReward > 0, buildComplateData.upgradeMoneyReward > 0);
+            string content = string.Format("哇哦 恭喜您又建成一个岛屿，送你奖励继续加油哦！能量：{0} 金币：{1}", buildComplateData.upgradeEnergyReward.ToString(), buildComplateData.upgradeMoneyReward.ToString());
+            GameMainManager.instance.uiManager.OpenModalBoxWindow(content, "领取", () =>
+            {
+                upgradePanel.SetActive(false);
+                box.gameObject.SetActive(false);
+                buildBtn.SetActive(true);
 
-    private IEnumerator showBuildAnimation(int index,int level)
+                GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UISideBarWindow);
+                GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UITopBarWindow);
+                switchBtn.SetActive(true);
+            });
+        });
+    }
+
+    private IEnumerator showBuildAnimation(int index,int level,System.Action onComplate = null)
     {
         yield return new WaitForSeconds(0.5f);
         GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.building_upgrade);
@@ -185,5 +244,10 @@ public class UIBuildPanel : MonoBehaviour {
         bd.status = 0;
         islandFactory.UpdateBuildingData(islandID, index, bd);
         islandFactory.ShowBuild(index);
+        if(onComplate != null)
+        {
+            yield return new WaitForSeconds(1);
+            onComplate();
+        }
     }
 }

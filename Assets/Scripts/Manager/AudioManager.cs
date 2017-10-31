@@ -122,6 +122,8 @@ public class AudioNameEnum
     public static string wheel_view_switch_in = "view_switch_in";//转盘界面和建造界面切换
     public static string wheel_view_switch_out = "view_switch_out";
 
+    
+
     public static string shoot_island_come = "shoot_island_come";//攻击界面中 岛屿飞过来
     public static string shoot_target_change = "shoot_target_change";//更换攻击目标 岛屿飞走
     public static string shoot_target_come = "shoot_target_come";//更换攻击目标岛屿飞过来
@@ -142,7 +144,8 @@ public class AudioNameEnum
     public static string steal_result = "steal_result";
 
     public static string building_upgrade = "upgrade_build";
-    
-
+    public static string building_level_up = "level_success";//岛屿升级的时候
+    public static string building_island_change = "passland_con_text";//升级更换岛屿外观的时候
+    public static string building_box_down = "passland_box_down";//包厢掉落的时候
 
 }

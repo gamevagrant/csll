@@ -277,6 +277,18 @@ public class FilePathTools
         return root + str;
     }
 
-
+    public static string GetAnimationPath(string name)
+    {
+        string str = "/Animations/" + name;
+        if (GameSetting.isUseAssetBundle)
+        {
+            str = str.ToLower();
+        }
+        else
+        {
+            str = str + ".prefab";
+        }
+        return root + str;
+    }
 
 }

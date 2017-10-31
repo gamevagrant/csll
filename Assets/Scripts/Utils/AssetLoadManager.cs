@@ -84,7 +84,13 @@ public class AssetLoadManager:MonoBehaviour
 
 	private IEnumerator loadAsync<T>(string url,Action<T> callback ,bool iscache)where T:Object
 	{
-		isLoading = true;
+        Object obj;
+        if (callback != null && cache.TryGetValue(url, out obj) && obj != null)
+        {
+            callback(obj as T);
+            yield break;
+        }
+        isLoading = true;
 		//string path = CacheManager.instance.getLocalPath(url);
         string path="";
 

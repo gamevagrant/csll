@@ -20,11 +20,13 @@ public class GameMainManager {
     public IUIManager uiManager;
     public INetManager netManager;
     public IAudioManager audioManager;
+    public IWebSocketMsgManager websocketMsgManager;
     public GameModel model;
 
     public GameMainManager()
     {
         netManager = new NetManager();
+        websocketMsgManager = new WebSocketMsgManager();
         uiManager = GameObject.Find("UIRoot").GetComponent<UIManager>();//暂时这样 之后改成UIRoot从UIManager自动创建
         audioManager = AudioManager.instance;
         audioManager.SetSoundPathProxy (FilePathTools.getAudioPath);

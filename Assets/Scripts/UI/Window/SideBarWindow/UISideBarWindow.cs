@@ -40,12 +40,16 @@ public class UISideBarWindow :UIWindowBase {
     protected override void EnterAnimation(Action onComplete)
     {
         leftPanel.DOAnchorPos(new Vector2(0, -60), 1f).SetEase(Ease.OutCubic);
-        rightPanel.DOAnchorPos(new Vector2(0, -60), 1f).SetEase(Ease.OutCubic);
+        rightPanel.DOAnchorPos(new Vector2(0, -60), 1f).SetEase(Ease.OutCubic).OnComplete(()=> {
+            onComplete();
+        });
     }
 
     protected override void ExitAnimation(Action onComplete)
     {
         leftPanel.DOAnchorPos(new Vector2(0, 800), 1f).SetEase(Ease.OutCubic);
-        rightPanel.DOAnchorPos(new Vector2(0, 800), 1f).SetEase(Ease.OutCubic);
+        rightPanel.DOAnchorPos(new Vector2(0, 800), 1f).SetEase(Ease.OutCubic).OnComplete(() => {
+            onComplete();
+        }); 
     }
 }

@@ -8,29 +8,31 @@ SpriteAtlas:
   m_Name: TopBar
   m_EditorData:
     textureSettings:
+      serializedVersion: 2
       anisoLevel: 1
       compressionQuality: 50
       maxTextureSize: 2048
       textureCompression: 0
-      colorSpace: 1
       filterMode: 1
       generateMipMaps: 0
       readable: 0
       crunchedCompression: 0
+      sRGB: 0
     platformSettings: []
     packingParameters:
-      paddingPower: 2
+      serializedVersion: 2
+      padding: 4
       blockOffset: 1
       allowAlphaSplitting: 0
       enableRotation: 0
       enableTightPacking: 0
     packedHash:
       serializedVersion: 2
-      Hash: 45e3dff9c9cffeff2aa48c45d6ce23c9
+      Hash: 39f9e0307e351e848629d0f8225bf89b
     variantMultiplier: 1
-    bindAsDefault: 1
+    bindAsDefault: 0
     finalFormat: 4
-    hashString: 45e3dff9c9cffeff2aa48c45d6ce23c9
+    hashString: 39f9e0307e351e848629d0f8225bf89b
     totalSpriteSurfaceArea: 66247
     packables:
     - {fileID: 102900000, guid: d2af9f96f9256984ca547a3d66685b30, type: 3}

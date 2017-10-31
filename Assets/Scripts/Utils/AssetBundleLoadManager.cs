@@ -108,6 +108,14 @@ public class AssetBundleLoadManager : MonoBehaviour {
 
     private IEnumerator loadAsync<T>(string path, Action<T> callback) where T : Object
     {
+        CacheObject co;
+        if (callback != null && dicCacheObject.TryGetValue(path, out co) && co != null)
+        {
+            callback(co.obj as T);
+            co.time = Time.time;
+            yield break;
+        }
+
         isLoading = true;
 
         path = FilePathTools.normalizePath(path);
@@ -219,7 +227,7 @@ public class AssetBundleLoadManager : MonoBehaviour {
             tryClearCache();
             callback((T)obj);
         }
-        Debug.Log("============end loadAsync:AssetBundleLoader.loadAsync" + path);
+        Debug.Log("---end loadAsync:AssetBundleLoader.loadAsync" + path);
         isLoading = false;
     }
 

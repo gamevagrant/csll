@@ -20,7 +20,7 @@ public class UserData {
     public int recoverEnergy;            // 体力恢复值
     public long timeToRecover;                // 体力恢复剩余时间
     public long timeToRecoverInterval;      // 体力恢复时间间隔
-    public int islandId;      // 岛屿ID
+    public int islandId;      // 岛屿ID 从1 开始
     public BuildingData[] buildings;               // 岛屿内各物体  // Building 数据结构在上面
     public int crowns;           // 星星数量
     public int shields;           // 护盾数量
@@ -53,7 +53,7 @@ public class UserData {
     public int lolly;                    // 暂时未用到
     public int guildMedal;                 // 暂时未用到
                                            //      *DailyEventInfo dailyEventInfo                // 暂时未用到
-                                           //     *MapInfo mapInfo                         // 暂时未用到
+    public MapInfoData mapInfo;                                       //     *MapInfo mapInfo                         // 暂时未用到
                                            //      *Guild guild                           // 暂时未用到
     public JigsawInfoData jigsawInfo;                      // 拼图    // JigsawInfo 数据结构在上面
     public string cashInfo;                // 暂时未用到

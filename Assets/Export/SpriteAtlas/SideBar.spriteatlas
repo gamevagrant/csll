@@ -8,29 +8,31 @@ SpriteAtlas:
   m_Name: SideBar
   m_EditorData:
     textureSettings:
+      serializedVersion: 2
       anisoLevel: 1
       compressionQuality: 50
       maxTextureSize: 2048
       textureCompression: 0
-      colorSpace: 1
       filterMode: 1
       generateMipMaps: 0
       readable: 0
       crunchedCompression: 0
+      sRGB: 0
     platformSettings: []
     packingParameters:
-      paddingPower: 2
+      serializedVersion: 2
+      padding: 4
       blockOffset: 1
       allowAlphaSplitting: 0
       enableRotation: 0
       enableTightPacking: 0
     packedHash:
       serializedVersion: 2
-      Hash: 944255cf2922c81b87fde13fdf57593a
+      Hash: f3b37b062d0fb0d5a4ee5aea8599a25a
     variantMultiplier: 1
-    bindAsDefault: 1
+    bindAsDefault: 0
     finalFormat: 4
-    hashString: 944255cf2922c81b87fde13fdf57593a
+    hashString: f3b37b062d0fb0d5a4ee5aea8599a25a
     totalSpriteSurfaceArea: 71131
     packables:
     - {fileID: 102900000, guid: b8a0d9f1c6c4e904ebd621c8c9a163be, type: 3}

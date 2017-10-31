@@ -36,7 +36,7 @@ public class BuildingWindowItem : MonoBehaviour,IPointerClickHandler {
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if(state == BuildState.canBuild)
+        if(state == BuildState.canBuild || state == BuildState.damage)
         {
             if(onBuild!=null)
             {

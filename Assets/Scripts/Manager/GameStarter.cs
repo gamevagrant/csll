@@ -9,12 +9,12 @@ public class GameStarter : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
         
-        init();
+        
 	}
 
     private void Start()
     {
-        
+        init();
     }
     // Update is called once per frame
     void Update () {
@@ -31,10 +31,11 @@ public class GameStarter : MonoBehaviour {
 
     private void login()
     {
-        GameMainManager.instance.netManager.Login(1, (res, data) => {
+        GameMainManager.instance.netManager.Login(899836, (res, data) => {
             if (data.isOK)
             {
                 StartCoroutine(OpenUI());
+
             }
             else
             {

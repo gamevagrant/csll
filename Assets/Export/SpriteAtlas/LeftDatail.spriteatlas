@@ -8,37 +8,38 @@ SpriteAtlas:
   m_Name: LeftDatail
   m_EditorData:
     textureSettings:
+      serializedVersion: 2
       anisoLevel: 1
       compressionQuality: 50
       maxTextureSize: 2048
       textureCompression: 0
-      colorSpace: 1
       filterMode: 1
       generateMipMaps: 0
       readable: 0
       crunchedCompression: 0
+      sRGB: 0
     platformSettings: []
     packingParameters:
-      paddingPower: 2
+      serializedVersion: 2
+      padding: 4
       blockOffset: 1
       allowAlphaSplitting: 0
       enableRotation: 0
       enableTightPacking: 0
     packedHash:
       serializedVersion: 2
-      Hash: 7777a809f5607faf06865f345a387d2e
+      Hash: 9295cb3aec6a2f05301ab54bab20b2a8
     variantMultiplier: 1
-    bindAsDefault: 1
+    bindAsDefault: 0
     finalFormat: 4
-    hashString: 7777a809f5607faf06865f345a387d2e
-    totalSpriteSurfaceArea: 560411
+    hashString: 9295cb3aec6a2f05301ab54bab20b2a8
+    totalSpriteSurfaceArea: 540631
     packables:
     - {fileID: 102900000, guid: 8b75ce511bcd1564cb58c09924c006ee, type: 3}
     packedSpriteRenderDataKeys:
     - 48a51b9e0a0d80a4c9234accbc279dec: 21300000
     - 419ef8439fc6ec240a30cc4667ebd5aa: 21300000
     - 1e58ab52f0d6e72448596dbad3a03af5: 21300000
-    - 82aea9ade3528a34082c6880a5fadecb: 21300000
     - 8cb112ae47c5d634c8cf5a256478d771: 21300000
     - 28c591e0d61df82418474a2b5e948b9f: 21300000
     - 307e460501a979742a2dc2ad01fb7f12: 21300000
@@ -66,7 +67,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 48a51b9e0a0d80a4c9234accbc279dec, type: 3}
   - {fileID: 21300000, guid: 419ef8439fc6ec240a30cc4667ebd5aa, type: 3}
   - {fileID: 21300000, guid: 1e58ab52f0d6e72448596dbad3a03af5, type: 3}
-  - {fileID: 21300000, guid: 82aea9ade3528a34082c6880a5fadecb, type: 3}
   - {fileID: 21300000, guid: 8cb112ae47c5d634c8cf5a256478d771, type: 3}
   - {fileID: 21300000, guid: 28c591e0d61df82418474a2b5e948b9f, type: 3}
   - {fileID: 21300000, guid: 307e460501a979742a2dc2ad01fb7f12, type: 3}
@@ -93,7 +93,6 @@ SpriteAtlas:
   - menu_bg
   - head_bg
   - head_bg_vip
-  - menu_btn_nor
   - menu_news
   - menu_bomb
   - menu_wheel

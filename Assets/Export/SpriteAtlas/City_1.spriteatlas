@@ -8,29 +8,31 @@ SpriteAtlas:
   m_Name: City_1
   m_EditorData:
     textureSettings:
+      serializedVersion: 2
       anisoLevel: 1
       compressionQuality: 50
       maxTextureSize: 2048
       textureCompression: 0
-      colorSpace: 1
       filterMode: 1
       generateMipMaps: 0
       readable: 0
       crunchedCompression: 0
+      sRGB: 0
     platformSettings: []
     packingParameters:
-      paddingPower: 2
+      serializedVersion: 2
+      padding: 4
       blockOffset: 1
       allowAlphaSplitting: 0
       enableRotation: 0
       enableTightPacking: 0
     packedHash:
       serializedVersion: 2
-      Hash: 2f7c2da146e56fdfe7154167d9b5d749
+      Hash: d6c1cfa36566437cb25d0c6fba68e54e
     variantMultiplier: 1
     bindAsDefault: 0
     finalFormat: 4
-    hashString: 2f7c2da146e56fdfe7154167d9b5d749
+    hashString: d6c1cfa36566437cb25d0c6fba68e54e
     totalSpriteSurfaceArea: 33945600
     packables:
     - {fileID: 102900000, guid: 5deb728314db24d499c9e8b7b0131b75, type: 3}

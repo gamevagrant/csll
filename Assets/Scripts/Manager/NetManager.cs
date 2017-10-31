@@ -45,6 +45,34 @@ public class NetManager:INetManager
         return str;
     }
 
+    private void ConnectWebSocket(long uid)
+    {
+        WebSocketProxy wsp;
+        wsp = new WebSocketProxy(string.Format("ws://10.0.8.50:8080/ws/conn?uid={0}",uid.ToString()));
+        wsp.onOpen += () => {
+            //wsp.send("{\"cmd\":\"info\",\"fromid\":\"1\",\"toid\":\"2\",\"content\":\"hello?\"}");
+
+        };
+        wsp.onMessage += (str) => 
+        {
+            Debug.Log("onMessage" + str);
+            WebSocketMessage msg = LitJson.JsonMapper.ToObject<WebSocketMessage>(str);
+            GameMainManager.instance.websocketMsgManager.SendMsg(msg);
+
+            //Debug.Log("假数据");
+            //string json = "{\"uid\":101,\"toid\":2,\"action\":1,\"result\":0,\"time\":\"2006-01-0215:04:05\",\"name\":\"Badlwin\",\"headImg\":\"http://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIUKt2UaM9cibOM5RsVDyibbbr1tUHia1jR1eibsjGgmXm2BBAFQbosuBPx4sX4hY50j0Jzhu3y4hx2rQ/0\",\"Crowns\":100,\"extra\":{\"crows\":138,\"building\":{\"isShield\":false,\"level\":1,\"status\":1},\"building_index\":1,\"isShielded\":false},\"read\":false,\"isWanted\":false,\"isVip\":false}";
+            //WebSocketMessage m = LitJson.JsonMapper.ToObject<WebSocketMessage>(json);
+            //GameMainManager.instance.websocketMsgManager.SendMsg(m);
+            //GameMainManager.instance.websocketMsgManager.SendMsg(m);
+            //GameMainManager.instance.websocketMsgManager.SendMsg(m);
+        };
+        wsp.onError += (str) => 
+        {
+            Debug.Log("onError" + str);
+        };
+
+        
+    }
 
     public bool Login(long userid, Action<bool,LoginMessage> callBack)
     {
@@ -56,7 +84,7 @@ public class NetManager:INetManager
             {
                 GameMainManager.instance.model.userData = res.data;
                 EventDispatcher.instance.DispatchEvent(EventEnum.LOGIN_COMPLATE, res.data);
-
+                ConnectWebSocket(res.data.uid);
             }
             else
             {
@@ -109,6 +137,11 @@ public class NetManager:INetManager
     }
     public bool Build(int islandID,int buildIndex, Action<bool, BuildMessage> callBack)
     {
+        Debug.Log("假数据");
+        string str = "{\"data\":{\"money\":2732090199,\"maxEnergy\":50,\"energy\":48,\"recoverEnergy\":6,\"timeToRecover\":0,\"islandId\":4,\"buildings\":[{\"level\":0,\"status\":0,\"isShield\":true},{\"level\":0,\"status\":0,\"isShield\":true},{\"level\":0,\"status\":0,\"isShield\":true},{\"level\":0,\"status\":0,\"isShield\":true},{\"level\":0,\"status\":0,\"isShield\":true}],\"crowns\":75,\"buildingCost\":[[165000,423000,795000,970000,1580000],[205000,463000,805000,990000,1900000],[275000,518000,850000,1150000,2050000],[320000,560000,895000,1350000,2250000],[390000,690000,975000,1550000,2550000]],\"buildingRepairCost\":[[45000,175000,275000,350000,450000],[50000,225000,300000,375000,475000],[100000,250000,325000,400000,500000],[200000,275000,350000,425000,550000],[150000,300000,400000,450000,800000]],\"gainIslandReward\":false,\"canIslandShare\":false,\"playUpgradeAnimation\":true,\"upgradeEnergyAfterReward\":68,\"upgradeMoneyAfterReward\":2732590199,\"rollerItems\":[{\"index\":0,\"type\":\"xcrowns\",\"value\":65,\"code\":200,\"name\":\"星星倍金钱\"},{\"index\":1,\"type\":\"steal\",\"value\":40,\"code\":1,\"name\":\"偷取\"},{\"index\":2,\"type\":\"coin\",\"value\":200,\"code\":25000,\"name\":\"25k\"},{\"index\":3,\"type\":\"energy\",\"value\":5,\"code\":10,\"name\":\"能量\"},{\"index\":4,\"type\":\"coin\",\"value\":215,\"code\":5000,\"name\":\"5000\"},{\"index\":5,\"type\":\"coin\",\"value\":85,\"code\":50000,\"name\":\"50k\"},{\"index\":6,\"type\":\"shield\",\"value\":55,\"code\":1,\"name\":\"护盾\"},{\"index\":7,\"type\":\"coin\",\"value\":220,\"code\":15000,\"name\":\"15k\"},{\"index\":8,\"type\":\"shoot\",\"value\":65,\"code\":1,\"name\":\"攻击\"},{\"index\":9,\"type\":\"coin\",\"value\":50,\"code\":100000,\"name\":\"100k\"}],\"tutorial\":18,\"mapInfo\":{\"islandNames\":[\"北京\",\"呼和浩特\",\"沈阳\",\"天津\",\"黄山\",\"西安\",\"成都\",\"上海\",\"贵阳\",\"乐山\",\"武汉\",\"昆明\",\"香港\",\"台北\",\"三亚\",\"敬请期待\"],\"mines\":[{\"island\":1,\"costs\":[270000,360000,450000,540000,630000],\"produces\":[7200,9600,12000,14400,16800],\"miner\":0},{\"island\":2,\"costs\":[307500,397500,487500,577500,667500],\"produces\":[8200,10600,13000,15400,17800],\"miner\":0},{\"island\":3,\"costs\":[460000,580000,700000,820000,940000],\"produces\":[9200,11600,14000,16400,18800],\"miner\":0},{\"island\":4,\"costs\":[765000,945000,1125000,1305000,1485000],\"produces\":[10200,12600,15000,17400,19800],\"miner\":0}],\"moneyBox\":0,\"producePerSecond\":0,\"limit\":400000}},\"errcode\":0,\"errmsg\":\"\"}";
+        BuildMessage r = LitJson.JsonMapper.ToObject<BuildMessage>(str);
+        callBack(true, r);
+        return true;
         string url = MakeUrl(APIDomain, "game/island/build");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("uid", uid);

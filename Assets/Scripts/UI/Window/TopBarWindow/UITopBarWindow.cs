@@ -99,7 +99,7 @@ public class UITopBarWindow : UIWindowBase {
     {
         starLabel.text = user.crowns.ToString();
         moneyLabel.text = GameUtils.GetCurrencyString(user.money);
-        Debug.Log("money = " + GameUtils.GetCurrencyString(user.money).ToString());
+        //Debug.Log("money = " + GameUtils.GetCurrencyString(user.money).ToString());
 
         for(int i = 0;i< shieldImages.Length;i++)
         {

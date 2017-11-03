@@ -31,7 +31,7 @@ public class GameStarter : MonoBehaviour {
 
     private void login()
     {
-        GameMainManager.instance.netManager.Login(899836, (res, data) => {
+        GameMainManager.instance.netManager.Login(12, (res, data) => {
             if (data.isOK)
             {
                 StartCoroutine(OpenUI());

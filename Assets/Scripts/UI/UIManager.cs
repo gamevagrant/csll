@@ -62,7 +62,7 @@ public class UIManager : MonoBehaviour,IUIManager {
         rt.anchorMax = Vector2.one;
         rt.offsetMin = Vector2.zero;
         rt.offsetMax = Vector2.zero;
-        popupCollider.AddComponent<Image>().color = new Color(0,0,0,0);
+        popupCollider.AddComponent<Image>().color = new Color(0,0,0,0.4f);
 
         EventTrigger eventTrigger = popupCollider.AddComponent<EventTrigger>();
         EventTrigger.Entry entry = new EventTrigger.Entry();

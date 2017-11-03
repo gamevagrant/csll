@@ -197,6 +197,9 @@ public class DynamicScrollView : MonoBehaviour {
 	public void setDatas(IList datas)
 	{
 		itemPool.resetAllTarget();
+        if (datas == null)
+            return;
+
 		displayRect.x = 0;
 		displayRect.y = 0;
 		itemDatas = new List<ItemRect>();
@@ -259,6 +262,8 @@ public class DynamicScrollView : MonoBehaviour {
 
 	private void updateItems()
 	{
+        if (itemDatas == null)
+            return;
 		//Rect rect = new Rect(displayRect.x - displayRect.width*(buffer - 1)/2,displayRect.y + displayRect.height*(buffer - 1)/2, displayRect.width*buffer, displayRect.height*buffer);
 		Rect rect = new Rect(displayRect.x - displayRect.width * (buffer - 1) / 2, displayRect.y + displayRect.height * (buffer - 1) / 2, displayRect.width * buffer, displayRect.height * buffer);
 

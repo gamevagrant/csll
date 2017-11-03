@@ -99,4 +99,6 @@ public class UserData {
     public Dictionary<string, NoticeItemData> ActivityNotices;       // 系统公告列表  // NoticeItem 数据结构在上面
     public NewbieAttackTargetData newbie_attack_target;       // 新手引导中攻击者的头像和昵称  // NewbieAttackTarget 数据结构在上面
     public DailyTaskData daily_task;          // 每日任务  // DailyTask 数据结构在上面
+    public AnnouncementData announcement;//系统公告
+    public MailData[] user_mail;//邮件
 }

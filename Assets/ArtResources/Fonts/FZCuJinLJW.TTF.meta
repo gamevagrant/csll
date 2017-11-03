@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 2e9748bdf7c56bc4e8cd1e141ec7ca86
+timeCreated: 1509505552
+licenseType: Free
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: FZJinLS-B-GB
+  fontNames:
+  - FZJinLS-B-GB
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

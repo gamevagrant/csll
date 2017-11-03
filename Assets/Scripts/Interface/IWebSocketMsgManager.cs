@@ -5,7 +5,7 @@ public interface IWebSocketMsgManager
     /// 发送消息
     /// </summary>
     /// <param name="msg"></param>
-    void SendMsg(WebSocketMessage msg);
+    void SendMsg(MessageResponseData msg);
 
 
 }

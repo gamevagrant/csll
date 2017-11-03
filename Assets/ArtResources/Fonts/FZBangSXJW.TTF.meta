@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 57dfcadb84d7d3c45900b9b828ecce7d
+timeCreated: 1509506625
+licenseType: Free
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: FZBangShuXingS-R-GB
+  fontNames:
+  - FZBangShuXingS-R-GB
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

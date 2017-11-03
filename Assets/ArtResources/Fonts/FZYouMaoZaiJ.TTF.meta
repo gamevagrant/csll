@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 1e440a8122f9c3a4c899a7605dfc4a40
+timeCreated: 1509506625
+licenseType: Free
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: FZYouMaoZaiS-R-GB
+  fontNames:
+  - FZYouMaoZaiS-R-GB
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

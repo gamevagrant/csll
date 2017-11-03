@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// 系统消息列表
+/// 消息列表
 /// </summary>
 public class MessageResponseData {
 
@@ -11,7 +11,8 @@ public class MessageResponseData {
     public string name;                // 昵称
     public string headImg;              // 头像url
     public int crowns;            // 星星数量
-                                  //interface{ } extra                   // 其他数据
+    public LitJson.JsonData extra;                   // 其他数据
     public bool read;                 // 是否已读
     public bool isWanted;            // 暂时未用到
+    public bool isVip;
 }

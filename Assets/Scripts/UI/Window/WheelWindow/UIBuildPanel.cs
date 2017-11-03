@@ -65,7 +65,11 @@ public class UIBuildPanel : MonoBehaviour {
     {
         this.islandID = islandID;
         islandFactory.UpdateCityData(islandID, data);
-        cityName.text = mapInfo.islandNames[islandID-1];
+        if(mapInfo != null)
+        {
+            cityName.text = mapInfo.islandNames[islandID - 1];
+        }
+        
 
     }
 

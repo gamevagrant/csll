@@ -6,7 +6,7 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
 
 
 
-    public void SendMsg(WebSocketMessage msg)
+    public void SendMsg(MessageResponseData msg)
     {
 
         switch (msg.action)
@@ -45,7 +45,7 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
 
 
 
-    private void AttackAction(WebSocketMessage msg)
+    private void AttackAction(MessageResponseData msg)
     {
         string str = "";
         if((bool)msg.extra["isShielded"])
@@ -73,7 +73,7 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
         GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIPopupMessageWindow, data);
     }
 
-    private void StealAction(WebSocketMessage msg)
+    private void StealAction(MessageResponseData msg)
     {
         string str = "";
         str = string.Format("{0}偷走了{1}金币", msg.name,msg.extra["reward"]);
@@ -85,32 +85,32 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
         GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIPopupMessageWindow, data);
     }
 
-    private void AddFriendAction(WebSocketMessage msg)
+    private void AddFriendAction(MessageResponseData msg)
     {
 
     }
 
-    private void PayAction(WebSocketMessage msg)
+    private void PayAction(MessageResponseData msg)
     {
 
     }
 
-    private void PieceAction(WebSocketMessage msg)
+    private void PieceAction(MessageResponseData msg)
     {
 
     }
 
-    private void NoticeAction(WebSocketMessage msg)
+    private void NoticeAction(MessageResponseData msg)
     {
 
     }
 
-    private void DailyTaskAction(WebSocketMessage msg)
+    private void DailyTaskAction(MessageResponseData msg)
     {
 
     }
 
-    private void MailAction(WebSocketMessage msg)
+    private void MailAction(MessageResponseData msg)
     {
 
     }
@@ -118,7 +118,7 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
 
 
 }
-
+/*
 public class WebSocketMessage
 {
     public long uid;
@@ -135,4 +135,5 @@ public class WebSocketMessage
     public bool isVip;
 
 }
+*/
 

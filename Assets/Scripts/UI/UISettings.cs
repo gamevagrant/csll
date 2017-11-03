@@ -15,6 +15,11 @@ public class UISettings  {
         UISideBarWindow,
         UIPopupMessageWindow,
         UIModalBoxWindow,
+        UINoticeWindow,
+        UIMessageMailWindow,
+        UIGetRewardWindow,
+        UIBadGuyRankWindow,
+        UIBuyWantedWindow,
     }
 
     public enum UIWindowType
@@ -56,6 +61,11 @@ public class UISettings  {
               { UIWindowID.UISideBarWindow,"UISideBarWindow"},
                 { UIWindowID.UIPopupMessageWindow,"UIPopupMessageWindow" },
         {UIWindowID.UIModalBoxWindow,"UIModalBoxWindow" },
+        {UIWindowID.UINoticeWindow,"UINoticeWindow" },
+        {UIWindowID.UIMessageMailWindow,"UIMessageMailWindow" },
+        {UIWindowID.UIGetRewardWindow,"UIGetRewardWindow" },
+        {UIWindowID.UIBadGuyRankWindow,"UIBadGuyRankWindow" },
+        {UIWindowID.UIBuyWantedWindow,"UIBuyWantedWindow" },
     };
 
     public static string getWindowName(UIWindowID id)

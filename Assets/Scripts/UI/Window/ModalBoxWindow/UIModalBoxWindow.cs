@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
 
 public class UIModalBoxWindow : UIWindowBase {
 
@@ -25,8 +26,8 @@ public class UIModalBoxWindow : UIWindowBase {
         }
     }
 
-    public Text text;
-    public Text okBtnLabel;
+    public TextMeshProUGUI text;
+    public TextMeshProUGUI okBtnLabel;
     private ModalBoxData modalData;
     private RectTransform rectTransform;
 

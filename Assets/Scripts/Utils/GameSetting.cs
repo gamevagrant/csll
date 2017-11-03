@@ -12,7 +12,7 @@ public class GameSetting {
 	public static readonly bool isDebug = true ;//显示测试UI，显示AI手牌
 	//-------------------平台区分的配置-------------------------
 #if UNITY_EDITOR
-	public static readonly bool isUseAssetBundle =  true;//true：使用assetbundle包中的资源,资源有变化需要重新打包，false：使用编辑器里的资源，资源更改随时生效
+	public static readonly bool isUseAssetBundle =  false;//true：使用assetbundle包中的资源,资源有变化需要重新打包，false：使用编辑器里的资源，资源更改随时生效
 #else
 	public static readonly bool isUseAssetBundle = true;//这条勿动，发布平台下永远是true
 #endif

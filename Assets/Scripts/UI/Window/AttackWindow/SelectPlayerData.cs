@@ -14,6 +14,7 @@ public class SelectPlayerData {
     public int islandId; // 岛屿ID
     public bool isRandomUser;//是否时随机用户
     public bool isSelected;//是否是当前选中的
+    public bool isWanted = false;//是否呗通缉
     public BuildingData[] buildings;
 
     public SelectPlayerData()
@@ -33,6 +34,7 @@ public class SelectPlayerData {
         stealMoney = data.stealMoney;
         islandId = data.islandId;
         buildings = data.buildings;
+        isWanted = data.isWanted;
     }
 
     public SelectPlayerData(FriendData data)

@@ -49,7 +49,7 @@ public class UIEnemyPanelItem : BaseItemView {
         {
             nullImage.SetActive(false);
         }
-        if(selectData.stealMoney>300000)
+        if(selectData.isWanted)
         {
             img300k.SetActive(true);
         }else

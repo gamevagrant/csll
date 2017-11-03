@@ -53,4 +53,38 @@ public class UILeftDatailWindow : UIWindowBase {
         });
     }
 
+
+    public void OnClickNoticeBtn()
+    {
+        OnClickClose();
+        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UINoticeWindow, GameMainManager.instance.model.userData.announcement);
+
+    }
+
+    public void OnClickMessageBtn()
+    {
+        OnClickClose();
+        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIMessageMailWindow);
+    }
+
+    public void OnClickMapBtn()
+    {
+
+    }
+
+    public void OnClickWheelBtn()
+    {
+
+    }
+
+    public void OnClickBuildBtn()
+    {
+
+    }
+
+    public void OnClickBadGuyBtn()
+    {
+        OnClickClose();
+        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIBadGuyRankWindow);
+    }
 }

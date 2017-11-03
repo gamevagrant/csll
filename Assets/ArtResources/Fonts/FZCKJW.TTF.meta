@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 83f4766e2ec3a79418df5874c121b60d
+timeCreated: 1509505552
+licenseType: Free
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: FZCuKaiS-R-GB
+  fontNames:
+  - FZCuKaiS-R-GB
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 4c7e7d1e891b8134798be7974b21eceb
+timeCreated: 1509505552
+licenseType: Free
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: FZFenSTXS-R-GB
+  fontNames:
+  - FZFenSTXS-R-GB
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

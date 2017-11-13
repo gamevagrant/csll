@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using DG.Tweening;
 
 public class UISideBarWindow :UIWindowBase {
@@ -25,6 +27,21 @@ public class UISideBarWindow :UIWindowBase {
 
     public RectTransform leftPanel;
     public RectTransform rightPanel;
+
+    public RectTransform rank;
+
+    private void Awake()
+    {
+        rank.GetComponentInChildren<Button>().onClick.AddListener(() =>
+        {
+            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIRankWindow);
+        });
+    }
+
+    private void OnDestroy()
+    {
+        rank.GetComponentInChildren<Button>().onClick.RemoveAllListeners();
+    }
 
     protected override void StartShowWindow(object[] data)
     {

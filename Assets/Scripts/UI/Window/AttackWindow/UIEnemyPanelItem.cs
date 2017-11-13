@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIEnemyPanelItem : BaseItemView {
 
     public HeadIcon headIcon;
-    public Text tipsLabel;
-    public Text attCountLabel;
+    public TextMeshProUGUI tipsLabel;
+    public TextMeshProUGUI attCountLabel;
     public Button attBtn;
     public GameObject img300k;
     public GameObject attImage;

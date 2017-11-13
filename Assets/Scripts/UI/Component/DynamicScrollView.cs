@@ -213,7 +213,7 @@ public class DynamicScrollView : MonoBehaviour {
 
 				Debug.Log(x.ToString() + "|" + y.ToString());
 
-				item.rect = new Rect(x * (itemTemplate.rect.width + spacing)+spacing, -y * (itemTemplate.rect.height + spacing) - spacing, itemTemplate.rect.width, itemTemplate.rect.height);
+				item.rect = new Rect(x * (itemTemplate.rect.width + spacing)+spacing, -y * (itemTemplate.rect.height + spacing), itemTemplate.rect.width, itemTemplate.rect.height);
 				item.data = datas[i];
 				item.isVisable = false;
 				itemDatas.Add(item);
@@ -237,7 +237,7 @@ public class DynamicScrollView : MonoBehaviour {
 
 				//Debug.Log(x.ToString() + "|" + y.ToString());
 
-				item.rect = new Rect(x * (itemTemplate.rect.width + spacing) + spacing, -y * (itemTemplate.rect.height + spacing) - spacing, itemTemplate.rect.width, itemTemplate.rect.height);
+				item.rect = new Rect(x * (itemTemplate.rect.width + spacing), -y * (itemTemplate.rect.height + spacing) - spacing, itemTemplate.rect.width, itemTemplate.rect.height);
 				item.data = datas[i];
 				item.isVisable = false;
 				itemDatas.Add(item);

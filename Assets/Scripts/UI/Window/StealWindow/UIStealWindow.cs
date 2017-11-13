@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
 
 public class UIStealWindow : UIWindowBase {
 
@@ -28,11 +29,11 @@ public class UIStealWindow : UIWindowBase {
     public RectTransform[] buttons;
     public RectTransform islandRoot;
     public RectTransform topBar;
-    public RectTransform bottomBar;
+    //public RectTransform bottomBar;
     public HeadIcon targetHead;
-    public Text bottomBarTips;
-    public Text stealTips;
-    public Text targetMooneyLabel;
+    //public TextMeshProUGUI bottomBarTips;
+    public TextMeshProUGUI stealTips;
+    public TextMeshProUGUI targetMooneyLabel;
     public RectTransform victoryTip;
     public RectTransform effect;
 
@@ -56,8 +57,8 @@ public class UIStealWindow : UIWindowBase {
         topBar.gameObject.SetActive(false);
         topBar.anchoredPosition = new Vector2(0, 150);
 
-        bottomBar.gameObject.SetActive(false);
-        bottomBar.anchoredPosition = new Vector2(0, -350);
+        //bottomBar.gameObject.SetActive(false);
+        //bottomBar.anchoredPosition = new Vector2(0, -350);
 
         victoryTip.gameObject.SetActive(false);
         effect.gameObject.SetActive(false);
@@ -126,7 +127,7 @@ public class UIStealWindow : UIWindowBase {
             buttons[i].gameObject.SetActive(false);
         }
         topBar.DOAnchorPos(new Vector2(0, 150), 0.5f).SetEase(Ease.OutCubic);
-        bottomBar.DOAnchorPos(new Vector2(0, -350), 0.5f).SetEase(Ease.OutCubic);
+        //bottomBar.DOAnchorPos(new Vector2(0, -350), 0.5f).SetEase(Ease.OutCubic);
         Sequence sq = DOTween.Sequence();
         for (int i = 0; i < islands.Length; i++)
         {
@@ -156,7 +157,7 @@ public class UIStealWindow : UIWindowBase {
     {
         selectedIndex = index;
         stealTips.gameObject.SetActive(false);
-        bottomBar.gameObject.SetActive(true);
+        //bottomBar.gameObject.SetActive(true);
         for (int i = 0; i < buttons.Length; i++)
         {
             buttons[i].gameObject.SetActive(false);
@@ -199,14 +200,16 @@ public class UIStealWindow : UIWindowBase {
                     {
                         GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.steal_got_king);
                         victoryTip.gameObject.SetActive(true);
-                        bottomBarTips.text = string.Format("恭喜你猜到富豪！\n获得{0}金币",GameUtils.GetCurrencyString(selectedTarget.money));
+                        //bottomBarTips.text = string.Format("恭喜你猜到富豪！\n获得{0}金币",GameUtils.GetCurrencyString(selectedTarget.money));
+                        GameMainManager.instance.uiManager.OpenModalBoxWindow(string.Format("恭喜你猜到富豪！\n获得{0}金币", GameUtils.GetCurrencyString(selectedTarget.money)), "", OnClickOkBtn);
                     }else
                     {
                         GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.steal_miss_king);
-                        bottomBarTips.text = string.Format("很遗憾没有猜到富豪！\n获得{0}金币", GameUtils.GetCurrencyString(selectedTarget.money));
+                        //bottomBarTips.text = string.Format("很遗憾没有猜到富豪！\n获得{0}金币", GameUtils.GetCurrencyString(selectedTarget.money));
+                        GameMainManager.instance.uiManager.OpenModalBoxWindow(string.Format("很遗憾没有猜到富豪！\n获得{0}金币", GameUtils.GetCurrencyString(selectedTarget.money)), "", OnClickOkBtn);
                     }
                 });
-                sq.Insert(6, bottomBar.DOAnchorPos(Vector2.zero, 0.5f).SetEase(Ease.OutCubic));
+                //sq.Insert(6, bottomBar.DOAnchorPos(Vector2.zero, 0.5f).SetEase(Ease.OutCubic));
 
             }
         });

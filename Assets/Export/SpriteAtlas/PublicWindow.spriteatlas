@@ -28,12 +28,12 @@ SpriteAtlas:
       enableTightPacking: 0
     packedHash:
       serializedVersion: 2
-      Hash: 9e6392046b8d4f65e42c6cdeedce9f9d
+      Hash: 5420f80320f8dc5cefcbcdb9881e79b2
     variantMultiplier: 1
     bindAsDefault: 0
     finalFormat: 4
-    hashString: 9e6392046b8d4f65e42c6cdeedce9f9d
-    totalSpriteSurfaceArea: 1517353
+    hashString: 5420f80320f8dc5cefcbcdb9881e79b2
+    totalSpriteSurfaceArea: 1576793
     packables:
     - {fileID: 102900000, guid: ce42f10cdb7301d4194ca8ae080ce34b, type: 3}
     packedSpriteRenderDataKeys:
@@ -45,6 +45,8 @@ SpriteAtlas:
     - e82e36c1fdfcd9842a878b8a33f0d662: 21300000
     - b9eb7782bafdd30408fbc2ec421488a8: 21300000
     - 470f46e03d9d56248b307d8c335d4528: 21300000
+    - cc1e95aedcf965d478d9fd46234f03a9: 21300000
+    - a00fd0a188f2954418dac35c7ee38dab: 21300000
     - 20842a95030312e4c95befdfc48fbaa8: 21300000
     - 9d01de07044aa35438a79ad8a9958a96: 21300000
     - 8fde3591d4213b74089fa902e2c1b942: 21300000
@@ -61,6 +63,8 @@ SpriteAtlas:
     - 9a891e006107a1741989aec33b869a29: 21300000
     - e23bb7eaa8b39a54b935ea31f2089a07: 21300000
     - b63e0849e9c6b1346b0150abb1d51c7e: 21300000
+    - 996060026a96cdf4d9324e17aba9c228: 21300000
+    - 15b2dec68f7dc9b40bdfa0eca070d606: 21300000
     - 6bfec6a06be81c8459b541fc58d6b292: 21300000
     - 6e4bb9a5dff58f448ba68d9f7448300a: 21300000
     - 704e6246bf6ab6b439d08c439d006bfc: 21300000
@@ -87,6 +91,8 @@ SpriteAtlas:
   - {fileID: 21300000, guid: e82e36c1fdfcd9842a878b8a33f0d662, type: 3}
   - {fileID: 21300000, guid: b9eb7782bafdd30408fbc2ec421488a8, type: 3}
   - {fileID: 21300000, guid: 470f46e03d9d56248b307d8c335d4528, type: 3}
+  - {fileID: 21300000, guid: cc1e95aedcf965d478d9fd46234f03a9, type: 3}
+  - {fileID: 21300000, guid: a00fd0a188f2954418dac35c7ee38dab, type: 3}
   - {fileID: 21300000, guid: 20842a95030312e4c95befdfc48fbaa8, type: 3}
   - {fileID: 21300000, guid: 9d01de07044aa35438a79ad8a9958a96, type: 3}
   - {fileID: 21300000, guid: 8fde3591d4213b74089fa902e2c1b942, type: 3}
@@ -103,6 +109,8 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 9a891e006107a1741989aec33b869a29, type: 3}
   - {fileID: 21300000, guid: e23bb7eaa8b39a54b935ea31f2089a07, type: 3}
   - {fileID: 21300000, guid: b63e0849e9c6b1346b0150abb1d51c7e, type: 3}
+  - {fileID: 21300000, guid: 996060026a96cdf4d9324e17aba9c228, type: 3}
+  - {fileID: 21300000, guid: 15b2dec68f7dc9b40bdfa0eca070d606, type: 3}
   - {fileID: 21300000, guid: 6bfec6a06be81c8459b541fc58d6b292, type: 3}
   - {fileID: 21300000, guid: 6e4bb9a5dff58f448ba68d9f7448300a, type: 3}
   - {fileID: 21300000, guid: 704e6246bf6ab6b439d08c439d006bfc, type: 3}
@@ -128,6 +136,8 @@ SpriteAtlas:
   - wrap_001_001
   - scale
   - wrap_002
+  - public_btn_green
+  - public_btn_red
   - headWrap_vip
   - headWrapS_vip
   - headWrapS
@@ -144,6 +154,8 @@ SpriteAtlas:
   - gonggao_wrap_001
   - menu_eren_03
   - wrap_001
+  - wrap_nor
+  - wrap_sel
   - public_btnwrap_sel
   - public_btnwrap_nor
   - public_scale3

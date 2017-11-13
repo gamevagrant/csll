@@ -18,8 +18,7 @@ public class UIAttackWindow :UIWindowBase {
     public RectTransform boomAnimation;//爆炸序列帧
     public RectTransform particSys;//萨金币特效
     public RectTransform shell;//炮弹
-    public RectTransform bottomBar;//底部对话框
-    public Text tips;//提示文字
+
 
     private AttackTargetUserData attackTargetUser;//随机攻击目标
 
@@ -59,8 +58,6 @@ public class UIAttackWindow :UIWindowBase {
         boomAnimation.gameObject.SetActive(false);
         aimIcon.gameObject.SetActive(false);
         shell.gameObject.SetActive(false);
-        bottomBar.gameObject.SetActive(false);
-        bottomBar.anchoredPosition = new Vector2(0, -350);
         shield.gameObject.SetActive(false);
 
         attackTargetUser = data[0] as AttackTargetUserData;
@@ -111,7 +108,6 @@ public class UIAttackWindow :UIWindowBase {
         sq.Append(DOTween.To(() => island.transform.localScale, x => island.transform.localScale = x,Vector3.zero, 2).SetEase(Ease.OutCubic));
        // sq.Insert(0,DOTween.To(() => (island.transform as RectTransform).anchoredPosition, x => (island.transform as RectTransform).anchoredPosition = x, new Vector2(600, 0), 1).SetEase(Ease.OutQuint));
        // sq.InsertCallback(0,()=> { topBar.HideBar(); });
-        sq.Insert(0,DOTween.To(() => bottomBar.anchoredPosition, x => bottomBar.anchoredPosition = x, new Vector2(0, -350), 1).SetEase(Ease.OutBack));
         sq.onComplete += () => {
             onComplete();
         };
@@ -149,7 +145,6 @@ public class UIAttackWindow :UIWindowBase {
         boomAnimation.position = target.position;
         particSys.anchoredPosition3D = target.anchoredPosition3D + new Vector3(0, 0, -100);
         shell.position = artillery.position;
-        bottomBar.gameObject.SetActive(true);
 
         float angle = Vector2.Angle(new Vector2(0, 1), target.position - artillery.position);
         if ((target.position - artillery.position).x > 0)
@@ -157,15 +152,17 @@ public class UIAttackWindow :UIWindowBase {
             angle = angle * -1;
         }
 
+        string tips = "";
         if (!data.isShielded && !data.isMiniShielded)
         {
+
             if(data.attackTarget.buildings[index - 1].status == 2)
             {
-                tips.text = string.Format("恭喜您，您成功摧毁了<color=red>{0}</color>的建筑，获得了<color=red>{1}</color>金币", data.attackTarget.name, GameUtils.GetCurrencyString(data.reward));
+                tips = string.Format("恭喜您，您成功摧毁了<color=red>{0}</color>的建筑，获得了<color=red>{1}</color>金币", data.attackTarget.name, GameUtils.GetCurrencyString(data.reward));
             }
             else 
             {
-                tips.text = string.Format("恭喜您，您成功损坏了<color=red>{0}</color>的建筑，获得了<color=red>{1}</color>金币", data.attackTarget.name, GameUtils.GetCurrencyString(data.reward));
+                tips = string.Format("恭喜您，您成功损坏了<color=red>{0}</color>的建筑，获得了<color=red>{1}</color>金币", data.attackTarget.name, GameUtils.GetCurrencyString(data.reward));
             }
             
            
@@ -194,8 +191,9 @@ public class UIAttackWindow :UIWindowBase {
             sq.Insert(4.5f,DOTween.To(() => artillery.anchoredPosition, x => artillery.anchoredPosition = x, new Vector2(0, -250), 0.5f));
             sq.InsertCallback(4.5f,()=> {
                 GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.panel_in);
+                GameMainManager.instance.uiManager.OpenModalBoxWindow(tips, "", OnClickOkBtn);
             });
-            sq.Insert(4.5f,bottomBar.DOAnchorPos(Vector2.zero,0.5f).SetEase(Ease.OutQuint));
+
             sq.AppendCallback(() =>
             {
                 boomAnimation.gameObject.SetActive(false);
@@ -205,7 +203,7 @@ public class UIAttackWindow :UIWindowBase {
         }
         else
         {
-            tips.text = string.Format("您的攻击被<color=red>{0}</color>的盾牌阻挡了，获得了<color=red>{1}</color>金币", data.attackTarget.name, GameUtils.GetCurrencyString(data.reward) );
+            tips = string.Format("您的攻击被<color=red>{0}</color>的盾牌阻挡了，获得了<color=red>{1}</color>金币", data.attackTarget.name, GameUtils.GetCurrencyString(data.reward) );
             GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.shoot_aim_target);
             Sequence sq = DOTween.Sequence();
             sq.Append(artillery.DORotate(new Vector3(0, 0, angle), 0.5f));
@@ -232,9 +230,8 @@ public class UIAttackWindow :UIWindowBase {
             sq.Insert(4.5f,DOTween.To(() => artillery.anchoredPosition, x => artillery.anchoredPosition = x, new Vector2(0, -250), 0.5f));
             sq.InsertCallback(5, () => {
                 GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.panel_in);
+                GameMainManager.instance.uiManager.OpenModalBoxWindow(tips, "", OnClickOkBtn);
             });
-            
-            sq.Insert(5f, bottomBar.DOAnchorPos(Vector2.zero, 0.5f).SetEase(Ease.OutQuint));
 
             sq.onComplete += () =>
             {

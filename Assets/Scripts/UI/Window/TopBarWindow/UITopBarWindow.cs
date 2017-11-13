@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-
+using TMPro;
 public class UITopBarWindow : UIWindowBase {
 
     public override UIWindowData windowData
@@ -25,8 +25,8 @@ public class UITopBarWindow : UIWindowBase {
 
     public RectTransform panel;
     public Image[] shieldImages;
-    public Text starLabel;
-    public Text moneyLabel;
+    public TextMeshProUGUI starLabel;
+    public TextMeshProUGUI moneyLabel;
 
     private UserData user;
 

@@ -101,4 +101,79 @@ public class UserData {
     public DailyTaskData daily_task;          // 每日任务  // DailyTask 数据结构在上面
     public AnnouncementData announcement;//系统公告
     public MailData[] user_mail;//邮件
+    public bool isVip;//是否时vip
+    public int vip_days;//VIP剩余时间
+
+    /// <summary>
+    /// 建造提示红点数值
+    /// </summary>
+    public int buildingTip
+    {
+        get
+        {
+            int num = 0;
+            if(buildingCost != null)
+            {
+                for (int i = 0; i < buildingCost.Length; i++)
+                {
+                    if (buildings[i].level < buildingCost[i].Length)
+                    {
+                        int cost = buildingCost[i][buildings[i].level];
+                        if (money > cost)
+                        {
+                            num++;
+                        }
+                    }
+
+                }
+            }
+           
+            return num;
+        }
+    }
+    /// <summary>
+    /// 好友提示红点
+    /// </summary>
+    public int friendTip
+    {
+        get
+        {
+            if(friendNotAgreeInfo!=null && friendNotAgreeInfo.Length>0)
+            {
+                return friendNotAgreeInfo.Length;
+            }else if(friendInfo != null)
+            {
+                foreach(FriendData fd in friendInfo)
+                {
+                    if(fd.sendStatus ==0|| fd.receiveStatus == 1)
+                    {
+                        return 1;
+                    }
+                }
+               
+            }
+            return 0;
+        }
+    }
+
+    public int mailTip
+    {
+        get
+        {
+            int num = 0;
+            if (user_mail != null)
+            {
+                foreach (MailData mail in user_mail)
+                {
+                    if (mail.is_get == 1)
+                    {
+                        num++;
+                    }
+                }
+            }
+           
+            return num;
+        }
+    }
+
 }

@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIPopupMessageWindow : UIWindowBase {
 
     public RawImage headImage;
-    public Text contentLabel;
+    public TextMeshProUGUI contentLabel;
 
     private RectTransform rectTransform;
     private Queue<PopupMessageData> queue;

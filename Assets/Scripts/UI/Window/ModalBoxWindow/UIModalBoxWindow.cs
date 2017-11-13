@@ -40,6 +40,11 @@ public class UIModalBoxWindow : UIWindowBase {
         rectTransform.anchoredPosition = new Vector2(0, -350);
     }
 
+    protected override void StartHideWindow()
+    {
+        modalData = null;
+    }
+
     protected override void EnterAnimation(Action onComplete)
     {
  
@@ -60,18 +65,20 @@ public class UIModalBoxWindow : UIWindowBase {
 
     public void OnClickOK()
     {
-        if(modalData.onClickOK != null)
+        if(modalData.onClick != null)
         {
-            modalData.onClickOK();
+            modalData.onClick(true);
         }
         OnClickClose();
     }
 
-    public class ModalBoxData
-    {
-        public string content;
-        public string okName;
-        public Action onClickOK;
-    }
 
+
+}
+public class ModalBoxData
+{
+    public string content;
+    public string okName = "确认";
+    public string cancelName = "取消";
+    public Action<bool> onClick = null;
 }

@@ -58,11 +58,12 @@ public abstract class UIWindowBase : MonoBehaviour {
             ExitAnimation(() => {
                 
                 GameMainManager.instance.uiManager.EnableOperation();
+                gameObject.SetActive(false);
                 if (onComplate != null)
                 {
                     onComplate();
                 }
-                gameObject.SetActive(false);
+               
             });
         }else
         {

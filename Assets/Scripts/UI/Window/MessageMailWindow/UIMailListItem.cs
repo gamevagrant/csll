@@ -34,11 +34,11 @@ public class UIMailListItem : BaseItemView
         }else if(mailData.is_get == 1)
         {
             getBtn.gameObject.SetActive(true);
-            getBtn.interactable = false;
+            getBtn.interactable = true;
         }else
         {
             getBtn.gameObject.SetActive(true);
-            getBtn.interactable = true;
+            getBtn.interactable = false;
         }
     }
 

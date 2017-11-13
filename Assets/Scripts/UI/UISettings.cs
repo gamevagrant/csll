@@ -15,11 +15,16 @@ public class UISettings  {
         UISideBarWindow,
         UIPopupMessageWindow,
         UIModalBoxWindow,
+        UIPopupModalBoxWindow,
         UINoticeWindow,
         UIMessageMailWindow,
         UIGetRewardWindow,
         UIBadGuyRankWindow,
         UIBuyWantedWindow,
+        UICheckPlayerIslandWindow,
+        UIFriendsWindow,
+        UIShopWindow,
+        UIRankWindow,
     }
 
     public enum UIWindowType
@@ -52,20 +57,25 @@ public class UISettings  {
     //public static string UIPrefabPath = "UIPrefab/";
     private static Dictionary<UIWindowID, string> windowPrefabPath = new Dictionary<UIWindowID, string>()
     {
-        { UIWindowID.UIWheelWindow,"UIWheelWindow"},
-         { UIWindowID.UIBuildingWindow,"UIBuildingWindow"},
-          { UIWindowID.UIAttackWindow,"UIAttackWindow"},
-           { UIWindowID.UIStealWindow,"UIStealWindow"},
-            { UIWindowID.UILeftDatailWindow,"UILeftDatailWindow"},
-             { UIWindowID.UITopBarWindow,"UITopBarWindow"},
-              { UIWindowID.UISideBarWindow,"UISideBarWindow"},
-                { UIWindowID.UIPopupMessageWindow,"UIPopupMessageWindow" },
+        {UIWindowID.UIWheelWindow,"UIWheelWindow"},
+        {UIWindowID.UIBuildingWindow,"UIBuildingWindow"},
+        {UIWindowID.UIAttackWindow,"UIAttackWindow"},
+        {UIWindowID.UIStealWindow,"UIStealWindow"},
+        {UIWindowID.UILeftDatailWindow,"UILeftDatailWindow"},
+        {UIWindowID.UITopBarWindow,"UITopBarWindow"},
+        {UIWindowID.UISideBarWindow,"UISideBarWindow"},
+        {UIWindowID.UIPopupMessageWindow,"UIPopupMessageWindow" },
         {UIWindowID.UIModalBoxWindow,"UIModalBoxWindow" },
+        {UIWindowID.UIPopupModalBoxWindow,"UIPopupModalBoxWindow" },
         {UIWindowID.UINoticeWindow,"UINoticeWindow" },
         {UIWindowID.UIMessageMailWindow,"UIMessageMailWindow" },
         {UIWindowID.UIGetRewardWindow,"UIGetRewardWindow" },
         {UIWindowID.UIBadGuyRankWindow,"UIBadGuyRankWindow" },
         {UIWindowID.UIBuyWantedWindow,"UIBuyWantedWindow" },
+        {UIWindowID.UICheckPlayerIslandWindow,"UICheckPlayerIslandWindow" },
+        {UIWindowID.UIFriendsWindow,"UIFriendsWindow" },
+        {UIWindowID.UIShopWindow,"UIShopWindow" },
+        {UIWindowID.UIRankWindow,"UIRankWindow" },
     };
 
     public static string getWindowName(UIWindowID id)

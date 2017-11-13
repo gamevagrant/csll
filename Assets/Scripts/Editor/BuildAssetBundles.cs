@@ -33,7 +33,7 @@ public class BuildAssetBundles {
         FilePathTools.createFolder(exportPath);
         BuildPipeline.BuildAssetBundles(exportPath,buildMap, BuildAssetBundleOptions.DeterministicAssetBundle, buildTarget);
     }
-
+    
     static AssetBundleBuild[] GetBuildFileListNew(string buildRoot)
     {
         //获取所有固定打包的文件

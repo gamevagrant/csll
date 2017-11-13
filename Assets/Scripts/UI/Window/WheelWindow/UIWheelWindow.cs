@@ -7,6 +7,13 @@ using UnityEngine.U2D;
 
 public class UIWheelWindow : UIWindowBase {
 
+    private enum State
+    {
+        Wheel,
+        Building,
+        Closed,
+    }
+
     public UIWheelPanel wheelPanel;
     public UIBuildPanel buildPanel;
 
@@ -14,6 +21,8 @@ public class UIWheelWindow : UIWindowBase {
 
     private long energyTimeToRecover;//增加体力剩余时间
     private float energyTimeToRecoverTag;// 获取体力剩余时间时的标记
+    private State currState;
+    private State openState;
 
     public override UIWindowData windowData
     {
@@ -35,13 +44,9 @@ public class UIWheelWindow : UIWindowBase {
     private void Awake()
     {
         EventDispatcher.instance.AddEventListener(EventEnum.LOGIN_COMPLATE, onUpdateUserData);
-
+        currState = State.Closed;
     }
 
-    private void Start()
-    {
-
-    }
 
     private void Update()
     {
@@ -81,28 +86,62 @@ public class UIWheelWindow : UIWindowBase {
     protected override void StartShowWindow(object[] data)
     {
         user = GameMainManager.instance.model.userData;
+        
         if (user != null)
         {
             updateUserData(user);
         }
-
+        openState = State.Wheel;
+        if(data!= null && data[0]!=null)
+        {
+            openState = (int)data[0]==0?State.Wheel:State.Building;
+           
+        }
+        
     }
 
     protected override void EnterAnimation(Action onComplete)
     {
+        if(currState!=State.Closed)
+        {   
+            if(currState != openState)
+            {
+                if (openState == State.Wheel)
+                {
+                    onClickShowWheelBtn();
+                }
+                else
+                {
+                    onClickShowBuildBtn();
+                }
+                currState = openState;
+            }
+            onComplete();
+            return;
+        }
+        currState = openState;
         GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_come);
         int count = 0;
         wheelPanel.OpenPanel(()=> {
             count++;
             if(count>1)
             {
+                if (openState == State.Building)
+                {
+                    onClickShowBuildBtn();
+                }
                 onComplete();
+               
             }
             });
         buildPanel.OpenPanel(() => {
             count++;
             if (count > 1)
             {
+                if (openState == State.Building)
+                {
+                    onClickShowBuildBtn();
+                }
                 onComplete();
             }
         });
@@ -114,6 +153,7 @@ public class UIWheelWindow : UIWindowBase {
             count++;
             if (count > 1)
             {
+                currState = State.Closed;
                 onComplete();
             }
         });
@@ -121,6 +161,7 @@ public class UIWheelWindow : UIWindowBase {
             count++;
             if (count > 1)
             {
+                currState = State.Closed;
                 onComplete();
             }
         });
@@ -130,12 +171,14 @@ public class UIWheelWindow : UIWindowBase {
     {
         wheelPanel.enterToBuildPanelState();
         buildPanel.enterToBuildPanelState();
+        currState = State.Building;
     }
 
     public void onClickShowWheelBtn()
     {
         wheelPanel.enterToWheelPanelState();
         buildPanel.enterToWheelPanelState();
+        currState = State.Wheel;
     }
 
     public void OnClickLeftDatailBtn()

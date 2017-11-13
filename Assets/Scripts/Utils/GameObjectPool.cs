@@ -36,14 +36,14 @@ public class GameObjectPool : MonoBehaviour {
 		return comp as T;
 	}
 
-	public List<T> getActiveTarget<T>() where T:Component
+	public List<T> getActiveTargets<T>() where T:Component
 	{
 		List<T> list = new List<T>();
 		Component comp;
-		for(int i = 0;i<transform.childCount;i++)
+		for(int i = 0; i < targetlist.Count; i++)
 		{
-			comp = transform.GetChild(i).GetComponent<T>();
-			if(comp.gameObject.activeSelf)
+			comp = targetlist[index];
+            if (comp.gameObject.activeSelf)
 			{
 				list.Add(comp as T);
 			}

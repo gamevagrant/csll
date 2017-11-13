@@ -5,7 +5,7 @@ public class MapInfoData {
 
     public string[] islandNames;
     public MinesData[] mines;
-    public long moneyBox;
+    public double moneyBox;
     public double producePerSecond;
     public int limit;
 }

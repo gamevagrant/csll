@@ -25,13 +25,13 @@ public class GameStarter : MonoBehaviour {
     {
         gameObject.AddComponent<AssetBundleLoadManager>();
         gameObject.AddComponent<AssetLoadManager>();
-       
+        GameMainManager.instance.mono = this;
         login();
     }
 
     private void login()
     {
-        GameMainManager.instance.netManager.Login(12, (res, data) => {
+        GameMainManager.instance.netManager.Login(4, (res, data) => {
             if (data.isOK)
             {
                 StartCoroutine(OpenUI());
@@ -49,10 +49,12 @@ public class GameStarter : MonoBehaviour {
         yield return new WaitForSeconds(1);
         //GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIWheelWindow);
 
-        Dictionary<UISettings.UIWindowID, object> stateData = new Dictionary<UISettings.UIWindowID, object>();
-        stateData.Add(UISettings.UIWindowID.UITopBarWindow, null);
-        stateData.Add(UISettings.UIWindowID.UIWheelWindow, null);
-        stateData.Add(UISettings.UIWindowID.UISideBarWindow, null);
-        GameMainManager.instance.uiManager.ChangeState(new UIStateChangeBase(stateData, null));
+        //Dictionary<UISettings.UIWindowID, object> stateData = new Dictionary<UISettings.UIWindowID, object>();
+        //stateData.Add(UISettings.UIWindowID.UITopBarWindow, null);
+        //stateData.Add(UISettings.UIWindowID.UIWheelWindow, null);
+        //stateData.Add(UISettings.UIWindowID.UISideBarWindow, null);
+        //GameMainManager.instance.uiManager.ChangeState(new UIStateChangeBase(stateData, null));
+
+        GameMainManager.instance.uiManager.ChangeState(new MainState());
     }
 }

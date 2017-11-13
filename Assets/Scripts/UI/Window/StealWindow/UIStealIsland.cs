@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
 
 public class UIStealIsland : MonoBehaviour {
 
     public IslandFactory island;
     public HeadIcon head;
-    public Text labelMoney;
+    public TextMeshProUGUI labelMoney;
 
     public void setData(StealIslandData islandData)
     {

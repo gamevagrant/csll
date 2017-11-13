@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.U2D;
 using DG.Tweening;
-
+using TMPro;
 public class UIBuildPanel : MonoBehaviour {
 
-    public Text cityName;
+    public TextMeshProUGUI cityName;
     public GameObject buildingAnimation;
     public IslandFactory islandFactory;
 
@@ -15,11 +15,11 @@ public class UIBuildPanel : MonoBehaviour {
     public GetMoneyBoxAnimation box;
 
     [SerializeField]
-    private GameObject buildBtn;
+    private RectTransform buildBtn;
     [SerializeField]
-    private GameObject switchBtn;
+    private RectTransform switchBtn;
     [SerializeField]
-    private GameObject panel;
+    private RectTransform panel;
 
     private SpriteAtlas spriteAtlas;
 
@@ -33,18 +33,19 @@ public class UIBuildPanel : MonoBehaviour {
     {
         EventDispatcher.instance.AddEventListener(EventEnum.BUILD_COMPLATE, OnBuildComplateHandle);
 
-        buildBtnOriginalValue = (buildBtn.transform as RectTransform).anchoredPosition;
-        switchOriginalValue = (switchBtn.transform as RectTransform).anchoredPosition;
-        panelLocalOriginalValue = (panel.transform as RectTransform).anchoredPosition;
+        buildBtnOriginalValue = buildBtn.anchoredPosition;
+        switchOriginalValue = switchBtn.anchoredPosition;
+        panelLocalOriginalValue = panel.anchoredPosition;
 
-        (buildBtn.transform as RectTransform).anchoredPosition = new Vector2((buildBtn.transform as RectTransform).anchoredPosition.x, -300);
-        (switchBtn.transform as RectTransform).anchoredPosition = new Vector2(-200, (switchBtn.transform as RectTransform).anchoredPosition.y);
+        buildBtn.anchoredPosition = new Vector2(buildBtn.anchoredPosition.x, -300);
+        switchBtn.anchoredPosition = new Vector2(-200, switchBtn.anchoredPosition.y);
+        panel.anchoredPosition = new Vector2(400, -150);
+        panel.localScale = new Vector3(0.5f, 0.5f, 1);
 
-        panel.transform.localScale = new Vector3(0.5f,0.5f,1);
-        (panel.transform as RectTransform).anchoredPosition = new Vector2(200,-150);
 
-        buildBtn.SetActive(false);
-        switchBtn.SetActive(false);
+
+        buildBtn.gameObject.SetActive(false);
+        switchBtn.gameObject.SetActive(false);
         buildingAnimation.SetActive(false);
 
         upgradePanel.SetActive(false);
@@ -78,18 +79,18 @@ public class UIBuildPanel : MonoBehaviour {
     /// </summary>
     public void enterToWheelPanelState()
     {
-        RectTransform buildBtnTF = buildBtn.transform as RectTransform;
-        DOTween.To(() => buildBtnTF.anchoredPosition, p => buildBtnTF.anchoredPosition = p, new Vector2(buildBtnTF.anchoredPosition.x, -300), 1).SetEase(Ease.OutQuint); ;
+        //RectTransform buildBtnTF = buildBtn.transform as RectTransform;
+        DOTween.To(() => buildBtn.anchoredPosition, p => buildBtn.anchoredPosition = p, new Vector2(buildBtn.anchoredPosition.x, -300), 1).SetEase(Ease.OutQuint); ;
 
-        RectTransform switchBtnTF = switchBtn.transform as RectTransform;
-        DOTween.To(() => switchBtnTF.anchoredPosition, p => switchBtnTF.anchoredPosition = p, new Vector2(-200, switchBtnTF.anchoredPosition.y), 1);
+        //RectTransform switchBtnTF = switchBtn.transform as RectTransform;
+        DOTween.To(() => switchBtn.anchoredPosition, p => switchBtn.anchoredPosition = p, new Vector2(-200, switchBtn.anchoredPosition.y), 1);
 
-        RectTransform buildPanelTF = panel.transform as RectTransform;
-        DOTween.To(() => buildPanelTF.anchoredPosition, x => buildPanelTF.anchoredPosition = x, new Vector2(200, -150), 1);
-        DOTween.To(() => buildPanelTF.localScale, x => buildPanelTF.localScale = x, new Vector3(0.5f,0.5f,1), 1).onComplete = () => {
+        //RectTransform buildPanelTF = panel.transform as RectTransform;
+        DOTween.To(() => panel.anchoredPosition, x => panel.anchoredPosition = x, new Vector2(200, -150), 1);
+        DOTween.To(() => panel.localScale, x => panel.localScale = x, new Vector3(0.5f,0.5f,1), 1).onComplete = () => {
 
-            buildBtn.SetActive(false);
-            switchBtn.SetActive(false);
+            buildBtn.gameObject.SetActive(false);
+            switchBtn.gameObject.SetActive(false);
         };
     }
 
@@ -99,19 +100,19 @@ public class UIBuildPanel : MonoBehaviour {
     public void enterToBuildPanelState()
     {
         GameMainManager.instance.uiManager.DisableOperation();
-        buildBtn.SetActive(true);
-        switchBtn.SetActive(true);
+        buildBtn.gameObject.SetActive(true);
+        switchBtn.gameObject.SetActive(true);
 
-        RectTransform buildBtnTF = buildBtn.transform as RectTransform;
-        DOTween.To(() => buildBtnTF.anchoredPosition, p => buildBtnTF.anchoredPosition = p, buildBtnOriginalValue, 1).SetEase(Ease.InQuint); ;
+        //RectTransform buildBtnTF = buildBtn.transform as RectTransform;
+        DOTween.To(() => buildBtn.anchoredPosition, p => buildBtn.anchoredPosition = p, buildBtnOriginalValue, 1).SetEase(Ease.InQuint); ;
         //DOTween.To(() => buildBtnTF.localScale, x => buildBtnTF.localScale = x, new Vector3(1.5f, 1.5f, 1), 1);
 
-        RectTransform switchBtnTF = switchBtn.transform as RectTransform;
-        DOTween.To(() => switchBtnTF.anchoredPosition, p => switchBtnTF.anchoredPosition = p, switchOriginalValue, 1);
+        //RectTransform switchBtnTF = switchBtn.transform as RectTransform;
+        DOTween.To(() => switchBtn.anchoredPosition, p => switchBtn.anchoredPosition = p, switchOriginalValue, 1);
 
-        RectTransform buildPanelTF = panel.transform as RectTransform;
-        DOTween.To(() => buildPanelTF.anchoredPosition, x => buildPanelTF.anchoredPosition = x,panelLocalOriginalValue, 1).SetEase(Ease.InQuint);
-        DOTween.To(() => buildPanelTF.localScale, x => buildPanelTF.localScale = x, Vector3.one, 1).onComplete = () => {
+        //RectTransform buildPanelTF = panel.transform as RectTransform;
+        DOTween.To(() => panel.anchoredPosition, x => panel.anchoredPosition = x,panelLocalOriginalValue, 1).SetEase(Ease.InQuint);
+        DOTween.To(() => panel.localScale, x => panel.localScale = x, Vector3.one, 1).onComplete = () => {
 
             GameMainManager.instance.uiManager.EnableOperation();
         };
@@ -122,18 +123,18 @@ public class UIBuildPanel : MonoBehaviour {
     /// </summary>
     public void ClosePanel(System.Action onComplate)
     {
-        RectTransform buildBtnTF = buildBtn.transform as RectTransform;
-        RectTransform switchBtnTF = switchBtn.transform as RectTransform;
-        RectTransform buildPanelTF = panel.transform as RectTransform;
+        //RectTransform buildBtnTF = buildBtn.transform as RectTransform;
+        //RectTransform switchBtnTF = switchBtn.transform as RectTransform;
+        //RectTransform buildPanelTF = panel.transform as RectTransform;
 
         Sequence sq = DOTween.Sequence();
-        sq.Append(DOTween.To(() => buildBtnTF.anchoredPosition, p => buildBtnTF.anchoredPosition = p, new Vector2(buildBtnTF.anchoredPosition.x, -300), 1).SetEase(Ease.OutExpo));
-        sq.Insert(0.5f,DOTween.To(() => switchBtnTF.anchoredPosition, p => switchBtnTF.anchoredPosition = p, new Vector2(-200, switchBtnTF.anchoredPosition.y), 1).SetEase(Ease.OutCubic));
-        sq.Insert(0.5f, DOTween.To(() => buildPanelTF.anchoredPosition, x => buildPanelTF.anchoredPosition = x, new Vector2(500, -150), 1).SetEase(Ease.OutBack));
+        sq.Append(DOTween.To(() => buildBtn.anchoredPosition, p => buildBtn.anchoredPosition = p, new Vector2(buildBtn.anchoredPosition.x, -300), 1).SetEase(Ease.OutExpo));
+        sq.Insert(0.5f,DOTween.To(() => switchBtn.anchoredPosition, p => switchBtn.anchoredPosition = p, new Vector2(-200, switchBtn.anchoredPosition.y), 1).SetEase(Ease.OutCubic));
+        sq.Insert(0.5f, DOTween.To(() => panel.anchoredPosition, x => panel.anchoredPosition = x, new Vector2(500, -150), 1).SetEase(Ease.OutBack));
         sq.onComplete += () => {
-            buildBtn.SetActive(false);
-            switchBtn.SetActive(false);
-            panel.SetActive(false);
+            //buildBtn.gameObject.SetActive(false);
+            //switchBtn.gameObject.SetActive(false);
+            //panel.gameObject.SetActive(false);
             onComplate();
         };
         
@@ -146,20 +147,17 @@ public class UIBuildPanel : MonoBehaviour {
     public void OpenPanel(System.Action onComplate)
     {
         GameMainManager.instance.uiManager.DisableOperation();
-        buildBtn.SetActive(false);
-        switchBtn.SetActive(false);
-        panel.SetActive(true);
+        // buildBtn.SetActive(false);
+        // switchBtn.SetActive(false);
+        // panel.SetActive(true);
 
-        RectTransform buildBtnTF = buildBtn.transform as RectTransform;
-        RectTransform switchBtnTF = switchBtn.transform as RectTransform;
-        RectTransform buildPanelTF = panel.transform as RectTransform;
+        //RectTransform buildBtnTF = buildBtn.transform as RectTransform;
+        //RectTransform switchBtnTF = switchBtn.transform as RectTransform;
+        //RectTransform buildPanelTF = panel.transform as RectTransform;
 
-        buildBtnTF.anchoredPosition = new Vector2(buildBtnTF.anchoredPosition.x, -300);
-        switchBtnTF.anchoredPosition = new Vector2(-200, switchBtnTF.anchoredPosition.y);
-        buildPanelTF.anchoredPosition = new Vector2(400, -150);
-        buildPanelTF.localScale = new Vector3(0.5f, 0.5f, 1);
 
-        DOTween.To(() => buildPanelTF.anchoredPosition, x => buildPanelTF.anchoredPosition = x, new Vector2(200, -150), 1).SetEase(Ease.OutCubic).onComplete+=()=> {
+
+        DOTween.To(() => panel.anchoredPosition, x => panel.anchoredPosition = x, new Vector2(200, -150), 1).SetEase(Ease.OutCubic).onComplete+=()=> {
             GameMainManager.instance.uiManager.EnableOperation();
             onComplate();
         };
@@ -192,11 +190,11 @@ public class UIBuildPanel : MonoBehaviour {
                 GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.building_level_up);
                 GameMainManager.instance.uiManager.CloseWindow(UISettings.UIWindowID.UISideBarWindow);
                 GameMainManager.instance.uiManager.CloseWindow(UISettings.UIWindowID.UITopBarWindow);
-                switchBtn.SetActive(false);
+                switchBtn.gameObject.SetActive(false);
                 upgradePanel.SetActive(true);
             }));
            
-            buildBtn.SetActive(false);
+            buildBtn.gameObject.SetActive(false);
 
         }
        
@@ -225,11 +223,11 @@ public class UIBuildPanel : MonoBehaviour {
             {
                 upgradePanel.SetActive(false);
                 box.gameObject.SetActive(false);
-                buildBtn.SetActive(true);
+                buildBtn.gameObject.SetActive(true);
 
                 GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UISideBarWindow);
                 GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UITopBarWindow);
-                switchBtn.SetActive(true);
+                switchBtn.gameObject.SetActive(true);
             });
         });
     }

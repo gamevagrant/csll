@@ -46,5 +46,86 @@ public interface INetManager
     /// <param name="callBack"></param>
     /// <returns></returns>
     bool Vengeance(Action<bool, VengeanceMessage> callBack);
+    /// <summary>
+    /// 获取玩家信息
+    /// </summary>
+    /// <param name="fid"></param>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool Show(long fid, Action<bool, ShowMessage> callBack);
+
+    /// <summary>
+    /// 获取好友列表
+    /// </summary>
+    /// <param name="needFoF"></param>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool Friend(int needFoF, Action<bool, FriendMessage> callBack);
+    /// <summary>
+    /// 同意好友申请
+    /// </summary>
+    /// <param name="friendUid"></param>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool AgreeAddFriend(long friendUid, Action<bool, AgreeAddFriendMessage> callBack);
+    /// <summary>
+    /// 同意所有添加好友请求
+    /// </summary>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool AgreeAddAllFriend(Action<bool, FriendMessage> callBack);
+    /// <summary>
+    /// 添加好友
+    /// </summary>
+    /// <param name="FriendshipCode"></param>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool AddFriend(string FriendshipCode, Action<bool, FriendMessage> callBack);
+
+    /// <summary>
+    /// 删除好友/忽略添加好友请求
+    /// </summary>
+    /// <param name="friendUid"></param>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool RemoveFriend(long friendUid, Action<bool, FriendMessage> callBack);
+    /// <summary>
+    /// 忽略所有添加好友请求
+    /// </summary>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool RemoveAllFriend(Action<bool, FriendMessage> callBack);
+    /// <summary>
+    /// 赠送好友能量
+    /// </summary>
+    /// <param name="friendUid"></param>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool SendEnergy(long friendUid, Action<bool, SendEnergyMessage> callBack);
+    /// <summary>
+    /// 领取好友赠送的能量/一键领取好友赠送的能量
+    /// </summary>
+    /// <param name="friendUid">为0时一键领取/赠送好友能量</param>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool ReceiveEnergy(long friendUid, Action<bool, ReceiveEnergyMessage> callBack);
+    /// <summary>
+    /// 获取商店数据
+    /// </summary>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool ShopList(Action<bool, ShopMessage> callBack);
+    /// <summary>
+    /// 获取世界排行榜
+    /// </summary>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool AllRank(Action<bool, AllRankMessage> callBack);
+    /// <summary>
+    /// 获取好友排行榜
+    /// </summary>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool FriendRank(Action<bool, SendEnergyMessage> callBack);
 }
 

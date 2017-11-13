@@ -46,6 +46,29 @@ public class UIBadGuyRankItem : BaseItemView {
 
     private void OnClickWantedBtn()
     {
+        if(GameMainManager.instance.model.userData.wantedCount>0)
+        {
+            GameMainManager.instance.uiManager.OpenModalBoxWindow("确认使用1个通缉令吗？", "", "", (ret) =>
+            {
+                Debug.Log(ret);
+            });
+        }else
+        {
+            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIBuyWantedWindow);
+        }
+        
+    }
 
+    public void OnClickHead()
+    {
+        GameMainManager.instance.netManager.Show(badGuy.uid, (ret,res) =>
+        {
+            if(res.isOK)
+            {
+                GameMainManager.instance.uiManager.ChangeState(new CheckPlayerState(res.data.otherData));
+            }
+            
+        });
+        
     }
 }

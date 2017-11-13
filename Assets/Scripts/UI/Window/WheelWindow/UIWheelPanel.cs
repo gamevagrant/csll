@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-
+using TMPro;
 
 public class UIWheelPanel : MonoBehaviour {
 
-    public Text[] names;//文字显示位置
+    public TextMeshProUGUI[] names;//文字显示位置
     public Image[] images;//图片显示位置
     public Sprite[] sprites;//sprite集合
     public Image reflective;//反光
@@ -19,21 +19,21 @@ public class UIWheelPanel : MonoBehaviour {
     public GameObject beaver;
 
     public RawImage stealHead;
-    public Text stealNameLabel;
-    public Text stealMoneyLabel;
+    public TextMeshProUGUI stealNameLabel;
+    public TextMeshProUGUI stealMoneyLabel;
 
-    public Text countDownLabel;
-    public Text addEnergyCountLabel;
-    public Text energyLabel;
+    public TextMeshProUGUI countDownLabel;
+    public TextMeshProUGUI addEnergyCountLabel;
+    public TextMeshProUGUI energyLabel;
     public Slider energyProgressSlider;
     public AudioClip[] audioClips;
 
     [SerializeField]
-    private GameObject rollBtn;
+    private RectTransform rollBtn;
     [SerializeField]
-    private GameObject switchBtn;
+    private RectTransform switchBtn;
     [SerializeField]
-    private GameObject panel;
+    private RectTransform panel;
 
     private bool isWorking;
 
@@ -48,14 +48,18 @@ public class UIWheelPanel : MonoBehaviour {
     // Use this for initialization
     void Awake ()
     {
-        rollBtnOriginalValue = (rollBtn.transform as RectTransform).anchoredPosition;
-        switchOriginalValue = (switchBtn.transform as RectTransform).anchoredPosition;
-        panelLocalOriginalValue = (panel.transform as RectTransform).anchoredPosition;
+        rollBtnOriginalValue = rollBtn.anchoredPosition;
+        switchOriginalValue = switchBtn.anchoredPosition;
+        panelLocalOriginalValue = panel.anchoredPosition;
 
         reflective.color = new Color(1, 1, 1, 0);
+
+        rollBtn.anchoredPosition = new Vector2(rollBtn.anchoredPosition.x, -300);
+        switchBtn.anchoredPosition = new Vector2(200, switchBtn.anchoredPosition.y);
+        panel.anchoredPosition = new Vector2(-600, panel.anchoredPosition.y);
     }
 
-   
+  
 
     private void Start()
     {
@@ -110,7 +114,7 @@ public class UIWheelPanel : MonoBehaviour {
         foreach(RollerItemData data in datas)
         {
             int index = data.index;
-            Text t = names[index];
+            TextMeshProUGUI t = names[index];
             Image pic = images[index];
             pic.enabled = true;
             if(data.type == "steal")
@@ -147,21 +151,21 @@ public class UIWheelPanel : MonoBehaviour {
     public void enterToBuildPanelState()
     {
         GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_view_switch_in);
-        RectTransform rollBtnTF = rollBtn.transform as RectTransform;
+        //RectTransform rollBtnTF = rollBtn.transform as RectTransform;
 
-        DOTween.To(() => rollBtnTF.anchoredPosition, p => rollBtnTF.anchoredPosition = p, new Vector2(rollBtnTF.anchoredPosition.x, -300), 1).SetEase(Ease.InQuint);
-        DOTween.To(() => rollBtnTF.localScale, x => rollBtnTF.localScale = x, new Vector3(1.5f,1.5f,1), 1);
+        DOTween.To(() => rollBtn.anchoredPosition, p => rollBtn.anchoredPosition = p, new Vector2(rollBtn.anchoredPosition.x, -300), 1).SetEase(Ease.InQuint);
+        DOTween.To(() => rollBtn.localScale, x => rollBtn.localScale = x, new Vector3(1.5f,1.5f,1), 1);
 
-        RectTransform switchBtnTF = switchBtn.transform as RectTransform;
-        DOTween.To(() => switchBtnTF.anchoredPosition, p => switchBtnTF.anchoredPosition = p, new Vector2(200, switchBtnTF.anchoredPosition.y), 1);
+        //RectTransform switchBtnTF = switchBtn.transform as RectTransform;
+        DOTween.To(() => switchBtn.anchoredPosition, p => switchBtn.anchoredPosition = p, new Vector2(200, switchBtn.anchoredPosition.y), 1);
 
-        RectTransform rollPanelTF = panel.transform as RectTransform;
-        DOTween.To(() => rollPanelTF.anchoredPosition, x => rollPanelTF.anchoredPosition = x, new Vector2(-800,1000), 1);
-        DOTween.To(() => rollPanelTF.localScale, x => rollPanelTF.localScale = x, new Vector3(2f, 2f, 1), 1).onComplete = ()=> {
+        //RectTransform rollPanelTF = panel.transform as RectTransform;
+        DOTween.To(() => panel.anchoredPosition, x => panel.anchoredPosition = x, new Vector2(-800,1000), 1);
+        DOTween.To(() => panel.localScale, x => panel.localScale = x, new Vector3(2f, 2f, 1), 1).onComplete = ()=> {
 
-            rollBtn.SetActive(false);
-            switchBtn.SetActive(false);
-            panel.SetActive(false);
+            rollBtn.gameObject.SetActive(false);
+            switchBtn.gameObject.SetActive(false);
+            panel.gameObject.SetActive(false);
         };
     }
 
@@ -169,20 +173,20 @@ public class UIWheelPanel : MonoBehaviour {
     {
         GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_view_switch_out);
         GameMainManager.instance.uiManager.DisableOperation();
-        rollBtn.SetActive(true);
-        switchBtn.SetActive(true);
-        panel.SetActive(true);
+        rollBtn.gameObject.SetActive(true);
+        switchBtn.gameObject.SetActive(true);
+        panel.gameObject.SetActive(true);
 
-        RectTransform rollBtnTF = rollBtn.transform as RectTransform;
-        DOTween.To(() => rollBtnTF.anchoredPosition, p => rollBtnTF.anchoredPosition = p, rollBtnOriginalValue, 1).SetEase(Ease.OutQuint);
-        DOTween.To(() => rollBtnTF.localScale, x => rollBtnTF.localScale = x, Vector3.one, 1);
+        //RectTransform rollBtnTF = rollBtn.transform as RectTransform;
+        DOTween.To(() => rollBtn.anchoredPosition, p => rollBtn.anchoredPosition = p, rollBtnOriginalValue, 1).SetEase(Ease.OutQuint);
+        DOTween.To(() => rollBtn.localScale, x => rollBtn.localScale = x, Vector3.one, 1);
 
-        RectTransform switchBtnTF = switchBtn.transform as RectTransform;
-        DOTween.To(() => switchBtnTF.anchoredPosition, p => switchBtnTF.anchoredPosition = p, switchOriginalValue, 1);
+        //RectTransform switchBtnTF = switchBtn.transform as RectTransform;
+        DOTween.To(() => switchBtn.anchoredPosition, p => switchBtn.anchoredPosition = p, switchOriginalValue, 1);
 
-        RectTransform rollPanelTF = panel.transform as RectTransform;
-        DOTween.To(() => rollPanelTF.anchoredPosition, x => rollPanelTF.anchoredPosition = x, panelLocalOriginalValue, 1);
-        DOTween.To(() => rollPanelTF.localScale, x => rollPanelTF.localScale = x, Vector3.one, 1).onComplete = () => {
+       // RectTransform rollPanelTF = panel.transform as RectTransform;
+        DOTween.To(() => panel.anchoredPosition, x => panel.anchoredPosition = x, panelLocalOriginalValue, 1);
+        DOTween.To(() => panel.localScale, x => panel.localScale = x, Vector3.one, 1).onComplete = () => {
 
             GameMainManager.instance.uiManager.EnableOperation();
         };
@@ -190,19 +194,19 @@ public class UIWheelPanel : MonoBehaviour {
 
     public void ClosePanel(System.Action onComplate)
     {
-        RectTransform rollBtnTF = rollBtn.transform as RectTransform;
-        RectTransform switchBtnTF = switchBtn.transform as RectTransform;
-        RectTransform rollPanelTF = panel.transform as RectTransform;
+       // RectTransform rollBtnTF = rollBtn.transform as RectTransform;
+       // RectTransform switchBtnTF = switchBtn.transform as RectTransform;
+        //RectTransform rollPanelTF = panel.transform as RectTransform;
 
         Sequence sq = DOTween.Sequence();
-        sq.Append(DOTween.To(() => rollBtnTF.anchoredPosition, p => rollBtnTF.anchoredPosition = p, new Vector2(rollBtnTF.anchoredPosition.x, -300), 1f).SetEase(Ease.OutExpo));
-        sq.Insert(0.5f,DOTween.To(() => switchBtnTF.anchoredPosition, p => switchBtnTF.anchoredPosition = p, new Vector2(200, switchBtnTF.anchoredPosition.y), 1).SetEase(Ease.OutCubic));
-        sq.Insert(0.5f, DOTween.To(() => rollPanelTF.anchoredPosition, x => rollPanelTF.anchoredPosition = x, new Vector2(-600, rollPanelTF.anchoredPosition.y), 1));
+        sq.Append(DOTween.To(() => rollBtn.anchoredPosition, p => rollBtn.anchoredPosition = p, new Vector2(rollBtn.anchoredPosition.x, -300), 1f).SetEase(Ease.OutExpo));
+        sq.Insert(0.5f,DOTween.To(() => switchBtn.anchoredPosition, p => switchBtn.anchoredPosition = p, new Vector2(200, switchBtn.anchoredPosition.y), 1).SetEase(Ease.OutCubic));
+        sq.Insert(0.5f, DOTween.To(() => panel.anchoredPosition, x => panel.anchoredPosition = x, new Vector2(-600, panel.anchoredPosition.y), 1));
         sq.onComplete+= () => {
 
-            rollBtn.SetActive(false);
-            switchBtn.SetActive(false);
-            panel.SetActive(false);
+            //rollBtn.gameObject.SetActive(false);
+            //switchBtn.gameObject.SetActive(false);
+            //panel.gameObject.SetActive(false);
             onComplate();
         };
     }
@@ -210,22 +214,20 @@ public class UIWheelPanel : MonoBehaviour {
     public void OpenPanel(System.Action onComplate)
     {
         GameMainManager.instance.uiManager.DisableOperation();
-        rollBtn.SetActive(true);
-        switchBtn.SetActive(true);
-        panel.SetActive(true);
+        //rollBtn.gameObject.SetActive(true);
+        //switchBtn.gameObject.SetActive(true);
+        //panel.gameObject.SetActive(true);
 
-        RectTransform rollBtnTF = rollBtn.transform as RectTransform;
-        RectTransform switchBtnTF = switchBtn.transform as RectTransform;
-        RectTransform rollPanelTF = panel.transform as RectTransform;
+        //RectTransform rollBtnTF = rollBtn.transform as RectTransform;
+        //RectTransform switchBtnTF = switchBtn.transform as RectTransform;
+        //RectTransform rollPanelTF = panel.transform as RectTransform;
 
-        rollBtnTF.anchoredPosition = new Vector2(rollBtnTF.anchoredPosition.x, -300);
-        switchBtnTF.anchoredPosition = new Vector2(200, switchBtnTF.anchoredPosition.y);
-        rollPanelTF.anchoredPosition = new Vector2(-600, rollPanelTF.anchoredPosition.y);
+       
 
         Sequence sq = DOTween.Sequence();
-        sq.Append(DOTween.To(() => rollBtnTF.anchoredPosition, p => rollBtnTF.anchoredPosition = p, rollBtnOriginalValue, 1f).SetEase(Ease.OutExpo));
-        sq.Insert(0,DOTween.To(() => switchBtnTF.anchoredPosition, p => switchBtnTF.anchoredPosition = p, switchOriginalValue, 1).SetEase(Ease.OutCubic));
-        sq.Insert(0, DOTween.To(() => rollPanelTF.anchoredPosition, x => rollPanelTF.anchoredPosition = x, panelLocalOriginalValue, 1));
+        sq.Append(DOTween.To(() => rollBtn.anchoredPosition, p => rollBtn.anchoredPosition = p, rollBtnOriginalValue, 1f).SetEase(Ease.OutExpo));
+        sq.Insert(0,DOTween.To(() => switchBtn.anchoredPosition, p => switchBtn.anchoredPosition = p, switchOriginalValue, 1).SetEase(Ease.OutCubic));
+        sq.Insert(0, DOTween.To(() => panel.anchoredPosition, x => panel.anchoredPosition = x, panelLocalOriginalValue, 1));
         sq.onComplete += () => {
 
             GameMainManager.instance.uiManager.EnableOperation();
@@ -356,19 +358,25 @@ public class UIWheelPanel : MonoBehaviour {
             Dictionary<UISettings.UIWindowID, object> stateData = new Dictionary<UISettings.UIWindowID, object>();
             stateData.Add(UISettings.UIWindowID.UIAttackWindow, rollData.attackTarget);
             GameMainManager.instance.uiManager.ChangeState(new UIStateChangeBase(stateData));
-        }else if (rollItem.type == "coin")
+        }else if (rollItem.type == "coin" || rollItem.type == "xcrowns")
         {
-            if (rollItem.code < 10000)
+            int money = rollItem.code;
+            if(rollItem.type == "xcrowns")
+            {
+                money = GameMainManager.instance.model.userData.crowns * rollItem.code;
+            }
+
+            if (money < 10000)
             {
                 goldEffect.emission.SetBursts(new ParticleSystem.Burst[1] { new ParticleSystem.Burst(0, 10, 20, 1, 0.01f) });
                 GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_gold_small);
             }
-            else if (rollItem.code < 50000)
+            else if (money < 50000)
             {
                 goldEffect.emission.SetBursts(new ParticleSystem.Burst[1] { new ParticleSystem.Burst(0, 20, 50, 1, 0.01f) });
                 GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_gold_med);
             }
-            else if (rollItem.code < 100000)
+            else if (money < 100000)
             {
                 goldEffect.emission.SetBursts(new ParticleSystem.Burst[1] { new ParticleSystem.Burst(0, 50, 80, 1, 0.01f) });
                 GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_gold_large);

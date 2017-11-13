@@ -82,7 +82,6 @@ public class UIManager : MonoBehaviour,IUIManager {
 
     }
 
-
     private void Start()
     {
         //Init();
@@ -138,7 +137,7 @@ public class UIManager : MonoBehaviour,IUIManager {
             else if(windowdata.type == UISettings.UIWindowType.PopUp)
             {
                 curPopUpWindow = window;
-                popupCollider.transform.SetSiblingIndex(0);
+                popupCollider.transform.SetSiblingIndex(PopUpRoot.childCount);
                 popupCollider.SetActive(true);
                 //popupCollider.GetComponent<Image>().color = new Color(0.8f,0.8f,0.8f,0.5f);
             }
@@ -186,8 +185,24 @@ public class UIManager : MonoBehaviour,IUIManager {
                 }
                 else if (windowdata.type == UISettings.UIWindowType.PopUp)
                 {
-                    popupCollider.SetActive(false);
                     curPopUpWindow = null;
+                    popupCollider.SetActive(false);
+                    for (int i = PopUpRoot.childCount-1;i>=0;i--)
+                    {
+                        Transform tf = PopUpRoot.GetChild(i);
+                        if (tf.gameObject.activeSelf)
+                        {
+                            UIWindowBase wd = tf.GetComponent<UIWindowBase>();
+                            if(wd != null)
+                            {
+                                popupCollider.SetActive(true);
+                                curPopUpWindow = wd;
+                                popupCollider.transform.SetSiblingIndex(i);
+                                
+                                break;
+                            }
+                        }
+                    }
 
                 }
                 else if (windowdata.type == UISettings.UIWindowType.Normal)
@@ -209,11 +224,31 @@ public class UIManager : MonoBehaviour,IUIManager {
     /// <param name="onClickOKBtn">确认键点击回调</param>
     public void OpenModalBoxWindow(string content,string okBtnName = "",System.Action onClickOKBtn = null)
     {
-        UIModalBoxWindow.ModalBoxData data = new UIModalBoxWindow.ModalBoxData();
+        ModalBoxData data = new ModalBoxData();
         data.content = content;
         data.okName = okBtnName;
-        data.onClickOK = onClickOKBtn;
+        data.onClick = (ret) => {
+            if (ret)
+            {
+                if(onClickOKBtn!=null)
+                {
+                    onClickOKBtn();
+                }
+               
+            }
+
+        };
         OpenWindow(UISettings.UIWindowID.UIModalBoxWindow, data);
+    }
+
+    public void OpenModalBoxWindow(string content, string okBtnName = "",string cancelBtnName = "",System.Action<bool> onClickBtn = null)
+    {
+        ModalBoxData data = new ModalBoxData();
+        data.content = content;
+        data.okName = okBtnName;
+        data.cancelName = cancelBtnName;
+        data.onClick = onClickBtn;
+        OpenWindow(UISettings.UIWindowID.UIPopupModalBoxWindow, data);
     }
 
     public void ChangeState(UIStateChangeBase state)

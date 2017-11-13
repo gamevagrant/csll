@@ -5,10 +5,11 @@ using UnityEngine.UI;
 using UnityEngine.U2D;
 using UnityEngine.EventSystems;
 using System;
+using TMPro;
 
 public class BuildingWindowItem : MonoBehaviour,IPointerClickHandler {
 
-    public Text price;
+    public TextMeshProUGUI price;
     public Image repair;
     public Image upgraded;
     public Action<int> onBuild;

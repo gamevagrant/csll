@@ -28,22 +28,20 @@ SpriteAtlas:
       enableTightPacking: 0
     packedHash:
       serializedVersion: 2
-      Hash: 4c692e0555fbce088c555fe1735eefcc
+      Hash: 4e17404f67cc9e97bdfc013abded1f83
     variantMultiplier: 1
     bindAsDefault: 0
     finalFormat: 4
-    hashString: 4c692e0555fbce088c555fe1735eefcc
-    totalSpriteSurfaceArea: 180450
+    hashString: 4e17404f67cc9e97bdfc013abded1f83
+    totalSpriteSurfaceArea: 161410
     packables:
     - {fileID: 102900000, guid: 9a270de653791d7469ed5099182197b8, type: 3}
     packedSpriteRenderDataKeys:
     - 10bb132e3c0ba164c8d235b5f443f5d0: 21300000
     - 5d70aa3e7ee611d4d8dc4416fe881aa0: 21300000
     - e114dc3b968832b4e892cb12c79ead49: 21300000
-    - 996060026a96cdf4d9324e17aba9c228: 21300000
     - e0e31944229e9c54786589053f76ad07: 21300000
     - 4dd2c1ac246287e4aa31d145de1ef01b: 21300000
-    - 15b2dec68f7dc9b40bdfa0eca070d606: 21300000
     - b941f3028fc8b6a4ba076f82684ceff0: 21300000
     - 22745e75a129d88429f6bc5856948f44: 21300000
     - e4748ddf4fa9a284cb483adaffbfbcdf: 21300000
@@ -64,10 +62,8 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 10bb132e3c0ba164c8d235b5f443f5d0, type: 3}
   - {fileID: 21300000, guid: 5d70aa3e7ee611d4d8dc4416fe881aa0, type: 3}
   - {fileID: 21300000, guid: e114dc3b968832b4e892cb12c79ead49, type: 3}
-  - {fileID: 21300000, guid: 996060026a96cdf4d9324e17aba9c228, type: 3}
   - {fileID: 21300000, guid: e0e31944229e9c54786589053f76ad07, type: 3}
   - {fileID: 21300000, guid: 4dd2c1ac246287e4aa31d145de1ef01b, type: 3}
-  - {fileID: 21300000, guid: 15b2dec68f7dc9b40bdfa0eca070d606, type: 3}
   - {fileID: 21300000, guid: b941f3028fc8b6a4ba076f82684ceff0, type: 3}
   - {fileID: 21300000, guid: 22745e75a129d88429f6bc5856948f44, type: 3}
   - {fileID: 21300000, guid: e4748ddf4fa9a284cb483adaffbfbcdf, type: 3}
@@ -87,10 +83,8 @@ SpriteAtlas:
   - menu_eren04_06
   - tongji_btn
   - tongji_btn_dis
-  - wrap_nor
   - email_001
   - email_002
-  - wrap_sel
   - system_001
   - system_002
   - get_001

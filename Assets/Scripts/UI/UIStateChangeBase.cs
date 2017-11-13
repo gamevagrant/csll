@@ -16,6 +16,11 @@ public class UIStateChangeBase {
 
     private float delay;
 
+    public UIStateChangeBase()
+    {
+
+    }
+
     public UIStateChangeBase(Dictionary<UISettings.UIWindowID, object> needShowWindows, UISettings.UIWindowID[] needHideWindows = null, float delayOpen = 0)
     {
         this.needShowWindows = needShowWindows;
@@ -53,7 +58,7 @@ public class UIStateChangeBase {
         }
 
 
-        AssetBundleLoadManager.Instance.StartCoroutine(openWindow(delay));
+        GameMainManager.instance.mono.StartCoroutine(openWindow(delay));
     }
 
     IEnumerator openWindow(float delay)

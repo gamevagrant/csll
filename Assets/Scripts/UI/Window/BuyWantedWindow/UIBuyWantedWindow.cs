@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class UIBuyWantedWindow : UIWindowBase {
 
     public override UIWindowData windowData
@@ -21,18 +21,32 @@ public class UIBuyWantedWindow : UIWindowBase {
         }
     }
 
+    public CounterControler conter;
+    public TextMeshProUGUI costText;
+    const float UNIT_PRICE = 28;
+
+    private void Awake()
+    {
+        conter.onChangeValue += OnChangeValue;
+    }
+
+    private void OnDestroy()
+    {
+        conter.onChangeValue -= OnChangeValue;
+    }
+
     protected override void StartShowWindow(object[] data)
     {
-        base.StartShowWindow(data);
+        conter.num = 1;
     }
 
-    protected override void EnterAnimation(Action onComplete)
+    private void OnChangeValue(int num)
     {
-        base.EnterAnimation(onComplete);
+        costText.text = "￥" + num * UNIT_PRICE;
     }
 
-    protected override void ExitAnimation(Action onComplete)
+    public void OnBuyBtn()
     {
-        base.ExitAnimation(onComplete);
+
     }
 }

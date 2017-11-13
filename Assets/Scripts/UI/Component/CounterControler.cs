@@ -11,6 +11,7 @@ public class CounterControler : MonoBehaviour {
     public TextMeshProUGUI text;
     public int min = 0;
     public int max = 99;
+    public event System.Action<int> onChangeValue;
 
     private int _num = 0;
     public int num
@@ -22,6 +23,7 @@ public class CounterControler : MonoBehaviour {
         set
         {
             _num = value;
+            UpdateText();
         }
     }
 
@@ -54,5 +56,7 @@ public class CounterControler : MonoBehaviour {
     private void UpdateText()
     {
         text.text = _num.ToString() + "个";
+        if (onChangeValue != null)
+            onChangeValue(_num);
     }
 }

@@ -22,6 +22,7 @@ public class GameMainManager {
     public IAudioManager audioManager;
     public IWebSocketMsgManager websocketMsgManager;
     public GameModel model;
+    public MonoBehaviour mono;//全局脚本，可以使用monobehaviour方法
 
     public GameMainManager()
     {

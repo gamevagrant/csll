@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: MiningMapWindow
+  m_EditorData:
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 0
+    platformSettings: []
+    packingParameters:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    packedHash:
+      serializedVersion: 2
+      Hash: bb4d584b718091a4019c3b0d1d5caacd
+    variantMultiplier: 1
+    bindAsDefault: 0
+    finalFormat: 4
+    hashString: bb4d584b718091a4019c3b0d1d5caacd
+    totalSpriteSurfaceArea: 95890
+    packables:
+    - {fileID: 102900000, guid: 25494fed5c00d5d45b86a4e62b64d2b1, type: 3}
+    packedSpriteRenderDataKeys:
+    - cba8722b5b180204ea1f3fc132595117: 21300000
+    - 72ae2c2fe3f07444e922942a05accb3e: 21300000
+    - 6d8b8bf8de8b4af4b9ebbec6338ffa4b: 21300000
+    - 9154aa976f871d947a339cc75542a35f: 21300000
+    - fcab521e0c948bd408b418ee73687299: 21300000
+    - 18b1609d948f9974980e704a4f685e4d: 21300000
+    - d4adb971cb36c0447b2a181a7752613d: 21300000
+    - 9d14becf76e834545ab9f8eb61b51c79: 21300000
+    - 67cfa57dbcd0da0489d454631b6db350: 21300000
+    - 703706160d76de74c981fdee029e27b5: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: cba8722b5b180204ea1f3fc132595117, type: 3}
+  - {fileID: 21300000, guid: 72ae2c2fe3f07444e922942a05accb3e, type: 3}
+  - {fileID: 21300000, guid: 6d8b8bf8de8b4af4b9ebbec6338ffa4b, type: 3}
+  - {fileID: 21300000, guid: 9154aa976f871d947a339cc75542a35f, type: 3}
+  - {fileID: 21300000, guid: fcab521e0c948bd408b418ee73687299, type: 3}
+  - {fileID: 21300000, guid: 18b1609d948f9974980e704a4f685e4d, type: 3}
+  - {fileID: 21300000, guid: d4adb971cb36c0447b2a181a7752613d, type: 3}
+  - {fileID: 21300000, guid: 9d14becf76e834545ab9f8eb61b51c79, type: 3}
+  - {fileID: 21300000, guid: 67cfa57dbcd0da0489d454631b6db350, type: 3}
+  - {fileID: 21300000, guid: 703706160d76de74c981fdee029e27b5, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - gold_box
+  - frame_003
+  - frame_002
+  - frame_001
+  - back_sel
+  - back_nor
+  - green_point
+  - lock_point
+  - smile
+  - setting
+  m_Tag: MiningMapWindow
+  m_IsVariant: 0

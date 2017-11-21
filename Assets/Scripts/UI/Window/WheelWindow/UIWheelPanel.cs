@@ -15,7 +15,7 @@ public class UIWheelPanel : MonoBehaviour {
     public ParticleSystem goldEffect;
     public GameObject shield;
     public GameObject energy;
-    public GameObject light;
+    public GameObject lightBG;
     public GameObject beaver;
 
     public RawImage stealHead;
@@ -238,7 +238,11 @@ public class UIWheelPanel : MonoBehaviour {
     public void onClickRollBtn()
     {
         //startRotate();
-        StartCoroutine(StartRoll());
+        if(!isWorking)
+        {
+            StartCoroutine(StartRoll());
+        }
+       
     }
     /*
     private void startRotate()
@@ -303,9 +307,10 @@ public class UIWheelPanel : MonoBehaviour {
         audio.loop = false;
         audio.Play();
         wheel.DOLocalRotate(new Vector3(0, 0, -(360 * 1 + 36 * rollItem.index)), 2.3f, RotateMode.FastBeyond360).SetEase(Ease.OutCirc).OnComplete(() => {
-            isWorking = false;
+           
             showResault(rollData);
             audio.Stop();
+            isWorking = false;
         });
     }
     /*
@@ -396,7 +401,7 @@ public class UIWheelPanel : MonoBehaviour {
     {
         GameObject icon = energy;
 
-        GameObject backLight = light;
+        GameObject backLight = lightBG;
         Vector3 moveTarget = new Vector3(270, 349, 0);
 
         icon.transform.localPosition = Vector3.zero;
@@ -428,7 +433,7 @@ public class UIWheelPanel : MonoBehaviour {
     {
         GameObject icon = shield;
 
-        GameObject backLight = light;
+        GameObject backLight = lightBG;
         Vector3 moveTarget = new Vector3(-170, 449, 0);
 
         icon.transform.localPosition = Vector3.zero;

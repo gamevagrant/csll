@@ -25,13 +25,15 @@ public class MailData {
     public int is_get;//// 0不可以 1可以领取 2已领取
     public string time;
     public RewardData[] reward;
+    public int index;//邮件列表中的位置
 }
 /// <summary>
 /// 邮件中的奖励物品数据
 /// </summary>
 public class RewardData
 {
-    public string type;
+    public string type;//energy,money
     public int num;
     public string name;
+    public long count;
 }

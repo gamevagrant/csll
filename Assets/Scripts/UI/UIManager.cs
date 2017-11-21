@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.U2D;
+using System;
 
 /// <summary>
 /// UI管理类 
@@ -16,9 +17,12 @@ public class UIManager : MonoBehaviour,IUIManager {
     private Transform NormalRoot;//普通窗口根节点
     [SerializeField]
     private Transform PopUpRoot;//模态窗口UI 根节点
+    [SerializeField]
+    private Transform coverRoot;//覆盖界面UI节点
 
     private Dictionary<UISettings.UIWindowID, UIWindowBase> allWindows;
     private Dictionary<UISettings.UIWindowID, UIWindowBase> showingWindows;
+
 
     protected Stack<UIWindowBase> backSequence;//导航窗口的堆栈
 
@@ -28,6 +32,9 @@ public class UIManager : MonoBehaviour,IUIManager {
     private UIWindowBase curPopUpWindow;//当前打开的窗口
 
     private int colliderNum = 0;//打开遮挡面板的计数
+    private Queue<Action> queue = new Queue<Action>();
+    private bool isOpening = false;
+
 
     private bool openCoilder
     {
@@ -82,9 +89,16 @@ public class UIManager : MonoBehaviour,IUIManager {
 
     }
 
-    private void Start()
+    private void Update()
     {
-        //Init();
+        if(queue.Count > 0 && !isOpening)
+        {
+            Action act = queue.Dequeue();
+            if (act != null)
+            {
+                act();
+            }
+        }
     }
     private void Init()
     {
@@ -123,54 +137,29 @@ public class UIManager : MonoBehaviour,IUIManager {
     {
         OpenWindow(id,true,data);
     }
-    public void OpenWindow(UISettings.UIWindowID id,bool needTransform = true,params object[] data)
+    public void OpenWindow(UISettings.UIWindowID id, bool needTransform = true, params object[] data)
     {
-        UIWindowBase window;
-        allWindows.TryGetValue(id, out window);
-        if(window!=null)
+        OpenWindow(id, needTransform, null, data);
+    }
+    public void OpenWindow(UISettings.UIWindowID id,bool needTransform = true,System.Action onComplate = null,params object[] data)
+    {
+        queue.Enqueue(() =>
         {
-            UIWindowData windowdata = window.windowData;
-            if(windowdata.type == UISettings.UIWindowType.Fixed)
-            {
-                
-            }
-            else if(windowdata.type == UISettings.UIWindowType.PopUp)
-            {
-                curPopUpWindow = window;
-                popupCollider.transform.SetSiblingIndex(PopUpRoot.childCount);
-                popupCollider.SetActive(true);
-                //popupCollider.GetComponent<Image>().color = new Color(0.8f,0.8f,0.8f,0.5f);
-            }
-            else if(windowdata.type == UISettings.UIWindowType.Normal)
-            {
-                showNavigationWindow(window);
-               
-            }
-
-            
-            if (!showingWindows.ContainsKey(id))
-            {
-                showingWindows.Add(id,window);
-            }
-            window.ShowWindow(()=> 
-            {
-
-            },needTransform, data);
-        }
-        else
-        {
-            loadWindow(id, needTransform,data);
-        }
+            StartOpenWindow(id, needTransform, onComplate, data);
+        });
     }
 
-    public void CloseWindow(UISettings.UIWindowID id,bool needTransform = true)
+    public void CloseWindow(UISettings.UIWindowID id)
+    {
+        CloseWindow(id,true);
+    }
+
+    public void CloseWindow(UISettings.UIWindowID id,bool needTransform = true, System.Action onComplate = null)
     {
         UIWindowBase window;
         allWindows.TryGetValue(id, out window);
         if (window != null)
         {
-
-           
             if (showingWindows.ContainsKey(id))
             {
                 showingWindows.Remove(id);
@@ -208,6 +197,10 @@ public class UIManager : MonoBehaviour,IUIManager {
                 else if (windowdata.type == UISettings.UIWindowType.Normal)
                 {
                     hideNavigationWindow(window);
+                }
+                if(onComplate != null)
+                {
+                    onComplate();
                 }
             },needTransform);
 
@@ -256,6 +249,7 @@ public class UIManager : MonoBehaviour,IUIManager {
         state.ChangeState(showingWindows);
     }
 
+
     /// <summary>
     /// 允许界面操作
     /// </summary>
@@ -273,45 +267,81 @@ public class UIManager : MonoBehaviour,IUIManager {
         windowCollider.transform.SetSiblingIndex(windowCollider.transform.parent.childCount);
     }
 
-
-
-    private void loadWindow(UISettings.UIWindowID id, bool needTransform = true, params object[] data)
+    private void StartOpenWindow(UISettings.UIWindowID id, bool needTransform = true, System.Action onComplate = null, params object[] data)
     {
-        string path = FilePathTools.getUIPath(UISettings.getWindowName(id));
-        AssetBundleLoadManager.Instance.LoadAsset<GameObject>(path,(go)=> {
+        isOpening = true;
+        UIWindowBase window;
+        allWindows.TryGetValue(id, out window);
+        if (window != null)
+        {
+            UIWindowData windowdata = window.windowData;
 
-            UIWindowBase window;
-            allWindows.TryGetValue(id, out window);
-            if (window == null)
+            if (windowdata.type == UISettings.UIWindowType.Fixed)
             {
-                GameObject windowGO = GameObject.Instantiate(go);
-                windowGO.SetActive(false);
-                window = windowGO.GetComponent<UIWindowBase>();
-                UIWindowData windowData = window.windowData;
-                if (windowData.id != id)
-                {
-                    Debug.LogError("加载的window id和目标id不符");
-                }
-                allWindows.Add(windowData.id, window);
+                window.transform.SetSiblingIndex(FixedRoot.childCount);
+            }
+            else if (windowdata.type == UISettings.UIWindowType.PopUp)
+            {
+                curPopUpWindow = window;
+                window.transform.SetSiblingIndex(PopUpRoot.childCount);
+                popupCollider.transform.SetSiblingIndex(PopUpRoot.childCount - 2);
+                popupCollider.SetActive(true);
+                //popupCollider.GetComponent<Image>().color = new Color(0.8f,0.8f,0.8f,0.5f);
+            }
+            else if (windowdata.type == UISettings.UIWindowType.Normal)
+            {
+                window.transform.SetSiblingIndex(NormalRoot.childCount);
+                showNavigationWindow(window);
+
             }
 
-            
-            StartCoroutine(DelayOpen(id,needTransform,data,0.5f));
-        });
+
+            if (!showingWindows.ContainsKey(id))
+            {
+                showingWindows.Add(id, window);
+            }
+            isOpening = false;
+            window.ShowWindow(() =>
+            {
+                if (onComplate != null)
+                {
+                    onComplate();
+                }
+            }, needTransform, data);
+        }
+        else
+        {
+            string path = FilePathTools.getUIPath(UISettings.getWindowName(id));
+            AssetBundleLoadManager.Instance.LoadAsset<GameObject>(path, (go) =>
+            {
+                StartCoroutine(ConfigureWindow(go,id, needTransform, onComplate, data));
+            });
+ 
+        }
     }
 
-    IEnumerator DelayOpen(UISettings.UIWindowID id,bool needTransform,object[] data,float delay)
+    private IEnumerator ConfigureWindow(GameObject go,UISettings.UIWindowID id, bool needTransform = true,System.Action onComplate = null, params object[] data)
     {
-        
-        UIWindowBase window = allWindows[id];
+        UIWindowBase window;
+        allWindows.TryGetValue(id, out window);
+        if (window == null)
+        {
+            GameObject windowGO = GameObject.Instantiate(go);
+            windowGO.SetActive(false);
+            window = windowGO.GetComponent<UIWindowBase>();
+            UIWindowData windowData = window.windowData;
+            if (windowData.id != id)
+            {
+                Debug.LogError("加载的window id和目标id不符");
+            }
+            allWindows.Add(windowData.id, window);
+        }
 
-
+        RectTransform rt = window.transform as RectTransform;
         switch (window.windowData.type)
         {
             case UISettings.UIWindowType.Fixed:
-                //window.gameObject.transform.parent = FixedRoot;
                 window.gameObject.transform.SetParent(FixedRoot);
-                RectTransform rt = window.transform as RectTransform;
                 rt.anchorMin = Vector2.zero;
                 rt.anchorMax = Vector2.one;
                 rt.offsetMin = Vector2.zero;
@@ -323,13 +353,22 @@ public class UIManager : MonoBehaviour,IUIManager {
             case UISettings.UIWindowType.PopUp:
                 window.transform.SetParent(PopUpRoot);
                 break;
+            case UISettings.UIWindowType.Cover:
+                window.transform.SetParent(coverRoot);
+                rt.anchorMin = Vector2.zero;
+                rt.anchorMax = Vector2.one;
+                rt.offsetMin = Vector2.zero;
+                rt.offsetMax = Vector2.one;
+                break;
         }
         window.transform.localPosition = Vector3.zero;
         window.transform.localScale = Vector3.one;
-
-        yield return new WaitForSeconds(delay);
-        OpenWindow(id, needTransform, data);
+        //(window.transform as RectTransform).anchoredPosition = Vector2.zero;
+        window.Init();
+        yield return new WaitForSeconds(0.1f);
+        StartOpenWindow(id, needTransform, onComplate, data);
     }
+
 
 
     private void showNavigationWindow(UIWindowBase window)

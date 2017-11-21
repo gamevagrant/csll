@@ -13,15 +13,16 @@ using Object = UnityEngine.Object;
 public class AssetBundleLoadManager : MonoBehaviour {
 
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN
-	string prefix = "file:///";
+    //string prefix = "file:///";
+    string prefix = "";
 #elif UNITY_IPHONE
-    string prefix = "file://";
+    //string prefix = "file://";
+    string prefix = "";
 #else
     string prefix = "";
 #endif
 
     private const int RECOVERY_TIME = 180;//这个时间后没有被请求就自动销毁
-    //private Dictionary<string, Object> cache = new Dictionary<string, Object>();
     private Dictionary<string, CacheObject> dicCacheObject = new Dictionary<string, CacheObject>();
     private Queue<Action> queue = new Queue<Action>();
     private bool isLoading = false;
@@ -80,16 +81,6 @@ public class AssetBundleLoadManager : MonoBehaviour {
     public void LoadAsset<T>(string url, Action<T> callback) where T : Object
     {
         string path = url;
-        /*
-        if (path.IndexOf(@"http://") == -1)
-        {
-            if (path.IndexOf(@"file://") == -1)
-            {
-                path = prefix + path;
-
-            }
-        }
-        */
         path = FilePathTools.normalizePath(path);
 
         CacheObject co;
@@ -135,25 +126,24 @@ public class AssetBundleLoadManager : MonoBehaviour {
 				Debug.LogError ("Asset not found at path:" + path);
 			}
             callback((T)Obj);
-			//yield break;
 #endif
         }
         else
         {
             //打的ab包都资源名称和文件名都是小写的
             //path = Path.GetDirectoryName(path)+"/"+Path.GetFileNameWithoutExtension(path).ToLower();
-            WWW www;
             AssetBundleRequest assetRequest;
+            AssetBundleCreateRequest createRequest;
             //1加载Manifest文件
             if (manifest == null)
             {
                 string manifestPath = FilePathTools.manifestPath;
                 Debug.Log("---start load Manifest " + prefix + manifestPath);
-                www = new WWW(prefix + manifestPath);
-                yield return www;
-                if (string.IsNullOrEmpty(www.error))
+                createRequest = AssetBundle.LoadFromFileAsync(prefix + manifestPath);
+                yield return createRequest;
+                if (createRequest.isDone)
                 {
-                    AssetBundle manifestAB = www.assetBundle;
+                    AssetBundle manifestAB = createRequest.assetBundle;
                     yield return assetRequest = manifestAB.LoadAssetAsync<AssetBundleManifest>("AssetBundleManifest");
                     manifest = assetRequest.asset as AssetBundleManifest;
                     manifestAB.Unload(false);
@@ -161,7 +151,7 @@ public class AssetBundleLoadManager : MonoBehaviour {
                 }
                 else
                 {
-                    Debug.Log("---Manifest加载出错" + www.error);
+                    Debug.Log("---Manifest加载出错");
                 }
 
             }
@@ -178,27 +168,27 @@ public class AssetBundleLoadManager : MonoBehaviour {
                 string dependencyPath = FilePathTools.root + "/" + fileName;
                 Debug.Log("---开始加载依赖资源:" + dependencyPath);
 
-
-                www = new WWW(prefix + dependencyPath);
-                yield return www;
-                if (string.IsNullOrEmpty(www.error))
+                createRequest = AssetBundle.LoadFromFileAsync(prefix + dependencyPath);
+                yield return createRequest;
+                if (createRequest.isDone)
                 {
-                    dependencyAssetBundles.Add(dependencyPath, www.assetBundle);
+                    dependencyAssetBundles.Add(dependencyPath, createRequest.assetBundle);
                 }
                 else
                 {
-                    Debug.Log(www.error);
+                    Debug.Log("加载依赖资源出错");
                 }
 
             }
             //4加载目标资源
             Object obj = null;
             Debug.Log("---开始加载目标资源:" + prefix + path);
-            www = new WWW(prefix + path);
-            yield return www;
-            if (string.IsNullOrEmpty(www.error))
+            //www = new WWW(prefix + path);
+            createRequest = AssetBundle.LoadFromFileAsync(prefix + path);
+            yield return createRequest;
+            if (createRequest.isDone)
             {
-                AssetBundle assetBundle = www.assetBundle;
+                AssetBundle assetBundle = createRequest.assetBundle;
                 yield return assetRequest = assetBundle.LoadAssetAsync(Path.GetFileNameWithoutExtension(path), typeof(T));
                 obj = assetRequest.asset;
 
@@ -210,7 +200,7 @@ public class AssetBundleLoadManager : MonoBehaviour {
             }
             else
             {
-                Debug.Log(www.error);
+                Debug.Log("加载目标资源出错 ");
             }
 
             if (dependencyAssetBundles != null)

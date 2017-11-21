@@ -40,7 +40,7 @@ public class Test : MonoBehaviour {
     {
         string s = Resources.Load("a").ToString();
         RollerItemData l = JsonMapper.ToObject<RollerItemData>(s);
-        Debug.Log(s);
+        Debug.Log(l);
     }
 	// Update is called once per frame
 	void Update () {

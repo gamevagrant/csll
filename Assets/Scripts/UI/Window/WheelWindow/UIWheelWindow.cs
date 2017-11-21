@@ -92,7 +92,7 @@ public class UIWheelWindow : UIWindowBase {
             updateUserData(user);
         }
         openState = State.Wheel;
-        if(data!= null && data[0]!=null)
+        if(data!= null && data.Length>0 && data[0]!=null)
         {
             openState = (int)data[0]==0?State.Wheel:State.Building;
            

@@ -120,7 +120,7 @@ public class UIRankWindow : UIWindowBase {
 
     private void ShowPanel(RectTransform panel)
     {
-        Sequence sq = DOTween.Sequence();
+        //Sequence sq = DOTween.Sequence();
         panel.gameObject.SetActive(true);
         panel.DOAnchorPos(new Vector2(0, 0), 1f).SetEase(Ease.OutBack);
     }

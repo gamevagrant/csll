@@ -11,7 +11,7 @@ public class UIGetRewardWindow : UIWindowBase {
     public Image image;
 
     public Sprite[] sprites;//0:钱 1：能量
-
+    private GetRewardWindowData getRewardWindowData;
 
     public override UIWindowData windowData
     {
@@ -31,7 +31,8 @@ public class UIGetRewardWindow : UIWindowBase {
 
     protected override void StartShowWindow(object[] data)
     {
-        RewardData reward = data[0] as RewardData;
+        getRewardWindowData = data[0] as GetRewardWindowData;
+        RewardData reward = getRewardWindowData.reward;
         if(reward.type == "money")
         {
             image.sprite = sprites[0];
@@ -58,5 +59,15 @@ public class UIGetRewardWindow : UIWindowBase {
     public void OnClickGetRewardBtn()
     {
         OnClickClose();
+        if(getRewardWindowData.OnGetReward!=null)
+        {
+            getRewardWindowData.OnGetReward();
+        }
     }
+}
+
+public class GetRewardWindowData
+{
+    public RewardData reward;
+    public System.Action OnGetReward;
 }

@@ -48,9 +48,26 @@ public class UIMessageMailWindow : UIWindowBase {
 
     protected override void StartShowWindow(object[] data)
     {
-        messages = GameMainManager.instance.model.userData.messages;
-        mails = GameMainManager.instance.model.userData.user_mail;
-        messageScrollView.setDatas(messages);
+        GameMainManager.instance.netManager.Message((ret, res) =>
+        {
+            if(res.isOK)
+            {
+                messages = res.data.messages;
+                if(res.data.user_mail != null)
+                {
+                    mails = res.data.user_mail;
+                    for (int i = 0; i < mails.Length; i++)
+                    {
+                        mails[i].index = i;
+                    }
+                }
+               
+                messageScrollView.setDatas(messages);
+            }
+           
+        });
+        
+        
         
         messageToggle.isOn = true;
         mailToggle.enabled = false;

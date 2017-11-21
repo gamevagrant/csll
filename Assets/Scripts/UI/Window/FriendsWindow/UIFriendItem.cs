@@ -75,12 +75,20 @@ public class UIFriendItem : BaseItemView {
                     {
                         if(fd.uid == friend.uid)
                         {
-                            friendItemData.friend = fd;
+                            //friendItemData.friend = fd;
+                            friendItemData.friend.receiveStatus = fd.receiveStatus;
                             break;
                         }
                     }
 
                     SetData(friendItemData);
+                }
+                else
+                {
+                    if (res.errcode == 526)
+                    {
+                        GameMainManager.instance.uiManager.OpenModalBoxWindow("能量已满，用完再来领吧", "", null);
+                    }
                 }
             });
         }
@@ -88,10 +96,10 @@ public class UIFriendItem : BaseItemView {
         {
             GameMainManager.instance.netManager.SendEnergy(friendItemData.friend.uid, (ret, res) =>
             {
-                if (res.isOK)
+                if (res.isOK && res.data != null)
                 {
                     FriendData fd = res.data[0];
-                    friendItemData.friend = fd;
+                    friendItemData.friend.sendStatus = fd.sendStatus;
                     
                     SetData(friendItemData);
                 }

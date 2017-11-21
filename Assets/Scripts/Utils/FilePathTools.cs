@@ -17,35 +17,33 @@ public class FilePathTools
 	
 	public static string exportRoot = Application.streamingAssetsPath +"/" + targetName ;//打包资源的输出文件夹
 	
-	private static string downLoadSavePath = Application.temporaryCachePath + "/DownLoad";//下载远程资源数据保存的位置
+	public static string downLoadSavePath = Application.persistentDataPath + "/DownLoad/"+targetName;//下载远程资源数据保存的位置
 
-	public static string root
+    public static string tmpPath = Application.temporaryCachePath + "/Cache/" + targetName;//临时数据存放 缓存
+
+    public static string root
 	{
 		get
 		{
 			if(!GameSetting.isUseAssetBundle)
 			{
                 return assetsRootPath;
-			}else if(GameSetting.isUseLocalAssetBundle)
+			}
+            /*else if(GameSetting.isUseLocalAssetBundle)
             {
                 return exportRoot;
-            }else
+            }*/
+            else
 			{
 				return downLoadSavePath;
 			}
 		}
 	}
 
-	public static string manifestPath
-	{
-		get
-		{
-			return root + "/" + targetName;
-		}
-	}
+
 	
 	//资源文件地址 只有在ios和安卓平台下才需要从远程下载，编辑器的win平台下流程不走assetbundle
-	private static string loadRootPath
+	public static string downLoadRootPath
 	{
 		get{
 			string path;
@@ -77,9 +75,21 @@ public class FilePathTools
 		}
 		
 	}
+    public static string manifestPath
+    {
+        get
+        {
+            return root + "/" + targetName;
+        }
+    }
 
-	//根据一个绝对路径 获得这个资源的assetbundle name
-	public static string getAssetBundleNameWithPath(string path)
+    public static string GetDownLoadMainVersonPath(string name)
+    {
+        return exportRoot + "/" + targetName;
+    }
+
+    //根据一个绝对路径 获得这个资源的assetbundle name
+    public static string getAssetBundleNameWithPath(string path)
 	{
 		string str = normalizePath (path);
 		str = replaceFirst (str, root + "/", "");
@@ -290,5 +300,6 @@ public class FilePathTools
         }
         return root + str;
     }
+
 
 }

@@ -71,16 +71,16 @@ public class UILeftDatailWindow : UIWindowBase {
 
     protected override void EnterAnimation(Action onComplete)
     {
-        panel.DOAnchorPos(Vector2.zero, 0.3f).SetEase(Ease.OutCubic);
-        backCoilder.DOFade(0.5f, 0.3f).OnComplete(()=> {
+        panel.DOAnchorPos(Vector2.zero, 0.5f).SetEase(Ease.OutCubic);
+        backCoilder.DOFade(0.5f, 0.5f).OnComplete(()=> {
             onComplete();
         });
     }
 
     protected override void ExitAnimation(Action onComplete)
     {
-        panel.DOAnchorPos(new Vector2(-530, 0), 0.3f).SetEase(Ease.OutCubic);
-        backCoilder.DOFade(0, 0.3f).OnComplete(() => {
+        panel.DOAnchorPos(new Vector2(-530, 0), 0.5f).SetEase(Ease.OutCubic);
+        backCoilder.DOFade(0, 0.5f).OnComplete(() => {
             onComplete();
         });
     }
@@ -101,7 +101,8 @@ public class UILeftDatailWindow : UIWindowBase {
 
     public void OnClickMapBtn()
     {
-
+        OnClickClose();
+        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIMiningMapWindow);
     }
 
     public void OnClickWheelBtn()

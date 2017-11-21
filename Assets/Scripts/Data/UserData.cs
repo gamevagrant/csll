@@ -35,7 +35,7 @@ public class UserData {
     public int dailyPrizeDay;         // 登录第n天
     public bool daily_prize_limit;         // 用户是否可以领取日奖励(日登陆奖励)
     public int week_prize_day;             // 连续登录第n天
-    public int wantedCount;             // 暂时未用到
+    public int wantedCount;             // 通缉令数量
     public int ShipwreckCount;            // 暂时未用到
     public int cookieCount;            // 暂时未用到
     public int potionCount;            // 暂时未用到

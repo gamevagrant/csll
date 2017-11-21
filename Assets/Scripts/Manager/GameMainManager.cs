@@ -28,12 +28,15 @@ public class GameMainManager {
     {
         netManager = new NetManager();
         websocketMsgManager = new WebSocketMsgManager();
-        uiManager = GameObject.Find("UIRoot").GetComponent<UIManager>();//暂时这样 之后改成UIRoot从UIManager自动创建
-        audioManager = AudioManager.instance;
-        audioManager.SetSoundPathProxy (FilePathTools.getAudioPath);
-        audioManager.SetMusicPathProxy(FilePathTools.getAudioPath);
         model = new GameModel();
     }
 
+    public void Init()
+    {
+        uiManager = GameObject.Find("UIRoot").GetComponent<UIManager>();//暂时这样 之后改成UIRoot从UIManager自动创建
+        audioManager = AudioManager.instance;
+        audioManager.SetSoundPathProxy(FilePathTools.getAudioPath);
+        audioManager.SetMusicPathProxy(FilePathTools.getAudioPath);
+    }
    
 }

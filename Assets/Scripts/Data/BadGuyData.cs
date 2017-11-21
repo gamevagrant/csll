@@ -16,4 +16,5 @@ public class BadGuyData {
     public bool isWanted;// 暂时未使用
     public long wantedByWho; // 暂时未使用
 
+
 }

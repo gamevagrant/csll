@@ -13,10 +13,10 @@ public class UpdateFriendsEvent : BaseEvent {
         AgreeFriend,
     }
 
-    public UpdateType type;
+    public UpdateType updateType;
 
 	public UpdateFriendsEvent(UpdateType type) :base(EventEnum.UPDATE_FRIENDS)
     {
-        this.type = type;
+        this.updateType = type;
     }
 }

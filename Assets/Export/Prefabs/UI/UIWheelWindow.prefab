@@ -4034,7 +4034,7 @@ MonoBehaviour:
   goldEffect: {fileID: 198742964380293884}
   shield: {fileID: 1101028367074212}
   energy: {fileID: 1646674898836538}
-  light: {fileID: 1042339422634832}
+  lightBG: {fileID: 1042339422634832}
   beaver: {fileID: 1903676031438154}
   stealHead: {fileID: 114745846276499316}
   stealNameLabel: {fileID: 114769333414488154}

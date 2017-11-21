@@ -162,19 +162,19 @@ public class UIStealWindow : UIWindowBase {
         {
             buttons[i].gameObject.SetActive(false);
         }
-        GameMainManager.instance.netManager.Steal(index, (ret, res) =>
+        GameMainManager.instance.netManager.Steal(selectedIndex, (ret, res) =>
         {
             if (res.isOK)
             {
                 StealData stealData = res.data;
-                TargetData selectedTarget = stealData.targets[index - 1];
+                TargetData selectedTarget = stealData.targets[selectedIndex - 1];
 
                 GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.steal_result);
                 Sequence sq = DOTween.Sequence();
                 sq.Append(topBar.DOAnchorPos(new Vector2(0, 150), 0.5f).SetEase(Ease.OutCubic));
                 for (int i = 0; i < islands.Length; i++)
                 {
-                    if (i != index - 1)
+                    if (i != selectedIndex - 1)
                     {
                         islands[i].setData(stealData.targets[i]);
                         sq.Insert(2, (islands[i].transform as RectTransform).DOAnchorPos(goAwayPos[i], 1));

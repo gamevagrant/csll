@@ -30,10 +30,19 @@ public class UITopBarWindow : UIWindowBase {
 
     private UserData user;
 
+    public override void Init()
+    {
+        panel.anchoredPosition = new Vector2(0, 70);
+    }
+    protected override void EndShowWindow()
+    {
+        panel.anchoredPosition = Vector2.zero;
+    }
+
     protected override void StartShowWindow(object[] data)
     {
         user = GameMainManager.instance.model.userData;
-        panel.anchoredPosition = new Vector2(0, 70);
+        
         updateData();
         EventDispatcher.instance.AddEventListener(EventEnum.LOGIN_COMPLATE, OnUpdateData);
         EventDispatcher.instance.AddEventListener(EventEnum.UPDATE_USERDATA, OnUpdateData);
@@ -46,6 +55,8 @@ public class UITopBarWindow : UIWindowBase {
         EventDispatcher.instance.RemoveEventListener(EventEnum.UPDATE_USERDATA, OnUpdateData);
         EventDispatcher.instance.RemoveEventListener(EventEnum.GET_SHIELD, OnGetShield);
     }
+
+
 
     protected override void EnterAnimation(Action onComplete)
     {

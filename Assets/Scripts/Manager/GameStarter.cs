@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 /// <summary>
 /// 游戏启动器
 /// </summary>
@@ -8,33 +9,45 @@ public class GameStarter : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-        
-        
+
+        GameObject.DontDestroyOnLoad(gameObject);
+        EventDispatcher.instance.AddEventListener(EventEnum.LOGIN_START, OnLoginHandle);
 	}
 
     private void Start()
     {
+       
         init();
     }
-    // Update is called once per frame
-    void Update () {
-		
-	}
 
+    private void OnDestroy()
+    {
+        EventDispatcher.instance.RemoveEventListener(EventEnum.LOGIN_START, OnLoginHandle);
+    }
     private void init()
     {
         gameObject.AddComponent<AssetBundleLoadManager>();
         gameObject.AddComponent<AssetLoadManager>();
         GameMainManager.instance.mono = this;
-        login();
+
+        UpdateAssets updateAsset = new UpdateAssets();
+        updateAsset.onComplate += UpdateAssetsComplate;
+        updateAsset.StartUpdate();
     }
 
-    private void login()
+    private void UpdateAssetsComplate()
     {
-        GameMainManager.instance.netManager.Login(4, (res, data) => {
+        EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_ASSETS_COMPLATE));
+    }
+
+    private void OnLoginHandle(BaseEvent evt)
+    {
+        string openID = evt.datas[0].ToString();
+        GameMainManager.instance.netManager.Login(openID, (res, data) => {
             if (data.isOK)
             {
-                StartCoroutine(OpenUI());
+                StartCoroutine(LoadMainScene());
+                PlayerPrefs.SetString("OpenID",openID);
 
             }
             else
@@ -44,6 +57,26 @@ public class GameStarter : MonoBehaviour {
         });
     }
 
+    private IEnumerator LoadMainScene()
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Main");
+        float progress = 0;
+        while(!asyncLoad.isDone)
+        {
+            if(asyncLoad.progress != progress)
+            {
+                progress = asyncLoad.progress;
+                EventDispatcher.instance.DispatchEvent(new LoadingEvent("LoadScene",progress));
+            }
+            yield return null;
+        }
+        //StartCoroutine(OpenUI());
+        //yield return new WaitForSeconds(1);
+        GameMainManager.instance.Init();
+        GameMainManager.instance.uiManager.ChangeState(new MainState(0));
+        
+    }
+    /*
     private IEnumerator OpenUI()
     {
         yield return new WaitForSeconds(1);
@@ -57,4 +90,5 @@ public class GameStarter : MonoBehaviour {
 
         GameMainManager.instance.uiManager.ChangeState(new MainState());
     }
+    */
 }

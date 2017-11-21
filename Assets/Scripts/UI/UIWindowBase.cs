@@ -26,7 +26,7 @@ public abstract class UIWindowBase : MonoBehaviour {
 	
 	public void ShowWindow(Action onComplate = null,  bool needTransform = true,params object[] data)
     {
-        transform.SetSiblingIndex(100);
+        //transform.SetSiblingIndex(100);
         gameObject.SetActive(true);
         StartShowWindow(data);
         if(needTransform)
@@ -41,6 +41,7 @@ public abstract class UIWindowBase : MonoBehaviour {
             });
         }else
         {
+            EndShowWindow();
             if (onComplate != null)
             {
                 onComplate();
@@ -67,7 +68,8 @@ public abstract class UIWindowBase : MonoBehaviour {
             });
         }else
         {
-            if(onComplate != null)
+            EndHideWindow();
+            if (onComplate != null)
             {
                 onComplate();
             }
@@ -77,12 +79,25 @@ public abstract class UIWindowBase : MonoBehaviour {
         
     }
 
+    public virtual void Init()
+    {
+
+    }
+
     protected virtual void StartShowWindow(object[] data)
     {
 
     }
 
     protected virtual void StartHideWindow()
+    {
+
+    }
+    protected virtual void EndShowWindow()
+    {
+
+    }
+    protected virtual void EndHideWindow()
     {
 
     }

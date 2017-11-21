@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class MainState : UIStateChangeBase
 {
-    public MainState()
+    private float delay;
+    public MainState(float delay = 1)
     {
+        this.delay = delay;
         needShowWindows = new Dictionary<UISettings.UIWindowID, object>();
         needShowWindows.Add(UISettings.UIWindowID.UIWheelWindow, null);
         needShowWindows.Add(UISettings.UIWindowID.UISideBarWindow, null);
@@ -25,7 +27,10 @@ public class MainState : UIStateChangeBase
                 GameMainManager.instance.uiManager.CloseWindow(id);
             }
         }
-        GameMainManager.instance.mono.StartCoroutine(openWindow(1));
+
+
+
+        GameMainManager.instance.mono.StartCoroutine(openWindow(this.delay));
     }
 
     IEnumerator openWindow(float delay)

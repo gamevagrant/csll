@@ -4,7 +4,7 @@ using System;
 public interface INetManager
 {
 
-    bool Login(long userid, Action<bool, LoginMessage> callBack);
+    bool Login(string openid, Action<bool, LoginMessage> callBack);
     /// <summary>
     /// 转转盘
     /// </summary>
@@ -127,5 +127,43 @@ public interface INetManager
     /// <param name="callBack"></param>
     /// <returns></returns>
     bool FriendRank(Action<bool, SendEnergyMessage> callBack);
+    /// <summary>
+    /// 获取地图数据
+    /// </summary>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool GetMap(Action<bool, GetMapMessage> callBack);
+    /// <summary>
+    /// 购买矿工
+    /// </summary>
+    /// <param name="islanID"></param>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool BuyMiner(int islanID, Action<bool, BuyMinerMessage> callBack);
+    /// <summary>
+    /// 收获采矿金币
+    /// </summary>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool ReapMine(Action<bool, BuyMinerMessage> callBack);
+    /// <summary>
+    /// 通缉玩家
+    /// </summary>
+    /// <param name="wid"></param>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool Wanted(long wid, Action<bool, WantedMessage> callBack);
+    /// <summary>
+    /// 获取消息和邮件
+    /// </summary>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool Message(Action<bool, MessageMailMessage> callBack);
+    /// <summary>
+    /// 获取邮件列表里的奖励
+    /// </summary>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool GetReward(int index,Action<bool, GetRewardMessage> callBack);
 }
 

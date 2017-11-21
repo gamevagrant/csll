@@ -11,11 +11,13 @@ public class UIShopPropsPanel : MonoBehaviour {
     public TextMeshProUGUI vipPriceText;
     public TextMeshProUGUI wantedPriceText;
     public TextMeshProUGUI contentText;
+    public DynamicScrollView scrollView;
 
-    private GoodsData[] goodsList;
+    //private GoodsData[] goodsList;
     public void SetData(GoodsData[] goodsList)
     {
-        this.goodsList = goodsList;
+        //this.goodsList = goodsList;
+        List<GoodsData> propsList = new List<GoodsData>();
         foreach(GoodsData goods in goodsList)
         {
             if(goods.type == "vip")
@@ -36,8 +38,10 @@ public class UIShopPropsPanel : MonoBehaviour {
             }
             else if(goods.type == "props")
             {
-                wantedPriceText.text = (goods.price / 100.0f).ToString("C");
+                // wantedPriceText.text = (goods.price / 100.0f).ToString("C");
+                propsList.Add(goods);
             }
         }
+        scrollView.setDatas(propsList);
     }
 }

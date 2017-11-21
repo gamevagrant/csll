@@ -44,6 +44,30 @@ public class UIMailListItem : BaseItemView
 
     private void OnClickGetRewardBtn()
     {
-        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIGetRewardWindow, mailData.reward);
+        GameMainManager.instance.netManager.GetReward(mailData.index, (ret, res) =>
+        {
+            if(res.isOK)
+            {
+                SetData(res.data.user_mail[mailData.index]);
+                ShowReward(res.data.user_rewards);
+            }
+        });
+        
+    }
+
+    private void ShowReward(RewardData[] rewards)
+    {
+        int index = 0;
+        GetRewardWindowData data = new GetRewardWindowData();
+        data.reward = rewards[index];
+        data.OnGetReward = () => {
+            index++;
+            if(index<rewards.Length)
+            {
+                data.reward = rewards[index];
+                GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIGetRewardWindow, data);
+            }
+        };
+        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIGetRewardWindow, data);
     }
 }

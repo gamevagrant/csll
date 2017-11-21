@@ -65,9 +65,14 @@ public class UIFriendsWindow : UIWindowBase {
 
     protected override void StartShowWindow(object[] data)
     {
-        UpdateMyFriendsData();
+        GameMainManager.instance.netManager.Friend(0, (ret, res) =>
+        {
+            UpdateMyFriendsData(res.data.friends);
+
+            UpdateNotAgreeFriendsData(res.data.friendsNotAgree);
+        });
+       
         UpdateAddFriendData();
-        UpdateNotAgreeFriendsData();
         myFriendsToggle.isOn = true;
         myFriendsToggle.enabled = false;
         myFriendsToggle.enabled = true;
@@ -95,13 +100,13 @@ public class UIFriendsWindow : UIWindowBase {
     private void OnUpdateFriendsHandle(BaseEvent e)
     {
         UpdateFriendsEvent evt = e as UpdateFriendsEvent;
-        if(evt.type == UpdateFriendsEvent.UpdateType.AgreeFriend || evt.type == UpdateFriendsEvent.UpdateType.RemoveFriend)
+        if(evt.updateType == UpdateFriendsEvent.UpdateType.AgreeFriend || evt.updateType == UpdateFriendsEvent.UpdateType.RemoveFriend)
         {
-            UpdateMyFriendsData();
+            UpdateMyFriendsData(GameMainManager.instance.model.userData.friendInfo);
         }
-        if (evt.type == UpdateFriendsEvent.UpdateType.AgreeFriend || evt.type == UpdateFriendsEvent.UpdateType.IgnoreFriend)
+        if (evt.updateType == UpdateFriendsEvent.UpdateType.AgreeFriend || evt.updateType == UpdateFriendsEvent.UpdateType.IgnoreFriend)
         {
-            UpdateNotAgreeFriendsData();
+            UpdateNotAgreeFriendsData(GameMainManager.instance.model.userData.friendNotAgreeInfo);
         }
     }
 
@@ -114,13 +119,13 @@ public class UIFriendsWindow : UIWindowBase {
     }
 
 
-    private void UpdateMyFriendsData()
+    private void UpdateMyFriendsData(FriendData[] friendDatas)
     {
         //receiveCountText.text = string.Format("今日领取次数：{0}/{1}",GameMainManager.instance.model.userData.rec)
 
         List<FriendItemData> friendItems = new List<FriendItemData>();
         friendItems.Add(new FriendItemData(0,null));
-        FriendData[] friendDatas = GameMainManager.instance.model.userData.friendInfo;
+       // FriendData[] friendDatas = GameMainManager.instance.model.userData.friendInfo;
         if(friendDatas!= null)
         {
             foreach (FriendData fd in friendDatas)
@@ -147,9 +152,9 @@ public class UIFriendsWindow : UIWindowBase {
         friendCodeText.text = "我的邀请码：" + GameMainManager.instance.model.userData.friendshipCode;
     }
 
-    private void UpdateNotAgreeFriendsData()
+    private void UpdateNotAgreeFriendsData(FriendData[] friendDatas)
     {
-        FriendData[] friendDatas = GameMainManager.instance.model.userData.friendNotAgreeInfo;
+       // FriendData[] friendDatas = GameMainManager.instance.model.userData.friendNotAgreeInfo;
         notAgreeScrollView.setDatas(friendDatas);
     }
 
@@ -161,7 +166,7 @@ public class UIFriendsWindow : UIWindowBase {
             {
                 GameMainManager.instance.uiManager.OpenModalBoxWindow("添加成功", "", ()=> {
 
-                    UpdateNotAgreeFriendsData();
+                    UpdateNotAgreeFriendsData(res.data.friends);
                 });
             }
         });
@@ -175,7 +180,7 @@ public class UIFriendsWindow : UIWindowBase {
             {
                 GameMainManager.instance.uiManager.OpenModalBoxWindow("忽略成功", "", ()=>
                 {
-                    UpdateNotAgreeFriendsData();
+                    UpdateNotAgreeFriendsData(res.data.friendsNotAgree);
                 });
             }
         });
@@ -188,7 +193,7 @@ public class UIFriendsWindow : UIWindowBase {
             if (res.isOK)
             {
                 GameMainManager.instance.uiManager.OpenModalBoxWindow("一键领取成功", "", ()=> {
-                    UpdateMyFriendsData();
+                    UpdateMyFriendsData(res.data.friends);
 
                 });
             }

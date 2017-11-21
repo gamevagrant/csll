@@ -2,9 +2,12 @@
 
 public interface IUIManager {
 
+    void OpenWindow(UISettings.UIWindowID id, bool needTransform = true, System.Action onComplate = null, params object[] data);
     void OpenWindow(UISettings.UIWindowID id,bool needTransform=true,params object[] data);
     void OpenWindow(UISettings.UIWindowID id, params object[] data);
-    void CloseWindow(UISettings.UIWindowID id, bool needTransform = true);
+
+    void CloseWindow(UISettings.UIWindowID id, bool needTransform = true, System.Action onComplate = null);
+    void CloseWindow(UISettings.UIWindowID id);
     void ChangeState(UIStateChangeBase state);
     /// <summary>
     /// 打开只有一个确认按钮的模态窗口 

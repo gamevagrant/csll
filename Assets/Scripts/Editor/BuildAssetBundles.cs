@@ -38,7 +38,7 @@ public class BuildAssetBundles {
     {
         //获取所有固定打包的文件
         FileInfo[] files = FilePathTools.getFiles(buildRoot);
-        List<string> fixedPaths = new List<string>();
+        //List<string> fixedPaths = new List<string>();
         List<AssetBundleBuild> buildMap = new List<AssetBundleBuild>();
         for (int i = 0; i < files.Length; i++)
         {

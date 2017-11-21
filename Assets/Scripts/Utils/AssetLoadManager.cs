@@ -18,7 +18,7 @@ public class AssetLoadManager:MonoBehaviour
 	string prefix = "file://";
 #endif
 
-	private Dictionary<string, Object> cache = new Dictionary<string, Object>();
+	private Dictionary<string, object> cache = new Dictionary<string, object>();
  	private Queue<Action> queue = new Queue<Action>();
 	private bool isLoading = false;
 
@@ -54,8 +54,8 @@ public class AssetLoadManager:MonoBehaviour
 	/// 加载一个本地资源（file）
 	/// </summary>
 	/// <param name="path"></param>
-	public void LoadAsset<T>(string url,Action<T> callback ,bool isCache = true) where T:Object
-	{
+	public void LoadAsset<T>(string url,Action<T> callback ,bool isCache = true)
+    {
 		string path = url;
 		if (path.IndexOf(@"http://") == -1)
 		{
@@ -67,10 +67,10 @@ public class AssetLoadManager:MonoBehaviour
 		}
 
 		path = FilePathTools.normalizePath(path);
-		Object res;
+		object res;
 		if (callback != null && cache.TryGetValue(path, out res) && res != null)
 		{
-			callback(res as T);
+			callback((T)res);
 		}
 		else
 		{
@@ -82,12 +82,12 @@ public class AssetLoadManager:MonoBehaviour
 	
 	}
 
-	private IEnumerator loadAsync<T>(string url,Action<T> callback ,bool iscache)where T:Object
+	private IEnumerator loadAsync<T>(string url,Action<T> callback ,bool iscache)
 	{
-        Object obj;
+        object obj;
         if (callback != null && cache.TryGetValue(url, out obj) && obj != null)
         {
-            callback(obj as T);
+            callback((T)obj);
             yield break;
         }
         isLoading = true;
@@ -102,15 +102,34 @@ public class AssetLoadManager:MonoBehaviour
 		{
 			path = url;
 		}
-		Debug.Log("================" + path);
+		Debug.Log("==开始加载==:" + path);
 
 		path = FilePathTools.normalizePath(path);
 		WWW www = new WWW(path);
 		yield return www;
 		if (string.IsNullOrEmpty(www.error))
 		{
-			Object res;
-			if (typeof(T) == typeof(Texture2D))
+			object res;
+            Type type =typeof(T);
+            if(type == typeof(Texture2D))
+            {
+                Texture2D tex = new Texture2D(4, 4);
+                www.LoadImageIntoTexture(tex);
+                res = tex;
+            }else if (type == typeof(AssetBundle))
+            {
+                res = www.assetBundle;
+            }
+            else if (type == typeof(string))
+            {
+                res = www.text;
+            }
+            else
+            {
+                res = www.bytes;
+            }
+            /*
+            if (typeof(T) == typeof(Texture2D))
 			{
 				Texture2D tex = new Texture2D(4, 4);
 				tex.LoadImage(www.bytes);
@@ -122,13 +141,13 @@ public class AssetLoadManager:MonoBehaviour
 			}
 			else
 			{
-				res = www.assetBundle;
+				res = www.bytes;
 			}
 			if (iscache && !cache.ContainsKey(url))
 			{
 				cache.Add(url, res);
 			}
-				
+				*/
 			//CacheManager.instance.addCache(url, www.bytes);
 			callback((T)res);
 			

@@ -25,6 +25,10 @@ public class UISettings  {
         UIFriendsWindow,
         UIShopWindow,
         UIRankWindow,
+        UIMiningMapWindow,
+        UIMiningWindow,
+        UICloudCover,
+
     }
 
     public enum UIWindowType
@@ -32,6 +36,7 @@ public class UISettings  {
         Normal,    // 可推出界面(UIMainMenu,UIRank等)
         Fixed,     // 固定窗口(UITopBar等)
         PopUp,     // 模式窗口(UIMessageBox, yourPopWindow , yourTipsWindow ......)
+        Cover,      //覆盖效果
     }
 
     public enum UIWindowColliderMode
@@ -76,7 +81,12 @@ public class UISettings  {
         {UIWindowID.UIFriendsWindow,"UIFriendsWindow" },
         {UIWindowID.UIShopWindow,"UIShopWindow" },
         {UIWindowID.UIRankWindow,"UIRankWindow" },
+        {UIWindowID.UIMiningMapWindow,"UIMiningMapWindow" },
+        {UIWindowID.UIMiningWindow,"UIMiningWindow" },
+        {UIWindowID.UICloudCover,"UICloudCover"},
     };
+
+
 
     public static string getWindowName(UIWindowID id)
     {

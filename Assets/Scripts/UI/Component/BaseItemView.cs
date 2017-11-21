@@ -7,4 +7,9 @@ public class BaseItemView : MonoBehaviour {
 	{
 		
 	}
+
+    public virtual void OnSelected(bool isSelected)
+    {
+
+    }
 }

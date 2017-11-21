@@ -36,6 +36,8 @@ public class UISideBarWindow :UIWindowBase {
         {
             GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIRankWindow);
         });
+        leftPanel.anchoredPosition = new Vector2(0, 800);
+        rightPanel.anchoredPosition = new Vector2(0, 800);
     }
 
     private void OnDestroy()
@@ -43,10 +45,10 @@ public class UISideBarWindow :UIWindowBase {
         rank.GetComponentInChildren<Button>().onClick.RemoveAllListeners();
     }
 
+
     protected override void StartShowWindow(object[] data)
     {
-        leftPanel.anchoredPosition = new Vector2(0, 800);
-        rightPanel.anchoredPosition = new Vector2(0, 800);
+       
     }
 
     protected override void StartHideWindow()
@@ -61,12 +63,22 @@ public class UISideBarWindow :UIWindowBase {
             onComplete();
         });
     }
-
+    protected override void EndShowWindow()
+    {
+        leftPanel.anchoredPosition = new Vector2(0, -60);
+        rightPanel.anchoredPosition = new Vector2(0, -60);
+    }
     protected override void ExitAnimation(Action onComplete)
     {
         leftPanel.DOAnchorPos(new Vector2(0, 800), 1f).SetEase(Ease.OutCubic);
         rightPanel.DOAnchorPos(new Vector2(0, 800), 1f).SetEase(Ease.OutCubic).OnComplete(() => {
             onComplete();
         }); 
+    }
+
+    protected override void EndHideWindow()
+    {
+        leftPanel.anchoredPosition = new Vector2(0, 800);
+        rightPanel.anchoredPosition = new Vector2(0, 800);
     }
 }

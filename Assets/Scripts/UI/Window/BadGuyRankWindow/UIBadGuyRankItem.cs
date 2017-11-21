@@ -40,6 +40,7 @@ public class UIBadGuyRankItem : BaseItemView {
         starText.text = badGuy.crowns.ToString();
         nameText.text = badGuy.name;
         tipsText.text = badGuy.isWanted ? "已经被通缉！" : "还在逍遥法外！";
+        wantedBtn.interactable = !badGuy.isWanted;
         attackNumText.text = badGuy.attactTimes.ToString();
 
     }
@@ -48,9 +49,20 @@ public class UIBadGuyRankItem : BaseItemView {
     {
         if(GameMainManager.instance.model.userData.wantedCount>0)
         {
-            GameMainManager.instance.uiManager.OpenModalBoxWindow("确认使用1个通缉令吗？", "", "", (ret) =>
+            GameMainManager.instance.uiManager.OpenModalBoxWindow("确认使用1个通缉令吗？", "", "", (isOK) =>
             {
-                Debug.Log(ret);
+                if(isOK)
+                {
+                    GameMainManager.instance.netManager.Wanted(badGuy.uid, (ret, res) =>
+                    {
+                        if(res.isOK)
+                        {
+                            SetData(res.data.otherData);
+
+
+                        }
+                    });
+                }
             });
         }else
         {

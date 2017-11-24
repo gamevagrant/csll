@@ -4,29 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class ButtonAudio : MonoBehaviour {
+public class ButtonAudio : MonoBehaviour, IPointerClickHandler {
 
-    Button btn;
-    private void Awake()
-    {
-        btn = GetComponent<Button>();
-        if(btn != null)
-        {
-            btn.onClick.AddListener(() => {
-                GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.button_click);
-            });
-        }else
-        {
-            Debug.LogError("没有找到Button组件:"+name);
-        }
-    }
-    // Use this for initialization
-    void Start () {
-		
-	}
 
-    private void OnDestroy()
+    public void OnPointerClick(PointerEventData eventData)
     {
-        btn.onClick.RemoveAllListeners();
+        GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.button_click);
     }
+
 }

@@ -22,13 +22,16 @@ public class UIAgreeFriendItem : BaseItemView {
         {
             if (res.isOK)
             {
-                GameMainManager.instance.uiManager.OpenModalBoxWindow("忽略成功", "", () =>
+                Alert.Show("忽略成功");
+                /*
+                GameMainManager.instance.uiManager.OpenPopupModalBox("忽略成功", "", () =>
                 {
                    
-                });
+                });*/
             }else
             {
-                GameMainManager.instance.uiManager.OpenModalBoxWindow(res.errmsg, "", null);
+                Alert.Show(res.errmsg);
+                // GameMainManager.instance.uiManager.OpenPopupModalBox(res.errmsg, "", null);
             }
         });
     }
@@ -39,13 +42,17 @@ public class UIAgreeFriendItem : BaseItemView {
         {
             if (res.isOK)
             {
-                GameMainManager.instance.uiManager.OpenModalBoxWindow("添加成功", "", () =>
+                Alert.Show("添加成功");
+                /*
+                GameMainManager.instance.uiManager.OpenPopupModalBox("添加成功", "", () =>
                 {
 
-                });
-            }else
+                });*/
+            }
+            else
             {
-                GameMainManager.instance.uiManager.OpenModalBoxWindow(res.errmsg, "", null);
+                Alert.Show(res.errmsg);
+                //GameMainManager.instance.uiManager.OpenPopupModalBox(res.errmsg, "", null);
             }
         });
     }

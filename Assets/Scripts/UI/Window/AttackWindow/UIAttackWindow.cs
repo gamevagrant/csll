@@ -20,7 +20,8 @@ public class UIAttackWindow :UIWindowBase {
     public RectTransform shell;//炮弹
 
 
-    private AttackTargetUserData attackTargetUser;//随机攻击目标
+    //private AttackTargetUserData randomAttackTarget;//随机攻击目标
+    private SelectPlayerData selectAttackTarget;//选中攻击的目标
 
 
     public override UIWindowData windowData
@@ -42,8 +43,8 @@ public class UIAttackWindow :UIWindowBase {
     private void Start()
     {
         topBar.onSelectTarget += (data) => {
-
-            ChangeIsland(data.islandId, data.buildings);
+            selectAttackTarget = data;
+            ChangeIsland(selectAttackTarget.islandId, selectAttackTarget.buildings);
         };
     }
 
@@ -60,14 +61,15 @@ public class UIAttackWindow :UIWindowBase {
         shell.gameObject.SetActive(false);
         shield.gameObject.SetActive(false);
 
-        attackTargetUser = data[0] as AttackTargetUserData;
-        island.UpdateCityData(attackTargetUser.islandId, attackTargetUser.buildings);
-        SetSelectBtn(attackTargetUser.buildings);
+        AttackTargetUserData randomAttackTarget = data[0] as AttackTargetUserData;
+        selectAttackTarget = new SelectPlayerData(randomAttackTarget);
+        island.UpdateCityData(randomAttackTarget.islandId, randomAttackTarget.buildings);
+        SetSelectBtn(randomAttackTarget.buildings);
 
         GameMainManager.instance.netManager.Vengeance((ret,res)=> {
             if(res.isOK)
             {
-                topBar.SetEnemysData(res.data.enemies, attackTargetUser);
+                topBar.SetEnemysData(res.data.enemies, randomAttackTarget);
                 topBar.SetFriendsData(GameMainManager.instance.model.userData.friendInfo);
             }
         });
@@ -117,7 +119,7 @@ public class UIAttackWindow :UIWindowBase {
     {
         btnRoot.SetActive(false);
         topBar.HideBar();
-        GameMainManager.instance.netManager.Attack(attackTargetUser.uid, index - 1, (ret, res) =>
+        GameMainManager.instance.netManager.Attack(selectAttackTarget.uid, index - 1, (ret, res) =>
         {
             if(res.isOK)
             {
@@ -158,11 +160,11 @@ public class UIAttackWindow :UIWindowBase {
 
             if(data.attackTarget.buildings[index - 1].status == 2)
             {
-                tips = string.Format("恭喜您，您成功摧毁了<color=red>{0}</color>的建筑，获得了<color=red>{1}</color>金币", data.attackTarget.name, GameUtils.GetCurrencyString(data.reward));
+                tips = string.Format("恭喜您，您成功摧毁了<#1995BCFF>{0}</color>的建筑，获得了<#D34727FF>{1}</color>金币", data.attackTarget.name, GameUtils.GetCurrencyString(data.reward));
             }
             else 
             {
-                tips = string.Format("恭喜您，您成功损坏了<color=red>{0}</color>的建筑，获得了<color=red>{1}</color>金币", data.attackTarget.name, GameUtils.GetCurrencyString(data.reward));
+                tips = string.Format("恭喜您，您成功损坏了<#1995BCFF>{0}</color>的建筑，获得了<#D34727FF>{1}</color>金币", data.attackTarget.name, GameUtils.GetCurrencyString(data.reward));
             }
             
            
@@ -186,12 +188,14 @@ public class UIAttackWindow :UIWindowBase {
                 shell.gameObject.SetActive(false);
                 boomAnimation.gameObject.SetActive(true);
                 particSys.gameObject.SetActive(true);
-                island.UpdateBuildingData(attackTargetUser.islandId, index, data.attackTarget.buildings[index - 1]);
+                island.UpdateBuildingData(index, data.attackTarget.buildings[index - 1]);
+                EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Money, 0));
             });
             sq.Insert(4.5f,DOTween.To(() => artillery.anchoredPosition, x => artillery.anchoredPosition = x, new Vector2(0, -250), 0.5f));
             sq.InsertCallback(4.5f,()=> {
                 GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.panel_in);
-                GameMainManager.instance.uiManager.OpenModalBoxWindow(tips, "", OnClickOkBtn);
+                //GameMainManager.instance.uiManager.OpenPopupModalBox(tips, "", OnClickOkBtn);
+                Alert.ShowPopupBox(tips, OnClickOkBtn);
             });
 
             sq.AppendCallback(() =>
@@ -203,7 +207,7 @@ public class UIAttackWindow :UIWindowBase {
         }
         else
         {
-            tips = string.Format("您的攻击被<color=red>{0}</color>的盾牌阻挡了，获得了<color=red>{1}</color>金币", data.attackTarget.name, GameUtils.GetCurrencyString(data.reward) );
+            tips = string.Format("您的攻击被<#1995BCFF>{0}</color>的盾牌阻挡了，获得了<#D34727FF>{1}</color>金币", data.attackTarget.name, GameUtils.GetCurrencyString(data.reward) );
             GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.shoot_aim_target);
             Sequence sq = DOTween.Sequence();
             sq.Append(artillery.DORotate(new Vector3(0, 0, angle), 0.5f));
@@ -221,6 +225,7 @@ public class UIAttackWindow :UIWindowBase {
                 GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.shoot_hit_sheild);
                 shield.gameObject.SetActive(true);
                 particSys.gameObject.SetActive(true);
+                EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Money, 0));
             });
             sq.Append(shell.DOAnchorPos(new Vector2(-150,-200),1).SetRelative(true));
             sq.AppendCallback(()=> {
@@ -230,7 +235,8 @@ public class UIAttackWindow :UIWindowBase {
             sq.Insert(4.5f,DOTween.To(() => artillery.anchoredPosition, x => artillery.anchoredPosition = x, new Vector2(0, -250), 0.5f));
             sq.InsertCallback(5, () => {
                 GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.panel_in);
-                GameMainManager.instance.uiManager.OpenModalBoxWindow(tips, "", OnClickOkBtn);
+                //GameMainManager.instance.uiManager.OpenPopupModalBox(tips, "", OnClickOkBtn);
+                Alert.ShowPopupBox(tips, OnClickOkBtn);
             });
 
             sq.onComplete += () =>

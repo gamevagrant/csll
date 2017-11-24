@@ -40,6 +40,7 @@ GameObject:
   - component: {fileID: 114390437810560264}
   - component: {fileID: 114212391770341852}
   - component: {fileID: 114557084374861780}
+  - component: {fileID: 114612128048528790}
   m_Layer: 5
   m_Name: BuyMinerItem (2)
   m_TagString: Untagged
@@ -125,6 +126,7 @@ GameObject:
   - component: {fileID: 222284538647403604}
   - component: {fileID: 114110955386881556}
   - component: {fileID: 114084509916573406}
+  - component: {fileID: 114452053788308686}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -143,6 +145,7 @@ GameObject:
   - component: {fileID: 222693798907529216}
   - component: {fileID: 114140576947376222}
   - component: {fileID: 114509937670871776}
+  - component: {fileID: 114400642543964830}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -212,6 +215,7 @@ GameObject:
   - component: {fileID: 114054377421141180}
   - component: {fileID: 114817252973429422}
   - component: {fileID: 114530153639042196}
+  - component: {fileID: 114646148676494814}
   m_Layer: 5
   m_Name: BuyMinerItem (3)
   m_TagString: Untagged
@@ -400,6 +404,7 @@ GameObject:
   - component: {fileID: 114597554024553166}
   - component: {fileID: 114017934542915926}
   - component: {fileID: 114467799271483736}
+  - component: {fileID: 114779928831422662}
   m_Layer: 5
   m_Name: BuyMinerItem (4)
   m_TagString: Untagged
@@ -639,6 +644,7 @@ GameObject:
   - component: {fileID: 114836463076422946}
   - component: {fileID: 114704568319071508}
   - component: {fileID: 114872724321940324}
+  - component: {fileID: 114971342500409208}
   m_Layer: 5
   m_Name: BuyMinerItem (1)
   m_TagString: Untagged
@@ -996,6 +1002,7 @@ GameObject:
   - component: {fileID: 222038881593412866}
   - component: {fileID: 114520337974100396}
   - component: {fileID: 114172775431391300}
+  - component: {fileID: 114540525580943714}
   m_Layer: 5
   m_Name: Button (1)
   m_TagString: Untagged
@@ -1080,6 +1087,7 @@ GameObject:
   - component: {fileID: 114144193584990370}
   - component: {fileID: 114632338297595252}
   - component: {fileID: 114684945227276366}
+  - component: {fileID: 114604651285036140}
   m_Layer: 5
   m_Name: BuyMinerItem
   m_TagString: Untagged
@@ -2896,6 +2904,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114400642543964830
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1161721243618814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 531eead7af90d3647bb77a9a42072d07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114403291017901584
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3172,6 +3191,17 @@ MonoBehaviour:
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
+--- !u!114 &114452053788308686
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1125758566762610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 531eead7af90d3647bb77a9a42072d07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114455282464725018
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3495,6 +3525,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114540525580943714
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1637439063624324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 531eead7af90d3647bb77a9a42072d07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114544642208169702
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3663,6 +3704,28 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114604651285036140
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1705022983724634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 531eead7af90d3647bb77a9a42072d07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114612128048528790
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1062670791294472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 531eead7af90d3647bb77a9a42072d07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114632338297595252
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3734,6 +3797,17 @@ MonoBehaviour:
   fullMiner: {fileID: 1365391254831348}
   islandNameText: {fileID: 114057283238175576}
   incomeText: {fileID: 114328158476017830}
+--- !u!114 &114646148676494814
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1189704389449842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 531eead7af90d3647bb77a9a42072d07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114646836157581766
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4323,6 +4397,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114779928831422662
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1300724191982452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 531eead7af90d3647bb77a9a42072d07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114807165913864604
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4741,6 +4826,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114971342500409208
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1476160360600396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 531eead7af90d3647bb77a9a42072d07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114992930445493786
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4787,7 +4883,7 @@ ParticleSystem:
   startDelay:
     serializedVersion: 2
     minMaxState: 0
-    scalar: 0
+    scalar: 1
     minScalar: 0
     maxCurve:
       serializedVersion: 2
@@ -8138,7 +8234,7 @@ ParticleSystem:
   startDelay:
     serializedVersion: 2
     minMaxState: 0
-    scalar: 0
+    scalar: 1
     minScalar: 0
     maxCurve:
       serializedVersion: 2
@@ -11489,7 +11585,7 @@ ParticleSystem:
   startDelay:
     serializedVersion: 2
     minMaxState: 0
-    scalar: 0
+    scalar: 1
     minScalar: 0
     maxCurve:
       serializedVersion: 2
@@ -14840,7 +14936,7 @@ ParticleSystem:
   startDelay:
     serializedVersion: 2
     minMaxState: 0
-    scalar: 0
+    scalar: 1
     minScalar: 0
     maxCurve:
       serializedVersion: 2
@@ -18179,7 +18275,7 @@ ParticleSystem:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1452335159524524}
   serializedVersion: 5
-  lengthInSec: 3
+  lengthInSec: 2
   simulationSpeed: 1
   stopAction: 0
   looping: 0
@@ -21524,7 +21620,7 @@ ParticleSystem:
   startDelay:
     serializedVersion: 2
     minMaxState: 0
-    scalar: 0
+    scalar: 1
     minScalar: 0
     maxCurve:
       serializedVersion: 2

@@ -38,25 +38,33 @@ public class AutoScrollView : MonoBehaviour {
         {
             _curItem = value;
             ItemRect item = _curItem;
+            float p;
             if (direction == Direction.Horizontal)
             {
                 Vector2 endPos = item.rect.position + item.rect.size / 2 - center.anchoredPosition;
                 endPos = new Vector2(endPos.x, 0);
-                float p = endPos.x / (content.sizeDelta - displayRect.size).x;
-                scrollRect.DOHorizontalNormalizedPos(p, 0.5f);
+                p = endPos.x / (content.sizeDelta - displayRect.size).x;
+                scrollRect.DOHorizontalNormalizedPos(p, 0.5f).OnComplete(()=> {
+                    item.item.OnSelected(true);
+                });
             }
             else
             {
                 Vector2 endPos = item.rect.position - item.rect.size / 2 - center.anchoredPosition;
                 endPos = new Vector2(0, endPos.y);
-                float p = 1 + endPos.y / (content.sizeDelta - displayRect.size).y;
-                scrollRect.DOVerticalNormalizedPos(p, 0.5f);
+                p = 1 + endPos.y / (content.sizeDelta - displayRect.size).y;
+                scrollRect.DOVerticalNormalizedPos(p, 0.5f).OnComplete(() => {
+                    item.item.OnSelected(true);
+                });
             }
-            item.item.OnSelected(true);
+
+           
         }
     }
 
     void Awake () {
+
+
         scrollRect = gameObject.GetComponent<ScrollRect>();
         content = scrollRect.content;
         displayRect = new Rect(0, 0, scrollRect.viewport.rect.width, scrollRect.viewport.rect.height);
@@ -90,6 +98,11 @@ public class AutoScrollView : MonoBehaviour {
         entry.eventID = EventTriggerType.BeginDrag;
         entry.callback.AddListener(OnDragHandle);
         et.triggers.Add(entry);
+
+        displayRect.x = 0;
+        displayRect.y = 0;
+        scrollRect.verticalNormalizedPosition = 1;
+        scrollRect.horizontalNormalizedPosition = 0;
     }
 
     private void OnDestroy()
@@ -103,8 +116,8 @@ public class AutoScrollView : MonoBehaviour {
             return;
 
         itemPool.resetAllTarget();
-        displayRect.x = 0;
-        displayRect.y = 0;
+        //displayRect.x = 0;
+        //displayRect.y = 0;
 
         Vector2 offset = Vector2.zero;
         //加开头空余空间
@@ -124,12 +137,26 @@ public class AutoScrollView : MonoBehaviour {
         offset += new Vector2((center.parent as RectTransform).rect.width - center.anchoredPosition.x - itemTemplate.rect.width / 2, -((center.parent as RectTransform).rect.height + center.anchoredPosition.y - itemTemplate.rect.height / 2));
 
         content.sizeDelta = direction == Direction.Horizontal?new Vector2(offset.x, itemTemplate.rect.height) :new Vector2(itemTemplate.rect.width, -offset.y);
-       
+
         //content.anchoredPosition = Vector2.zero;
-        scrollRect.verticalNormalizedPosition = 1;
-        scrollRect.horizontalNormalizedPosition = 0;
+
         updateItems();
-        curItem = itemDatas[0];
+        if (_curItem == null)
+        {
+            curItem = itemDatas[0];
+        }else
+        {
+            curItem =_curItem;
+        }
+    }
+
+    public void SetSelected(int index)
+    {
+        if(index>=0 && index<itemDatas.Count)
+        {
+            curItem = itemDatas[index];
+        }
+        
     }
 
     private void OnDragHandle(BaseEventData e)
@@ -227,7 +254,7 @@ public class AutoScrollView : MonoBehaviour {
                     end = index;
                 }
             }
-            Debug.Log(string.Format("head:{0}  end:{1}",head,end));
+            //Debug.Log(string.Format("head:{0}  end:{1}",head,end));
         }
         return itemDatas[head];
     }

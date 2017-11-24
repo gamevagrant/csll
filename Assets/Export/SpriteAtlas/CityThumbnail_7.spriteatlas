@@ -1,0 +1,194 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: CityThumbnail_7
+  m_EditorData:
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 0
+    platformSettings: []
+    packingParameters:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    packedHash:
+      serializedVersion: 2
+      Hash: ff40212d50132dfa51fee79100aae990
+    variantMultiplier: 1
+    bindAsDefault: 0
+    finalFormat: 4
+    hashString: ff40212d50132dfa51fee79100aae990
+    totalSpriteSurfaceArea: 211148
+    packables:
+    - {fileID: 102900000, guid: 127057e3baf88164683eca777b844ace, type: 3}
+    packedSpriteRenderDataKeys:
+    - 3acc5d06b9e79db439a1120f25284778: 21300000
+    - 4cbe58d66dba5774c9bacab3254615d6: 21300000
+    - cf4f1bece708ecb4ab1c803cbaa5e8c3: 21300000
+    - 42e8a2556fec21c44904f0259a691a17: 21300000
+    - 3d8db4aa8005d4c4f9f95c0b6d9154bd: 21300000
+    - 1f6c833d2442dfa43b04c062044452c6: 21300000
+    - 560b7335c29cd2d4e9cc5f4568e796d4: 21300000
+    - 3956438fd0c23074eb91c194a51555ba: 21300000
+    - 4943474db58fa4c458c816d505422ced: 21300000
+    - 0fcc588bbb71c554d8fb762f68721919: 21300000
+    - bb07d2016a9d5ce44a5bb5fff3b850cd: 21300000
+    - 0bdc56dcee6d0f940a7aaa844d1558e6: 21300000
+    - f54e391aad7342f45bff0d859cedd94e: 21300000
+    - 36edd89005e7bf3439541c5ce1d97a86: 21300000
+    - b37aa27efdeb0ba43bc12a256afe6192: 21300000
+    - f56f0e3d7293f61449744c68df9cd50d: 21300000
+    - 7f17bffd9287cee438aa0bbc7ebe35ec: 21300000
+    - fecb636e105dd3949af082cb05cb5083: 21300000
+    - 7c0ccae27fdd33740825be27e7831973: 21300000
+    - 3e91e68041c5f514fbdd18e11bce69f3: 21300000
+    - d9f8367854d49bb4a8d3fd36b165c2ac: 21300000
+    - cefe1767277c598489a705858727bf3c: 21300000
+    - 4c2f29142f8fc1440b7cd98a82c237d5: 21300000
+    - 064d29450a8fabe459028ed9a5bc7b54: 21300000
+    - 70dfc1e42efba2a41a05375955abcd0d: 21300000
+    - 3abd7f2122a7143439762063b6aa7f41: 21300000
+    - 467cd54c13bf6524d98fc8a94273cb55: 21300000
+    - edff4ac1b00ae1441a49e279a490ef5a: 21300000
+    - 8f74c459fd932994ab9f8150fef8e436: 21300000
+    - a5a6df8df9c01054c810a880b6931142: 21300000
+    - d18d2ad01c23f9544a3f55d79ea3335f: 21300000
+    - 1849b034a3aa9b8468fe37211ff8401d: 21300000
+    - 0ce363b8374a70047b1ff18db03ea4b5: 21300000
+    - 6a4bb9d64c1b25044a03cf3400a3751c: 21300000
+    - 8e98222385c5236428fbe66c1a3bf681: 21300000
+    - 0b3ec08aa6fe1a748b7759db37db34d4: 21300000
+    - 7e28eb84c755f9e41b0a8e7035b4bc58: 21300000
+    - 7da4777aa53022947aea8f60aea98edf: 21300000
+    - 392cc1ec6040e9c40a5046606bf7e4f6: 21300000
+    - f88f61366a5c59b4380ba77162d40146: 21300000
+    - 6b901dc5dbab6c04baf9c4c4daddfbb1: 21300000
+    - a4bc20a997ab364429610568474173c5: 21300000
+    - e338fb02746ceb148bc9fd5cd76d3590: 21300000
+    - 7bbd756a888ac044eb9751cbb8855394: 21300000
+    - c29a46bd61fa3cf48b161bd9e1cad542: 21300000
+    - 2bee6d893b88cff4594bd96c1b6d6ae9: 21300000
+    - 94c253e34c25e2c4398a5a17a6ef540b: 21300000
+    - 3e7858c302640d54ca6e808f5381a842: 21300000
+    - b11b4e08dc6c8624cb3a1ae853490906: 21300000
+    - 5e64a800c0af9bb43ace7f2ee4d57c1e: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 3acc5d06b9e79db439a1120f25284778, type: 3}
+  - {fileID: 21300000, guid: 4cbe58d66dba5774c9bacab3254615d6, type: 3}
+  - {fileID: 21300000, guid: cf4f1bece708ecb4ab1c803cbaa5e8c3, type: 3}
+  - {fileID: 21300000, guid: 42e8a2556fec21c44904f0259a691a17, type: 3}
+  - {fileID: 21300000, guid: 3d8db4aa8005d4c4f9f95c0b6d9154bd, type: 3}
+  - {fileID: 21300000, guid: 1f6c833d2442dfa43b04c062044452c6, type: 3}
+  - {fileID: 21300000, guid: 560b7335c29cd2d4e9cc5f4568e796d4, type: 3}
+  - {fileID: 21300000, guid: 3956438fd0c23074eb91c194a51555ba, type: 3}
+  - {fileID: 21300000, guid: 4943474db58fa4c458c816d505422ced, type: 3}
+  - {fileID: 21300000, guid: 0fcc588bbb71c554d8fb762f68721919, type: 3}
+  - {fileID: 21300000, guid: bb07d2016a9d5ce44a5bb5fff3b850cd, type: 3}
+  - {fileID: 21300000, guid: 0bdc56dcee6d0f940a7aaa844d1558e6, type: 3}
+  - {fileID: 21300000, guid: f54e391aad7342f45bff0d859cedd94e, type: 3}
+  - {fileID: 21300000, guid: 36edd89005e7bf3439541c5ce1d97a86, type: 3}
+  - {fileID: 21300000, guid: b37aa27efdeb0ba43bc12a256afe6192, type: 3}
+  - {fileID: 21300000, guid: f56f0e3d7293f61449744c68df9cd50d, type: 3}
+  - {fileID: 21300000, guid: 7f17bffd9287cee438aa0bbc7ebe35ec, type: 3}
+  - {fileID: 21300000, guid: fecb636e105dd3949af082cb05cb5083, type: 3}
+  - {fileID: 21300000, guid: 7c0ccae27fdd33740825be27e7831973, type: 3}
+  - {fileID: 21300000, guid: 3e91e68041c5f514fbdd18e11bce69f3, type: 3}
+  - {fileID: 21300000, guid: d9f8367854d49bb4a8d3fd36b165c2ac, type: 3}
+  - {fileID: 21300000, guid: cefe1767277c598489a705858727bf3c, type: 3}
+  - {fileID: 21300000, guid: 4c2f29142f8fc1440b7cd98a82c237d5, type: 3}
+  - {fileID: 21300000, guid: 064d29450a8fabe459028ed9a5bc7b54, type: 3}
+  - {fileID: 21300000, guid: 70dfc1e42efba2a41a05375955abcd0d, type: 3}
+  - {fileID: 21300000, guid: 3abd7f2122a7143439762063b6aa7f41, type: 3}
+  - {fileID: 21300000, guid: 467cd54c13bf6524d98fc8a94273cb55, type: 3}
+  - {fileID: 21300000, guid: edff4ac1b00ae1441a49e279a490ef5a, type: 3}
+  - {fileID: 21300000, guid: 8f74c459fd932994ab9f8150fef8e436, type: 3}
+  - {fileID: 21300000, guid: a5a6df8df9c01054c810a880b6931142, type: 3}
+  - {fileID: 21300000, guid: d18d2ad01c23f9544a3f55d79ea3335f, type: 3}
+  - {fileID: 21300000, guid: 1849b034a3aa9b8468fe37211ff8401d, type: 3}
+  - {fileID: 21300000, guid: 0ce363b8374a70047b1ff18db03ea4b5, type: 3}
+  - {fileID: 21300000, guid: 6a4bb9d64c1b25044a03cf3400a3751c, type: 3}
+  - {fileID: 21300000, guid: 8e98222385c5236428fbe66c1a3bf681, type: 3}
+  - {fileID: 21300000, guid: 0b3ec08aa6fe1a748b7759db37db34d4, type: 3}
+  - {fileID: 21300000, guid: 7e28eb84c755f9e41b0a8e7035b4bc58, type: 3}
+  - {fileID: 21300000, guid: 7da4777aa53022947aea8f60aea98edf, type: 3}
+  - {fileID: 21300000, guid: 392cc1ec6040e9c40a5046606bf7e4f6, type: 3}
+  - {fileID: 21300000, guid: f88f61366a5c59b4380ba77162d40146, type: 3}
+  - {fileID: 21300000, guid: 6b901dc5dbab6c04baf9c4c4daddfbb1, type: 3}
+  - {fileID: 21300000, guid: a4bc20a997ab364429610568474173c5, type: 3}
+  - {fileID: 21300000, guid: e338fb02746ceb148bc9fd5cd76d3590, type: 3}
+  - {fileID: 21300000, guid: 7bbd756a888ac044eb9751cbb8855394, type: 3}
+  - {fileID: 21300000, guid: c29a46bd61fa3cf48b161bd9e1cad542, type: 3}
+  - {fileID: 21300000, guid: 2bee6d893b88cff4594bd96c1b6d6ae9, type: 3}
+  - {fileID: 21300000, guid: 94c253e34c25e2c4398a5a17a6ef540b, type: 3}
+  - {fileID: 21300000, guid: 3e7858c302640d54ca6e808f5381a842, type: 3}
+  - {fileID: 21300000, guid: b11b4e08dc6c8624cb3a1ae853490906, type: 3}
+  - {fileID: 21300000, guid: 5e64a800c0af9bb43ace7f2ee4d57c1e, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - thumb_4_5@2x
+  - thumb_gray_4_5@2x
+  - thumb_gray_4_4@2x
+  - thumb_4_4@2x
+  - thumb_4_3@2x
+  - thumb_gray_4_3@2x
+  - thumb_gray_3_5@2x
+  - thumb_3_5@2x
+  - thumb_gray_2_5@2x
+  - thumb_2_5@2x
+  - thumb_4_2@2x
+  - thumb_gray_4_2@2x
+  - thumb_1_5@2x
+  - thumb_gray_1_5@2x
+  - thumb_3_4@2x
+  - thumb_gray_3_4@2x
+  - thumb_gray_2_4@2x
+  - thumb_2_4@2x
+  - thumb_gray_1_4@2x
+  - thumb_1_4@2x
+  - thumb_4_1@2x
+  - thumb_gray_4_1@2x
+  - thumb_3_3@2x
+  - thumb_gray_3_3@2x
+  - thumb_1_3@2x
+  - thumb_gray_1_3@2x
+  - thumb_1_2@2x
+  - thumb_gray_1_2@2x
+  - thumb_gray_2_3@2x
+  - thumb_2_3@2x
+  - thumb_1_1@2x
+  - thumb_gray_1_1@2x
+  - thumb_3_2@2x
+  - thumb_gray_3_2@2x
+  - thumb_2_2@2x
+  - thumb_gray_2_2@2x
+  - thumb_3_1@2x
+  - thumb_gray_3_1@2x
+  - thumb_gray_2_1@2x
+  - thumb_2_1@2x
+  - thumb_5_5@2x
+  - thumb_gray_5_5@2x
+  - thumb_5_4@2x
+  - thumb_gray_5_4@2x
+  - thumb_gray_5_3@2x
+  - thumb_5_3@2x
+  - thumb_5_2@2x
+  - thumb_gray_5_2@2x
+  - thumb_gray_5_1@2x
+  - thumb_5_1@2x
+  m_Tag: CityThumbnail_7
+  m_IsVariant: 0

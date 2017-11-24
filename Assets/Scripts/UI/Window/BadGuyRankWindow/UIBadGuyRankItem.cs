@@ -49,9 +49,9 @@ public class UIBadGuyRankItem : BaseItemView {
     {
         if(GameMainManager.instance.model.userData.wantedCount>0)
         {
-            GameMainManager.instance.uiManager.OpenModalBoxWindow("确认使用1个通缉令吗？", "", "", (isOK) =>
+            Alert.Show("确认使用1个通缉令吗？",Alert.OK|Alert.CANCEL , (btn) =>
             {
-                if(isOK)
+                if(btn == Alert.OK)
                 {
                     GameMainManager.instance.netManager.Wanted(badGuy.uid, (ret, res) =>
                     {

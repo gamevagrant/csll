@@ -10,6 +10,7 @@ public class UIWheelPanel : MonoBehaviour {
     public TextMeshProUGUI[] names;//文字显示位置
     public Image[] images;//图片显示位置
     public Sprite[] sprites;//sprite集合
+    
     public Image reflective;//反光
     public Transform wheel;
     public ParticleSystem goldEffect;
@@ -17,6 +18,9 @@ public class UIWheelPanel : MonoBehaviour {
     public GameObject energy;
     public GameObject lightBG;
     public GameObject beaver;
+    public GetStarGoldEffect getStarEffect;
+    //public GameObjectPool starPool;//星星倍的星星
+    //public TextMeshProUGUI starGoldText;
 
     public RawImage stealHead;
     public TextMeshProUGUI stealNameLabel;
@@ -25,8 +29,10 @@ public class UIWheelPanel : MonoBehaviour {
     public TextMeshProUGUI countDownLabel;
     public TextMeshProUGUI addEnergyCountLabel;
     public TextMeshProUGUI energyLabel;
+    public TextMeshProUGUI surplusEnergyLabel;
     public Slider energyProgressSlider;
     public AudioClip[] audioClips;
+    
 
     [SerializeField]
     private RectTransform rollBtn;
@@ -45,6 +51,23 @@ public class UIWheelPanel : MonoBehaviour {
     private TargetData stealTarget;
     private int shieldCount;//护盾个数
 
+    private UserData user;
+
+    private int _energyValue;
+    private int energyValue
+    {
+        get
+        {
+            return _energyValue;
+        }
+        set
+        {
+            _energyValue = value;
+            energyLabel.text = string.Format("{0}/{1}",Mathf.Min(value,user.maxEnergy), user.maxEnergy);
+            surplusEnergyLabel.text = value>user.maxEnergy?(value - user.maxEnergy).ToString():"";
+            energyProgressSlider.value = value / (float)user.maxEnergy;
+        }
+    }
     // Use this for initialization
     void Awake ()
     {
@@ -57,22 +80,43 @@ public class UIWheelPanel : MonoBehaviour {
         rollBtn.anchoredPosition = new Vector2(rollBtn.anchoredPosition.x, -300);
         switchBtn.anchoredPosition = new Vector2(200, switchBtn.anchoredPosition.y);
         panel.anchoredPosition = new Vector2(-600, panel.anchoredPosition.y);
+
+        getStarEffect.gameObject.SetActive(false);
     }
 
   
 
     private void Start()
     {
+        user = GameMainManager.instance.model.userData;
+        energyValue = user.energy;
+        UpdateAddEnergyData();
+        
         isWorking = false;
     }
 
-
-    public void SetEnergyData(int maxEnergy,int energy,int recoverEnergy,long timeToRecover)
+    private void Update()
     {
-        energyLabel.text = string.Format("{0}/{1}", energy, maxEnergy);
-        addEnergyCountLabel.text = "+ "+recoverEnergy.ToString();
-        countDownLabel.text = GameUtils.TimestampToDateTime(timeToRecover).ToString("mm:ss");
-        energyProgressSlider.value = energy / (float)maxEnergy;
+        if(user.energy<user.maxEnergy)
+        {
+            countDownLabel.text = GameUtils.TimestampToDateTime(user.timeToRecover - (long)(Time.time - user.timeTag)).ToString("mm:ss");
+        }else
+        {
+            countDownLabel.text = "";
+        }
+        
+    }
+
+    public void UpdateAddEnergyData()
+    {
+        if (energyValue < user.maxEnergy)
+        {
+            addEnergyCountLabel.text = "+ " + user.recoverEnergy.ToString();
+        }else
+        {
+            addEnergyCountLabel.text = "";
+        }
+           
     }
 
     public void SetStealerData(TargetData target)
@@ -108,10 +152,10 @@ public class UIWheelPanel : MonoBehaviour {
         }
         stealTarget = target;
     }
-
+    //设置转盘
     public void setData(RollerItemData[] datas)
     {
-        foreach(RollerItemData data in datas)
+        foreach (RollerItemData data in datas)
         {
             int index = data.index;
             TextMeshProUGUI t = names[index];
@@ -140,7 +184,12 @@ public class UIWheelPanel : MonoBehaviour {
             {
                 t.text = data.name;
                 pic.enabled = false;
-            }else
+            }else if(data.type == "xcrowns")
+            {
+                t.text = string.Format("{0}x{1}","<sprite=0>", data.code) ;
+                pic.enabled = false;
+            }
+            else
             {
                 t.text = data.name;
                 pic.enabled = false;
@@ -154,7 +203,7 @@ public class UIWheelPanel : MonoBehaviour {
         //RectTransform rollBtnTF = rollBtn.transform as RectTransform;
 
         DOTween.To(() => rollBtn.anchoredPosition, p => rollBtn.anchoredPosition = p, new Vector2(rollBtn.anchoredPosition.x, -300), 1).SetEase(Ease.InQuint);
-        DOTween.To(() => rollBtn.localScale, x => rollBtn.localScale = x, new Vector3(1.5f,1.5f,1), 1);
+        DOTween.To(() => rollBtn.localScale, x => rollBtn.localScale = x, new Vector3(1.5f,1.5f,1), 1).SetId(1);
 
         //RectTransform switchBtnTF = switchBtn.transform as RectTransform;
         DOTween.To(() => switchBtn.anchoredPosition, p => switchBtn.anchoredPosition = p, new Vector2(200, switchBtn.anchoredPosition.y), 1);
@@ -171,6 +220,7 @@ public class UIWheelPanel : MonoBehaviour {
 
     public void enterToWheelPanelState()
     {
+
         GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_view_switch_out);
         GameMainManager.instance.uiManager.DisableOperation();
         rollBtn.gameObject.SetActive(true);
@@ -221,8 +271,11 @@ public class UIWheelPanel : MonoBehaviour {
         //RectTransform rollBtnTF = rollBtn.transform as RectTransform;
         //RectTransform switchBtnTF = switchBtn.transform as RectTransform;
         //RectTransform rollPanelTF = panel.transform as RectTransform;
-
-       
+        rollBtn.gameObject.SetActive(true);
+        switchBtn.gameObject.SetActive(true);
+        panel.gameObject.SetActive(true);
+        rollBtn.localScale = Vector3.one;
+        panel.localScale = Vector3.one;
 
         Sequence sq = DOTween.Sequence();
         sq.Append(DOTween.To(() => rollBtn.anchoredPosition, p => rollBtn.anchoredPosition = p, rollBtnOriginalValue, 1f).SetEase(Ease.OutExpo));
@@ -240,7 +293,15 @@ public class UIWheelPanel : MonoBehaviour {
         //startRotate();
         if(!isWorking)
         {
-            StartCoroutine(StartRoll());
+            if(GameMainManager.instance.model.userData.energy>0)
+            {
+                StartCoroutine(StartRoll());
+            }
+            else
+            {
+                Alert.Show("能量不足");
+            }
+            
         }
        
     }
@@ -283,6 +344,9 @@ public class UIWheelPanel : MonoBehaviour {
                 getRes = true;
                 rollData = data.data;
                 rollItem = data.data.rollerItem;
+
+                energyValue = user.energy - 1;
+                UpdateAddEnergyData();
             }
             else
             {
@@ -327,6 +391,7 @@ public class UIWheelPanel : MonoBehaviour {
         reflective.gameObject.SetActive(false);
     }*/
 
+    //展示roll结果
     private void showResault(RollData rollData)
     {
         RollerItemData rollItem = rollData.rollerItem;
@@ -363,13 +428,27 @@ public class UIWheelPanel : MonoBehaviour {
             Dictionary<UISettings.UIWindowID, object> stateData = new Dictionary<UISettings.UIWindowID, object>();
             stateData.Add(UISettings.UIWindowID.UIAttackWindow, rollData.attackTarget);
             GameMainManager.instance.uiManager.ChangeState(new UIStateChangeBase(stateData));
-        }else if (rollItem.type == "coin" || rollItem.type == "xcrowns")
+        }
+        else if(rollItem.type == "xcrowns")
         {
             int money = rollItem.code;
-            if(rollItem.type == "xcrowns")
-            {
-                money = GameMainManager.instance.model.userData.crowns * rollItem.code;
-            }
+
+            getStarEffect.gameObject.SetActive(true);
+            getStarEffect.Show(user.crowns,rollItem.code,()=> {
+
+                goldEffect.emission.SetBursts(new ParticleSystem.Burst[1] { new ParticleSystem.Burst(0, 80, 100, 1, 0.01f) });
+                goldEffect.Play();
+                GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_gold_large);
+
+                EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Money, 0));
+                GameMainManager.instance.uiManager.EnableOperation();
+                GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_Star);
+            });
+           
+        }
+        else if (rollItem.type == "coin" )
+        {
+            int money = rollItem.code;
 
             if (money < 10000)
             {
@@ -392,17 +471,18 @@ public class UIWheelPanel : MonoBehaviour {
                 GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_gold_large);
             }
             goldEffect.Play();
+            energyValue = user.energy;
             GameMainManager.instance.uiManager.EnableOperation();
-            EventDispatcher.instance.DispatchEvent(EventEnum.UPDATE_USERDATA, GameMainManager.instance.model.userData);
+            EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Money,0));
         }
     }
-
+    //展示获得能量效果
     private void ShowEnergy()
     {
         GameObject icon = energy;
 
         GameObject backLight = lightBG;
-        Vector3 moveTarget = new Vector3(270, 349, 0);
+        Vector3 moveTarget = new Vector3(0, 0, 0);
 
         icon.transform.localPosition = Vector3.zero;
         icon.transform.localScale = Vector3.zero;
@@ -420,15 +500,17 @@ public class UIWheelPanel : MonoBehaviour {
         sq.Insert(1.5f,backLight.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutQuart));
         sq.Insert(1.5f,icon.transform.DOLocalMove(moveTarget, 1).SetEase(Ease.OutQuart));
         sq.Insert(1.5f, icon.transform.DOScale(new Vector3(0.2f,0.2f,1), 0.5f).SetEase(Ease.OutQuart));
-        sq.AppendInterval(0.5f);
+        //sq.AppendInterval(0.5f);
         sq.onComplete += () => {
             GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_energy_change);
             GameMainManager.instance.uiManager.EnableOperation();
             icon.SetActive(false);
             backLight.SetActive(false);
-            EventDispatcher.instance.DispatchEvent(EventEnum.UPDATE_USERDATA, GameMainManager.instance.model.userData);
+            energyValue = user.energy;
+            EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Energy,0));
         };
     }
+    //展示护盾效果
     private void ShowShield(bool isGet)
     {
         GameObject icon = shield;
@@ -443,7 +525,7 @@ public class UIWheelPanel : MonoBehaviour {
         backLight.SetActive(true);
 
 
-        GetShieldEvent evt = new GetShieldEvent((pos) => {
+        GetShieldPosEvent evt = new GetShieldPosEvent((pos) => {
             moveTarget = pos;
             GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_shiled_start);
             Sequence sq = DOTween.Sequence();
@@ -470,19 +552,22 @@ public class UIWheelPanel : MonoBehaviour {
             });
             if (!isGet)
             {
-
-                sq.Append(icon.transform.DOLocalMove(new Vector3(100, -100, 0), 0.5f).SetRelative(true));
+                sq.Append(icon.transform.DOLocalMove(Vector3.zero, 1f));
             }
             sq.AppendInterval(0.5f);
             sq.onComplete += () => {
-
+                
                 GameMainManager.instance.uiManager.EnableOperation();
                 icon.SetActive(false);
                 backLight.SetActive(false);
-                EventDispatcher.instance.DispatchEvent(EventEnum.UPDATE_USERDATA, GameMainManager.instance.model.userData);
+                energyValue = user.energy;
+                EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.sheild,0));
+
             };
-        }, 3);
+        });
 
         EventDispatcher.instance.DispatchEvent(evt);
     }
+
+
 }

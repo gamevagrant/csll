@@ -22,7 +22,6 @@ public class UpdateAssets {
 
     public void StartUpdate()
     {
-
         Debug.Log("==开始更新==");
         Debug.Log("下载根目录：" + loadRootPath);
         Debug.Log("保存根目录：" + saveRootPath);

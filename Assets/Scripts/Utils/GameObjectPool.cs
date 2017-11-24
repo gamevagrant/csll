@@ -11,7 +11,7 @@ public class GameObjectPool : MonoBehaviour {
 	int index = 0;
 
 
-	public T getIdleTarget<T>() where T:Component
+    public T getIdleTarget<T>() where T:Component
 	{
 		Component comp;
 		for(int i = 0;i<targetlist.Count;i++)
@@ -31,8 +31,7 @@ public class GameObjectPool : MonoBehaviour {
 		}
 
 		comp = createNewTarget<T> () as Component;
-
-		index = 0;
+        index = 0;
 		return comp as T;
 	}
 

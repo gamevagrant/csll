@@ -1,6 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 using TMPro;
 
 public class UIPopupModalBoxWindow : UIWindowBase {
@@ -12,26 +15,30 @@ public class UIPopupModalBoxWindow : UIWindowBase {
             if (_windowData == null)
             {
                 _windowData = new UIWindowData();
-                _windowData.id = UISettings.UIWindowID.UIPopupModalBoxWindow;
+                _windowData.id = UISettings.UIWindowID.UIPopupModalBox;
                 _windowData.type = UISettings.UIWindowType.PopUp;
+                _windowData.colliderMode = UISettings.UIWindowColliderMode.Normal;
+                _windowData.colliderType = UISettings.UIWindowColliderType.Transparent;
                 _windowData.showMode = UISettings.UIWindowShowMode.DoNothing;
-                _windowData.navMode = UISettings.UIWindowNavigationMode.IgnoreNavigation;
+                _windowData.navMode = UISettings.UIWindowNavigationMode.NormalNavigation;
             }
+
             return _windowData;
         }
     }
 
     public TextMeshProUGUI text;
     public TextMeshProUGUI okBtnLabel;
-    public TextMeshProUGUI cancelBtnLabel;
-
     private ModalBoxData modalData;
+    private RectTransform rectTransform;
+
     protected override void StartShowWindow(object[] data)
     {
         modalData = data[0] as ModalBoxData;
         text.text = modalData.content;
         okBtnLabel.text = string.IsNullOrEmpty(modalData.okName) ? "确认" : modalData.okName;
-        cancelBtnLabel.text = string.IsNullOrEmpty(modalData.cancelName) ? "取消" : modalData.cancelName;
+        rectTransform = transform as RectTransform;
+        rectTransform.anchoredPosition = new Vector2(0, -350);
     }
 
     protected override void StartHideWindow()
@@ -39,21 +46,34 @@ public class UIPopupModalBoxWindow : UIWindowBase {
         modalData = null;
     }
 
-    public void OnClickOKBtn()
+    protected override void EnterAnimation(Action onComplete)
     {
-        if (modalData.onClick != null)
+ 
+        rectTransform.DOAnchorPos(Vector2.zero, 0.5f).SetEase(Ease.OutQuint).OnComplete(()=> {
+
+            onComplete();
+        });
+
+    }
+
+    protected override void ExitAnimation(Action onComplete)
+    {
+        rectTransform.DOAnchorPos(new Vector2(0,-350), 0.5f).SetEase(Ease.OutQuint).OnComplete(() => {
+
+            onComplete();
+        });
+    }
+
+    public void OnClickOK()
+    {
+        if(modalData.onClick != null)
         {
-            modalData.onClick(true);
+            modalData.onClick(Alert.OK);
         }
         OnClickClose();
     }
 
-    public void OnClickCancelBtn()
-    {
-        if (modalData.onClick != null)
-        {
-            modalData.onClick(false);
-        }
-        OnClickClose();
-    }
+
+
 }
+

@@ -21,6 +21,8 @@ public class UIBuildingWindow : UIWindowBase {
                 _windowData.type = UISettings.UIWindowType.PopUp;
                 _windowData.showMode = UISettings.UIWindowShowMode.DoNothing;
                 _windowData.navMode = UISettings.UIWindowNavigationMode.IgnoreNavigation;
+                _windowData.colliderMode = UISettings.UIWindowColliderMode.Normal;
+                _windowData.colliderType = UISettings.UIWindowColliderType.SemiTransparent;
             }
             return _windowData;
         }
@@ -66,9 +68,9 @@ public class UIBuildingWindow : UIWindowBase {
         else
         {
             islandID = userData.islandId;
-            if(islandID>3)
+            if (islandID > GameMainManager.instance.model.islandConfig.islandNames.Length)
             {
-                islandID = 3;
+                islandID = islandID % (GameMainManager.instance.model.islandConfig.islandNames.Length + 1) + 1;
             }
             string name = "CityThumbnail_" + islandID.ToString();
             string path = FilePathTools.getSpriteAtlasPath(name);

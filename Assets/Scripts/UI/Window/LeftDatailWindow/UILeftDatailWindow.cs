@@ -36,6 +36,18 @@ public class UILeftDatailWindow : UIWindowBase {
         panel.anchoredPosition = new Vector2(-530, 0);
     }
 
+    private void Update()
+    {
+        if (qy.CrossPlatformInput.CrossPlatformInputManager.GetButtonDown(CrossPlatformInput.LEFT))
+        {
+            if (GameMainManager.instance.uiManager.curWindow.windowData == windowData)
+            {
+                OnClickClose();
+            }
+        }
+
+    }
+
     protected override void StartShowWindow(object[] data)
     {
         UserData ud = GameMainManager.instance.model.userData;
@@ -101,8 +113,16 @@ public class UILeftDatailWindow : UIWindowBase {
 
     public void OnClickMapBtn()
     {
+        if(GameMainManager.instance.model.userData.islandId>=3)
+        {
+            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIMiningMapWindow);
+        }else
+        {
+            string name = GameMainManager.instance.model.islandConfig.GetIslandName(3);
+            Alert.Show(string.Format("到达{0}后开启地图功能", name));
+            //GameMainManager.instance.uiManager.OpenPopupModalBox(string.Format("到达{0}后开启地图功能",name),"",null);
+        }
         OnClickClose();
-        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIMiningMapWindow);
     }
 
     public void OnClickWheelBtn()

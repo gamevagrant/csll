@@ -36,12 +36,12 @@ public class UIBadGuyRankWindow : UIWindowBase {
         topBar.anchoredPosition = new Vector2(0, 110);
         panel.anchoredPosition = new Vector2(0, 900);
 
-        EventDispatcher.instance.AddEventListener(EventEnum.UPDATE_USERDATA, OnUpdateUserDataHandle);
+        EventDispatcher.instance.AddEventListener(EventEnum.UPDATE_BASE_DATA, OnUpdateUserDataHandle);
     }
 
     private void OnDestroy()
     {
-        EventDispatcher.instance.RemoveEventListener(EventEnum.UPDATE_USERDATA, OnUpdateUserDataHandle);
+        EventDispatcher.instance.RemoveEventListener(EventEnum.UPDATE_BASE_DATA, OnUpdateUserDataHandle);
     }
 
     protected override void StartShowWindow(object[] data)
@@ -75,6 +75,11 @@ public class UIBadGuyRankWindow : UIWindowBase {
 
     private void OnUpdateUserDataHandle(BaseEvent e)
     {
-        wantedNumText.text = GameMainManager.instance.model.userData.wantedCount.ToString();
+        UpdateBaseDataEvent evt = e as UpdateBaseDataEvent;
+        if(evt.type == UpdateBaseDataEvent.UpdateType.wanted)
+        {
+            wantedNumText.text = GameMainManager.instance.model.userData.wantedCount.ToString();
+        }
+       
     }
 }

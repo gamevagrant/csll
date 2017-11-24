@@ -43,6 +43,7 @@ public class IslandFactory : MonoBehaviour {
             GameObject go = GameUtils.createGameObject(gameObject, index.ToString());
             go.AddComponent<RectTransform>();
             citySprites[index] = go.AddComponent<Image>();
+            citySprites[index].raycastTarget = false;
             GameObject goTag = GameUtils.createGameObject(go, "tag");
             goTag.AddComponent<RectTransform>().anchoredPosition = new Vector3(positions[index].x, positions[index].y, 0);
 
@@ -52,11 +53,12 @@ public class IslandFactory : MonoBehaviour {
     public void UpdateCityData(int islandID, BuildingData[] data)
     {
         Debug.Log("island is "+islandID);
-        if(islandID > 3)
+        if(islandID> GameMainManager.instance.model.islandConfig.islandNames.Length)
         {
-            islandID = 3;
+            islandID = islandID % (GameMainManager.instance.model.islandConfig.islandNames.Length + 1) + 1;
         }
-        if(islandID == this.islandID)
+        
+        if (islandID == this.islandID)
         {
             UpdateAllSprite(spriteAtlas, data);
         }
@@ -75,27 +77,9 @@ public class IslandFactory : MonoBehaviour {
 
     }
 
-    public void UpdateBuildingData(int islandID,int index,BuildingData data)
+    public void UpdateBuildingData(int index,BuildingData data)
     {
-        if (islandID == this.islandID)
-        {
-            UpdateCitySprite(spriteAtlas, index, data);
-        }
-        else
-        {
-            if (islandID > 3)
-            {
-                islandID = 3;
-            }
-            string path = FilePathTools.getSpriteAtlasPath("City_" + islandID.ToString());
-            AssetBundleLoadManager.Instance.LoadAsset<SpriteAtlas>(path, (sa) => {
-
-                this.islandID = islandID;
-                spriteAtlas = sa;
-
-                UpdateCitySprite(sa,index, data);
-            });
-        }
+        UpdateCitySprite(spriteAtlas, index, data);
     }
 
     public void HideBuild(int index)

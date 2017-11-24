@@ -39,10 +39,17 @@ public class UIMiningWindow :UIWindowBase {
     private float updateTime;
     private long moneyBox;
     private int timeTag;
+    private float goldProgress;
+    private UserData user;
 
     private void Awake()
     {
         EventDispatcher.instance.AddEventListener(EventEnum.UPDATE_MAPINFO, OnUpdateMapInfoHandle);
+        user = GameMainManager.instance.model.userData;
+    }
+    private void Start()
+    {
+        
     }
 
     private void OnDestroy()
@@ -57,16 +64,18 @@ public class UIMiningWindow :UIWindowBase {
         if (f != timeTag)
         {
             timeTag = f;
-            UpdateMoneyBox(GameMainManager.instance.model.userData.mapInfo);
+            UpdateMoneyBox(user.mapInfo);
         }
-        
+        largeGold.anchoredPosition = Vector2.Lerp(largeGold.anchoredPosition, new Vector2(0, goldProgress * 100),1f * Time.deltaTime) ;
+        goldSlider.value = Vector2.Lerp(new Vector2(goldSlider.value,0),new Vector2(goldProgress,0),1f * Time.deltaTime).x ;
     }
 
     protected override void StartShowWindow(object[] data)
     {
-        
+
         updateMapInfo();
-        
+        largeGold.anchoredPosition = new Vector2(0, goldProgress * 100);
+        goldSlider.value = goldProgress;
     }
 
     protected override void EnterAnimation(Action onComplete)
@@ -83,10 +92,10 @@ public class UIMiningWindow :UIWindowBase {
     {
         goldEfect.SetActive(false);
         buyMinerPanel.gameObject.SetActive(false);
-        if (GameMainManager.instance.model.userData.mapInfo != null)
+        if (user.mapInfo != null)
         {
             updateTime = Time.time;
-            MapInfoData mapinfo = GameMainManager.instance.model.userData.mapInfo;
+            MapInfoData mapinfo = user.mapInfo;
             List<UIMiningIslandItem.MiningItemData> list = new List<UIMiningIslandItem.MiningItemData>();
             for (int i = 0; i < mapinfo.islandNames.Length; i++)
             {
@@ -101,7 +110,7 @@ public class UIMiningWindow :UIWindowBase {
                 list.Add(itemData);
             }
             scrollView.SetData(list);
-
+            scrollView.SetSelected(user.islandId>1? user.islandId-2:0);
             long produce = 0;
             foreach (MinesData md in mapinfo.mines)
             {
@@ -113,13 +122,10 @@ public class UIMiningWindow :UIWindowBase {
             }
 
             goldEveryDayText.text = string.Format("{0}/天", GameUtils.GetCurrencyString(produce));
-            UpdateMoneyBox(mapinfo);
             //curGoldText.text = GameUtils.GetCurrencyString((long)mapinfo.moneyBox);
             allGoldText.text = GameUtils.GetCurrencyString(mapinfo.limit);
+            UpdateMoneyBox(mapinfo);
 
-            float f = (float)mapinfo.moneyBox / mapinfo.limit;
-            largeGold.anchoredPosition = new Vector2(0, f * 100);
-            goldSlider.value = f;
         }
     }
 
@@ -136,6 +142,7 @@ public class UIMiningWindow :UIWindowBase {
         {
             reapBtn.interactable = false;
         }
+        goldProgress = (float)moneyBox / mapInfo.limit;
         
     }
     private void OnUpdateMapInfoHandle(BaseEvent e)

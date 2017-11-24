@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using LitJson;
 /// <summary>
 /// 游戏启动器
 /// </summary>
@@ -16,7 +17,6 @@ public class GameStarter : MonoBehaviour {
 
     private void Start()
     {
-       
         init();
     }
 
@@ -30,14 +30,22 @@ public class GameStarter : MonoBehaviour {
         gameObject.AddComponent<AssetLoadManager>();
         GameMainManager.instance.mono = this;
 
-        UpdateAssets updateAsset = new UpdateAssets();
-        updateAsset.onComplate += UpdateAssetsComplate;
-        updateAsset.StartUpdate();
+        if(GameSetting.isUseAssetBundle)
+        {
+            UpdateAssets updateAsset = new UpdateAssets();
+            updateAsset.onComplate += UpdateAssetsComplate;
+            updateAsset.StartUpdate();
+        }else
+        {
+            UpdateAssetsComplate();
+        }
+        
     }
 
     private void UpdateAssetsComplate()
     {
         EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_ASSETS_COMPLATE));
+        LoadConfig();
     }
 
     private void OnLoginHandle(BaseEvent evt)
@@ -55,6 +63,18 @@ public class GameStarter : MonoBehaviour {
                 Debug.Log("登录失败:" + data.errmsg);
             }
         });
+
+    }
+
+    private void LoadConfig()
+    {
+        AssetBundleLoadManager.Instance.LoadAsset<Object>(FilePathTools.getConfigPath("IslandConfig"), (data) =>
+        {
+            string json =  data.ToString();
+            IslandConfig config = JsonMapper.ToObject<IslandConfig>(json);
+            GameMainManager.instance.model.islandConfig = config;
+        });
+
     }
 
     private IEnumerator LoadMainScene()
@@ -70,25 +90,10 @@ public class GameStarter : MonoBehaviour {
             }
             yield return null;
         }
-        //StartCoroutine(OpenUI());
-        //yield return new WaitForSeconds(1);
+
         GameMainManager.instance.Init();
         GameMainManager.instance.uiManager.ChangeState(new MainState(0));
         
     }
-    /*
-    private IEnumerator OpenUI()
-    {
-        yield return new WaitForSeconds(1);
-        //GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIWheelWindow);
 
-        //Dictionary<UISettings.UIWindowID, object> stateData = new Dictionary<UISettings.UIWindowID, object>();
-        //stateData.Add(UISettings.UIWindowID.UITopBarWindow, null);
-        //stateData.Add(UISettings.UIWindowID.UIWheelWindow, null);
-        //stateData.Add(UISettings.UIWindowID.UISideBarWindow, null);
-        //GameMainManager.instance.uiManager.ChangeState(new UIStateChangeBase(stateData, null));
-
-        GameMainManager.instance.uiManager.ChangeState(new MainState());
-    }
-    */
 }

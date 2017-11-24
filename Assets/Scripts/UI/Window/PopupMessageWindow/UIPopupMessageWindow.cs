@@ -24,8 +24,10 @@ public class UIPopupMessageWindow : UIWindowBase {
                 _windowData.id = UISettings.UIWindowID.UIPopupMessageWindow;
                 _windowData.type = UISettings.UIWindowType.PopUp;
                 _windowData.colliderMode = UISettings.UIWindowColliderMode.Normal;
+                _windowData.colliderType = UISettings.UIWindowColliderType.Transparent;
                 _windowData.showMode = UISettings.UIWindowShowMode.DoNothing;
                 _windowData.navMode = UISettings.UIWindowNavigationMode.IgnoreNavigation;
+
             }
             return _windowData;
         }

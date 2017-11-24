@@ -19,6 +19,7 @@ public class UserData {
     public int energy;              // 当前体力值
     public int recoverEnergy;            // 体力恢复值
     public long timeToRecover;                // 体力恢复剩余时间
+    public float timeTag;                     //获取到体力剩余时间时的时间节点
     public long timeToRecoverInterval;      // 体力恢复时间间隔
     public int islandId;      // 岛屿ID 从1 开始
     public BuildingData[] buildings;               // 岛屿内各物体  // Building 数据结构在上面

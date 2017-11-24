@@ -16,6 +16,8 @@ public class UIBuyWantedWindow : UIWindowBase {
                 _windowData.type = UISettings.UIWindowType.PopUp;
                 _windowData.showMode = UISettings.UIWindowShowMode.DoNothing;
                 _windowData.navMode = UISettings.UIWindowNavigationMode.IgnoreNavigation;
+                _windowData.colliderMode = UISettings.UIWindowColliderMode.Normal;
+                _windowData.colliderType = UISettings.UIWindowColliderType.SemiTransparent;
             }
             return _windowData;
         }

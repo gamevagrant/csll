@@ -14,8 +14,8 @@ public class UISettings  {
         UITopBarWindow,
         UISideBarWindow,
         UIPopupMessageWindow,
-        UIModalBoxWindow,
-        UIPopupModalBoxWindow,
+        UIPopupModalBox,
+        UIModalBox,
         UINoticeWindow,
         UIMessageMailWindow,
         UIGetRewardWindow,
@@ -45,6 +45,12 @@ public class UISettings  {
         TouchClose,    // 点击背景板关闭面板
     }
 
+    public enum UIWindowColliderType
+    {
+        Transparent,//透明的
+        SemiTransparent,//半透
+    }
+
     public enum UIWindowShowMode
     {
         DoNothing = 0,
@@ -70,8 +76,8 @@ public class UISettings  {
         {UIWindowID.UITopBarWindow,"UITopBarWindow"},
         {UIWindowID.UISideBarWindow,"UISideBarWindow"},
         {UIWindowID.UIPopupMessageWindow,"UIPopupMessageWindow" },
-        {UIWindowID.UIModalBoxWindow,"UIModalBoxWindow" },
-        {UIWindowID.UIPopupModalBoxWindow,"UIPopupModalBoxWindow" },
+        {UIWindowID.UIPopupModalBox,"UIPopupModalBoxWindow" },
+        {UIWindowID.UIModalBox,"UIModalBoxWindow" },
         {UIWindowID.UINoticeWindow,"UINoticeWindow" },
         {UIWindowID.UIMessageMailWindow,"UIMessageMailWindow" },
         {UIWindowID.UIGetRewardWindow,"UIGetRewardWindow" },

@@ -87,7 +87,8 @@ public class UIFriendItem : BaseItemView {
                 {
                     if (res.errcode == 526)
                     {
-                        GameMainManager.instance.uiManager.OpenModalBoxWindow("能量已满，用完再来领吧", "", null);
+                        Alert.Show("能量已满，用完再来领吧");
+                        //GameMainManager.instance.uiManager.OpenPopupModalBox("能量已满，用完再来领吧", "", null);
                     }
                 }
             });

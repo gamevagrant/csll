@@ -37,9 +37,11 @@ public class BuildingWindowItem : MonoBehaviour,IPointerClickHandler {
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if(state == BuildState.canBuild || state == BuildState.damage)
+        
+        if (state == BuildState.canBuild || state == BuildState.damage)
         {
-            if(onBuild!=null)
+            GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.button_click);
+            if (onBuild!=null)
             {
                 onBuild(index);
             }
@@ -69,7 +71,7 @@ public class BuildingWindowItem : MonoBehaviour,IPointerClickHandler {
             {
                 needMoney = buildingCost[index - 1][level - 1];
             }
-            price.text = needMoney.ToString();
+            price.text = GameUtils.GetCurrencyString(needMoney);
 
             if (level == bd.level && bd.status != 0)
             {
@@ -79,7 +81,7 @@ public class BuildingWindowItem : MonoBehaviour,IPointerClickHandler {
                 }
                 else
                 {
-                    price.color = Color.black;
+                    price.color = new Color(0.72f,0.49f,0,0.8f);
                 }
                 price.gameObject.SetActive(true);
                 repair.gameObject.SetActive(true);
@@ -93,7 +95,7 @@ public class BuildingWindowItem : MonoBehaviour,IPointerClickHandler {
                     price.color = Color.yellow;
                 }else
                 {
-                    price.color = Color.black;
+                    price.color = new Color(0.72f, 0.49f, 0, 0.8f);
                 }
                
                 price.gameObject.SetActive(true);
@@ -103,7 +105,7 @@ public class BuildingWindowItem : MonoBehaviour,IPointerClickHandler {
             }
             else if (level > bd.level)
             {
-                price.color = Color.black;
+                price.color = new Color(0, 0, 0, 0.4f);
                 price.gameObject.SetActive(true);
                 repair.gameObject.SetActive(false);
                 upgraded.gameObject.SetActive(false);

@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 2019389346, guid: 89f0137620f6af44b9ba852b4190e64e, type: 3}
+  m_Name: moji
+  m_EditorClassIdentifier: 
+  hashCode: 132360178
+  material: {fileID: 21899898471502860}
+  materialHashCode: 0
+  spriteSheet: {fileID: 2800000, guid: afc95c444f6d2de4a9c5f8d37a092406, type: 3}
+  spriteInfoList:
+  - id: 0
+    x: 0
+    y: 0
+    width: 55
+    height: 52
+    xOffset: -13.37
+    yOffset: 40
+    xAdvance: 40.93
+    scale: 1
+    name: main_star
+    hashCode: -1437894496
+    unicode: 805306287
+    pivot: {x: 0.5, y: 0.5}
+    sprite: {fileID: 0}
+  - id: 1
+    x: 58
+    y: 3
+    width: 50
+    height: 50
+    xOffset: -13.37
+    yOffset: 40
+    xAdvance: 40.93
+    scale: 1
+    name: main_gold
+    hashCode: -1437460588
+    unicode: 805306365
+    pivot: {x: 0.5, y: 0.5}
+    sprite: {fileID: 0}
+  - id: 2
+    x: 110
+    y: 11
+    width: 40
+    height: 42
+    xOffset: -13.37
+    yOffset: 40
+    xAdvance: 40.93
+    scale: 1
+    name: main_wheel_shield
+    hashCode: 1995931207
+    unicode: -259
+    pivot: {x: 0.5, y: 0.5}
+    sprite: {fileID: 0}
+  fallbackSpriteAssets: []
+--- !u!21 &21899898471502860
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: TextMeshPro/Sprite
+  m_Shader: {fileID: 4800000, guid: 3a1c68c8292caf046bd21158886c5e40, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: afc95c444f6d2de4a9c5f8d37a092406, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _ColorMask: 15
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilOp: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
+    - _UseUIAlphaClip: 0
+    m_Colors:
+    - _ClipRect: {r: -32767, g: -32767, b: 32767, a: 32767}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}

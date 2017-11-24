@@ -36,6 +36,7 @@ public class UIStealWindow : UIWindowBase {
     public TextMeshProUGUI targetMooneyLabel;
     public RectTransform victoryTip;
     public RectTransform effect;
+    public GameObject goldEffect;
 
     private Vector2[] goAwayPos = new Vector2[] {new Vector2(-500,0),new Vector2(500,0),new Vector2(0,-800) };
     private Vector2[] islandPos = new Vector2[3];
@@ -47,7 +48,7 @@ public class UIStealWindow : UIWindowBase {
         {
             islandPos[i] = (islands[i].transform as RectTransform).anchoredPosition;
         }
-            
+       
     }
 
     protected override void StartShowWindow(object[] data)
@@ -63,6 +64,7 @@ public class UIStealWindow : UIWindowBase {
         victoryTip.gameObject.SetActive(false);
         effect.gameObject.SetActive(false);
         stealTips.gameObject.SetActive(false);
+        goldEffect.SetActive(false);
 
         islandRoot.localScale = new Vector3(0.3f,0.3f,0.3f);
         islandRoot.gameObject.SetActive(false);
@@ -171,42 +173,46 @@ public class UIStealWindow : UIWindowBase {
 
                 GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.steal_result);
                 Sequence sq = DOTween.Sequence();
-                sq.Append(topBar.DOAnchorPos(new Vector2(0, 150), 0.5f).SetEase(Ease.OutCubic));
+               
                 for (int i = 0; i < islands.Length; i++)
                 {
                     if (i != selectedIndex - 1)
                     {
                         islands[i].setData(stealData.targets[i]);
-                        sq.Insert(2, (islands[i].transform as RectTransform).DOAnchorPos(goAwayPos[i], 1));
+                        sq.Insert(3, (islands[i].transform as RectTransform).DOAnchorPos(goAwayPos[i], 1));
                     }
                     else
                     {
-                        sq.Insert(2, (islands[i].transform as RectTransform).DOAnchorPos(new Vector2(0, -100), 1));
-                        sq.Insert(2, (islands[i].transform as RectTransform).DOScale(new Vector3(2,2,2), 1));
+                        sq.Insert(3, (islands[i].transform as RectTransform).DOAnchorPos(new Vector2(0, -100), 1));
+                        sq.Insert(3, (islands[i].transform as RectTransform).DOScale(new Vector3(2,2,2), 1));
                     }
                 }
-                
-                sq.InsertCallback(2f, () =>
+                sq.Append(topBar.DOAnchorPos(new Vector2(0, 150), 0.5f).SetEase(Ease.OutCubic));
+                sq.InsertCallback(3f, () =>
                 {
                     effect.gameObject.SetActive(true);
 
                 });
-                sq.InsertCallback(4, () =>
+                sq.InsertCallback(5, () =>
                 {
 
                     effect.gameObject.SetActive(false);
                     islands[index-1].setData(selectedTarget);
-                    if(stealData.targets[index - 1].isRichMan)
+                    goldEffect.SetActive(true);
+                    EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Money, 0));
+                    if (stealData.targets[index - 1].isRichMan)
                     {
                         GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.steal_got_king);
                         victoryTip.gameObject.SetActive(true);
                         //bottomBarTips.text = string.Format("恭喜你猜到富豪！\n获得{0}金币",GameUtils.GetCurrencyString(selectedTarget.money));
-                        GameMainManager.instance.uiManager.OpenModalBoxWindow(string.Format("恭喜你猜到富豪！\n获得{0}金币", GameUtils.GetCurrencyString(selectedTarget.money)), "", OnClickOkBtn);
+                        Alert.ShowPopupBox(string.Format("恭喜你猜到富豪！\n获得<#D34727FF>{0}</color>金币", GameUtils.GetCurrencyString(selectedTarget.money)), OnClickOkBtn);
+                        //GameMainManager.instance.uiManager.OpenPopupModalBox(string.Format("恭喜你猜到富豪！\n获得{0}金币", GameUtils.GetCurrencyString(selectedTarget.money)), "", OnClickOkBtn);
                     }else
                     {
                         GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.steal_miss_king);
                         //bottomBarTips.text = string.Format("很遗憾没有猜到富豪！\n获得{0}金币", GameUtils.GetCurrencyString(selectedTarget.money));
-                        GameMainManager.instance.uiManager.OpenModalBoxWindow(string.Format("很遗憾没有猜到富豪！\n获得{0}金币", GameUtils.GetCurrencyString(selectedTarget.money)), "", OnClickOkBtn);
+                        Alert.ShowPopupBox(string.Format("很遗憾没有猜到富豪！\n只得到<#D34727FF>{0}</color>金币", GameUtils.GetCurrencyString(selectedTarget.money)), OnClickOkBtn);
+                        //GameMainManager.instance.uiManager.OpenPopupModalBox(string.Format("很遗憾没有猜到富豪！\n获得{0}金币", GameUtils.GetCurrencyString(selectedTarget.money)), "", OnClickOkBtn);
                     }
                 });
                 //sq.Insert(6, bottomBar.DOAnchorPos(Vector2.zero, 0.5f).SetEase(Ease.OutCubic));

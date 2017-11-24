@@ -68,8 +68,8 @@ public class UIMiningIslandItem : BaseItemView {
 
             }
         }
-       
-       
+
+        Debug.Log("setData");
     }
 
     public override void OnSelected(bool isSelected)
@@ -79,12 +79,15 @@ public class UIMiningIslandItem : BaseItemView {
             if (data.minesData.miner < data.minesData.produces.Length)
             {
                 panel.SetActive(isSelected);
+                Debug.Log("panel"+ isSelected);
             }else
             {
                 fullMiner.SetActive(isSelected);
+                Debug.Log("fullMiner" + isSelected);
             }
             minerPanel.SetActive(isSelected);
-
+            Debug.Log("minerPanel" + isSelected);
+            Debug.Log(data.islandID + data.name);
         }
        
         

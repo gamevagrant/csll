@@ -23,7 +23,7 @@ public class UIStealIsland : MonoBehaviour {
         head.setData(targetData.name, targetData.headImg, targetData.crowns, targetData.isVip);
         head.gameObject.SetActive(true);
 
-        labelMoney.text = targetData.money.ToString();
+        labelMoney.text = GameUtils.GetCurrencyString(targetData.money);
         labelMoney.gameObject.SetActive(true);
 
         (labelMoney.transform as RectTransform).DOAnchorPos(new Vector2(0, 100), 1).SetEase(Ease.OutBounce).From().SetRelative(true);

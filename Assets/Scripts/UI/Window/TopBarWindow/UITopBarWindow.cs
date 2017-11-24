@@ -42,18 +42,22 @@ public class UITopBarWindow : UIWindowBase {
     protected override void StartShowWindow(object[] data)
     {
         user = GameMainManager.instance.model.userData;
-        
-        updateData();
-        EventDispatcher.instance.AddEventListener(EventEnum.LOGIN_COMPLATE, OnUpdateData);
-        EventDispatcher.instance.AddEventListener(EventEnum.UPDATE_USERDATA, OnUpdateData);
+
+        UpdateMoney(user.money, 0);
+        UpdateStar(user.crowns, 0);
+        UpdateShield(user.shields, 0);
+
+        EventDispatcher.instance.AddEventListener(EventEnum.UPDATE_BASE_DATA, OnUpdateData);
         EventDispatcher.instance.AddEventListener(EventEnum.GET_SHIELD, OnGetShield);
+        EventDispatcher.instance.AddEventListener(EventEnum.GET_STAR, OnGetStar);
     }
 
     protected override void StartHideWindow()
     {
-        EventDispatcher.instance.RemoveEventListener(EventEnum.LOGIN_COMPLATE, OnUpdateData);
-        EventDispatcher.instance.RemoveEventListener(EventEnum.UPDATE_USERDATA, OnUpdateData);
+
+        EventDispatcher.instance.RemoveEventListener(EventEnum.UPDATE_BASE_DATA, OnUpdateData);
         EventDispatcher.instance.RemoveEventListener(EventEnum.GET_SHIELD, OnGetShield);
+        EventDispatcher.instance.RemoveEventListener(EventEnum.GET_STAR, OnGetStar);
     }
 
 
@@ -78,17 +82,29 @@ public class UITopBarWindow : UIWindowBase {
 
     public void OnClickBuyBtn()
     {
-
+        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIShopWindow);
     }
 
     private void OnUpdateData(BaseEvent e)
     {
-        updateData();
+        UpdateBaseDataEvent evt = e as UpdateBaseDataEvent;
+        switch (evt.type)
+        {
+            case UpdateBaseDataEvent.UpdateType.Money:
+                UpdateMoney(user.money, evt.delay);
+                break;
+            case UpdateBaseDataEvent.UpdateType.sheild:
+                UpdateShield(user.shields, evt.delay);
+                break;
+            case UpdateBaseDataEvent.UpdateType.star:
+                UpdateStar(user.crowns, evt.delay);
+                break;
+        }
     }
 
     private void OnGetShield(BaseEvent e)
     {
-        GetShieldEvent evt = e as GetShieldEvent;
+        GetShieldPosEvent evt = e as GetShieldPosEvent;
         for(int i = 0;i<shieldImages.Length;i++)
         {
             if(!shieldImages[i].gameObject.activeSelf)
@@ -102,26 +118,66 @@ public class UITopBarWindow : UIWindowBase {
             }
         }
 
-       
-        Invoke("updateData",evt.delay);
     }
 
-    private void updateData()
+    private void OnGetStar(BaseEvent e)
     {
-        starLabel.text = user.crowns.ToString();
-        moneyLabel.text = GameUtils.GetCurrencyString(user.money);
-        //Debug.Log("money = " + GameUtils.GetCurrencyString(user.money).ToString());
+        GetStarPosEvent evt = e as GetStarPosEvent;
+        evt.starPos(starLabel.transform.position);
 
-        for(int i = 0;i< shieldImages.Length;i++)
-        {
-            if(i< user.shields)
-            {
-                shieldImages[i].gameObject.SetActive(true);
-            }else
-            {
-                shieldImages[i].gameObject.SetActive(false);
-            }
-           
-        }
     }
+
+    private void UpdateStar(int value,float delay)
+    {
+        if(starLabel.text== value.ToString())
+        {
+            return;
+        }
+        Sequence sq = DOTween.Sequence();
+        sq.AppendInterval(delay);
+        sq.Append(starLabel.transform.DOScale(1.3f, 0.3f).SetEase(Ease.OutCubic));
+        sq.InsertCallback(delay + 0.1f,()=> {
+
+            starLabel.text = value.ToString();
+        });
+        sq.Append(starLabel.transform.DOScale(1, 0.3f).SetEase(Ease.InCubic));
+    }
+
+    private void UpdateMoney(long value,float delay)
+    {
+        if (moneyLabel.text == GameUtils.GetCurrencyString(value))
+        {
+            return;
+        }
+        Sequence sq = DOTween.Sequence();
+        sq.AppendInterval(delay);
+        sq.Append(moneyLabel.transform.DOScale(1.3f, 0.3f).SetEase(Ease.OutCubic));
+        sq.InsertCallback(delay + 0.1f,() => {
+
+            moneyLabel.text = GameUtils.GetCurrencyString(value);
+        });
+        sq.Append(moneyLabel.transform.DOScale(1, 0.3f).SetEase(Ease.InCubic));
+    }
+
+    private void UpdateShield(int value,float delay)
+    {
+        Sequence sq = DOTween.Sequence();
+        sq.AppendInterval(delay);
+        sq.AppendCallback(() =>
+        {
+            for (int i = 0; i < shieldImages.Length; i++)
+            {
+                if (i < user.shields)
+                {
+                    shieldImages[i].gameObject.SetActive(true);
+                }
+                else
+                {
+                    shieldImages[i].gameObject.SetActive(false);
+                }
+
+            }
+        });
+    }
+
 }

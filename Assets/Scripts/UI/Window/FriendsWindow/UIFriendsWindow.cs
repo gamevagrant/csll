@@ -16,6 +16,7 @@ public class UIFriendsWindow : UIWindowBase {
                 _windowData.id = UISettings.UIWindowID.UIFriendsWindow;
                 _windowData.type = UISettings.UIWindowType.PopUp;
                 _windowData.colliderMode = UISettings.UIWindowColliderMode.Normal;
+                _windowData.colliderType = UISettings.UIWindowColliderType.SemiTransparent;
                 _windowData.showMode = UISettings.UIWindowShowMode.DoNothing;
                 _windowData.navMode = UISettings.UIWindowNavigationMode.IgnoreNavigation;
             }
@@ -164,10 +165,16 @@ public class UIFriendsWindow : UIWindowBase {
         {
             if(res.isOK)
             {
-                GameMainManager.instance.uiManager.OpenModalBoxWindow("添加成功", "", ()=> {
+                Alert.Show("添加成功", Alert.OK, (flag) =>
+                {
+                    UpdateNotAgreeFriendsData(res.data.friends);
+                });
+                /*
+                GameMainManager.instance.uiManager.OpenPopupModalBox("添加成功", "", ()=> {
 
                     UpdateNotAgreeFriendsData(res.data.friends);
                 });
+                */
             }
         });
     }
@@ -178,10 +185,15 @@ public class UIFriendsWindow : UIWindowBase {
         {
             if (res.isOK)
             {
-                GameMainManager.instance.uiManager.OpenModalBoxWindow("忽略成功", "", ()=>
+                Alert.Show("忽略成功", Alert.OK, (flag) =>
                 {
                     UpdateNotAgreeFriendsData(res.data.friendsNotAgree);
                 });
+                /*
+                GameMainManager.instance.uiManager.OpenPopupModalBox("忽略成功", "", ()=>
+                {
+                    UpdateNotAgreeFriendsData(res.data.friendsNotAgree);
+                });*/
             }
         });
     }
@@ -192,10 +204,15 @@ public class UIFriendsWindow : UIWindowBase {
         {
             if (res.isOK)
             {
-                GameMainManager.instance.uiManager.OpenModalBoxWindow("一键领取成功", "", ()=> {
+                Alert.Show("一键领取成功", Alert.OK, (flag) =>
+                {
+                    UpdateMyFriendsData(res.data.friends);
+                });
+                /*
+                GameMainManager.instance.uiManager.OpenPopupModalBox("一键领取成功", "", ()=> {
                     UpdateMyFriendsData(res.data.friends);
 
-                });
+                });*/
             }
         });
     }
@@ -208,11 +225,23 @@ public class UIFriendsWindow : UIWindowBase {
             {
                 if (res.isOK)
                 {
-                    GameMainManager.instance.uiManager.OpenModalBoxWindow("添加好友成功", "", null);
+                    Alert.Show("添加好友成功");
+                   // GameMainManager.instance.uiManager.OpenPopupModalBox("添加好友成功", "", null);
                 }
                 else
                 {
-                    GameMainManager.instance.uiManager.OpenModalBoxWindow(res.errmsg, "", null);
+                    string tips = "";
+                    switch(res.errcode)
+                    {
+                        case 2513:
+                            tips = "亲，不能添加自己为好友哒";
+                            break;
+                        default:
+                            tips = res.errmsg;
+                            break;
+                    }
+                    Alert.Show(tips);
+                    //GameMainManager.instance.uiManager.OpenPopupModalBox(res.errmsg, "", null);
                 }
             });
         }

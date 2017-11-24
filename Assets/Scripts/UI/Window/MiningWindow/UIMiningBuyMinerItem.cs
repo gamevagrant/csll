@@ -52,8 +52,8 @@ public class UIMiningBuyMinerItem : MonoBehaviour {
     private void OnClickBuyBtn()
     {
         GameMainManager.instance.netManager.BuyMiner(data.island, (ret, res) =>
-         {
+        {
 
-         });
+        });
     }
 }

@@ -10,8 +10,8 @@ public class AudioManager : MonoBehaviour ,IAudioManager{
     GetAudioPath musicProxy;
     GetAudioPath soundProxy;
 
-    private static AudioManager _instance;
-    public static AudioManager instance
+    private static IAudioManager _instance;
+    public static IAudioManager instance
     {
         get
         {
@@ -118,6 +118,7 @@ public class AudioNameEnum
     public static string wheel_steal_gone = "wheel_steal_gone";//偷窃动画结束
     public static string wheel_attack_prepare = "wheel_attack_prepare";//进入攻击界面
     public static string wheel_come = "wheel_come";//转盘过来时
+    public static string wheel_Star = "wheel_star";//转到星星
 
     public static string wheel_view_switch_in = "view_switch_in";//转盘界面和建造界面切换
     public static string wheel_view_switch_out = "view_switch_out";

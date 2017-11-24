@@ -936,6 +936,7 @@ GameObject:
   - component: {fileID: 222015432158460282}
   - component: {fileID: 114078431400163012}
   - component: {fileID: 114257999948806334}
+  - component: {fileID: 114139642561113964}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -1243,6 +1244,7 @@ GameObject:
   - component: {fileID: 222638485970987976}
   - component: {fileID: 114162259113077124}
   - component: {fileID: 114266741616383880}
+  - component: {fileID: 114849974000545786}
   m_Layer: 5
   m_Name: LeftButton
   m_TagString: Untagged
@@ -2402,6 +2404,17 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &114139642561113964
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1510522030095814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 531eead7af90d3647bb77a9a42072d07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114142874977233552
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3777,6 +3790,7 @@ MonoBehaviour:
   content: {fileID: 224331744829845520}
   panel: {fileID: 224978500680236330}
   items: []
+  scrollRect: {fileID: 114545491340003110}
 --- !u!114 &114580875401435402
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4449,6 +4463,17 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &114849974000545786
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1600151066567702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 531eead7af90d3647bb77a9a42072d07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114853648348231204
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7564,7 +7589,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1600151066567702}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -257.11108, z: 0}
+  m_LocalPosition: {x: 0, y: -402, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224978500680236330}
@@ -7572,7 +7597,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 293.88892}
+  m_AnchoredPosition: {x: 0, y: 149}
   m_SizeDelta: {x: 106, y: 88}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!224 &224978500680236330

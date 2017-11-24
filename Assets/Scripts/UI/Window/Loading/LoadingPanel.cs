@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
+
 
 public class LoadingPanel : MonoBehaviour {
 
-    public TMP_InputField inputField;
+    public InputField inputField;
     public Slider slider;
 
     private void Awake()

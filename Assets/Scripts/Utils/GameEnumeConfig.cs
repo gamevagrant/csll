@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
 public class GameEnumeConfig {
+
 
     private static string[] buildingNames = new string[] {"","风景","交通","动物","文化","建筑" };
 
@@ -26,4 +28,4 @@ public class GameEnumeConfig {
         return "";
     }
 
-}
+}*/

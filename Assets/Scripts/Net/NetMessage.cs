@@ -11,7 +11,7 @@ public class NetMessage {
     {
         get
         {
-            return string.IsNullOrEmpty(errmsg);
+            return string.IsNullOrEmpty(errmsg) && errcode==0;
         }
     }
 }

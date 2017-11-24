@@ -31,7 +31,7 @@ public class UICheckPlayerIslandWindow : UIWindowBase {
     private void Awake()
     {
         head.gameObject.SetActive(false);
-        (backBtn.transform as RectTransform).anchoredPosition = new Vector2(-150, 200);
+        (backBtn.transform as RectTransform).anchoredPosition = new Vector2(-160, 149);
         (island.transform as RectTransform).anchoredPosition = new Vector2(600, 0);
     }
 
@@ -45,7 +45,7 @@ public class UICheckPlayerIslandWindow : UIWindowBase {
 
     protected override void EnterAnimation(Action onComplete)
     {
-        (backBtn.transform as RectTransform).DOAnchorPos(new Vector2(25, 200),0.5f);
+        (backBtn.transform as RectTransform).DOAnchorPos(new Vector2(-68, 149),0.5f);
         (island.transform as RectTransform).DOAnchorPos(Vector2.zero, 0.5f).OnComplete(()=> {
             head.gameObject.SetActive(true);
             onComplete();
@@ -56,7 +56,7 @@ public class UICheckPlayerIslandWindow : UIWindowBase {
     protected override void ExitAnimation(Action onComplete)
     {
         head.gameObject.SetActive(false);
-        (backBtn.transform as RectTransform).DOAnchorPos(new Vector2(-150, 200), 0.5f);
+        (backBtn.transform as RectTransform).DOAnchorPos(new Vector2(-160, 149), 0.5f);
         (island.transform as RectTransform).DOAnchorPos(new Vector2(600, 0), 0.5f).OnComplete(() => {
             onComplete();
         });

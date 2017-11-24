@@ -255,7 +255,7 @@ public class FilePathTools
 			str = str.ToLower();
 		}else
 		{
-			str = str+".csv";
+			str = str+".txt";
 		}
 		return root + str;
 	}

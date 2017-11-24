@@ -55,11 +55,11 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
         {
             if((int)msg.extra["building"]["status"] == 2)
             {
-                str = string.Format("{0}损坏了你的{1}", msg.name, GameEnumeConfig.GetBuildingName((int)msg.extra["building_index"]));
+                str = string.Format("{0}损坏了你的{1}", msg.name, GameMainManager.instance.model.islandConfig.GetBuildingName((int)msg.extra["building_index"]));
             }
             else
             {
-                str = string.Format("{0}摧毁了你的{1}", msg.name, GameEnumeConfig.GetBuildingName((int)msg.extra["building_index"]));
+                str = string.Format("{0}摧毁了你的{1}", msg.name, GameMainManager.instance.model.islandConfig.GetBuildingName((int)msg.extra["building_index"]));
             }
         }
         PopupMessageData data = new PopupMessageData();

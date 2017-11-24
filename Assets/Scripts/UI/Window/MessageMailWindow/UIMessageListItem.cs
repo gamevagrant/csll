@@ -27,18 +27,18 @@ public class UIMessageListItem : BaseItemView {
             string str = "";
             if ((bool)data.extra["isShielded"])
             {
-                str = string.Format("你成功防御了<font=\"FZLanTYJW_Da SDF\" material=\"FZLanTYJW_Da SDF Shadow & RedOutline\"><color=white><size=130%>{0}</size></color></font>的攻击", data.name);
+                str = string.Format("你成功防御了<color=#BA7F00FF><size=110%>{0}</size></color>的攻击", data.name);
                 button.gameObject.SetActive(false);
             }
             else
             {
                 if ((int)data.extra["building"]["status"] == 2)
                 {
-                    str = string.Format("<font=\"FZLanTYJW_Da SDF\" material=\"FZLanTYJW_Da SDF Shadow & RedOutline\"><color=white><size=130%>{0}</size></color></font>损坏了你的{1}", data.name, GameEnumeConfig.GetBuildingName((int)data.extra["building_index"]));
+                    str = string.Format("<color=#BA7F00FF><size=110%>{0}</size></color>损坏了你的{1}", data.name, GameMainManager.instance.model.islandConfig.GetBuildingName((int)data.extra["building_index"]));
                 }
                 else
                 {
-                    str = string.Format("<font=\"FZLanTYJW_Da SDF\" material=\"FZLanTYJW_Da SDF Shadow & RedOutline\"><color=white><size=130%>{0}</size></color></font>摧毁了你的{1}", data.name, GameEnumeConfig.GetBuildingName((int)data.extra["building_index"]));
+                    str = string.Format("<color=#BA7F00FF><size=110%>{0}</size></color>摧毁了你的{1}", data.name, GameMainManager.instance.model.islandConfig.GetBuildingName((int)data.extra["building_index"]));
                 }
                 button.gameObject.SetActive(true);
             }
@@ -47,14 +47,26 @@ public class UIMessageListItem : BaseItemView {
         else if(data.action == 2)//被偷窃
         {
             string str = "";
-            str = string.Format("<font=\"FZLanTYJW_Da SDF\" material=\"FZLanTYJW_Da SDF Shadow & RedOutline\"><color=white><size=130%>{0}</size></color></font>偷走了{1}金币", data.name, data.extra["reward"]);
+            str = string.Format("<color=#BA7F00FF><size=110%>{0}</size></color>偷走了{1}金币", data.name, data.extra["reward"]);
             button.gameObject.SetActive(true);
+            contentText.text = str;
+        }
+        else if (data.action == 5)//通缉
+        {
+            string str = "";
+            str = string.Format("<color=#BA7F00FF><size=110%>{0}</size></color>正在通缉<color=#BA7F00FF><size=110%>{1}</size></color>,帮助好友攻击可以获得300k奖金", data.name, data.extra["name"]);
+            button.gameObject.SetActive(false);
             contentText.text = str;
         }
         else if(data.action == 6)//被通缉
         {
             string str = "";
-            str = string.Format("你被<font=\"FZLanTYJW_Da SDF\" material=\"FZLanTYJW_Da SDF Shadow & RedOutline\"><color=white><size=130%>{0}</size></color></font>通缉了", data.name);
+            str = string.Format("<color=#BA7F00FF><size=110%>{0}</size></color>正在通缉你，战斗号角已经吹响！", data.name);
+            button.gameObject.SetActive(false);
+            contentText.text = str;
+        }else
+        {
+            string str = "";
             button.gameObject.SetActive(false);
             contentText.text = str;
         }

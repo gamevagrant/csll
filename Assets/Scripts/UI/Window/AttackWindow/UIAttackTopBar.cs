@@ -66,7 +66,7 @@ public class UIAttackTopBar : MonoBehaviour {
         this.randomTarget = new SelectPlayerData(randomTarget);
 
         this.enemys = new List<SelectPlayerData>();
-        this.enemys.Add(this.randomTarget);
+        //this.enemys.Add(this.randomTarget);
         this.selectedTarget = this.randomTarget;
         
         if (enemys!=null)

@@ -35,6 +35,48 @@ public class UIManager : MonoBehaviour,IUIManager {
     private Queue<Action> queue = new Queue<Action>();
     private bool isOpening = false;
 
+    public bool isEnable
+    {
+        get
+        {
+            return colliderNum == 0;
+        }
+    }
+
+    public UIWindowBase curWindow
+    {
+        get
+        {
+            for(int i = PopUpRoot.childCount - 1; i>=0;i--)
+            {
+                Transform tf = PopUpRoot.GetChild(i);
+                if (tf != null && tf.gameObject.activeSelf)
+                {
+                    UIWindowBase window = tf.GetComponent<UIWindowBase>();
+                    if(window!= null)
+                    {
+                        return window;
+                    }
+                   
+                }
+            }
+
+            for (int i = FixedRoot.childCount - 1; i >= 0; i--)
+            {
+                Transform tf = FixedRoot.GetChild(i);
+                if (tf != null && tf.gameObject.activeSelf)
+                {
+                    UIWindowBase window = tf.GetComponent<UIWindowBase>();
+                    if (window != null)
+                    {
+                        return window;
+                    }
+                }
+            }
+
+            return null;
+        }
+    }
 
     private bool openCoilder
     {
@@ -52,6 +94,7 @@ public class UIManager : MonoBehaviour,IUIManager {
 
     private void Awake()
     {
+        
         //------------------------添加全屏遮挡背板start-----------------------
         windowCollider = GameUtils.createGameObject(FixedRoot.gameObject, "WindwCollider");
         RectTransform rt = windowCollider.AddComponent<RectTransform>();
@@ -88,7 +131,7 @@ public class UIManager : MonoBehaviour,IUIManager {
 
 
     }
-
+    //GameObject selectedGO;
     private void Update()
     {
         if(queue.Count > 0 && !isOpening)
@@ -99,6 +142,18 @@ public class UIManager : MonoBehaviour,IUIManager {
                 act();
             }
         }
+        /*
+        if (selectedGO!= EventSystem.current.currentSelectedGameObject)
+        {
+            selectedGO = EventSystem.current.currentSelectedGameObject;
+            if(selectedGO.GetComponent<IPointerClickHandler>()!=null)
+            {
+                AudioManager.instance.PlaySound(AudioNameEnum.button_click);
+                Debug.Log(selectedGO.name);
+            }
+            
+        }
+        */
     }
     private void Init()
     {
@@ -209,40 +264,8 @@ public class UIManager : MonoBehaviour,IUIManager {
        
     }
 
-    /// <summary>
-    /// 打开只有一个确认按钮的模态窗口 
-    /// </summary>
-    /// <param name="content">显示内容</param>
-    /// <param name="okBtnName">确认键显示文字</param>
-    /// <param name="onClickOKBtn">确认键点击回调</param>
-    public void OpenModalBoxWindow(string content,string okBtnName = "",System.Action onClickOKBtn = null)
-    {
-        ModalBoxData data = new ModalBoxData();
-        data.content = content;
-        data.okName = okBtnName;
-        data.onClick = (ret) => {
-            if (ret)
-            {
-                if(onClickOKBtn!=null)
-                {
-                    onClickOKBtn();
-                }
-               
-            }
 
-        };
-        OpenWindow(UISettings.UIWindowID.UIModalBoxWindow, data);
-    }
 
-    public void OpenModalBoxWindow(string content, string okBtnName = "",string cancelBtnName = "",System.Action<bool> onClickBtn = null)
-    {
-        ModalBoxData data = new ModalBoxData();
-        data.content = content;
-        data.okName = okBtnName;
-        data.cancelName = cancelBtnName;
-        data.onClick = onClickBtn;
-        OpenWindow(UISettings.UIWindowID.UIPopupModalBoxWindow, data);
-    }
 
     public void ChangeState(UIStateChangeBase state)
     {
@@ -286,6 +309,14 @@ public class UIManager : MonoBehaviour,IUIManager {
                 window.transform.SetSiblingIndex(PopUpRoot.childCount);
                 popupCollider.transform.SetSiblingIndex(PopUpRoot.childCount - 2);
                 popupCollider.SetActive(true);
+                if(window.windowData.colliderType == UISettings.UIWindowColliderType.Transparent)
+                {
+                    popupCollider.GetComponent<Image>().color = new Color(0.8f, 0.8f, 0.8f, 0f);
+                }
+                else
+                {
+                    popupCollider.GetComponent<Image>().color = new Color(0, 0, 0, 0.3f);
+                }
                 //popupCollider.GetComponent<Image>().color = new Color(0.8f,0.8f,0.8f,0.5f);
             }
             else if (windowdata.type == UISettings.UIWindowType.Normal)

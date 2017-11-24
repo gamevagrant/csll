@@ -58,9 +58,15 @@ public class UIEnemyPanelItem : BaseItemView {
             img300k.SetActive(false);
         }
 
-        if(selectData.isRandomUser)
+        if (selectData.isRandomUser)
         {
-            if(selectData.isSelected)
+            attBtn.image.sprite = btnSprites[0];
+            SpriteState spriteState = new SpriteState();
+            spriteState.disabledSprite = btnSprites[1];
+            attBtn.spriteState = spriteState;
+            attBtn.interactable = !selectData.isSelected;
+            /*
+            if (selectData.isSelected)
             {
                 attBtn.image.sprite = btnSprites[1];
             }
@@ -68,9 +74,16 @@ public class UIEnemyPanelItem : BaseItemView {
             {
                 attBtn.image.sprite = btnSprites[0];
             }
-           
-        }else
+           */
+        }
+        else
         {
+            attBtn.image.sprite = btnSprites[2];
+            SpriteState spriteState = new SpriteState();
+            spriteState.disabledSprite = btnSprites[3];
+            attBtn.spriteState = spriteState;
+            attBtn.interactable = !selectData.isSelected;
+            /*
             if (selectData.isSelected)
             {
                 attBtn.image.sprite = btnSprites[3];
@@ -79,6 +92,7 @@ public class UIEnemyPanelItem : BaseItemView {
             {
                 attBtn.image.sprite = btnSprites[2];
             }
+            */
         }
     }
 }

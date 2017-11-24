@@ -9,9 +9,9 @@ public class MainState : UIStateChangeBase
     {
         this.delay = delay;
         needShowWindows = new Dictionary<UISettings.UIWindowID, object>();
-        needShowWindows.Add(UISettings.UIWindowID.UIWheelWindow, null);
         needShowWindows.Add(UISettings.UIWindowID.UISideBarWindow, null);
         needShowWindows.Add(UISettings.UIWindowID.UITopBarWindow, null);
+        needShowWindows.Add(UISettings.UIWindowID.UIWheelWindow, null);
     }
     public override void ChangeState(Dictionary<UISettings.UIWindowID, UIWindowBase> showingWindows)
     {

@@ -14,11 +14,13 @@ public class UIShopItem : BaseItemView
         goodsData = data as GoodsData;
         if(goodsData.type == "props")
         {
+            //countText.fontSize = 25;
             countText.text = "+" + goodsData.name;
         }
         else
         {
-            countText.text = "+" + goodsData.quantity.ToString();
+            //countText.fontSize = 25;
+            countText.text = "+" + GameUtils.GetCurrencyString(goodsData.quantity);
         }
         priceText.text = "￥" + ((float)goodsData.price / 100).ToString();
         int index = Mathf.Min(sprites.Length - 1, Mathf.Max(0, int.Parse(goodsData.goodsId) % 10 - 1));

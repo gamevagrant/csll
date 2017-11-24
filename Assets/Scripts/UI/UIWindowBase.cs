@@ -79,6 +79,7 @@ public abstract class UIWindowBase : MonoBehaviour {
         
     }
 
+
     public virtual void Init()
     {
 

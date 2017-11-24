@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using DG.Tweening;
 
 public class UIMiningMapWindow : UIWindowBase
@@ -27,6 +28,7 @@ public class UIMiningMapWindow : UIWindowBase
     public RectTransform content;
     public RectTransform panel;
     public UIMiningMapItem[] items;
+    public ScrollRect scrollRect;
 
     public override void Init()
     {
@@ -46,6 +48,8 @@ public class UIMiningMapWindow : UIWindowBase
             {
                 Vector2 pos = (item.transform as RectTransform).anchoredPosition;
                 content.anchoredPosition = -pos;
+                scrollRect.movementType = ScrollRect.MovementType.Elastic;
+                
             }
 
         }
@@ -56,6 +60,7 @@ public class UIMiningMapWindow : UIWindowBase
         panel.DOAnchorPos(Vector2.zero, 0.5f).SetEase(Ease.OutCubic);
         panel.GetComponent<CanvasGroup>().DOFade(1, 0.5f).OnComplete(() =>
         {
+            scrollRect.movementType = ScrollRect.MovementType.Clamped;
             onComplete();
         });
     }

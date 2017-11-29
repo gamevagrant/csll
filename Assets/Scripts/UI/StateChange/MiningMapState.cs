@@ -26,9 +26,10 @@ public class MiningMapState : UIStateChangeBase
                 GameMainManager.instance.uiManager.CloseWindow(id, false);
             }
 
-            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIWheelWindow,false);
-            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UITopBarWindow,false);
+           
             GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UISideBarWindow, false);
+            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UITopBarWindow, false);
+            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIWheelWindow, false);
             GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIMiningMapWindow,false);
 
             GameMainManager.instance.uiManager.CloseWindow(UISettings.UIWindowID.UICloudCover);

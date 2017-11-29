@@ -66,6 +66,8 @@ public class UIWheelPanel : MonoBehaviour {
             energyLabel.text = string.Format("{0}/{1}",Mathf.Min(value,user.maxEnergy), user.maxEnergy);
             surplusEnergyLabel.text = value>user.maxEnergy?(value - user.maxEnergy).ToString():"";
             energyProgressSlider.value = value / (float)user.maxEnergy;
+            addEnergyCountLabel.text = value < user.maxEnergy ? "+ " + user.recoverEnergy.ToString() : "";
+
         }
     }
     // Use this for initialization
@@ -90,14 +92,13 @@ public class UIWheelPanel : MonoBehaviour {
     {
         user = GameMainManager.instance.model.userData;
         energyValue = user.energy;
-        UpdateAddEnergyData();
         
         isWorking = false;
     }
 
     private void Update()
     {
-        if(user.energy<user.maxEnergy)
+        if(energyValue < user.maxEnergy)
         {
             countDownLabel.text = GameUtils.TimestampToDateTime(user.timeToRecover - (long)(Time.time - user.timeTag)).ToString("mm:ss");
         }else
@@ -105,18 +106,6 @@ public class UIWheelPanel : MonoBehaviour {
             countDownLabel.text = "";
         }
         
-    }
-
-    public void UpdateAddEnergyData()
-    {
-        if (energyValue < user.maxEnergy)
-        {
-            addEnergyCountLabel.text = "+ " + user.recoverEnergy.ToString();
-        }else
-        {
-            addEnergyCountLabel.text = "";
-        }
-           
     }
 
     public void SetStealerData(TargetData target)
@@ -346,7 +335,6 @@ public class UIWheelPanel : MonoBehaviour {
                 rollItem = data.data.rollerItem;
 
                 energyValue = user.energy - 1;
-                UpdateAddEnergyData();
             }
             else
             {
@@ -431,6 +419,8 @@ public class UIWheelPanel : MonoBehaviour {
         }
         else if(rollItem.type == "xcrowns")
         {
+            GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_Star);
+
             int money = rollItem.code;
 
             getStarEffect.gameObject.SetActive(true);
@@ -438,11 +428,11 @@ public class UIWheelPanel : MonoBehaviour {
 
                 goldEffect.emission.SetBursts(new ParticleSystem.Burst[1] { new ParticleSystem.Burst(0, 80, 100, 1, 0.01f) });
                 goldEffect.Play();
+                energyValue = user.energy;
                 GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_gold_large);
-
                 EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Money, 0));
                 GameMainManager.instance.uiManager.EnableOperation();
-                GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_Star);
+                
             });
            
         }

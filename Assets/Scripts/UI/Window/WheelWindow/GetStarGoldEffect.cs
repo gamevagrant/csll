@@ -36,7 +36,7 @@ public class GetStarGoldEffect : MonoBehaviour {
     {
         if(starCount != 0)
         {
-            tmp = Mathf.CeilToInt(Vector3.Lerp(new Vector3(tmp, 0, 0), new Vector3(starCount, 0, 0), 0.9f * Time.deltaTime).x);
+            tmp = Mathf.CeilToInt(Vector3.Lerp(new Vector3(tmp, 0, 0), new Vector3(starCount, 0, 0), 0.9f * Time.deltaTime * 10f).x);
             starGoldText.text = tmp.ToString();
         }else
         {
@@ -70,7 +70,7 @@ public class GetStarGoldEffect : MonoBehaviour {
                 });
 
             }
-            sq.AppendInterval(1 + 5 * 0.2f);
+            sq.AppendInterval(5 * 0.2f);
             sq.AppendCallback(()=> {
                 
                 starRateText.gameObject.SetActive(true);

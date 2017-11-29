@@ -8,7 +8,7 @@ using DG.Tweening;
 
 public class UIWheelWindow : UIWindowBase {
 
-    private enum State
+    private enum OpenState
     {
         Wheel,
         Building,
@@ -22,8 +22,8 @@ public class UIWheelWindow : UIWindowBase {
     private UserData user;
 
 
-    private State currState;
-    private State openState;
+    private OpenState currState;
+    private OpenState openState;
 
     private Vector2 leftBtnPos;
 
@@ -47,7 +47,7 @@ public class UIWheelWindow : UIWindowBase {
     private void Awake()
     {
        // EventDispatcher.instance.AddEventListener(EventEnum.LOGIN_COMPLATE, onUpdateUserData);
-        currState = State.Closed;
+        currState = OpenState.Closed;
 
         leftBtnPos = leftBtn.anchoredPosition;
     }
@@ -107,10 +107,10 @@ public class UIWheelWindow : UIWindowBase {
         {
             updateUserData(user);
         }
-        openState = State.Wheel;
+        openState = OpenState.Wheel;
         if(data!= null && data.Length>0 && data[0]!=null)
         {
-            openState = (int)data[0]==0?State.Wheel:State.Building;
+            openState = (int)data[0]==0?OpenState.Wheel:OpenState.Building;
            
         }
         
@@ -118,11 +118,11 @@ public class UIWheelWindow : UIWindowBase {
 
     protected override void EnterAnimation(Action onComplete)
     {
-        if(currState!=State.Closed)
+        if(currState!=OpenState.Closed)
         {   
             if(currState != openState)
             {
-                if (openState == State.Wheel)
+                if (openState == OpenState.Wheel)
                 {
                     onClickShowWheelBtn();
                 }
@@ -142,7 +142,7 @@ public class UIWheelWindow : UIWindowBase {
             count++;
             if(count>1)
             {
-                if (openState == State.Building)
+                if (openState == OpenState.Building)
                 {
                     onClickShowBuildBtn();
                 }
@@ -154,7 +154,7 @@ public class UIWheelWindow : UIWindowBase {
             count++;
             if (count > 1)
             {
-                if (openState == State.Building)
+                if (openState == OpenState.Building)
                 {
                     onClickShowBuildBtn();
                 }
@@ -170,7 +170,7 @@ public class UIWheelWindow : UIWindowBase {
             count++;
             if (count > 1)
             {
-                currState = State.Closed;
+                currState = OpenState.Closed;
                 onComplete();
             }
         });
@@ -178,7 +178,7 @@ public class UIWheelWindow : UIWindowBase {
             count++;
             if (count > 1)
             {
-                currState = State.Closed;
+                currState = OpenState.Closed;
                 onComplete();
             }
         });
@@ -204,16 +204,24 @@ public class UIWheelWindow : UIWindowBase {
 
     public void onClickShowBuildBtn()
     {
-        wheelPanel.enterToBuildPanelState();
-        buildPanel.enterToBuildPanelState();
-        currState = State.Building;
+        if(currState!= OpenState.Building)
+        {
+            wheelPanel.enterToBuildPanelState();
+            buildPanel.enterToBuildPanelState();
+            currState = OpenState.Building;
+        }
+        
     }
 
     public void onClickShowWheelBtn()
     {
-        wheelPanel.enterToWheelPanelState();
-        buildPanel.enterToWheelPanelState();
-        currState = State.Wheel;
+        if(currState!= OpenState.Wheel)
+        {
+            wheelPanel.enterToWheelPanelState();
+            buildPanel.enterToWheelPanelState();
+            currState = OpenState.Wheel;
+        }
+       
     }
 
     public void OnClickLeftDatailBtn()

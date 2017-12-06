@@ -117,7 +117,7 @@ public class HttpProxy {
         }
 
         HTTPRequest req = MakePostRequest<T>(url, data, callback);
-
+        Debug.Log("正在请求："+ url);
         MarkCheck(url);
         return HTTPManager.SendRequest(req) != null;
     }

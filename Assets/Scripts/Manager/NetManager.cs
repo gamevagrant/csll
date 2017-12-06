@@ -15,11 +15,12 @@ public class NetManager:INetManager
             return GameSetting.serverPath;
         }
     }
+    private string _token;
     private string token
     {
         get
         {
-            return GameSetting.token;
+            return _token;
         }
     }
 
@@ -75,6 +76,26 @@ public class NetManager:INetManager
         
     }
 
+    public bool AddGuest(Action<bool, AddGuesMessage> callBack)
+    {
+        string url = MakeUrl("http://h5.dodgame.com.cn", "api/add_guest");
+        Debug.Log(url);
+        Dictionary<string, object> data = new Dictionary<string, object>();
+        return HttpProxy.SendPostRequest<AddGuesMessage>(url, data, (ret, res) => {
+            if (res.result == "ok")
+            {
+
+                Debug.Log("注册游客："+res.UserInfo.OpenId);
+                
+            }
+
+            callBack(ret, res);
+        });
+       
+    }
+
+
+
     public bool Login(string openid, Action<bool,LoginMessage> callBack)
     {
         string url = MakeUrl(APIDomain, "game/basic/login");
@@ -97,6 +118,28 @@ public class NetManager:INetManager
 
     }
 
+
+    public bool TutorialComplete(Action<bool,NetMessage> callBack)
+    {
+        string url = MakeUrl(APIDomain, "game/reward/tutorialcomplete");
+        Dictionary<string, object> data = new Dictionary<string, object>();
+        data.Add("uid", uid);
+        data.Add("token", token);
+        data.Add("t", time.ToString());
+        return HttpProxy.SendPostRequest<NetMessage>(url, data, (ret, res) => {
+
+            callBack(ret, res);
+            if (res.isOK)
+            {
+
+            }
+            else
+            {
+                Debug.Log("TutorialComplete失败:" + res.errmsg);
+            }
+
+        });
+    }
     public bool Roll(Action<bool, RollMessage> callBack)
     {
         string url = MakeUrl(APIDomain, "game/roller/roll");
@@ -131,7 +174,6 @@ public class NetManager:INetManager
                 user.stealIslands = res.data.stealIslands;
                 user.timeToRecoverInterval = res.data.timeToRecoverInterval;
 
-                Debug.Log(user.timeToRecover);
             }
             else
             {
@@ -757,6 +799,189 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("获取消息和邮件失败:" + res.errmsg);
+            }
+
+        });
+    }
+
+    //-------------------------facebook接口------------------------------------
+    /// <summary>
+    /// 注册接口，不管是否注册过每册登录都调用 会返回用于登录的uid和token
+    /// </summary>
+    /// <param name="accessToken"></param>
+    /// <param name="expirationTime"></param>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    private bool Register(string accessToken, long expirationTime, Action<bool, RegisterMessage> callBack)
+    {
+
+        string url = MakeUrl(APIDomain, "game/basic/registerUnityFb");
+        Dictionary<string, object> data = new Dictionary<string, object>();
+        data.Add("AccessToken", accessToken);
+        data.Add("ExpirationTime", expirationTime);
+        return HttpProxy.SendPostRequest<RegisterMessage>(url, data, (ret, res) => {
+            if (res.isOK)
+            {
+
+                _token = res.data.token;
+            }
+            else
+            {
+                Debug.Log("注册失败:" + res.errmsg);
+            }
+            callBack(ret, res);
+        });
+
+    }
+
+    public bool LoginFB(string accessToken, long expirationTime, Action<bool, LoginMessage> callBack)
+    {
+        return Register(accessToken, expirationTime, (ret, res) =>
+        {
+            if (res.isOK)
+            {
+                string openID = res.data.openid;
+                string token = res.data.token;
+                Login(openID, (rs, rt) =>
+                {
+                    callBack(rs, rt);
+                });
+            }
+
+        });
+    }
+
+
+    public bool GetInviteProgress(Action<bool, InviteProgressMessage> callBack)
+    {
+        string url = MakeUrl(APIDomain, "game/friend/getinvitetimesfb");
+        Dictionary<string, object> data = new Dictionary<string, object>();
+        data.Add("uid", uid);
+        data.Add("type", "get");
+        data.Add("token", token);
+        data.Add("t", time.ToString());
+        return HttpProxy.SendPostRequest<InviteProgressMessage>(url, data, (ret, res) => 
+        {
+            callBack(ret, res);
+            if (res.isOK)
+            {
+
+            }
+            else
+            {
+                Debug.Log("获取好友邀请进度失败:" + res.errmsg);
+            }
+            
+        });
+    }
+
+    public bool SetInviteProgress(int limit, Action<bool, NetMessage> callBack)
+    {
+        string url = MakeUrl(APIDomain, "game/friend/getinvitetimesfb");
+        Dictionary<string, object> data = new Dictionary<string, object>(); 
+        data.Add("limit", limit);
+        data.Add("type", "set");
+        data.Add("uid", uid);
+        data.Add("token", token);
+        data.Add("t", time.ToString());
+        return HttpProxy.SendPostRequest<NetMessage>(url, data, (ret, res) =>
+        {
+            callBack(ret, res);
+            if (res.isOK)
+            {
+
+            }
+            else
+            {
+                Debug.Log("设置好友邀请进度失败:" + res.errmsg);
+            }
+
+        });
+    }
+
+
+    public bool GetRecallableFriends(Action<bool, RecallableFriendsMessage> callBack)
+    {
+        string url = MakeUrl(APIDomain, "game/user/share");
+        Dictionary<string, object> data = new Dictionary<string, object>();
+        data.Add("isShared", 0);
+        data.Add("uid", uid);
+        data.Add("token", token);
+        data.Add("t", time.ToString());
+        return HttpProxy.SendPostRequest<RecallableFriendsMessage>(url, data, (ret, res) =>
+        {
+            callBack(ret, res);
+            if (res.isOK)
+            {
+
+            }
+            else
+            {
+                Debug.Log("获取可召回好友列表失败:" + res.errmsg);
+            }
+
+        });
+    }
+
+   public bool InviteFriends(string reqid,string[] to, Action<bool, InviteFriendsMessage> callBack)
+    {
+        string url = MakeUrl(APIDomain, "game/friend/invitebyfb");
+        Dictionary<string, object> data = new Dictionary<string, object>();
+        data.Add("reqid", reqid);
+        data.Add("touids", LitJson.JsonMapper.ToJson(to));//json字符串 [xxxxx,xxxxx,xxxx]
+        data.Add("uid", uid);
+        data.Add("token", token);
+        data.Add("t", time.ToString());
+        return HttpProxy.SendPostRequest<InviteFriendsMessage>(url, data, (ret, res) =>
+        {
+            callBack(ret, res);
+            if (res.isOK)
+            {
+                UserData ud = GameMainManager.instance.model.userData;
+                ud.energy = res.data.energy;
+                ud.money = res.data.money;
+            }
+            else
+            {
+                Debug.Log("邀请好友失败:" + res.errmsg);
+            }
+
+        });
+    }
+
+    public bool RecallFriends(int limit, string[] to, Action<bool, RecallFriendsMessage> callBack)
+    {
+        string url = MakeUrl(APIDomain, "game/user/recall");
+        Dictionary<string, object> data = new Dictionary<string, object>();
+        data.Add("limit", limit);
+        string touids = "";
+        for(int i = 0;i<to.Length;i++)
+        {
+            if(i==to.Length-1)
+            {
+                touids += to[i];
+            }else
+            {
+                touids += to[i] + ",";
+            }
+        }
+        data.Add("touids", touids);
+        data.Add("uid", uid);
+        data.Add("token", token);
+        data.Add("t", time.ToString());
+
+        return HttpProxy.SendPostRequest<RecallFriendsMessage>(url, data, (ret, res) =>
+        {
+            callBack(ret, res);
+            if (res.isOK)
+            {
+                UserData ud = GameMainManager.instance.model.userData;
+                ud.energy = res.data.energy;
+                ud.money = res.data.money;
+            }
+            else
+            {
+                Debug.Log("召回好友失败:" + res.errmsg);
             }
 
         });

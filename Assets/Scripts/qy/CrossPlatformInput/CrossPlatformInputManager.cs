@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace qy.CrossPlatformInput
+namespace QY.CrossPlatformInput
 {
 	public class CrossPlatformInputManager
 	{
@@ -23,7 +23,7 @@ namespace qy.CrossPlatformInput
 		{
 			if (m_VirtualAxes.ContainsKey(axis.name))
 			{
-				Debug.LogError("There is already a virtual axis named " + axis.name + " registered.");
+				UnityEngine.Debug.LogError("There is already a virtual axis named " + axis.name + " registered.");
 			}
 			else
 			{
@@ -38,7 +38,7 @@ namespace qy.CrossPlatformInput
 		{
 			if (m_VirtualButtons.ContainsKey(button.name))
 			{
-				Debug.LogError("There is already a virtual axis named " + button.name + " registered.");
+                UnityEngine.Debug.LogError("There is already a virtual axis named " + button.name + " registered.");
 			}
 			else
 			{

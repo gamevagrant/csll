@@ -4,7 +4,10 @@ using System;
 public interface INetManager
 {
 
+    bool AddGuest(Action<bool, AddGuesMessage> callBack);
+
     bool Login(string openid, Action<bool, LoginMessage> callBack);
+    bool TutorialComplete(Action<bool, NetMessage> callBack);
     /// <summary>
     /// 转转盘
     /// </summary>
@@ -165,5 +168,53 @@ public interface INetManager
     /// <param name="callBack"></param>
     /// <returns></returns>
     bool GetReward(int index,Action<bool, GetRewardMessage> callBack);
+
+    //------------------------平台区分---------------------------------------
+
+    /// <summary>
+    /// facebook登录
+    /// </summary>
+    /// <param name="accessToken"></param>
+    /// <param name="expirationTime"></param>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool LoginFB(string accessToken, long expirationTime, Action<bool, LoginMessage> callBack);
+    /// <summary>
+    /// 获取好友邀请进度
+    /// </summary>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool GetInviteProgress(Action<bool, InviteProgressMessage> callBack);
+    /// <summary>
+    /// 设置好友邀请进度 每次邀请时把获取到的可邀请好友数量传给服务器
+    /// </summary>
+    /// <returns></returns>
+    bool SetInviteProgress(int limit, Action<bool, NetMessage> callBack);
+    /// <summary>
+    /// 获取可召回好友列表
+    /// </summary>
+    /// <param name="isShared">（0：没有进行分享,1：分享过）</param>
+    /// <returns></returns>
+    bool GetRecallableFriends(Action<bool, RecallableFriendsMessage> callBack);
+
+    /// <summary>
+    /// 邀请好友
+    /// </summary>
+    /// <param name="reqid">邀请后获得的requestID</param>
+    /// <param name="to">邀请的好友列表</param>
+    /// <returns></returns>
+    /// {"errcode":0,"errmsg":"","data":{"energy":119,"money":16957,"invite_limit_reward":true,"invite_energy_reward":20,"invite_reward_num_limit":200,"invite_reward_num_limit_daily":1,"invite_times_daily":1,"reward_list":[{"type":"energy","num":20,"name":""}]}}
+    bool InviteFriends(string reqid, string[] to, Action<bool, InviteFriendsMessage> callBack);
+
+    /// <summary>
+    /// 召回好友
+    /// </summary>
+    /// <param name="limit">GetRecallableFriends 获取到的可召回好友的数量</param>
+    /// <param name="to"></param>
+    /// <returns></returns>
+    /// {"errcode":0,"errmsg":"send success","data":{"energy":646,"money":315947502,"recall_limit_reward":false,"recall_reward_num_limit_daily":2,"recall_times_daily":1,"reward_list":[{"type":"energy","num":5,"name":""}]}}
+    bool RecallFriends(int limit, string[] to, Action<bool, RecallFriendsMessage> callBack);
+
+
 }
 

@@ -28,12 +28,12 @@ SpriteAtlas:
       enableTightPacking: 0
     packedHash:
       serializedVersion: 2
-      Hash: 7f6c6796ea4ce67e2a36eb21943a97db
+      Hash: 486bb0c759b691b6d1962629bb6ed551
     variantMultiplier: 1
     bindAsDefault: 0
     finalFormat: 4
-    hashString: 7f6c6796ea4ce67e2a36eb21943a97db
-    totalSpriteSurfaceArea: 540631
+    hashString: 486bb0c759b691b6d1962629bb6ed551
+    totalSpriteSurfaceArea: 552227
     packables:
     - {fileID: 102900000, guid: 8b75ce511bcd1564cb58c09924c006ee, type: 3}
     packedSpriteRenderDataKeys:
@@ -51,6 +51,7 @@ SpriteAtlas:
     - 8fc0101bfd4d001409402ce59565ae78: 21300000
     - e04a265c4ed501045b8921487983d657: 21300000
     - 754693c1d7644a14f821615ed647a76d: 21300000
+    - cb1104f9fa828cb4c95815dcff274d1c: 21300000
     - 7ad71c666ec9794458a931515c9ea153: 21300000
     - 386c51113ac5ffb429d44a29fbc700c4: 21300000
     - d5a40599796636941926b7e13c63d4f7: 21300000
@@ -62,6 +63,7 @@ SpriteAtlas:
     - 892fc9eae018eac4ca2b91a79fd4d6c9: 21300000
     - 8768265d8745b574dbc11bec7106545e: 21300000
     - 0dc3a435ba7c8654ea4e86cc2e50af78: 21300000
+    - f19b4eae2c4cc244085011c05311850b: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: 48a51b9e0a0d80a4c9234accbc279dec, type: 3}
@@ -78,6 +80,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 8fc0101bfd4d001409402ce59565ae78, type: 3}
   - {fileID: 21300000, guid: e04a265c4ed501045b8921487983d657, type: 3}
   - {fileID: 21300000, guid: 754693c1d7644a14f821615ed647a76d, type: 3}
+  - {fileID: 21300000, guid: cb1104f9fa828cb4c95815dcff274d1c, type: 3}
   - {fileID: 21300000, guid: 7ad71c666ec9794458a931515c9ea153, type: 3}
   - {fileID: 21300000, guid: 386c51113ac5ffb429d44a29fbc700c4, type: 3}
   - {fileID: 21300000, guid: d5a40599796636941926b7e13c63d4f7, type: 3}
@@ -89,6 +92,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 892fc9eae018eac4ca2b91a79fd4d6c9, type: 3}
   - {fileID: 21300000, guid: 8768265d8745b574dbc11bec7106545e, type: 3}
   - {fileID: 21300000, guid: 0dc3a435ba7c8654ea4e86cc2e50af78, type: 3}
+  - {fileID: 21300000, guid: f19b4eae2c4cc244085011c05311850b, type: 3}
   m_PackedSpriteNamesToIndex:
   - menu_bg
   - head_bg
@@ -104,6 +108,7 @@ SpriteAtlas:
   - copy_nor
   - setup_nor
   - menu_btn_sel
+  - menu_invite
   - menu_friends_word
   - menu_shop_word
   - menu_wheel_word
@@ -115,5 +120,6 @@ SpriteAtlas:
   - main_tishi
   - setup_sel
   - copy_sel
+  - menu_invite_word
   m_Tag: LeftDatailWindow
   m_IsVariant: 0

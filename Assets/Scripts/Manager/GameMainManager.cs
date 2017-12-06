@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using QY.Open;
 
 public class GameMainManager {
 
@@ -21,6 +22,7 @@ public class GameMainManager {
     public INetManager netManager;
     public IAudioManager audioManager;
     public IWebSocketMsgManager websocketMsgManager;
+    public IOpenPlatform open;
     public GameModel model;
     public MonoBehaviour mono;//全局脚本，可以使用monobehaviour方法
 
@@ -29,6 +31,7 @@ public class GameMainManager {
         netManager = new NetManager();
         websocketMsgManager = new WebSocketMsgManager();
         model = new GameModel();
+        open = new OpenFacebook();
     }
 
     public void Init()
@@ -37,6 +40,7 @@ public class GameMainManager {
         audioManager = AudioManager.instance;
         audioManager.SetSoundPathProxy(FilePathTools.getAudioPath);
         audioManager.SetMusicPathProxy(FilePathTools.getAudioPath);
+       
     }
    
 }

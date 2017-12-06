@@ -33,6 +33,7 @@ public class UIModalBoxWindow : UIWindowBase {
     {
         modalData = data[0] as ModalBoxData;
         text.text = modalData.content;
+        text.alignment = modalData.alignment;
         okBtnLabel.text = string.IsNullOrEmpty(modalData.okName) ? "确认" : modalData.okName;
         cancelBtnLabel.text = string.IsNullOrEmpty(modalData.cancelName) ? "取消" : modalData.cancelName;
 

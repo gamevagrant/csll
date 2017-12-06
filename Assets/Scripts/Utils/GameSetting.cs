@@ -5,9 +5,9 @@ public class GameSetting {
 
 
     //------------------全平台一致的配置--------------------------
-    public static string serverPath = "http://www.caishenlaile.com";
-    public static string serverPathTest = "http://10.0.8.50:8080";
-    public static string token = "ABC";
+    public static string serverPath = "https://api.nutsgamer.com";
+    public static string serverPathTest = "https://api.dev.nutsgamer.com";//"http://10.0.8.50:8080";
+    public static string accessToken = "EAAClL2BiDkgBAE0tyncTW7YtmeBHe7RLCZAaMGsgYeexufVmdmeKMUpfgdxCOWk2hTZByconjAv8EBV8JU2DzoLXIqyO1EJrJXjMagsWiZC4dpybYTT8DajbwVm6JuJ77EQgtsuhEvrX8NgAeKLU2RWh5HZBZBOZCigz3W3wAQM0ZBv6ouwZB6yZA";//测试用facebook访问token
 
     //-------------------平台区分的配置-------------------------
 #if UNITY_EDITOR
@@ -17,7 +17,7 @@ public class GameSetting {
 #else
 	public static readonly bool isUseAssetBundle = true;//这条勿动，发布平台下永远是true
     public static readonly bool isUseLocalAssetBundle = true;//是否使用本地資源 使用本地资源会去streamAsset文件夹下加载，不使用会从网络加载
-	public static readonly bool isDebug = false ;//显示测试UI，帧率等
+	public static readonly bool isDebug = true ;//显示测试UI，帧率等
 #endif
 
 

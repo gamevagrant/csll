@@ -57,7 +57,7 @@ public class AssetLoadManager:MonoBehaviour
 	public void LoadAsset<T>(string url,Action<T> callback ,bool isCache = true)
     {
 		string path = url;
-		if (path.IndexOf(@"http://") == -1)
+		if (path.IndexOf(@"http://") == -1 && path.IndexOf(@"https://") == -1)
 		{
 			if (path.IndexOf(@"file://") == -1)
 			{
@@ -154,6 +154,7 @@ public class AssetLoadManager:MonoBehaviour
 		}
 		else
 		{
+            Debug.Log(url);
 			Debug.Log(www.error);
 		}
 		www.Dispose();

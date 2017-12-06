@@ -27,4 +27,10 @@ public class EditorTools  {
         }
         Debug.Log(Selection.activeGameObject.name);
     }
+
+    [MenuItem("Tools/清理player")]
+    public static void ClearPlayer()
+    {
+        PlayerPrefs.DeleteAll();
+    }
 }

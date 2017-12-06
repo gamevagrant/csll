@@ -339,6 +339,7 @@ public class UIWheelPanel : MonoBehaviour {
             else
             {
                 isWorking = false;
+                getRes = true;
                 GameMainManager.instance.uiManager.EnableOperation();
             }
 
@@ -354,7 +355,13 @@ public class UIWheelPanel : MonoBehaviour {
 
             yield return null;
         }
+
         reflective.DOFade(0, 1f);
+        if (rollItem == null)
+        {
+            wheel.DOLocalRotate(new Vector3(0, 0, -(360 * 1 + 36 * 0)), 2.3f, RotateMode.FastBeyond360).SetEase(Ease.OutCirc);
+            yield break;
+        }
         audio.clip = audioClips[1];
         audio.loop = false;
         audio.Play();

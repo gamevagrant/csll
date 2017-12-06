@@ -36,6 +36,9 @@ public class AutoScrollView : MonoBehaviour {
         }
         set
         {
+            if (value == null)
+                return;
+
             _curItem = value;
             ItemRect item = _curItem;
             float p;
@@ -112,7 +115,7 @@ public class AutoScrollView : MonoBehaviour {
 
     public void SetData(IList datas)
     {
-        if (datas == null)
+        if (datas == null || datas.Count==0)
             return;
 
         itemPool.resetAllTarget();
@@ -221,6 +224,9 @@ public class AutoScrollView : MonoBehaviour {
 
     private ItemRect GetNearestItem()
     {
+        if (itemDatas == null || itemDatas.Count == 0)
+            return null;
+
         Vector2 target = center.anchoredPosition;
         int head = 0;
         int end = itemDatas.Count-1;

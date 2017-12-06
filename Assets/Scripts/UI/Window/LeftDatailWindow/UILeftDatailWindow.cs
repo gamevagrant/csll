@@ -38,7 +38,7 @@ public class UILeftDatailWindow : UIWindowBase {
 
     private void Update()
     {
-        if (qy.CrossPlatformInput.CrossPlatformInputManager.GetButtonDown(CrossPlatformInput.LEFT))
+        if (QY.CrossPlatformInput.CrossPlatformInputManager.GetButtonDown(CrossPlatformInput.LEFT))
         {
             if (GameMainManager.instance.uiManager.curWindow.windowData == windowData)
             {
@@ -154,5 +154,11 @@ public class UILeftDatailWindow : UIWindowBase {
     {
         OnClickClose();
         GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIShopWindow);
+    }
+
+    public void OnClickInviteBtn()
+    {
+        //GameMainManager.instance.open.Invite();
+        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIInviteWindow);
     }
 }

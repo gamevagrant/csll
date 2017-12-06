@@ -28,6 +28,7 @@ public class UISettings  {
         UIMiningMapWindow,
         UIMiningWindow,
         UICloudCover,
+        UIInviteWindow,
 
     }
 
@@ -90,6 +91,7 @@ public class UISettings  {
         {UIWindowID.UIMiningMapWindow,"UIMiningMapWindow" },
         {UIWindowID.UIMiningWindow,"UIMiningWindow" },
         {UIWindowID.UICloudCover,"UICloudCover"},
+        {UIWindowID.UIInviteWindow,"UIInviteWindow"},
     };
 
 

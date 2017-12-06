@@ -61,13 +61,13 @@ public class UIWheelWindow : UIWindowBase {
             wheelPanel.SetEnergyData(user.maxEnergy, user.energy, user.recoverEnergy, energyTimeToRecover - (long)(Time.time - energyTimeToRecoverTag));
         }
         */
-        if(qy.CrossPlatformInput.CrossPlatformInputManager.GetButtonDown(CrossPlatformInput.LEFT))
+        if(QY.CrossPlatformInput.CrossPlatformInputManager.GetButtonDown(CrossPlatformInput.LEFT))
         {
             if(GameMainManager.instance.uiManager.isEnable && GameMainManager.instance.uiManager.curWindow.windowData == windowData)
             {
                 onClickShowBuildBtn();
             }
-        }else if(qy.CrossPlatformInput.CrossPlatformInputManager.GetButtonDown(CrossPlatformInput.RIGHT))
+        }else if(QY.CrossPlatformInput.CrossPlatformInputManager.GetButtonDown(CrossPlatformInput.RIGHT))
         {
             if (GameMainManager.instance.uiManager.isEnable && GameMainManager.instance.uiManager.curWindow.windowData == windowData)
             {

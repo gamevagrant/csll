@@ -1,5 +1,5 @@
 ﻿using System;
-
+using TMPro;
 public class Alert
 {
 
@@ -33,7 +33,7 @@ public class Alert
     /// <param name="onClickBtn">点击按钮的回调，Alert.OK 或者 Alert.CANCEL的值</param>
     /// <param name="okBtnName"></param>
     /// <param name="cancelBtnName"></param>
-    public static void Show(string content, uint flags = Alert.OK, Action<uint> onClickBtn = null, string okBtnName = "", string cancelBtnName = "")
+    public static void Show(string content, uint flags = Alert.OK, Action<uint> onClickBtn = null, string okBtnName = "", string cancelBtnName = "", TextAlignmentOptions alignment = TextAlignmentOptions.Center)
     {
         ModalBoxData data = new ModalBoxData();
         data.content = content;
@@ -41,6 +41,7 @@ public class Alert
         data.okName = okBtnName;
         data.cancelName = cancelBtnName;
         data.onClick = onClickBtn;
+        data.alignment = alignment;
         GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIModalBox, data);
     }
 }
@@ -52,4 +53,5 @@ public class ModalBoxData
     public string okName = "确认";
     public string cancelName = "取消";
     public Action<uint> onClick = null;
+    public TextAlignmentOptions alignment = TextAlignmentOptions.Center;//对齐
 }

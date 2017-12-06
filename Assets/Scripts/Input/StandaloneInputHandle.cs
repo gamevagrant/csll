@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using qy.CrossPlatformInput;
+using QY.CrossPlatformInput;
 using UnityEngine;
 using UnityEngine.EventSystems;
 

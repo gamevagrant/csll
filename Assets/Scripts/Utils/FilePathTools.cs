@@ -49,16 +49,14 @@ public class FilePathTools
 			string path;
 			if(GameSetting.isUseLocalAssetBundle)
 			{
+                #if UNITY_ANDROID
+                path = exportRoot;
+                #elif UNITY_IPHONE
+                path = "file://" + exportRoot;
+                #else
+                path = "file://"+exportRoot;
+                #endif
 
-				#if UNITY_IPHONE 
-				path = "file://" + exportRoot;
-				#elif UNITY_ANDROID
-				path = exportRoot;
-				#else
-				path = "file://"+exportRoot;
-				#endif
-				
-				
 			}else
 			{
 
@@ -85,7 +83,7 @@ public class FilePathTools
 
     public static string GetDownLoadMainVersonPath(string name)
     {
-        return exportRoot + "/" + targetName;
+        return downLoadRootPath + "/" + targetName;
     }
 
     //根据一个绝对路径 获得这个资源的assetbundle name

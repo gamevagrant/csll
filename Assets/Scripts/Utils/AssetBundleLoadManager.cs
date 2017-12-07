@@ -12,16 +12,6 @@ using Object = UnityEngine.Object;
 /// </summary>
 public class AssetBundleLoadManager : MonoBehaviour {
 
-#if UNITY_EDITOR || UNITY_STANDALONE_WIN
-    //string prefix = "file:///";
-    string prefix = "";
-#elif UNITY_IPHONE
-    //string prefix = "file://";
-    string prefix = "";
-#else
-    string prefix = "";
-#endif
-
     private const int RECOVERY_TIME = 180;//这个时间后没有被请求就自动销毁
     private Dictionary<string, CacheObject> dicCacheObject = new Dictionary<string, CacheObject>();
     private Queue<Action> queue = new Queue<Action>();
@@ -138,8 +128,8 @@ public class AssetBundleLoadManager : MonoBehaviour {
             if (manifest == null)
             {
                 string manifestPath = FilePathTools.manifestPath;
-                Debug.Log("---start load Manifest " + prefix + manifestPath);
-                createRequest = AssetBundle.LoadFromFileAsync(prefix + manifestPath);
+                Debug.Log("---start load Manifest " + manifestPath);
+                createRequest = AssetBundle.LoadFromFileAsync( manifestPath);
                 yield return createRequest;
                 if (createRequest.isDone)
                 {
@@ -168,7 +158,7 @@ public class AssetBundleLoadManager : MonoBehaviour {
                 string dependencyPath = FilePathTools.root + "/" + fileName;
                 Debug.Log("---开始加载依赖资源:" + dependencyPath);
 
-                createRequest = AssetBundle.LoadFromFileAsync(prefix + dependencyPath);
+                createRequest = AssetBundle.LoadFromFileAsync( dependencyPath);
                 yield return createRequest;
                 if (createRequest.isDone)
                 {
@@ -182,9 +172,9 @@ public class AssetBundleLoadManager : MonoBehaviour {
             }
             //4加载目标资源
             Object obj = null;
-            Debug.Log("---开始加载目标资源:" + prefix + path);
+            Debug.Log("---开始加载目标资源:" + path);
             //www = new WWW(prefix + path);
-            createRequest = AssetBundle.LoadFromFileAsync(prefix + path);
+            createRequest = AssetBundle.LoadFromFileAsync(path);
             yield return createRequest;
             if (createRequest.isDone)
             {
@@ -194,7 +184,7 @@ public class AssetBundleLoadManager : MonoBehaviour {
 
                 addCache(path,obj);
                 //5释放目标资源
-                Debug.Log("---释放目标资源:" + prefix + path);
+                Debug.Log("---释放目标资源:" + path);
                 assetBundle.Unload(false);
                 assetBundle = null;
             }

@@ -10,14 +10,6 @@ using Object = UnityEngine.Object;
 public class AssetLoadManager:MonoBehaviour
 {
 
-#if UNITY_EDITOR || UNITY_STANDALONE_WIN
-	string prefix = "file:///";
-#elif UNITY_IPHONE
-	string prefix = "";
-#else
-	string prefix = "file://";
-#endif
-
 	private Dictionary<string, object> cache = new Dictionary<string, object>();
  	private Queue<Action> queue = new Queue<Action>();
 	private bool isLoading = false;
@@ -57,14 +49,6 @@ public class AssetLoadManager:MonoBehaviour
 	public void LoadAsset<T>(string url,Action<T> callback ,bool isCache = true)
     {
 		string path = url;
-		if (path.IndexOf(@"http://") == -1 && path.IndexOf(@"https://") == -1)
-		{
-			if (path.IndexOf(@"file://") == -1)
-			{
-				path = prefix + path;
-
-			}
-		}
 
 		path = FilePathTools.normalizePath(path);
 		object res;
@@ -92,17 +76,8 @@ public class AssetLoadManager:MonoBehaviour
         }
         isLoading = true;
 		//string path = CacheManager.instance.getLocalPath(url);
-        string path="";
-
-        if (!string.IsNullOrEmpty(path))
-		{
-			path = prefix + path;
-		}
-		else
-		{
-			path = url;
-		}
-		Debug.Log("==开始加载==:" + path);
+        string path= url;
+		Debug.Log("==开始使用WWW下载==:" + path);
 
 		path = FilePathTools.normalizePath(path);
 		WWW www = new WWW(path);
@@ -128,27 +103,12 @@ public class AssetLoadManager:MonoBehaviour
             {
                 res = www.bytes;
             }
-            /*
-            if (typeof(T) == typeof(Texture2D))
-			{
-				Texture2D tex = new Texture2D(4, 4);
-				tex.LoadImage(www.bytes);
-				res = tex;
-			}
-			else if (typeof(T) == typeof(AudioClip))
-			{
-				res = www.GetAudioClip();
-			}
-			else
-			{
-				res = www.bytes;
-			}
-			if (iscache && !cache.ContainsKey(url))
+
+            if (iscache && !cache.ContainsKey(url))
 			{
 				cache.Add(url, res);
 			}
-				*/
-			//CacheManager.instance.addCache(url, www.bytes);
+				
 			callback((T)res);
 			
 		}

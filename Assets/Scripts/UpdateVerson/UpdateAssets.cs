@@ -50,7 +50,7 @@ public class UpdateAssets {
             newManifest = manifestAB.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
             manifestAB.Unload(false);
             UpdateFiles();
-        });
+        },false);
     }
 
 
@@ -79,7 +79,7 @@ public class UpdateAssets {
                 {
                     onComplate();
                 }
-            });
+            },false);
         }
 
     }

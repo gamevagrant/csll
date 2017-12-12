@@ -44,6 +44,11 @@ public class UIShopWindow : UIWindowBase {
 
     private void Awake()
     {
+		if(GameMainManager.instance.iap==null)
+		{
+			GameMainManager.instance.iap = new IAPManager ();
+		}
+
         energyToggle.onValueChanged.AddListener(OnEnergyToggleValueChange);
         goldToggle.onValueChanged.AddListener(OnGoldToggleValueChange);
         propsToggle.onValueChanged.AddListener(OnPropsToggleValueChange);

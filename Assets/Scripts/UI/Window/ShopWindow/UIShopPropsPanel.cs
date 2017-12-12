@@ -44,4 +44,9 @@ public class UIShopPropsPanel : MonoBehaviour {
         }
         scrollView.setDatas(propsList);
     }
+
+	public void OnClickBuyVIPBtn()
+	{
+
+	}
 }

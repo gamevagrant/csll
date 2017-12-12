@@ -11,7 +11,7 @@ public class BuildAssetBundles {
 	#if UNITY_ANDROID
 	static BuildTarget buildTarget = BuildTarget.Android;
 	#elif UNITY_IPHONE
-	static BuildTarget buildTarget = BuildTarget.iPhone;
+	static BuildTarget buildTarget = BuildTarget.iOS;
 	#else
 	static BuildTarget buildTarget = BuildTarget.StandaloneWindows64;
 	#endif

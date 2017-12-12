@@ -29,6 +29,6 @@ public class UIShopItem : BaseItemView
 
     public void OnClickBuyBtn()
     {
-
+		GameMainManager.instance.iap.Purchase("gold_400k");
     }
 }

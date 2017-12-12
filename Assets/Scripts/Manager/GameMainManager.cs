@@ -24,6 +24,7 @@ public class GameMainManager {
     public IWebSocketMsgManager websocketMsgManager;
     public IOpenPlatform open;
     public GameModel model;
+	public IAPManager iap;
     public MonoBehaviour mono;//全局脚本，可以使用monobehaviour方法
 
     public GameMainManager()

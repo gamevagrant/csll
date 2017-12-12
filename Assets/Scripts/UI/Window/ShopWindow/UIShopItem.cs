@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Purchasing;
 public class UIShopItem : BaseItemView
 {
     public TextMeshProUGUI countText;
@@ -22,10 +23,12 @@ public class UIShopItem : BaseItemView
             //countText.fontSize = 25;
             countText.text = "+" + GameUtils.GetCurrencyString(goodsData.quantity);
         }
-        priceText.text = "￥" + ((float)goodsData.price / 100).ToString();
+        //priceText.text = "￥" + ((float)goodsData.price / 100).ToString();
+        priceText.text = GameMainManager.instance.iap.GetProductWithID(goodsData.GetPurchaseID()).metadata.localizedPriceString;
         int index = Mathf.Min(sprites.Length - 1, Mathf.Max(0, int.Parse(goodsData.goodsId) % 10 - 1));
         image.sprite = sprites[index];
 
+        ProductCatalog catalog = ProductCatalog.LoadDefaultCatalog();
         
     }
 

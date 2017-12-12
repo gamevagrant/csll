@@ -66,7 +66,7 @@ public class IAPManager : IStoreListener {
 			Debug.Log ("IAP发放物品成功");
 			controller.ConfirmPendingPurchase (e.purchasedProduct);
             GameMainManager.instance.uiManager.isWaiting = false;
-            Alert.Show("购买成功");
+            Alert.Show(string.Format("购买【{0}】成功",e.purchasedProduct.metadata.localizedTitle));
         });
 
 
@@ -88,4 +88,9 @@ public class IAPManager : IStoreListener {
 		}
 
 	}
+
+    public Product GetProductWithID(string id)
+    {
+       return controller.products.WithStoreSpecificID(id);
+    }
 }

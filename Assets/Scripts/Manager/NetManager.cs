@@ -230,7 +230,7 @@ public class NetManager:INetManager
     public bool Attack(long puid,int buildIndex, Action<bool, AttackMessage> callBack)
     {
        
-        string url = MakeUrl(APIDomain, "/game/pvp/attack");
+        string url = MakeUrl(APIDomain, "game/pvp/attack");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("uid", uid);
         data.Add("token", token);
@@ -258,7 +258,7 @@ public class NetManager:INetManager
 
     public bool Steal(int idx, Action<bool, StealMessage> callBack)
     {
-        string url = MakeUrl(APIDomain, "/game/pvp/steal");
+        string url = MakeUrl(APIDomain, "game/pvp/steal");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("uid", uid);
         data.Add("token", token);
@@ -289,7 +289,7 @@ public class NetManager:INetManager
 
     public bool Enemy(Action<bool, BadGuyMessage> callBack)
     {
-        string url = MakeUrl(APIDomain, "/game/rank/enemy");
+        string url = MakeUrl(APIDomain, "game/rank/enemy");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("uid", uid);
         data.Add("token", token);
@@ -311,7 +311,7 @@ public class NetManager:INetManager
 
     public bool Vengeance(Action<bool, VengeanceMessage> callBack)
     {
-        string url = MakeUrl(APIDomain, "/game/rank/vengeance");
+        string url = MakeUrl(APIDomain, "game/rank/vengeance");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("uid", uid);
         data.Add("token", token);
@@ -334,7 +334,7 @@ public class NetManager:INetManager
 
     public bool Show(long fid, Action<bool, ShowMessage> callBack)
     {
-        string url = MakeUrl(APIDomain, "/game/island/show");
+        string url = MakeUrl(APIDomain, "game/island/show");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("fid", fid);
         data.Add("uid", uid);
@@ -357,7 +357,7 @@ public class NetManager:INetManager
 
     public bool Friend(int needFoF, Action<bool, FriendMessage> callBack)
     {
-        string url = MakeUrl(APIDomain, "/game/rank/friend");
+        string url = MakeUrl(APIDomain, "game/rank/friend");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("needFoF", needFoF);
         data.Add("uid", uid);
@@ -381,7 +381,7 @@ public class NetManager:INetManager
 
     public bool AgreeAddFriend(long friendUid, Action<bool, AgreeAddFriendMessage> callBack)
     {
-        string url = MakeUrl(APIDomain, "/game/rank/agreeAddFriend");
+        string url = MakeUrl(APIDomain, "game/rank/agreeAddFriend");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("friendUid", friendUid);
         data.Add("uid", uid);
@@ -408,7 +408,7 @@ public class NetManager:INetManager
 
     public bool AgreeAddAllFriend( Action<bool, FriendMessage> callBack)
     {
-        string url = MakeUrl(APIDomain, "/game/rank/AddAllFriend");
+        string url = MakeUrl(APIDomain, "game/rank/AddAllFriend");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("uid", uid);
         data.Add("token", token);
@@ -433,7 +433,7 @@ public class NetManager:INetManager
 
     public bool AddFriend(string FriendshipCode, Action<bool, FriendMessage> callBack)
     {
-        string url = MakeUrl(APIDomain, "/game/rank/addFriend");
+        string url = MakeUrl(APIDomain, "game/rank/addFriend");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("FriendshipCode", FriendshipCode);
         data.Add("uid", uid);
@@ -460,7 +460,7 @@ public class NetManager:INetManager
 
     public bool RemoveFriend(long friendUid, Action<bool, FriendMessage> callBack)
     {
-        string url = MakeUrl(APIDomain, "/game/rank/removeFriend");
+        string url = MakeUrl(APIDomain, "game/rank/removeFriend");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("friendUid", friendUid);
         data.Add("uid", uid);
@@ -487,7 +487,7 @@ public class NetManager:INetManager
 
     public bool RemoveAllFriend(Action<bool, FriendMessage> callBack)
     {
-        string url = MakeUrl(APIDomain, "/game/rank/removeAllFriend");
+        string url = MakeUrl(APIDomain, "game/rank/removeAllFriend");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("uid", uid);
         data.Add("token", token);
@@ -512,7 +512,7 @@ public class NetManager:INetManager
 
     public bool SendEnergy(long friendUid, Action<bool, SendEnergyMessage> callBack)
     {
-        string url = MakeUrl(APIDomain, "/game/rank/send-to");
+        string url = MakeUrl(APIDomain, "game/rank/send-to");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("friendUid", friendUid);
         data.Add("uid", uid);
@@ -545,7 +545,7 @@ public class NetManager:INetManager
 
     public bool ReceiveEnergy(long friendUid, Action<bool, ReceiveEnergyMessage> callBack)
     {
-        string url = MakeUrl(APIDomain, "/game/rank/receive-from");
+        string url = MakeUrl(APIDomain, "game/rank/receive-from");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("friendUid", friendUid);
         data.Add("uid", uid);
@@ -589,7 +589,7 @@ public class NetManager:INetManager
 
     public bool ShopList(Action<bool, ShopMessage> callBack)
     {
-        string url = MakeUrl(APIDomain, "/game/shop/list");
+        string url = MakeUrl(APIDomain, "game/shop/list");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("uid", uid);
         data.Add("token", token);
@@ -611,7 +611,7 @@ public class NetManager:INetManager
 
     public bool AllRank(Action<bool, AllRankMessage> callBack)
     {
-        string url = MakeUrl(APIDomain, "/game/rank/all-rank");
+        string url = MakeUrl(APIDomain, "game/rank/all-rank");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("uid", uid);
         data.Add("token", token);
@@ -633,7 +633,7 @@ public class NetManager:INetManager
 
     public bool FriendRank(Action<bool, SendEnergyMessage> callBack)
     {
-        string url = MakeUrl(APIDomain, "/game/rank/friends-rank");
+        string url = MakeUrl(APIDomain, "game/rank/friends-rank");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("uid", uid);
         data.Add("token", token);
@@ -655,7 +655,7 @@ public class NetManager:INetManager
 
     public bool GetMap(Action<bool, GetMapMessage> callBack)
     {
-        string url = MakeUrl(APIDomain, "/game/map/get-map");
+        string url = MakeUrl(APIDomain, "game/map/get-map");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("uid", uid);
         data.Add("token", token);
@@ -676,7 +676,7 @@ public class NetManager:INetManager
 
     public bool BuyMiner(int islanID,Action<bool, BuyMinerMessage> callBack)
     {
-        string url = MakeUrl(APIDomain, "/game/map/buy-miner");
+        string url = MakeUrl(APIDomain, "game/map/buy-miner");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("island", islanID);
         data.Add("uid", uid);
@@ -706,7 +706,7 @@ public class NetManager:INetManager
 
     public bool ReapMine(Action<bool, BuyMinerMessage> callBack)
     {
-        string url = MakeUrl(APIDomain, "/game/map/reap-mine");
+        string url = MakeUrl(APIDomain, "game/map/reap-mine");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("uid", uid);
         data.Add("token", token);
@@ -733,7 +733,7 @@ public class NetManager:INetManager
 
     public bool Wanted(long wid,Action<bool, WantedMessage> callBack)
     {
-        string url = MakeUrl(APIDomain, "/game/pvp/wanted");
+        string url = MakeUrl(APIDomain, "game/pvp/wanted");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("wid", wid);
         data.Add("uid", uid);
@@ -757,7 +757,7 @@ public class NetManager:INetManager
 
     public bool Message(Action<bool, MessageMailMessage> callBack)
     {
-        string url = MakeUrl(APIDomain, "/game/message");
+        string url = MakeUrl(APIDomain, "game/message");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("uid", uid);
         data.Add("token", token);
@@ -780,7 +780,7 @@ public class NetManager:INetManager
 
     public bool GetReward(int index,Action<bool, GetRewardMessage> callBack)
     {
-        string url = MakeUrl(APIDomain, "/game/mail/getReward");
+        string url = MakeUrl(APIDomain, "game/mail/getReward");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("idx", index);
         data.Add("uid", uid);

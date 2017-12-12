@@ -4,6 +4,7 @@ public interface IUIManager {
 
     UIWindowBase curWindow{ get; }
     bool isEnable { get; }
+    bool isWaiting { get; set; }
 
     void OpenWindow(UISettings.UIWindowID id, bool needTransform = true, System.Action onComplate = null, params object[] data);
     void OpenWindow(UISettings.UIWindowID id,bool needTransform=true,params object[] data);

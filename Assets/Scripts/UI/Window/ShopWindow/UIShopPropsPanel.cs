@@ -13,6 +13,7 @@ public class UIShopPropsPanel : MonoBehaviour {
     public TextMeshProUGUI contentText;
     public DynamicScrollView scrollView;
 
+    private GoodsData goodsVip;
     //private GoodsData[] goodsList;
     public void SetData(GoodsData[] goodsList)
     {
@@ -35,6 +36,8 @@ public class UIShopPropsPanel : MonoBehaviour {
                     goods.extra["dailyEnergy"].ToString(),
                     goods.extra["hourEnergy"].ToString(),
                     goods.extra["recoverEnergy"].ToString());
+
+                goodsVip = goods;
             }
             else if(goods.type == "props")
             {
@@ -47,6 +50,6 @@ public class UIShopPropsPanel : MonoBehaviour {
 
 	public void OnClickBuyVIPBtn()
 	{
-
-	}
+        GameMainManager.instance.iap.Purchase(goodsVip.GetPurchaseID());
+    }
 }

@@ -9,7 +9,7 @@ using System;
 /// <summary>
 /// UI管理类 
 /// </summary>
-public class UIManager : MonoBehaviour,IUIManager {
+public class UIManager : MonoBehaviour,IUIManager  {
 
     [SerializeField]
     private Transform FixedRoot;//固定UI根节点
@@ -22,14 +22,15 @@ public class UIManager : MonoBehaviour,IUIManager {
 
     private Dictionary<UISettings.UIWindowID, UIWindowBase> allWindows;
     private Dictionary<UISettings.UIWindowID, UIWindowBase> showingWindows;
+    private Dictionary<UISettings.UIWindowID, bool> windowsState;//窗口加载完的状态 时打开还是关闭 避免窗口还没加载完就关闭但是窗口仍是开着的情况
 
 
     protected Stack<UIWindowBase> backSequence;//导航窗口的堆栈
 
     private UIWindowData curNavWindow;//当前导航窗口
+    private UIWindowBase curPopUpWindow;//当前打开的窗口
     private GameObject popupCollider;//模态窗口的遮挡面板
     private GameObject windowCollider;//全局遮挡面板
-    private UIWindowBase curPopUpWindow;//当前打开的窗口
 
     private int colliderNum = 0;//打开遮挡面板的计数
     private Queue<Action> queue = new Queue<Action>();
@@ -40,6 +41,32 @@ public class UIManager : MonoBehaviour,IUIManager {
         get
         {
             return colliderNum == 0;
+        }
+    }
+
+    public bool isWaiting
+    {
+        get
+        {
+            if(showingWindows.ContainsKey(UISettings.UIWindowID.UIWaitingWindow))
+            {
+                return true;
+            }else
+            {
+                return false;
+            }
+            
+        }
+        set
+        {
+            if(value)
+            {
+                OpenWindow(UISettings.UIWindowID.UIWaitingWindow);
+            }else
+            {
+                CloseWindow(UISettings.UIWindowID.UIWaitingWindow);
+            }
+            
         }
     }
 
@@ -90,6 +117,7 @@ public class UIManager : MonoBehaviour,IUIManager {
             windowCollider.SetActive(colliderNum>0);
         }
     }
+
 
 
     private void Awake()
@@ -159,6 +187,7 @@ public class UIManager : MonoBehaviour,IUIManager {
     {
         allWindows = new Dictionary<UISettings.UIWindowID, UIWindowBase>();
         showingWindows = new Dictionary<UISettings.UIWindowID, UIWindowBase>();
+        windowsState = new Dictionary<UISettings.UIWindowID, bool>();
         backSequence = new Stack<UIWindowBase>();
 
         UIWindowBase[] windows = transform.GetComponentsInChildren<UIWindowBase>(true);
@@ -198,6 +227,7 @@ public class UIManager : MonoBehaviour,IUIManager {
     }
     public void OpenWindow(UISettings.UIWindowID id,bool needTransform = true,System.Action onComplate = null,params object[] data)
     {
+        SetWindowState(id, true);
         queue.Enqueue(() =>
         {
             StartOpenWindow(id, needTransform, onComplate, data);
@@ -211,6 +241,7 @@ public class UIManager : MonoBehaviour,IUIManager {
 
     public void CloseWindow(UISettings.UIWindowID id,bool needTransform = true, System.Action onComplate = null)
     {
+        SetWindowState(id, false);
         UIWindowBase window;
         allWindows.TryGetValue(id, out window);
         if (window != null)
@@ -324,6 +355,9 @@ public class UIManager : MonoBehaviour,IUIManager {
                 window.transform.SetSiblingIndex(NormalRoot.childCount);
                 showNavigationWindow(window);
 
+            }else if(windowdata.type == UISettings.UIWindowType.Cover)
+            {
+                window.transform.SetSiblingIndex(coverRoot.childCount);
             }
 
 
@@ -397,7 +431,14 @@ public class UIManager : MonoBehaviour,IUIManager {
         //(window.transform as RectTransform).anchoredPosition = Vector2.zero;
         window.Init();
         yield return new WaitForSeconds(0.1f);
-        StartOpenWindow(id, needTransform, onComplate, data);
+        if(windowsState[id])
+        {
+            StartOpenWindow(id, needTransform, onComplate, data);
+        }else
+        {
+            isOpening = false;
+        }
+       
     }
 
 
@@ -433,6 +474,18 @@ public class UIManager : MonoBehaviour,IUIManager {
                 backWindow.ShowWindow();
 
             }
+        }
+    }
+
+    private void SetWindowState(UISettings.UIWindowID id ,bool state)
+    {
+        if (!windowsState.ContainsKey(id))
+        {
+            windowsState.Add(id, state);
+        }
+        else
+        {
+            windowsState[id] = state;
         }
     }
 }

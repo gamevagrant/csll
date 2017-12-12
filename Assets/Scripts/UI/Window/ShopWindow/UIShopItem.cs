@@ -25,10 +25,14 @@ public class UIShopItem : BaseItemView
         priceText.text = "￥" + ((float)goodsData.price / 100).ToString();
         int index = Mathf.Min(sprites.Length - 1, Mathf.Max(0, int.Parse(goodsData.goodsId) % 10 - 1));
         image.sprite = sprites[index];
+
+        
     }
 
     public void OnClickBuyBtn()
     {
-		GameMainManager.instance.iap.Purchase("gold_400k");
+		GameMainManager.instance.iap.Purchase(goodsData.GetPurchaseID());
     }
+
+
 }

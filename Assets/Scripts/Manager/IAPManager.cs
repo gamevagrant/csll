@@ -10,13 +10,30 @@ public class IAPManager : IStoreListener {
 
 	public IAPManager()
 	{
-		ConfigurationBuilder builder = ConfigurationBuilder.Instance (StandardPurchasingModule.Instance ());
-		builder.AddProduct("gold_400k", ProductType.Consumable);
-		if (builder.Configure<IAppleConfiguration> ().canMakePayments) {
+        ConfigurationBuilder builder = ConfigurationBuilder.Instance (StandardPurchasingModule.Instance ());
+        ProductCatalog catalog = ProductCatalog.LoadDefaultCatalog();
+        foreach(ProductCatalogItem item in catalog.allProducts)
+        {
+            if(item.allStoreIDs.Count>0)
+            {
+                IDs ids = new IDs();
+                foreach(StoreID storeID in item.allStoreIDs)
+                {
+                    ids.Add(storeID.id, storeID.store);
+                }
+                builder.AddProduct(item.id, item.type,ids);
+            }else
+            {
+                builder.AddProduct(item.id, item.type);
+            }
+            
+        }
+
+        if (builder.Configure<IAppleConfiguration> ().canMakePayments) {
 			UnityPurchasing.Initialize (this, builder);
 		} else {
-			
-			Debug.Log ("当前设备不允许支付");
+            Alert.Show("当前设备不允许支付，请启用内购功能");
+            Debug.Log ("当前设备不允许支付");
 		}
 
 	}
@@ -36,17 +53,21 @@ public class IAPManager : IStoreListener {
 	public void OnPurchaseFailed (Product i, PurchaseFailureReason p)
 	{
 		Debug.Log ("IAP支付失败:"+p);
-	}
+        Alert.Show("支付失败：" + p);
+        GameMainManager.instance.uiManager.isWaiting = false;
+    }
 
 	public PurchaseProcessingResult ProcessPurchase (PurchaseEventArgs e)
 	{
 		Debug.Log ("IAP支付成功:"+e.purchasedProduct.metadata.localizedTitle);
 		Debug.Log (string.Format ("交易id：{0} | 收据：{1}", e.purchasedProduct.transactionID, e.purchasedProduct.receipt));
 
-		GameMainManager.instance.netManager.ShopList ((ret,data) => {
+		GameMainManager.instance.netManager.GetInviteProgress((ret,data) => {
 			Debug.Log ("IAP发放物品成功");
 			controller.ConfirmPendingPurchase (e.purchasedProduct);
-		});
+            GameMainManager.instance.uiManager.isWaiting = false;
+            Alert.Show("购买成功");
+        });
 
 
 		return PurchaseProcessingResult.Pending;
@@ -55,14 +76,15 @@ public class IAPManager : IStoreListener {
 
 	public void Purchase(string productID)
 	{
+        GameMainManager.instance.uiManager.isWaiting = true;
 		Debug.Log ("IAP点击购买:"+productID);
 		if (controller != null) {
 			
 			controller.InitiatePurchase (productID);
 		} else 
 		{
-
-			Debug.Log ("IAP未初始化:");
+            Alert.Show("IAP未成功初始化");
+            Debug.Log ("IAP未初始化:");
 		}
 
 	}

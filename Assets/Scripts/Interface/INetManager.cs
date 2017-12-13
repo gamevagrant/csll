@@ -215,6 +215,9 @@ public interface INetManager
     /// {"errcode":0,"errmsg":"send success","data":{"energy":646,"money":315947502,"recall_limit_reward":false,"recall_reward_num_limit_daily":2,"recall_times_daily":1,"reward_list":[{"type":"energy","num":5,"name":""}]}}
     bool RecallFriends(int limit, string[] to, Action<bool, RecallFriendsMessage> callBack);
 
+    //------------支付-------------------
+    bool Purchase(string store, string transactionID, string payload, string orderID, Action<bool, NetMessage> callBack);
+    bool GetOrder(string itemId, int itemNum, Action<bool, OrderMessage> callBack);
 
 }
 

@@ -92,6 +92,35 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
 
     private void PayAction(MessageResponseData msg)
     {
+        //{"itemId": Item_id, "goods": [{"type": itemType, "count": count_extra, "num": count}]}
+        //itemType: energy, money, props
+        //count: 单件商品面值，比如400000金币、10能量
+        //num：购买数量
+        Debug.Log("购买发放物品："+ LitJson.JsonMapper.ToJson(msg.extra));
+        for (int i = 0;i< msg.extra["goods"].Count;i++)
+        {
+            LitJson.JsonData jd = msg.extra["goods"][i];
+            string type = jd["type"].ToString();
+            int value = (int)jd["count"];
+            int count = (int)jd["num"];
+            switch (type)
+            {
+                case "energy":
+                    GameMainManager.instance.model.userData.energy += value * count;
+                    break;
+                case "money":
+                    GameMainManager.instance.model.userData.money += value * count;
+                    break;
+                case "props"://通缉令
+                    GameMainManager.instance.model.userData.wantedCount += count;
+                    break;
+                case "vip":
+                    GameMainManager.instance.model.userData.isVip = true;
+                    GameMainManager.instance.model.userData.vip_days += value * count;
+                    break;
+            }
+        }
+        
 
     }
 

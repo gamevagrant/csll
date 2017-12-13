@@ -11,7 +11,7 @@ public class NetManager:INetManager
         get
         {
             if (GameSetting.isDebug)
-                return GameSetting.serverPathTest;
+                return GameSetting.serverPathDevelop;
             return GameSetting.serverPath;
         }
     }
@@ -48,11 +48,17 @@ public class NetManager:INetManager
 
     private void ConnectWebSocket(long uid)
     {
-        WebSocketProxy wsp;
-        //wsp = new WebSocketProxy(string.Format("ws://10.0.8.50:8080/ws/conn?uid={0}",uid.ToString()));
-        wsp = new WebSocketProxy(string.Format(GameMainManager.instance.model.userData.broadcast, uid.ToString()));
+        string websocketPath;
+        if (GameSetting.isDebug)
+            websocketPath = GameSetting.websocketPathDevelop;
+        else
+            websocketPath = GameSetting.websocketPath;
+
+        websocketPath += "?uid=" + uid.ToString();
+        Debug.Log("websocket:"+websocketPath);
+        WebSocketProxy wsp = new WebSocketProxy(websocketPath);
         wsp.onOpen += () => {
-            //wsp.send("{\"cmd\":\"info\",\"fromid\":\"1\",\"toid\":\"2\",\"content\":\"hello?\"}");
+
             Debug.Log("onOpen");
         };
         wsp.onMessage += (str) => 
@@ -982,6 +988,62 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("召回好友失败:" + res.errmsg);
+            }
+
+        });
+    }
+
+
+    //=======================支付========================
+    public bool Purchase(string store, string transactionID, string payload, string orderID, Action<bool, NetMessage> callBack)
+    {
+        string url = MakeUrl(APIDomain, "game/pay/appcallback");
+        Dictionary<string, object> data = new Dictionary<string, object>();
+
+        data.Add("store", store);
+        data.Add("transactionID", transactionID);
+        data.Add("payload", payload);
+        data.Add("orderID", orderID);
+        data.Add("uid", uid);
+        data.Add("token", token);
+        data.Add("t", time.ToString());
+
+        return HttpProxy.SendPostRequest<NetMessage>(url, data, (ret, res) =>
+        {
+            callBack(ret, res);
+            if (res.isOK)
+            {
+
+            }
+            else
+            {
+                Debug.Log("支付发放物品失败:" + res.errmsg);
+            }
+
+        });
+    }
+
+    public bool GetOrder(string itemId,int itemNum, Action<bool, OrderMessage> callBack)
+    {
+        string url = MakeUrl(APIDomain, "game/pay/order");
+        Dictionary<string, object> data = new Dictionary<string, object>();
+
+        data.Add("itemId", itemId);
+        data.Add("itemNum", itemNum);
+        data.Add("uid", uid);
+        data.Add("token", token);
+        data.Add("t", time.ToString());
+
+        return HttpProxy.SendPostRequest<OrderMessage>(url, data, (ret, res) =>
+        {
+            callBack(ret, res);
+            if (res.isOK)
+            {
+
+            }
+            else
+            {
+                Debug.Log("获取订单失败:" + res.errmsg);
             }
 
         });

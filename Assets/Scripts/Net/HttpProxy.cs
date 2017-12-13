@@ -42,8 +42,11 @@ public class HttpProxy {
             bool ret = request.State == HTTPRequestStates.Finished;
             if (!ret)
             {
-                Debug.LogErrorFormat("消息发送失败 request.State = {0} [{1}]", request.State.ToString(), url);
-            }else
+                Debug.LogErrorFormat("请求失败失败 request.State = {0} [{1}]", request.State.ToString(), url);
+                Debug.Log("正在尝试重新请求"+request.CurrentUri);
+                HTTPManager.SendRequest(request);
+            }
+            else
             {
                 string msgStr = (reponse != null && !string.IsNullOrEmpty(reponse.DataAsText)) ? reponse.DataAsText : "";
 
@@ -83,10 +86,14 @@ public class HttpProxy {
             if (!ret)
             {
                 Debug.LogErrorFormat("request.State = {0} [{1}]", request.State.ToString(), url);
-            }else
+                Debug.Log("正在尝试重新请求" + request.CurrentUri);
+                HTTPManager.SendRequest(request);
+            }
+            else
             {
                 string msgStr = (reponse != null && !string.IsNullOrEmpty(reponse.DataAsText)) ? reponse.DataAsText : "";
-                Debug.Log("<<=get=" + url + "==>>" + msgStr);
+                if (GameSetting.isDebug)
+                    Debug.Log(msgStr);
                 if (callback != null)
                 {
                     try

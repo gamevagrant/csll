@@ -39,4 +39,27 @@ public class GoodsData  {
 
         return purchaseID;
     }
+
+    public static string GetGoodsID(string purchaseID)
+    {
+        string id = "";
+        string[] list = purchaseID.Split('_');
+        if(list[0]== "energy")
+        {
+            id += "1";
+        }
+        else if (list[0] == "gold")
+        {
+            id += "2";
+        }
+        else if (list[0] == "props")
+        {
+            id += "3";
+        }
+        int index = purchaseID.LastIndexOf("item");
+        string s = purchaseID.Substring(index + 4);
+        int num = int.Parse(s);
+        id += num.ToString("D2");
+        return id;
+    }
 }

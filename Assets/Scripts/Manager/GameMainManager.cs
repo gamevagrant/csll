@@ -41,7 +41,8 @@ public class GameMainManager {
         audioManager = AudioManager.instance;
         audioManager.SetSoundPathProxy(FilePathTools.getAudioPath);
         audioManager.SetMusicPathProxy(FilePathTools.getAudioPath);
-       
+        iap = new IAPManager();
+
     }
-   
+
 }

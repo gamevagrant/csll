@@ -43,8 +43,7 @@ public class HttpProxy {
             if (!ret)
             {
                 Debug.LogErrorFormat("请求失败失败 request.State = {0} [{1}]", request.State.ToString(), url);
-                Debug.Log("正在尝试重新请求"+request.CurrentUri);
-                HTTPManager.SendRequest(request);
+                EventDispatcher.instance.DispatchEvent(new RequestErrorEvent(request, reponse));
             }
             else
             {
@@ -86,8 +85,7 @@ public class HttpProxy {
             if (!ret)
             {
                 Debug.LogErrorFormat("request.State = {0} [{1}]", request.State.ToString(), url);
-                Debug.Log("正在尝试重新请求" + request.CurrentUri);
-                HTTPManager.SendRequest(request);
+                EventDispatcher.instance.DispatchEvent(new RequestErrorEvent(request, reponse));
             }
             else
             {
@@ -124,6 +122,7 @@ public class HttpProxy {
         }
 
         HTTPRequest req = MakePostRequest<T>(url, data, callback);
+        req.Timeout = new TimeSpan(0,0,15);
         Debug.Log("正在请求："+ url);
         MarkCheck(url);
         return HTTPManager.SendRequest(req) != null;
@@ -136,12 +135,14 @@ public class HttpProxy {
             Debug.LogError("Send too fast = " + url);
             return false;
         }
-        Debug.Log("<<=send=" + url + "==>>");
         HTTPRequest req = MakeGetRequest<T>(url, callback);
 
         MarkCheck(url);
         return HTTPManager.SendRequest(req) != null;
     }
 
-
+    public static bool SendRequest(HTTPRequest req)
+    {
+        return HTTPManager.SendRequest(req) != null;
+    }
 }

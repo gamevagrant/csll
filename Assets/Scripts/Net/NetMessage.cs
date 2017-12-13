@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BestHTTP;
 
 public class NetMessage {
 
@@ -11,7 +12,9 @@ public class NetMessage {
     {
         get
         {
-            return string.IsNullOrEmpty(errmsg) && errcode==0;
+            return errcode==0;
         }
     }
+
+
 }

@@ -7,6 +7,7 @@ public class EventEnum {
     public const string LOGIN_START = "LOGIN_START";//开始登录
     public const string LOGIN_COMPLATE = "LOGIN_COMPLATE";//登录成功
     public const string LOADING_PROGRESS = "LOADING_PROGRESS";//加载进度
+    public const string REQUEST_ERROR = "REQUEST_ERROR";//请求失败
 
     public const string UPDATE_BASE_DATA = "UPDATE_BASE_DATA";//更新基础用户数据  金币 能量 通缉令
     public const string BUILD_COMPLATE = "BUILD_COMPLATE";//建造成功

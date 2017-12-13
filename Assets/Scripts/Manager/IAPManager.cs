@@ -71,6 +71,7 @@ public class IAPManager : IStoreListener {
         string payload = jd["Payload"].ToString();
 #endif
         string goodsID = GoodsData.GetGoodsID(e.purchasedProduct.definition.id);
+        Debug.Log("goodsID:"+goodsID);
         string transactionID = e.purchasedProduct.transactionID;
 
         GameMainManager.instance.netManager.GetOrder(goodsID, 1, (ret, res) =>

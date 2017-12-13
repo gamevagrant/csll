@@ -94,33 +94,34 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
     {
         //{"itemId": Item_id, "goods": [{"type": itemType, "count": count_extra, "num": count}]}
         //itemType: energy, money, props
-        //count: 单件商品面值，比如400000金币、10能量
-        //num：购买数量
+        //count: 获得物品后的 物品总量
+        //num：购买单件商品面值
         Debug.Log("购买发放物品："+ LitJson.JsonMapper.ToJson(msg.extra));
-        for (int i = 0;i< msg.extra["goods"].Count;i++)
+        RewardData[] rewards = LitJson.JsonMapper.ToObject<RewardData[]>(LitJson.JsonMapper.ToJson(msg.extra["goods"]));
+        for (int i = 0;i< rewards.Length;i++)
         {
-            LitJson.JsonData jd = msg.extra["goods"][i];
-            string type = jd["type"].ToString();
-            int value = (int)jd["count"];
-            int count = (int)jd["num"];
-            switch (type)
+            RewardData rewardData = rewards[i];
+            switch (rewardData.type)
             {
                 case "energy":
-                    GameMainManager.instance.model.userData.energy += value * count;
+                    GameMainManager.instance.model.userData.energy = (int)rewardData.count;
                     break;
                 case "money":
-                    GameMainManager.instance.model.userData.money += value * count;
+                    GameMainManager.instance.model.userData.money = rewardData.count;
                     break;
                 case "props"://通缉令
-                    GameMainManager.instance.model.userData.wantedCount += count;
+                    GameMainManager.instance.model.userData.wantedCount = (int)rewardData.count;
                     break;
                 case "vip":
                     GameMainManager.instance.model.userData.isVip = true;
-                    GameMainManager.instance.model.userData.vip_days += value * count;
+                    GameMainManager.instance.model.userData.vip_days = (int)rewardData.count;
                     break;
             }
+            GetRewardWindowData getRewardWindowData = new GetRewardWindowData();
+            getRewardWindowData.reward = rewardData;
+            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIGetRewardWindow, getRewardWindowData);
         }
-        
+       
 
     }
 

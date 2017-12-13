@@ -32,8 +32,8 @@ public class MailData {
 /// </summary>
 public class RewardData
 {
-    public string type;//energy,money
-    public int num;
+    public string type;//energy,money,vip,props
+    public int num;//物品数量
     public string name;
-    public long count;
+    public long count;//获取物品后的总物品数量
 }

@@ -858,6 +858,8 @@ public class NetManager:INetManager
     }
 
 
+
+
     public bool GetInviteProgress(Action<bool, InviteProgressMessage> callBack)
     {
         string url = MakeUrl(APIDomain, "game/friend/getinvitetimesfb");

@@ -83,7 +83,7 @@ public class IAPManager : IStoreListener {
                     Debug.Log("IAP发放物品成功");
                     controller.ConfirmPendingPurchase(e.purchasedProduct);
                    
-                    Alert.Show(string.Format("成功购买【{0}】", e.purchasedProduct.metadata.localizedTitle));
+                    //Alert.Show(string.Format("成功购买【{0}】", e.purchasedProduct.metadata.localizedTitle));
                 }
                 else
                 {

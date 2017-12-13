@@ -21,7 +21,7 @@ public class UIGetRewardWindow : UIWindowBase {
             {
                 _windowData = new UIWindowData();
                 _windowData.id = UISettings.UIWindowID.UIGetRewardWindow;
-                _windowData.type = UISettings.UIWindowType.PopUp;
+                _windowData.type = UISettings.UIWindowType.Cover;
                 _windowData.showMode = UISettings.UIWindowShowMode.DoNothing;
                 _windowData.navMode = UISettings.UIWindowNavigationMode.IgnoreNavigation;
                 _windowData.colliderMode = UISettings.UIWindowColliderMode.Normal;
@@ -40,12 +40,21 @@ public class UIGetRewardWindow : UIWindowBase {
             image.sprite = sprites[0];
             text.text = "金币 x" + reward.num.ToString();
         }
-        else 
+        else if (reward.type == "energy")
         {
             image.sprite = sprites[1];
             text.text = "能量 x" + reward.num.ToString();
+        }else if(reward.type == "vip")
+        {
+            image.sprite = sprites[2];
+            text.text = "vip" + reward.num.ToString();
         }
- 
+        else if(reward.type == "props")
+        {
+            image.sprite = sprites[3];
+            text.text = "通缉令 x" + reward.num.ToString();
+        }
+        image.SetNativeSize();
     }
 
     protected override void EnterAnimation(Action onComplete)

@@ -70,26 +70,23 @@ public class AccountManager {
     public void LoginGuest(string name = "")
     {
         Debug.Log("游客登录");
-        SimpleUserData guest;
-        string guestJson = PlayerPrefs.GetString(PlayerPrefsKeyEnum.LOGGED_GUEST);
-        if (!string.IsNullOrEmpty(guestJson))
-        {
-            guest = SimpleUserData.Create(guestJson);
-        }
-        else
+        SimpleUserData guest = LocalDatasManager.loggedGuest;
+        if (guest == null)
         {
             guest = new SimpleUserData();
             guest.uuid = Guid.NewGuid().ToString("N");
-            if(string.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(name))
             {
                 guest.name = "游客_" + UnityEngine.Random.Range(0, 10000).ToString();
-            }else
+            }
+            else
             {
                 guest.name = name;
             }
-            
-            PlayerPrefs.SetString(PlayerPrefsKeyEnum.LOGGED_GUEST, guest.ToJson());
+
+            LocalDatasManager.loggedGuest = guest;
         }
+       
 
         LoginGameServer(guest.uuid,guest.name);
     }
@@ -105,26 +102,19 @@ public class AccountManager {
                 {
                     if(res.errcode == -1)//未绑定
                     {
-                        string json = PlayerPrefs.GetString(PlayerPrefsKeyEnum.LOGGED_GUEST);
-                        if(string.IsNullOrEmpty(json))
+                        SimpleUserData user = LocalDatasManager.loggedGuest;
+                        if (user == null)
                         {
                             isSuccess(false);
                         }else
                         {
-                            SimpleUserData user = LitJson.JsonMapper.ToObject<SimpleUserData>(json);
-                            if(user == null)
+                            GameMainManager.instance.netManager.BindAccount(user.uuid, open.token.tokenString, (rt, rs) =>
                             {
-                                isSuccess(false);
-                            }else
-                            {
-                                GameMainManager.instance.netManager.BindAccount(user.uuid, open.token.tokenString, (rt, rs) =>
+                                if (rs.isOK)
                                 {
-                                    if(rs.isOK)
-                                    {
-                                        isSuccess(true);
-                                    }
-                                });
-                            }
+                                    isSuccess(true);
+                                }
+                            });
                         }
                     }else
                     {
@@ -162,7 +152,7 @@ public class AccountManager {
                 SimpleUserData simpleUser = new SimpleUserData();
                 simpleUser.name = res.data.name;
                 simpleUser.level = res.data.crowns;
-                PlayerPrefs.SetString(PlayerPrefsKeyEnum.LOGGED_ACCOUNT, simpleUser.ToJson());
+                LocalDatasManager.loggedAccount = simpleUser;
             }
 
             OnLoginComplateHandle(res);

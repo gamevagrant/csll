@@ -100,10 +100,9 @@ public class LoginPanel : MonoBehaviour {
         facebookBtn.SetActive(false);
         guesBtn.SetActive(false);
 
-        string accountJson = PlayerPrefs.GetString(PlayerPrefsKeyEnum.LOGGED_ACCOUNT);
-        if (!string.IsNullOrEmpty(accountJson))
+        SimpleUserData accountData = LocalDatasManager.loggedAccount;
+        if (accountData!=null)
         {
-            SimpleUserData accountData = SimpleUserData.Create(accountJson);
             loginTipPanel.SetActive(true);
             userNameText.text = string.Format("姓名：{0}", accountData.name);
             levelText.text = string.Format("等级：{0}", accountData.level);

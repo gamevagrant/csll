@@ -68,9 +68,9 @@ public class UIBuildingWindow : UIWindowBase {
         else
         {
             islandID = userData.islandId;
-            if (islandID > GameMainManager.instance.model.islandConfig.islandNames.Length)
+            if (islandID > GameMainManager.instance.configManager.islandConfig.islandNames.Length)
             {
-                islandID = islandID % (GameMainManager.instance.model.islandConfig.islandNames.Length + 1) + 1;
+                islandID = islandID % (GameMainManager.instance.configManager.islandConfig.islandNames.Length + 1) + 1;
             }
             string name = "CityThumbnail_" + islandID.ToString();
             string path = FilePathTools.getSpriteAtlasPath(name);

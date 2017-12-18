@@ -10,18 +10,25 @@ public class UIInvitePanel : MonoBehaviour {
     public AutoScrollView scrollView;
     public Slider slider;
     public TextMeshProUGUI sliderText;
+    public QY.UI.Toggle allSelectToggle;
 
     private List<InviteItemData> invitableList;
+    private Dictionary<string, string> invitedFriends;
 
     public void Start()
     {
         slider.value = 0;
         sliderText.text = "";
-        Refresh();
     }
 
     public void Refresh()
     {
+        invitedFriends = LocalDatasManager.invitedFriends;
+        if(invitedFriends == null)
+        {
+            invitedFriends = new Dictionary<string, string>();
+        }
+
         GameMainManager.instance.netManager.GetInviteProgress((ret, res) =>
         {
             if(res.isOK)
@@ -39,16 +46,32 @@ public class UIInvitePanel : MonoBehaviour {
 
         GameMainManager.instance.open.GetInvitableFriends((res) => {
             invitableList = new List<InviteItemData>();
+
+           /* //假数据
+            res = new InvitableFriendsData[10];
+            for(int i = 0;i<res.Length;i++)
+            {
+                res[i] = new InvitableFriendsData();
+                res[i].name = "游客7" + i.ToString();
+                res[i].id = i.ToString();
+            }*/
+            
             for (int i = 0; i < res.Length; i++)
             {
                 InvitableFriendsData data = res[i];
-                InviteItemData itemData = new InviteItemData();
-                itemData.id = data.id;
-                itemData.name = data.name;
-                itemData.isSelected = true;
+                if(!invitedFriends.ContainsKey(data.name))
+                {
 
-                invitableList.Add(itemData);
+                    InviteItemData itemData = new InviteItemData();
+                    itemData.id = data.id;
+                    itemData.name = data.name;
+                    itemData.isSelected = allSelectToggle.isOn;
+
+                    invitableList.Add(itemData);
+                }
+                
             }
+
             scrollView.SetData(invitableList);
             if(sliderText.text == "")
             {
@@ -57,6 +80,7 @@ public class UIInvitePanel : MonoBehaviour {
             GameMainManager.instance.netManager.SetInviteProgress(invitableList.Count, (ret, rs) =>{});
         });
     }
+
 
     private void SetProgress(int num,int maxNum)
     {
@@ -71,10 +95,31 @@ public class UIInvitePanel : MonoBehaviour {
 
     public void OnClickSelectAllBtn(bool isSelected)
     {
-        foreach(InviteItemData itemData in invitableList)
+        if(invitableList!=null)
         {
-            itemData.isSelected = isSelected;
+            foreach (InviteItemData itemData in invitableList)
+            {
+                itemData.isSelected = isSelected;
+            }
+            scrollView.SetData(invitableList);
         }
+       
+    }
+
+    private void RemoveItems(List<string> ids)
+    {
+        List<InviteItemData> list = new List<InviteItemData>(invitableList);
+        for (int i = 0; i < ids.Count; i++)
+        {
+            foreach (InviteItemData item in list)
+            {
+                if (item.id == ids[i])
+                {
+                    invitableList.Remove(item);
+                }
+            }
+        }
+
         scrollView.SetData(invitableList);
     }
 
@@ -86,17 +131,23 @@ public class UIInvitePanel : MonoBehaviour {
             if(itemData.isSelected)
             {
                 list.Add(itemData.id);
+                invitedFriends.Add(itemData.name, itemData.id);
             }
         }
         if(list.Count>0)
         {
+            LocalDatasManager.invitedFriends = invitedFriends;
+            RemoveItems(list);
+            //Refresh();
+
             GameMainManager.instance.open.Invite("快来和我一起玩财神来了", 
                 list.ToArray(), 
                 "您正在邀请的好友",
                 (response) => {
                     GameMainManager.instance.netManager.InviteFriends(response.request, response.to.Split(','), (ret, res) =>
                     {
-                        Refresh();
+
+                        
                     });
                 });
         }

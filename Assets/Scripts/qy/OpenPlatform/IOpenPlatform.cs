@@ -3,7 +3,7 @@ namespace QY.Open
 {
     public interface IOpenPlatform
     {
-        AccessToken Token { get; }
+        AccessToken token { get; }
         /// <summary>
         /// 判断是否已经登录
         /// </summary>

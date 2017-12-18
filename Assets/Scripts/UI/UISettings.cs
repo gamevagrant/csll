@@ -30,6 +30,8 @@ public class UISettings  {
         UICloudCover,
         UIWaitingWindow,
         UIInviteWindow,
+        UIFacebookTipsWindow,
+        UISettingWindow,
 
     }
 
@@ -94,6 +96,8 @@ public class UISettings  {
         {UIWindowID.UICloudCover,"UICloudCover"},
         {UIWindowID.UIWaitingWindow,"UIWaitingWindow"},
         {UIWindowID.UIInviteWindow,"UIInviteWindow"},
+        {UIWindowID.UIFacebookTipsWindow,"UIFacebookTipsWindow"},
+        {UIWindowID.UISettingWindow,"UISettingWindow"},
     };
 
 

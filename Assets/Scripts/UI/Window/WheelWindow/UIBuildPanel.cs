@@ -72,7 +72,7 @@ public class UIBuildPanel : MonoBehaviour {
         //this.islandID = islandID;
         islandFactory.UpdateCityData(user.islandId, user.buildings);
         
-        cityName.text = GameMainManager.instance.model.islandConfig.GetIslandName(user.islandId);
+        cityName.text = GameMainManager.instance.configManager.islandConfig.GetIslandName(user.islandId);
 
         this.onUpgrading = onUpgrading;
     }
@@ -216,7 +216,7 @@ public class UIBuildPanel : MonoBehaviour {
         sq.Append((panel.transform as RectTransform).DOAnchorPos(new Vector2(-800, 0), 1f).SetEase(Ease.InBack));
         sq.AppendCallback(() =>
         {
-            cityName.text = GameMainManager.instance.model.islandConfig.GetIslandName(user.islandId);
+            cityName.text = GameMainManager.instance.configManager.islandConfig.GetIslandName(user.islandId);
             islandFactory.UpdateCityData(user.islandId, user.buildings);
             (panel.transform as RectTransform).anchoredPosition = new Vector2(800, 0);
         });

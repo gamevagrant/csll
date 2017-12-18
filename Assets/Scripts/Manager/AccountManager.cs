@@ -1,0 +1,236 @@
+﻿using UnityEngine;
+using System;
+using QY.Open;
+
+public class AccountManager {
+
+    private static AccountManager _instance;
+    public static AccountManager instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = new AccountManager();
+            }
+            return _instance;
+        }
+    }
+
+    public event System.Action onComplate;
+
+    private IOpenPlatform open;
+
+    public AccountManager()
+    {
+        open = GameMainManager.instance.open;
+    }
+
+    public bool isLoginAccount
+    {
+        get
+        {
+            return open.token != null;
+        }
+    }
+
+
+    public void Init(Action onComplate)
+    {
+        open.Init(() => {
+
+            if (open.IsLoggedIn)
+            {
+                Debug.Log("facebook已经登录:"+open.token.tokenString);
+                LoginGameServer(open.token.tokenString);
+            }else
+            {
+                onComplate();
+            }
+        });
+    }
+
+    public void LoinPlatform(Action<bool> isSuccess)
+    {
+        Debug.Log("平台登录");
+        open.Login(() =>
+        {
+            if (open.IsLoggedIn)
+            {
+                isSuccess(true);
+                LoginGameServer(open.token.tokenString);
+            }
+            else
+            {
+                isSuccess(false);
+            }
+        });
+    }
+
+    public void LoginGuest(string name = "")
+    {
+        Debug.Log("游客登录");
+        SimpleUserData guest;
+        string guestJson = PlayerPrefs.GetString(PlayerPrefsKeyEnum.LOGGED_GUEST);
+        if (!string.IsNullOrEmpty(guestJson))
+        {
+            guest = SimpleUserData.Create(guestJson);
+        }
+        else
+        {
+            guest = new SimpleUserData();
+            guest.uuid = Guid.NewGuid().ToString("N");
+            if(string.IsNullOrEmpty(name))
+            {
+                guest.name = "游客_" + UnityEngine.Random.Range(0, 10000).ToString();
+            }else
+            {
+                guest.name = name;
+            }
+            
+            PlayerPrefs.SetString(PlayerPrefsKeyEnum.LOGGED_GUEST, guest.ToJson());
+        }
+
+        LoginGameServer(guest.uuid,guest.name);
+    }
+
+    public void BindAccount(Action<bool> isSuccess)
+    {
+        Debug.Log("绑定帐号");
+        open.Login(() =>
+        {
+            if (open.IsLoggedIn)
+            {
+                GameMainManager.instance.netManager.GetIsBind(open.token.userId, (ret,res) =>
+                {
+                    if(res.errcode == -1)//未绑定
+                    {
+                        string json = PlayerPrefs.GetString(PlayerPrefsKeyEnum.LOGGED_GUEST);
+                        if(string.IsNullOrEmpty(json))
+                        {
+                            isSuccess(false);
+                        }else
+                        {
+                            SimpleUserData user = LitJson.JsonMapper.ToObject<SimpleUserData>(json);
+                            if(user == null)
+                            {
+                                isSuccess(false);
+                            }else
+                            {
+                                GameMainManager.instance.netManager.BindAccount(user.uuid, open.token.tokenString, (rt, rs) =>
+                                {
+                                    if(rs.isOK)
+                                    {
+                                        isSuccess(true);
+                                    }
+                                });
+                            }
+                        }
+                    }else
+                    {
+                        LoginGameServer(open.token.tokenString);
+                    }
+                });
+            }
+            else
+            {
+                isSuccess(false);
+            }
+        });
+    }
+
+    public void Logout()
+    {
+        if(open.token!=null)
+        {
+            open.Logout();
+        }
+       
+    }
+
+    /// <summary>
+    /// 平台登录
+    /// </summary>
+    /// <param name="accessToken"></param>
+    private void LoginGameServer(string accessToken)
+    {
+        Debug.Log("登录游戏服务器");
+        GameMainManager.instance.netManager.LoginFB(accessToken, (ret, res) =>
+        {
+            if (res.isOK)
+            {
+                SimpleUserData simpleUser = new SimpleUserData();
+                simpleUser.name = res.data.name;
+                simpleUser.level = res.data.crowns;
+                PlayerPrefs.SetString(PlayerPrefsKeyEnum.LOGGED_ACCOUNT, simpleUser.ToJson());
+            }
+
+            OnLoginComplateHandle(res);
+
+        });
+    }
+
+    /// <summary>
+    /// 游客登录
+    /// </summary>
+    /// <param name="uuid"></param>
+    /// <param name="name"></param>
+    private void LoginGameServer(string uuid,string name)
+    {
+        GameMainManager.instance.netManager.LoginGuest(uuid, name, (ret, res) =>
+        {
+            OnLoginComplateHandle(res);
+
+        });
+    }
+
+    private void OnLoginComplateHandle(LoginMessage data)
+    {
+        if (data.isOK)
+        {
+
+            if (data.data.tutorial < 18)
+            {
+                JumpOverTutorial(18 - (int)data.data.tutorial, () => {
+
+                    EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.LOGIN_COMPLATE));
+                });
+            }
+            else
+            {
+                EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.LOGIN_COMPLATE));
+            }
+
+        }
+        else
+        {
+            Debug.Log("登录失败:" + data.errmsg);
+        }
+    }
+
+    private void JumpOverTutorial(int count, System.Action callback = null)
+    {
+        if (count > 0)
+        {
+            Debug.Log("正在跳跃新手引导：" + count);
+            GameMainManager.instance.netManager.TutorialComplete((ret, res) =>
+            {
+                if (res.isOK)
+                {
+                    count--;
+                    JumpOverTutorial(count, callback);
+
+                }
+            });
+        }
+        else
+        {
+            if (callback != null)
+            {
+                Debug.Log("跳跃新手引导结束");
+                callback();
+            }
+        }
+
+    }
+}

@@ -10,7 +10,6 @@ public class GameSetting {
     public static string websocketPath = "wss://api.nutsgamer.com/ws/conn";
     public static string websocketPathDevelop = "wss://api.dev.nutsgamer.com/ws/conn";
 
-    public static string accessToken = "EAAClL2BiDkgBAE0tyncTW7YtmeBHe7RLCZAaMGsgYeexufVmdmeKMUpfgdxCOWk2hTZByconjAv8EBV8JU2DzoLXIqyO1EJrJXjMagsWiZC4dpybYTT8DajbwVm6JuJ77EQgtsuhEvrX8NgAeKLU2RWh5HZBZBOZCigz3W3wAQM0ZBv6ouwZB6yZA";//测试用facebook访问token
 
     //-------------------平台区分的配置-------------------------
 #if UNITY_EDITOR

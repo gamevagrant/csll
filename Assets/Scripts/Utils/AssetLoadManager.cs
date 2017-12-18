@@ -30,6 +30,7 @@ public class AssetLoadManager:MonoBehaviour
 		_instance = this;
 	}
 
+    int aa = 0;
 	public void Update()
 	{
 		if (queue.Count>0 && !isLoading)
@@ -37,6 +38,7 @@ public class AssetLoadManager:MonoBehaviour
 			Action act = queue.Dequeue();
 			if (act != null)
 			{
+                aa++;
 				act();
 			}
 		}

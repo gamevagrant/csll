@@ -82,25 +82,6 @@ public class NetManager:INetManager
         
     }
 
-    public bool AddGuest(Action<bool, AddGuesMessage> callBack)
-    {
-        string url = MakeUrl("http://h5.dodgame.com.cn", "api/add_guest");
-        Debug.Log(url);
-        Dictionary<string, object> data = new Dictionary<string, object>();
-        return HttpProxy.SendPostRequest<AddGuesMessage>(url, data, (ret, res) => {
-            if (res.result == "ok")
-            {
-
-                Debug.Log("注册游客："+res.UserInfo.OpenId);
-                
-            }
-
-            callBack(ret, res);
-        });
-       
-    }
-
-
 
     public bool Login(string openid, Action<bool,LoginMessage> callBack)
     {
@@ -811,6 +792,7 @@ public class NetManager:INetManager
     }
 
     //-------------------------facebook接口------------------------------------
+
     /// <summary>
     /// 注册接口，不管是否注册过每册登录都调用 会返回用于登录的uid和token
     /// </summary>
@@ -818,13 +800,16 @@ public class NetManager:INetManager
     /// <param name="expirationTime"></param>
     /// <param name="callBack"></param>
     /// <returns></returns>
-    private bool Register(string accessToken, long expirationTime, Action<bool, RegisterMessage> callBack)
+    private bool Register(string accessToken, string uuid, string username, Action<bool, RegisterMessage> callBack)
     {
 
         string url = MakeUrl(APIDomain, "game/basic/registerUnityFb");
         Dictionary<string, object> data = new Dictionary<string, object>();
+        data.Add("uuid", uuid);
+        data.Add("username", username);
         data.Add("AccessToken", accessToken);
-        data.Add("ExpirationTime", expirationTime);
+        data.Add("useravatar ", "");
+        data.Add("usergender  ", "");
         return HttpProxy.SendPostRequest<RegisterMessage>(url, data, (ret, res) => {
             if (res.isOK)
             {
@@ -840,14 +825,14 @@ public class NetManager:INetManager
 
     }
 
-    public bool LoginFB(string accessToken, long expirationTime, Action<bool, LoginMessage> callBack)
+
+    public bool LoginFB(string accessToken, Action<bool, LoginMessage> callBack)
     {
-        return Register(accessToken, expirationTime, (ret, res) =>
+        return Register(accessToken, "", "", (ret, res) =>
         {
             if (res.isOK)
             {
                 string openID = res.data.openid;
-                string token = res.data.token;
                 Login(openID, (rs, rt) =>
                 {
                     callBack(rs, rt);
@@ -857,8 +842,55 @@ public class NetManager:INetManager
         });
     }
 
+    public bool LoginGuest(string uuid,string username, Action<bool, LoginMessage> callBack)
+    {
+        return Register("", uuid, username, (ret, res) =>
+        {
+            if (res.isOK)
+            {
+                string openID = res.data.openid;
+                Login(openID, (rs, rt) =>
+                {
+                    callBack(rs, rt);
+                });
+            }
 
+        });
+    }
 
+    /// <summary>
+    /// 判断平台ID(facebookID)是否绑定了帐号 返回json: errcode=0,已绑定；errcode=-1，未绑定
+    /// </summary>
+    /// <param name="account"></param>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    public bool GetIsBind(string accountID, Action<bool, NetMessage> callBack)
+    {
+        string url = MakeUrl(APIDomain, "game/user/isbind");
+        Dictionary<string, object> data = new Dictionary<string, object>();
+        data.Add("queryid", accountID);
+        return HttpProxy.SendPostRequest<NetMessage>(url, data, (ret, res) =>
+        {
+            callBack(ret, res);
+           
+        });
+    }
+
+    public bool BindAccount(string uuid, string accessToken, Action<bool, LoginMessage> callBack)
+    {
+        return Register(accessToken, uuid, "", (ret, res) =>
+        {
+            if (res.isOK)
+            {
+                string openID = res.data.openid;
+                Login(openID, (rs, rt) =>
+                {
+                    callBack(rs, rt);
+                });
+            }
+
+        });
+    }
 
     public bool GetInviteProgress(Action<bool, InviteProgressMessage> callBack)
     {
@@ -973,6 +1005,7 @@ public class NetManager:INetManager
                 touids += to[i] + ",";
             }
         }
+        Debug.Log(touids);
         data.Add("touids", touids);
         data.Add("uid", uid);
         data.Add("token", token);
@@ -981,11 +1014,14 @@ public class NetManager:INetManager
         return HttpProxy.SendPostRequest<RecallFriendsMessage>(url, data, (ret, res) =>
         {
             callBack(ret, res);
-            if (res.isOK)
+            if (res.isOK && res.data != null)
             {
                 UserData ud = GameMainManager.instance.model.userData;
                 ud.energy = res.data.energy;
                 ud.money = res.data.money;
+
+                EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Money,0));
+                EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Energy, 0));
             }
             else
             {

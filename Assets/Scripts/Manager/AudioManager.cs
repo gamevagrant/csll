@@ -10,6 +10,32 @@ public class AudioManager : MonoBehaviour ,IAudioManager{
     GetAudioPath musicProxy;
     GetAudioPath soundProxy;
 
+    float _musicVolume=1f;
+    public float musicVolume
+    {
+        get
+        {
+            return _musicVolume;
+        }
+        set
+        {
+            _musicVolume = value;
+            audioSource.volume = _musicVolume;
+        }
+    }
+    float _soundVolume=1f;
+    public float soundVolume
+    {
+        get
+        {
+            return _soundVolume;
+        }
+        set
+        {
+            _soundVolume = value;
+        }
+    }
+
     private static IAudioManager _instance;
     public static IAudioManager instance
     {
@@ -23,7 +49,7 @@ public class AudioManager : MonoBehaviour ,IAudioManager{
             return _instance;
         }
     }
-    public int volume { get; set; }
+
 
     private void Awake()
     {
@@ -37,6 +63,11 @@ public class AudioManager : MonoBehaviour ,IAudioManager{
         }
         audioSource = gameObject.AddComponent<AudioSource>();
         sounds = new Dictionary<string, AudioClip>();
+    }
+
+    private void OnDestroy()
+    {
+        _instance = null;
     }
 
     public void SetMusicPathProxy(GetAudioPath proxy)
@@ -77,7 +108,7 @@ public class AudioManager : MonoBehaviour ,IAudioManager{
 
     public void PlaySound(AudioClip clip)
     {
-        audioSource.PlayOneShot(clip);
+        audioSource.PlayOneShot(clip,_soundVolume);
     }
     public void PlaySound(string name)
     {

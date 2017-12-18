@@ -115,12 +115,13 @@ public class AutoScrollView : MonoBehaviour {
 
     public void SetData(IList datas)
     {
-        if (datas == null || datas.Count==0)
-            return;
-
         itemPool.resetAllTarget();
-        //displayRect.x = 0;
-        //displayRect.y = 0;
+        if (datas == null || datas.Count==0)
+        {
+            itemDatas = new List<ItemRect>();
+            return;
+        }
+           
 
         Vector2 offset = Vector2.zero;
         //加开头空余空间

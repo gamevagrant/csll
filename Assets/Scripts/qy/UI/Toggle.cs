@@ -8,8 +8,11 @@ namespace QY.UI
 {
     public class Toggle : UnityEngine.UI.Selectable, IPointerClickHandler
     {
-        public UnityEngine.UI.Toggle.ToggleEvent onValueChanged;
+        [System.Serializable]
+        public class ToggleEvent : UnityEvent<bool> { };
 
+        public ToggleEvent onValueChanged;
+        
         public bool isSelectedInStart = false;
         public GameObject[] activate;//选中时需要开启的
         public GameObject[] deactivate;//没有选中时需要关闭的
@@ -95,13 +98,14 @@ namespace QY.UI
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            isOn = true;
+            isOn = !isOn;
             int count = onValueChanged.GetPersistentEventCount();
             if (count > 0)
             {
                 for(int i = 0;i<count;i++)
                 {
-                    (onValueChanged.GetPersistentTarget(i) as GameObject).SendMessage(onValueChanged.GetPersistentMethodName(i), true);
+                    onValueChanged.Invoke(isOn);
+                    //(onValueChanged.GetPersistentTarget(i) as GameObject).SendMessage(onValueChanged.GetPersistentMethodName(i), true);
                 }
                
             }

@@ -12,7 +12,8 @@ public class UpdateAssets {
     private string verMainName = "/Version_Main.txt";
     private AssetBundleManifest oldManifest;
     private AssetBundleManifest newManifest;
-    
+
+    private byte[] manifestBytes;
 
     public UpdateAssets()
     {
@@ -43,8 +44,8 @@ public class UpdateAssets {
         AssetLoadManager.Instance.LoadAsset<byte[]>(path, (bytes) => {
 
             Debug.Log("-下载远程版本文件成功-" + path);
-
-            writeFile(saveRootPath +"/"+Path.GetFileName(saveRootPath), bytes);
+            manifestBytes = bytes;
+            
 
             manifestAB = AssetBundle.LoadFromMemory(bytes);
             newManifest = manifestAB.LoadAsset<AssetBundleManifest>("AssetBundleManifest");
@@ -75,8 +76,11 @@ public class UpdateAssets {
                 writeFile(saveRootPath + "/" + fileName, bytes);
                 Debug.Log("写入" + fileName + "成功:" + saveRootPath + "/" + fileName);
                 EventDispatcher.instance.DispatchEvent(new LoadingEvent("UpdateAssets", (float)count / allCount, fileName));
+                Debug.Log(string.Format("{0}/{1}", count, allCount));
                 if (count >= allCount && onComplate != null)
                 {
+                    
+                    writeFile(saveRootPath + "/" + Path.GetFileName(saveRootPath), manifestBytes);
                     onComplate();
                 }
             },false);

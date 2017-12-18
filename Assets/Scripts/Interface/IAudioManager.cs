@@ -3,7 +3,9 @@
 public delegate string GetAudioPath(string name);
 public interface IAudioManager {
 
-    int volume { get; set; }
+    float musicVolume { get; set; }
+    float soundVolume { get; set; }
+
     void SetMusicPathProxy(GetAudioPath proxy);
     void SetSoundPathProxy(GetAudioPath proxy);
 

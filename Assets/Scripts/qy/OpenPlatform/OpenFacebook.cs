@@ -6,16 +6,19 @@ using System;
 
 namespace QY.Open
 {
+    
     public class OpenFacebook : IOpenPlatform
     {
+        private const string DEBUG_TOKEN = "EAACOsVAkLvoBAJy0VbZCpljkRrmPEimQ3fG45AHkWmI388UpZBd2J5ZCzR5tZBS1qCnSBYQHKiDgeo0iQS5UyzGbZAU6cOvynJ1yx1ypeAxITS5TnOIcNqBG1ehjTvmiWcYjI967FQtBgHhvyHdd2VFFaunbp452IyoCIrQlwM2c9bHXlZBZCpQ";//测试用facebook访问token
+
         AccessToken _token;
-        public AccessToken Token
+        public AccessToken token
         {
             get
             {
                 if (_token == null)
                 {
-                    _token = new AccessToken(Facebook.Unity.AccessToken.CurrentAccessToken);
+                    _token = AccessToken.Create(Facebook.Unity.AccessToken.CurrentAccessToken);
                 }
                 return _token;
             }
@@ -38,6 +41,7 @@ namespace QY.Open
 
         public void Init(System.Action onComplate)
         {
+            _token = null;
             if (!FB.IsInitialized)
             {
                 FB.Init(() => {
@@ -66,8 +70,8 @@ namespace QY.Open
             {
 #if UNITY_EDITOR
                 Facebook.Unity.AccessToken.CurrentAccessToken = new Facebook.Unity.AccessToken(
-                    GameSetting.accessToken,
-                    "11111",
+                    DEBUG_TOKEN,
+                    "2085135021772785",
                     DateTime.Now,
                     new string[] { "user_friends", "email", "public_profile" },
                     DateTime.Now);

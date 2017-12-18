@@ -11,13 +11,21 @@ public class UIRecallPanel : MonoBehaviour {
 
     public void Start()
     {
-        Refresh();
     }
 
     public void Refresh()
     {
         GameMainManager.instance.netManager.GetRecallableFriends((ret, res) =>
         {
+            /*
+            res.data.recall_friend_rewards = new ShareData.RecallableFriendData[10];
+            for(int i = 0;i< res.data.recall_friend_rewards.Length;i++)
+            {
+                res.data.recall_friend_rewards[i] = new ShareData.RecallableFriendData();
+                res.data.recall_friend_rewards[i].name = "游客"+i.ToString();
+                res.data.recall_friend_rewards[i].uid = 123 + i;
+                res.data.recall_friend_rewards[i].head_img = "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1018364764,1223529536&fm=27&gp=0.jpg";
+            }*/
             if(res.isOK)
             {
                 if(res.data.recall_friend_rewards!=null)
@@ -40,13 +48,34 @@ public class UIRecallPanel : MonoBehaviour {
         });
     }
 
+    private void RemoveItems(List<string> ids)
+    {
+        List<RecallFriendData> list = new List<RecallFriendData>(recallableList);
+        for (int i=0;i<ids.Count;i++)
+        {
+            foreach (RecallFriendData item in list)
+            {
+                if(item.data.uid.ToString() == ids[i])
+                {
+                    recallableList.Remove(item);
+                }
+            }
+        }
+
+        scrollView.SetData(recallableList);
+    }
+
     public void OnClickSelectAllBtn(bool isSelected)
     {
-        foreach (RecallFriendData itemData in recallableList)
+        if(recallableList!=null)
         {
-            itemData.isSelected = isSelected;
+            foreach (RecallFriendData itemData in recallableList)
+            {
+                itemData.isSelected = isSelected;
+            }
+            scrollView.SetData(recallableList);
         }
-        scrollView.SetData(recallableList);
+       
     }
 
     public void OnClickRecallBtn()
@@ -61,11 +90,13 @@ public class UIRecallPanel : MonoBehaviour {
         }
         if (list.Count > 0)
         {
+            RemoveItems(list);
+
             GameMainManager.instance.netManager.RecallFriends(recallableList.Count, list.ToArray() , (ret, res) =>
             {
                 if(res.isOK)
                 {
-
+                    //Refresh();
                 }
                 else
                 {

@@ -34,11 +34,11 @@ public class UIMessageListItem : BaseItemView {
             {
                 if ((int)data.extra["building"]["status"] == 2)
                 {
-                    str = string.Format("<color=#BA7F00FF><size=110%>{0}</size></color>损坏了你的{1}", data.name, GameMainManager.instance.model.islandConfig.GetBuildingName((int)data.extra["building_index"]));
+                    str = string.Format("<color=#BA7F00FF><size=110%>{0}</size></color>损坏了你的{1}", data.name, GameMainManager.instance.configManager.islandConfig.GetBuildingName((int)data.extra["building_index"]));
                 }
                 else
                 {
-                    str = string.Format("<color=#BA7F00FF><size=110%>{0}</size></color>摧毁了你的{1}", data.name, GameMainManager.instance.model.islandConfig.GetBuildingName((int)data.extra["building_index"]));
+                    str = string.Format("<color=#BA7F00FF><size=110%>{0}</size></color>摧毁了你的{1}", data.name, GameMainManager.instance.configManager.islandConfig.GetBuildingName((int)data.extra["building_index"]));
                 }
                 button.gameObject.SetActive(true);
             }

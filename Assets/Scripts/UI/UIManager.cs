@@ -36,6 +36,9 @@ public class UIManager : MonoBehaviour,IUIManager  {
     private Queue<Action> queue = new Queue<Action>();
     private bool isOpening = false;
 
+    private CanvasScaler canvasScaler;
+    private Canvas canvas;
+
     public bool isEnable
     {
         get
@@ -122,7 +125,6 @@ public class UIManager : MonoBehaviour,IUIManager  {
 
     private void Awake()
     {
-        
         //------------------------添加全屏遮挡背板start-----------------------
         windowCollider = GameUtils.createGameObject(FixedRoot.gameObject, "WindwCollider");
         RectTransform rt = windowCollider.AddComponent<RectTransform>();
@@ -170,19 +172,14 @@ public class UIManager : MonoBehaviour,IUIManager  {
                 act();
             }
         }
-        /*
-        if (selectedGO!= EventSystem.current.currentSelectedGameObject)
-        {
-            selectedGO = EventSystem.current.currentSelectedGameObject;
-            if(selectedGO.GetComponent<IPointerClickHandler>()!=null)
-            {
-                AudioManager.instance.PlaySound(AudioNameEnum.button_click);
-                Debug.Log(selectedGO.name);
-            }
-            
-        }
-        */
+
     }
+
+    private void OnDestroy()
+    {
+        SpriteAtlasManager.atlasRequested -= OnLoadAtlas;
+    }
+
     private void Init()
     {
         allWindows = new Dictionary<UISettings.UIWindowID, UIWindowBase>();
@@ -197,26 +194,29 @@ public class UIManager : MonoBehaviour,IUIManager  {
             window.HideWindow(null, false);
         }
 
-        CanvasScaler canvasScaler = GetComponent<CanvasScaler>();
-        Canvas canvas = GetComponent<Canvas>();
+        canvasScaler = GetComponent<CanvasScaler>();
+        canvas = GetComponent<Canvas>();
 
-        SpriteAtlasManager.atlasRequested += (tag, act) => {
-            Debug.Log("开始加载[" + tag + "]图集");
-            string path = FilePathTools.getSpriteAtlasPath(tag);
-            AssetBundleLoadManager.Instance.LoadAsset<SpriteAtlas>(path, (sa) => {
-
-                act(sa);
-               
-
-                canvasScaler.enabled = false;
-                canvas.enabled = false;
-
-                canvasScaler.enabled = true;
-                canvas.enabled = true;
-                Debug.Log("图集加载完毕：" + sa);
-            });
-        };
+        SpriteAtlasManager.atlasRequested += OnLoadAtlas;
     }
+
+    private void OnLoadAtlas(string tag,Action<SpriteAtlas> act)
+    {
+        Debug.Log("开始加载[" + tag + "]图集");
+        string path = FilePathTools.getSpriteAtlasPath(tag);
+        AssetBundleLoadManager.Instance.LoadAsset<SpriteAtlas>(path, (sa) => {
+            act(sa);
+
+            canvasScaler.enabled = false;
+            canvas.enabled = false;
+
+            canvasScaler.enabled = true;
+            canvas.enabled = true;
+
+            Debug.Log("图集加载完毕：" + sa);
+        });
+    }
+
     public void OpenWindow(UISettings.UIWindowID id, params object[] data)
     {
         OpenWindow(id,true,data);

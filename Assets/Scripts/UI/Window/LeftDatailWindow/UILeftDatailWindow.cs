@@ -29,6 +29,7 @@ public class UILeftDatailWindow : UIWindowBase {
     public RectTransform panel;
     public HeadIcon head;
     public TextMeshProUGUI friendCode;
+    public GameObject facebookBtn;
     public TextMeshProUGUI[] buttonTips;//0:转盘 1：建造 3：好友 4：消息 7：地图
 
     private void Awake()
@@ -53,8 +54,9 @@ public class UILeftDatailWindow : UIWindowBase {
         UserData ud = GameMainManager.instance.model.userData;
         head.setData(ud.name, ud.headImg, ud.crowns, ud.isVip);
         friendCode.text = "友情码：" + ud.friendshipCode;
+        facebookBtn.SetActive(!AccountManager.instance.isLoginAccount);
 
-        for(int i = 0;i<buttonTips.Length;i++)
+        for (int i = 0;i<buttonTips.Length;i++)
         {
             buttonTips[i].transform.parent.gameObject.SetActive(false);
         }
@@ -118,7 +120,7 @@ public class UILeftDatailWindow : UIWindowBase {
             GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIMiningMapWindow);
         }else
         {
-            string name = GameMainManager.instance.model.islandConfig.GetIslandName(3);
+            string name = GameMainManager.instance.configManager.islandConfig.GetIslandName(3);
             Alert.Show(string.Format("到达{0}后开启地图功能", name));
             //GameMainManager.instance.uiManager.OpenPopupModalBox(string.Format("到达{0}后开启地图功能",name),"",null);
         }
@@ -158,7 +160,28 @@ public class UILeftDatailWindow : UIWindowBase {
 
     public void OnClickInviteBtn()
     {
-        //GameMainManager.instance.open.Invite();
-        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIInviteWindow);
+        if(AccountManager.instance.isLoginAccount)
+        {
+            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIInviteWindow);
+        }else
+        {
+            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIFacebookTipsWindow);
+        }
+        
+    }
+
+    public void OnClickFacebookBtn()
+    {
+        AccountManager.instance.BindAccount((issuccess)=> {
+            if(issuccess)
+            {
+                OnClickClose();
+            }
+        });
+    }
+
+    public void OnClickSettingBtn()
+    {
+        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UISettingWindow);
     }
 }

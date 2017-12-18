@@ -4,7 +4,6 @@ using System.Collections;
 public class EventEnum {
 
     public const string UPDATE_ASSETS_COMPLATE = "UPDATE_ASSETS_COMPLATE";//资源更新完毕
-    public const string LOGIN_START = "LOGIN_START";//开始登录
     public const string LOGIN_COMPLATE = "LOGIN_COMPLATE";//登录成功
     public const string LOADING_PROGRESS = "LOADING_PROGRESS";//加载进度
     public const string REQUEST_ERROR = "REQUEST_ERROR";//请求失败

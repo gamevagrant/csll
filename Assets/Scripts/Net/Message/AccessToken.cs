@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class AccessToken : MonoBehaviour {
+public class AccessToken {
 
     //public static AccessToken CurrentAccessToken;
     public string tokenString;
@@ -12,12 +12,20 @@ public class AccessToken : MonoBehaviour {
     public string userId;
     public DateTime? lastRefresh;
 
-    public AccessToken(Facebook.Unity.AccessToken token)
+    public static AccessToken Create(Facebook.Unity.AccessToken token)
     {
-        this.tokenString = token.TokenString;
-        this.expirationTime = token.ExpirationTime;
-        this.permissions = token.Permissions;
-        this.userId = token.UserId;
-        this.lastRefresh = token.LastRefresh;
+        if(token == null)
+        {
+            return null;
+        }else
+        {
+            AccessToken t = new AccessToken();
+            t.tokenString = token.TokenString;
+            t.expirationTime = token.ExpirationTime;
+            t.permissions = token.Permissions;
+            t.userId = token.UserId;
+            t.lastRefresh = token.LastRefresh;
+            return t;
+        }
     }
 }

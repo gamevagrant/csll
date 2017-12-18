@@ -53,9 +53,9 @@ public class IslandFactory : MonoBehaviour {
     public void UpdateCityData(int islandID, BuildingData[] data)
     {
         Debug.Log("island is "+islandID);
-        if(islandID> GameMainManager.instance.model.islandConfig.islandNames.Length)
+        if(islandID> GameMainManager.instance.configManager.islandConfig.islandNames.Length)
         {
-            islandID = islandID % (GameMainManager.instance.model.islandConfig.islandNames.Length + 1) + 1;
+            islandID = islandID % (GameMainManager.instance.configManager.islandConfig.islandNames.Length + 1) + 1;
         }
         
         if (islandID == this.islandID)

@@ -4,8 +4,6 @@ using System;
 public interface INetManager
 {
 
-    bool AddGuest(Action<bool, AddGuesMessage> callBack);
-
     bool Login(string openid, Action<bool, LoginMessage> callBack);
     bool TutorialComplete(Action<bool, NetMessage> callBack);
     /// <summary>
@@ -178,7 +176,30 @@ public interface INetManager
     /// <param name="expirationTime"></param>
     /// <param name="callBack"></param>
     /// <returns></returns>
-    bool LoginFB(string accessToken, long expirationTime, Action<bool, LoginMessage> callBack);
+    bool LoginFB(string accessToken, Action<bool, LoginMessage> callBack);
+    /// <summary>
+    /// 游客登录  
+    /// </summary>
+    /// <param name="uuid"></param>
+    /// <param name="username"></param>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool LoginGuest(string uuid, string username, Action<bool, LoginMessage> callBack);
+    /// <summary>
+    /// 绑定平台帐号
+    /// </summary>
+    /// <param name="uuid"></param>
+    /// <param name="accessToken"></param>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool BindAccount(string uuid, string accessToken, Action<bool, LoginMessage> callBack);
+    /// <summary>
+    ///判断平台ID(facebookID)是否绑定了帐号 返回json: errcode=0,已绑定；errcode=-1，未绑定
+    /// </summary>
+    /// <param name="accountID"></param>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool GetIsBind(string accountID, Action<bool, NetMessage> callBack);
     /// <summary>
     /// 获取好友邀请进度
     /// </summary>

@@ -55,11 +55,11 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
         {
             if((int)msg.extra["building"]["status"] == 2)
             {
-                str = string.Format("{0}损坏了你的{1}", msg.name, GameMainManager.instance.model.islandConfig.GetBuildingName((int)msg.extra["building_index"]));
+                str = string.Format("{0}损坏了你的{1}", msg.name, GameMainManager.instance.configManager.islandConfig.GetBuildingName((int)msg.extra["building_index"]));
             }
             else
             {
-                str = string.Format("{0}摧毁了你的{1}", msg.name, GameMainManager.instance.model.islandConfig.GetBuildingName((int)msg.extra["building_index"]));
+                str = string.Format("{0}摧毁了你的{1}", msg.name, GameMainManager.instance.configManager.islandConfig.GetBuildingName((int)msg.extra["building_index"]));
             }
         }
         PopupMessageData data = new PopupMessageData();
@@ -105,9 +105,11 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
             {
                 case "energy":
                     GameMainManager.instance.model.userData.energy = (int)rewardData.count;
+                    EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Energy, 1));
                     break;
                 case "money":
                     GameMainManager.instance.model.userData.money = rewardData.count;
+                    EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Money, 1));
                     break;
                 case "props"://通缉令
                     GameMainManager.instance.model.userData.wantedCount = (int)rewardData.count;
@@ -120,6 +122,7 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
             GetRewardWindowData getRewardWindowData = new GetRewardWindowData();
             getRewardWindowData.reward = rewardData;
             GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIGetRewardWindow, getRewardWindowData);
+            
         }
        
 

@@ -285,9 +285,15 @@ public class UIWheelPanel : MonoBehaviour {
             if(GameMainManager.instance.model.userData.energy>0)
             {
                 StartCoroutine(StartRoll());
+
+            }
+            else if(!AccountManager.instance.isLoginAccount)
+            {
+                GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIFacebookTipsWindow);
             }
             else
             {
+
                 Alert.Show("能量不足");
             }
             

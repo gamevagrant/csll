@@ -37,6 +37,7 @@ public class UILeftDatailWindow : UIWindowBase {
         panel.anchoredPosition = new Vector2(-530, 0);
     }
 
+    /*
     private void Update()
     {
         if (QY.CrossPlatformInput.CrossPlatformInputManager.GetButtonDown(CrossPlatformInput.LEFT))
@@ -48,7 +49,7 @@ public class UILeftDatailWindow : UIWindowBase {
         }
 
     }
-
+    */
     protected override void StartShowWindow(object[] data)
     {
         UserData ud = GameMainManager.instance.model.userData;
@@ -160,6 +161,7 @@ public class UILeftDatailWindow : UIWindowBase {
 
     public void OnClickInviteBtn()
     {
+        OnClickClose();
         if(AccountManager.instance.isLoginAccount)
         {
             GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIInviteWindow);

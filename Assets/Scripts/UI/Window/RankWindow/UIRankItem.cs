@@ -76,7 +76,8 @@ public class UIRankItem : BaseItemView {
 
     public void OnCLickRecruitBtn()
     {
-
+        GameMainManager.instance.uiManager.CloseWindow(UISettings.UIWindowID.UIRankWindow);
+        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIInviteWindow);
     }
 
     public void OnClickHeadBtn()

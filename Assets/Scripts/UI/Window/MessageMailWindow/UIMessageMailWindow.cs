@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+//using UnityEngine.UI;
 using DG.Tweening;
 using System;
+using QY.UI;
 
 public class UIMessageMailWindow : UIWindowBase {
 
@@ -108,9 +109,9 @@ public class UIMessageMailWindow : UIWindowBase {
             messageScrollView.setDatas(messages);
             ShowPanel(messagePanel);
         }
-        else if (!messageToggle.isOn)
+        else 
         {
-            HidePanel(currentPanel);
+            HidePanel(messagePanel);
         }
     }
     public void OnChangeMailToggle(bool value)
@@ -121,9 +122,9 @@ public class UIMessageMailWindow : UIWindowBase {
             mailScrollView.setDatas(mails);
             ShowPanel(mailPanel);
         }
-        else if (!mailToggle.isOn)
+        else 
         {
-            HidePanel(currentPanel);
+            HidePanel(mailPanel);
         }
 
     }
@@ -137,12 +138,12 @@ public class UIMessageMailWindow : UIWindowBase {
     private void ReSetToggle()
     {
         messageToggle.isOn = false;
-        messageToggle.enabled = false;
-        messageToggle.enabled = true;
+        //messageToggle.enabled = false;
+        //messageToggle.enabled = true;
 
         mailToggle.isOn = false;
-        mailToggle.enabled = false;
-        mailToggle.enabled = true;
+        //mailToggle.enabled = false;
+        //mailToggle.enabled = true;
     }
     private void ShowPanel(RectTransform panel)
     {
@@ -153,10 +154,10 @@ public class UIMessageMailWindow : UIWindowBase {
     }
     private void HidePanel(RectTransform panel)
     {
-        currentPanel = null;
+        //currentPanel = null;
         GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.panel_out);
         panel.DOAnchorPos(new Vector2(0, 1000), 1f).SetEase(Ease.OutCubic).OnComplete(() => {
-            panel.gameObject.SetActive(false);
+            //panel.gameObject.SetActive(false);
         });
     }
 

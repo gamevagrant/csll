@@ -53,34 +53,60 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
             str = string.Format("你成功防御了{0}的攻击", msg.name);
         }else
         {
-            if((int)msg.extra["building"]["status"] == 2)
+            int buildingIndex = (int)msg.extra["building_index"];
+            int buildingStatus = (int)msg.extra["building"]["status"];
+            if (buildingStatus == 2)
             {
-                str = string.Format("{0}损坏了你的{1}", msg.name, GameMainManager.instance.configManager.islandConfig.GetBuildingName((int)msg.extra["building_index"]));
+                str = string.Format("{0}损坏了你的{1}", msg.name, GameMainManager.instance.configManager.islandConfig.GetBuildingName(buildingIndex));
             }
             else
             {
-                str = string.Format("{0}摧毁了你的{1}", msg.name, GameMainManager.instance.configManager.islandConfig.GetBuildingName((int)msg.extra["building_index"]));
+                str = string.Format("{0}摧毁了你的{1}", msg.name, GameMainManager.instance.configManager.islandConfig.GetBuildingName(buildingIndex));
             }
+            GameMainManager.instance.model.userData.buildings[buildingIndex].status = buildingStatus;
         }
         PopupMessageData data = new PopupMessageData();
         data.headImg = msg.headImg;
         data.content = str;
         data.confirmHandle = () => {
 
-
+            EventDispatcher.instance.DispatchEvent(new UpdateBuildingEvent());
         };
 
         GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIPopupMessageWindow, data);
     }
 
+    /*
+     * {
+          "uid": 209, 
+          "toid": 315, 
+          "action": 2, 
+          "result": 0, 
+          "time": "今天 17:53:47", 
+          "name": "岳松", 
+          "headImg": "https://fb-s-c-a.akamaihd.net/h-ak-fbx/v/t1.0-1/p50x50/17799337_1013087895489876_7747316675865790869_n.jpg?oh=1f7e2a1c9b826d7cfdc5f3f51209ea55&oe=5AC84270&__gda__=1521541416_9c07b70aa926a7a1ff274119a0a13fbc", 
+          "crowns": 75, 
+          "extra": 
+              {
+                "money": 318144985, 
+                "reward": 83039102
+              }, 
+          "read": false, 
+          "isWanted": false, 
+          "isVip": false, 
+          "head_frame": 0
+        }
+ */
     private void StealAction(MessageResponseData msg)
     {
-        string str = "";
-        str = string.Format("{0}偷走了{1}金币", msg.name,msg.extra["reward"]);
+        long reward = (long)msg.extra["reward"];
+        long money = (long)msg.extra["money"];
+
+        string str = string.Format("{0}偷走了{1}金币", msg.name,GameUtils.GetCurrencyString(reward));
         PopupMessageData data = new PopupMessageData();
         data.headImg = msg.headImg;
         data.content = str;
-        GameMainManager.instance.model.userData.money = (int)msg.extra["money"];
+        GameMainManager.instance.model.userData.money = money;
 
         GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIPopupMessageWindow, data);
     }
@@ -113,12 +139,19 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
                     break;
                 case "props"://通缉令
                     GameMainManager.instance.model.userData.wantedCount = (int)rewardData.count;
+                    EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.wanted, 1));
                     break;
                 case "vip":
                     GameMainManager.instance.model.userData.isVip = true;
                     GameMainManager.instance.model.userData.vip_days = (int)rewardData.count;
+                    GameMainManager.instance.model.userData.maxEnergy = 60;
+                    GameMainManager.instance.model.userData.recoverEnergy = 8;
+                    EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.vip, 1));
                     break;
             }
+
+            GameMainManager.instance.uiManager.CloseWindow(UISettings.UIWindowID.UIShopWindow);
+
             GetRewardWindowData getRewardWindowData = new GetRewardWindowData();
             getRewardWindowData.reward = rewardData;
             GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIGetRewardWindow, getRewardWindowData);

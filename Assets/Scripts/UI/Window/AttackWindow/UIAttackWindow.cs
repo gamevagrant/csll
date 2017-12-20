@@ -160,11 +160,11 @@ public class UIAttackWindow :UIWindowBase {
 
             if(data.attackTarget.buildings[index - 1].status == 2)
             {
-                tips = string.Format("恭喜您，您成功摧毁了<#1995BCFF>{0}</color>的建筑，获得了<#D34727FF>{1}</color>金币", data.attackTarget.name, GameUtils.GetCurrencyString(data.reward));
+                tips = string.Format("恭喜您，您成功摧毁了<#1995BCFF>{0}</color>的建筑，获得了<#D34727FF>{1}</color>金币", data.attackTarget.name, GameUtils.GetShortMoneyStr(data.reward));
             }
             else 
             {
-                tips = string.Format("恭喜您，您成功损坏了<#1995BCFF>{0}</color>的建筑，获得了<#D34727FF>{1}</color>金币", data.attackTarget.name, GameUtils.GetCurrencyString(data.reward));
+                tips = string.Format("恭喜您，您成功损坏了<#1995BCFF>{0}</color>的建筑，获得了<#D34727FF>{1}</color>金币", data.attackTarget.name, GameUtils.GetShortMoneyStr(data.reward));
             }
             
            
@@ -207,7 +207,7 @@ public class UIAttackWindow :UIWindowBase {
         }
         else
         {
-            tips = string.Format("您的攻击被<#1995BCFF>{0}</color>的盾牌阻挡了，获得了<#D34727FF>{1}</color>金币", data.attackTarget.name, GameUtils.GetCurrencyString(data.reward) );
+            tips = string.Format("您的攻击被<#1995BCFF>{0}</color>的盾牌阻挡了，获得了<#D34727FF>{1}</color>金币", data.attackTarget.name, GameUtils.GetShortMoneyStr(data.reward) );
             GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.shoot_aim_target);
             Sequence sq = DOTween.Sequence();
             sq.Append(artillery.DORotate(new Vector3(0, 0, angle), 0.5f));

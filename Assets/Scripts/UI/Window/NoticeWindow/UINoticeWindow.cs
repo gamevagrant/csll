@@ -41,17 +41,27 @@ public class UINoticeWindow : UIWindowBase {
     protected override void StartShowWindow(object[] data)
     {
         this.data = data[0] as AnnouncementData;
-        AssetLoadManager.Instance.LoadAsset<Texture2D>(this.data.img_url, (tex) =>
-        {
-            topImage.texture = tex;
-        });
+
         pool.resetAllTarget();
-        for(int i = 0;i<this.data.sections.Length;i++)
+
+        if (!string.IsNullOrEmpty(this.data.img_url))
         {
-            AnnouncementContentData content = this.data.sections[i];
-            UINoticeItem item = pool.getIdleTarget<UINoticeItem>();
-            item.SetData(content);
+            AssetLoadManager.Instance.LoadAsset<Texture2D>(this.data.img_url, (tex) =>
+            {
+                topImage.texture = tex;
+            });
         }
+       
+        if(this.data.sections!=null)
+        {
+            for (int i = 0; i < this.data.sections.Length; i++)
+            {
+                AnnouncementContentData content = this.data.sections[i];
+                UINoticeItem item = pool.getIdleTarget<UINoticeItem>();
+                item.SetData(content);
+            }
+        }
+       
 
     }
 

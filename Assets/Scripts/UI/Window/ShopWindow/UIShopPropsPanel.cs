@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Purchasing;
 
 public class UIShopPropsPanel : MonoBehaviour {
 
@@ -14,6 +15,7 @@ public class UIShopPropsPanel : MonoBehaviour {
     public DynamicScrollView scrollView;
 
     private GoodsData goodsVip;
+    private Product productVip;
     //private GoodsData[] goodsList;
     public void SetData(GoodsData[] goodsList)
     {
@@ -23,10 +25,13 @@ public class UIShopPropsPanel : MonoBehaviour {
         {
             if(goods.type == "vip")
             {
+                goodsVip = goods;
+                productVip = GameMainManager.instance.iap.GetProductWithID(goodsVip.GetPurchaseID());
+                vipPriceText.text = "购买" + productVip.metadata.localizedPriceString;
+
                 timeText.text = GameMainManager.instance.model.userData.vip_days.ToString() + "天";
                 energyText.text = goods.extra["energy"].ToString();
                 dailyEneregyText.text = goods.extra["dailyEnergy"].ToString();
-                vipPriceText.text = "购买￥" + (goods.price / 100.0f).ToString();
                 string str = "1直接获得<#FFFFFFFF>{0}点</color>能量\n" +
                     "2每天获得 <#FFFFFFFF>{1}点</color>能量，持续30天\n" +
                     "3享受vip专属标识\n" +
@@ -37,9 +42,9 @@ public class UIShopPropsPanel : MonoBehaviour {
                     goods.extra["hourEnergy"].ToString(),
                     goods.extra["recoverEnergy"].ToString());
 
-                goodsVip = goods;
+               
             }
-            else if(goods.type == "props")
+            else if(goods.type != "money" && goods.type != "energy")
             {
                 // wantedPriceText.text = (goods.price / 100.0f).ToString("C");
                 propsList.Add(goods);
@@ -50,6 +55,6 @@ public class UIShopPropsPanel : MonoBehaviour {
 
 	public void OnClickBuyVIPBtn()
 	{
-        GameMainManager.instance.iap.Purchase(goodsVip.GetPurchaseID());
+        GameMainManager.instance.iap.Purchase(productVip.definition.id);
     }
 }

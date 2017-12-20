@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-using UnityEngine.UI;
-
+//using UnityEngine.UI;
+using QY.UI;
 public class UIAttackTopBar : MonoBehaviour {
 
     public HeadIcon head;
@@ -99,7 +99,7 @@ public class UIAttackTopBar : MonoBehaviour {
         {
             GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.button_click);
             ShowPanel(enemys);
-        }else if(!friendToggle.isOn)
+        }else
         {
             HidePanel();
         }
@@ -111,7 +111,7 @@ public class UIAttackTopBar : MonoBehaviour {
             GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.button_click);
             ShowPanel(friends);
         }
-        else if (!enemyToggle.isOn)
+        else
         {
             HidePanel();
         }
@@ -121,6 +121,7 @@ public class UIAttackTopBar : MonoBehaviour {
     public void OnClickClosePanelBtn()
     {
         HidePanel();
+
         ReSetToggle();
     }
 
@@ -154,17 +155,33 @@ public class UIAttackTopBar : MonoBehaviour {
 
     private void ShowPanel(List<SelectPlayerData> list)
     {
+       
+        Sequence sq = DOTween.Sequence();
+        GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.panel_out);
+        if(panelIsOpend)
+        {
+            sq.AppendInterval(0.5f);
+        }
+        sq.AppendCallback(() =>
+        {
+            DOTween.Kill(panel);
+            panel.gameObject.SetActive(true);
+            GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.panel_in);
+            SendSelectTargetData(list);
+        });
+        sq.Append(panel.DOAnchorPos(Vector2.zero, 0.5f).SetEase(Ease.OutBack));
+        /*
         if (panelIsOpend)
         {
             Sequence sq = DOTween.Sequence();
             GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.panel_out);
-            sq.Append(panel.DOAnchorPos(new Vector2(0, 1000), 0.5f).SetEase(Ease.OutBack));
+            sq.Append(panel.DOAnchorPos(new Vector2(0, 1000), 0.8f).SetEase(Ease.OutBack));
             sq.AppendCallback(() =>
             {
                 GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.panel_in);
                 SendSelectTargetData(list);
             });
-            sq.Append(panel.DOAnchorPos(Vector2.zero, 0.5f).SetEase(Ease.OutBack));
+            sq.Append(panel.DOAnchorPos(Vector2.zero, 0.8f).SetEase(Ease.OutBack));
 
 
         }
@@ -173,27 +190,32 @@ public class UIAttackTopBar : MonoBehaviour {
             GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.panel_in);
             panel.gameObject.SetActive(true);
             SendSelectTargetData(list);
-            panel.DOAnchorPos(Vector2.zero, 0.5f).SetEase(Ease.OutBack);
+            panel.DOAnchorPos(Vector2.zero, 0.8f).SetEase(Ease.OutBack);
         }
+        */
     }
 
     private void ReSetToggle()
     {
         enemyToggle.isOn = false;
-        enemyToggle.enabled = false;
-        enemyToggle.enabled = true;
+        //enemyToggle.enabled = false;
+        //enemyToggle.enabled = true;
 
         friendToggle.isOn = false;
-        friendToggle.enabled = false;
-        friendToggle.enabled = true;
+        //friendToggle.enabled = false;
+        //friendToggle.enabled = true;
     }
 
     private void HidePanel()
     {
-        GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.panel_out);
-        panel.DOAnchorPos(new Vector2(0, 1000), 0.5f).SetEase(Ease.OutBack).OnComplete(()=> {
-            panel.gameObject.SetActive(false);
-        });
+        if (panelIsOpend)
+        {
+            GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.panel_out);
+            panel.DOAnchorPos(new Vector2(0, 1000), 0.5f).SetEase(Ease.OutBack).OnComplete(() => {
+                //panel.gameObject.SetActive(false);
+            });
+        }
+       
     }
 
     private void SendSelectTargetData(List<SelectPlayerData> list)

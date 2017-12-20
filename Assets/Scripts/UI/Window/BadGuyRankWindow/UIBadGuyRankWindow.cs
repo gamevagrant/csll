@@ -49,7 +49,7 @@ public class UIBadGuyRankWindow : UIWindowBase {
         wantedNumText.text = GameMainManager.instance.model.userData.wantedCount.ToString();
         GameMainManager.instance.netManager.Enemy((ret, res) =>
         {
-            badGuys = res.data;
+            badGuys = res.data.enemies;
             scrollView.setDatas(badGuys);
         });
     }
@@ -76,10 +76,16 @@ public class UIBadGuyRankWindow : UIWindowBase {
     private void OnUpdateUserDataHandle(BaseEvent e)
     {
         UpdateBaseDataEvent evt = e as UpdateBaseDataEvent;
-        if(evt.type == UpdateBaseDataEvent.UpdateType.wanted)
+        if(evt.updateType == UpdateBaseDataEvent.UpdateType.wanted)
         {
             wantedNumText.text = GameMainManager.instance.model.userData.wantedCount.ToString();
         }
        
+    }
+
+    public void OnClickBuyWantedBtn()
+    {
+        OnClickClose();
+        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIBuyWantedWindow);
     }
 }

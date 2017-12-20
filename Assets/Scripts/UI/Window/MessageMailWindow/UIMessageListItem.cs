@@ -14,10 +14,11 @@ public class UIMessageListItem : BaseItemView {
     public Button button;
     public Sprite[] headFrameSprites;
 
-    
+    MessageResponseData data;
+
     override public void SetData(object obj)
     {
-        MessageResponseData data = (MessageResponseData)obj;
+        data = (MessageResponseData)obj;
         headFrame.sprite = data.isVip ? headFrameSprites[1] : headFrameSprites[0];
         timeText.text = data.time;
         startCountText.text = data.crowns.ToString();
@@ -75,5 +76,31 @@ public class UIMessageListItem : BaseItemView {
         {
             headImage.texture = tex;
         });
+    }
+
+    public void OnClickWantedBtn()
+    {
+        if (GameMainManager.instance.model.userData.wantedCount > 0)
+        {
+            Alert.Show("确认使用1个通缉令吗？", Alert.OK | Alert.CANCEL, (btn) =>
+            {
+                if (btn == Alert.OK)
+                {
+                    GameMainManager.instance.netManager.Wanted(data.uid, (ret, res) =>
+                    {
+                        if (res.isOK)
+                        {
+                            button.gameObject.SetActive(false);
+
+
+                        }
+                    });
+                }
+            });
+        }
+        else
+        {
+            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIBuyWantedWindow);
+        }
     }
 }

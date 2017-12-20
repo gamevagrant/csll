@@ -112,7 +112,8 @@ public class UIFriendItem : BaseItemView {
     //招募
     public void OnClickRecruitBtn()
     {
-
+        GameMainManager.instance.uiManager.CloseWindow(UISettings.UIWindowID.UIFriendsWindow);
+        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIInviteWindow);
     }
 
     public void OnClickHead()

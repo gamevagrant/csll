@@ -272,7 +272,7 @@ public class UIManager : MonoBehaviour,IUIManager  {
                             {
                                 popupCollider.SetActive(true);
                                 curPopUpWindow = wd;
-                                popupCollider.transform.SetSiblingIndex(i);
+                                popupCollider.transform.SetSiblingIndex(Mathf.Max(0, i-1));
                                 
                                 break;
                             }

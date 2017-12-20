@@ -15,4 +15,5 @@ public class MessageResponseData {
     public bool read;                 // 是否已读
     public bool isWanted;            // 暂时未用到
     public bool isVip;
+    public int head_frame;
 }

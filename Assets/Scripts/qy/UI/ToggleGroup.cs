@@ -6,7 +6,9 @@ namespace QY.UI
 {
     public class ToggleGroup : MonoBehaviour
     {
-        public Dictionary<Toggle,string> dic = new Dictionary<Toggle, string>();
+        public bool allowSwitchOff = false;
+
+        private Dictionary<Toggle,string> dic = new Dictionary<Toggle, string>();
 
 
         public void RegisterToggle(Toggle toggle)
@@ -29,14 +31,20 @@ namespace QY.UI
         {
             foreach(Toggle t in dic.Keys)
             {
-                if(t == toggle)
-                {
-                    t.SetSelected(true);
-                }else
+                t.SetSelected(t == toggle);
+            }
+        }
+
+        public void SetAllTogglesOff()
+        {
+            if(allowSwitchOff)
+            {
+                foreach (Toggle t in dic.Keys)
                 {
                     t.SetSelected(false);
                 }
             }
+            
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Purchasing;
 public class UIBuyWantedWindow : UIWindowBase {
 
     public override UIWindowData windowData
@@ -27,8 +28,11 @@ public class UIBuyWantedWindow : UIWindowBase {
     public TextMeshProUGUI costText;
     const float UNIT_PRICE = 28;
 
+    private Product wanted;
+
     private void Awake()
     {
+        wanted = GameMainManager.instance.iap.GetProductWithID(new GoodsData("302").GetPurchaseID());
         conter.onChangeValue += OnChangeValue;
     }
 
@@ -44,11 +48,19 @@ public class UIBuyWantedWindow : UIWindowBase {
 
     private void OnChangeValue(int num)
     {
-        costText.text = "￥" + num * UNIT_PRICE;
+        if(wanted!=null)
+        {
+            costText.text = wanted.metadata.localizedPriceString;
+        }else
+        {
+            costText.text = "￥" + num * UNIT_PRICE;
+        }
+        
+       
     }
 
     public void OnBuyBtn()
     {
-
+        GameMainManager.instance.iap.Purchase(wanted.definition.id);
     }
 }

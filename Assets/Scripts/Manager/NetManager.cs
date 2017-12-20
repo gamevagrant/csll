@@ -205,6 +205,12 @@ public class NetManager:INetManager
                     user.mapInfo = res.data.mapInfo;
                 }
 
+                if(res.data.playUpgradeAnimation)
+                {
+                    user.money = res.data.upgradeMoneyAfterReward;
+                    user.maxEnergy = res.data.upgradeEnergyAfterReward;
+                }
+
             }
             else
             {
@@ -980,6 +986,8 @@ public class NetManager:INetManager
                 UserData ud = GameMainManager.instance.model.userData;
                 ud.energy = res.data.energy;
                 ud.money = res.data.money;
+                EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Money, 0));
+                EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Energy, 0));
             }
             else
             {

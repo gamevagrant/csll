@@ -2,8 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+//using UnityEngine.UI;
 using DG.Tweening;
+using QY.UI;
 
 public class UIShopWindow : UIWindowBase {
 
@@ -27,7 +28,6 @@ public class UIShopWindow : UIWindowBase {
     public Toggle energyToggle;
     public Toggle goldToggle;
     public Toggle propsToggle;
-    public ToggleGroup toggleGroup;
 
     public RectTransform TopBar;
     public RectTransform energyPanel;
@@ -72,8 +72,8 @@ public class UIShopWindow : UIWindowBase {
         });
 
         energyToggle.isOn = true;
-        energyToggle.enabled = false;
-        energyToggle.enabled = true;
+        //energyToggle.enabled = false;
+        //energyToggle.enabled = true;
 
         TopBar.anchoredPosition = new Vector2(0, 160);
         //toggleGroup.NotifyToggleOn(energyToggle);
@@ -112,37 +112,40 @@ public class UIShopWindow : UIWindowBase {
 
     private void OnEnergyToggleValueChange(bool value)
     {
-        currPanel = energyPanel;
+        
         if(value)
         {
+            currPanel = energyPanel;
             ShowPanel(currPanel);
         }else
         {
-            HidePanel(currPanel);
+            HidePanel(energyPanel);
         }
     }
     private void OnGoldToggleValueChange(bool value)
     {
-        currPanel = goldPanel;
+       
         if (value)
         {
+            currPanel = goldPanel;
             ShowPanel(currPanel);
         }
         else
         {
-            HidePanel(currPanel);
+            HidePanel(goldPanel);
         }
     }
     private void OnPropsToggleValueChange(bool value)
     {
-        currPanel = propsPanel;
+        
         if (value)
         {
+            currPanel = propsPanel;
             ShowPanel(currPanel);
         }
         else
         {
-            HidePanel(currPanel);
+            HidePanel(propsPanel);
         }
     }
 

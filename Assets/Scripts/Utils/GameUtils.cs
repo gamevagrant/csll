@@ -105,4 +105,28 @@ public class GameUtils
     {
         return string.Format("{0:N0}", money);
     }
+
+    /// <summary>
+    /// 获取钱币的短字符串以K为最小单位
+    /// </summary>
+    /// <param name="money"></param>
+    /// <returns></returns>
+    public static string GetShortMoneyStr(long money)
+    {
+        string[] sign = new string[] { "K", "M", "B", "T" };
+        string str = GetCurrencyString(money);
+        string[] list = str.Split(',');
+        if(list.Length<2)
+        {
+
+        }else if (list.Length - 1 <= sign.Length)
+        {
+            str = list[0] + sign[list.Length - 2];
+        }else
+        {
+            float tag = money / Mathf.Pow(1000, sign.Length );
+            str = GetCurrencyString((long)tag) + sign[sign.Length - 1];
+        }
+        return str;
+    }
 }

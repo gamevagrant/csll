@@ -109,7 +109,6 @@ public class HttpProxy {
             
         });
         req.AddHeader(JsonHeaderType, JsonHeaderValue);
-        req.Timeout = new TimeSpan(0, 0, 0, 5);
         return req;
     }
 
@@ -122,7 +121,7 @@ public class HttpProxy {
         }
 
         HTTPRequest req = MakePostRequest<T>(url, data, callback);
-        req.Timeout = new TimeSpan(0,0,15);
+        req.Timeout = new TimeSpan(0,0,30);
         Debug.Log("正在请求："+ url);
         MarkCheck(url);
         return HTTPManager.SendRequest(req) != null;

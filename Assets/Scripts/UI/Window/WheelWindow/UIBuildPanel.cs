@@ -36,6 +36,7 @@ public class UIBuildPanel : MonoBehaviour {
     private void Awake()
     {
         EventDispatcher.instance.AddEventListener(EventEnum.BUILD_COMPLATE, OnBuildComplateHandle);
+        EventDispatcher.instance.AddEventListener(EventEnum.UPDATE_BUILDING, OnUpdateBuilding);
 
         buildBtnOriginalValue = buildBtn.anchoredPosition;
         switchOriginalValue = switchBtn.anchoredPosition;
@@ -64,6 +65,7 @@ public class UIBuildPanel : MonoBehaviour {
     private void OnDestroy()
     {
         EventDispatcher.instance.RemoveEventListener(EventEnum.BUILD_COMPLATE, OnBuildComplateHandle);
+        EventDispatcher.instance.RemoveEventListener(EventEnum.UPDATE_BUILDING, OnUpdateBuilding);
     }
 
     public void setData(int islandID,BuildingData[] data,System.Action<bool> onUpgrading)
@@ -206,6 +208,11 @@ public class UIBuildPanel : MonoBehaviour {
        
     }
 
+    private void OnUpdateBuilding(BaseEvent e)
+    {
+        islandFactory.UpdateCityData(user.islandId, user.buildings);
+    }
+
     private void UpgradeIsland()
     {
         GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.building_island_change);
@@ -226,6 +233,9 @@ public class UIBuildPanel : MonoBehaviour {
         {
             box.gameObject.SetActive(true);
             box.SetData(buildComplateData.upgradeEnergyReward > 0, buildComplateData.upgradeMoneyReward > 0);
+            EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Energy, 0));
+            EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Money, 0));
+
             string content = string.Format("哇哦 恭喜您又建成一个岛屿，送你奖励继续加油哦！能量：{0} 金币：{1}", buildComplateData.upgradeEnergyReward.ToString(), buildComplateData.upgradeMoneyReward.ToString());
             Alert.ShowPopupBox(content, () =>
             {
@@ -238,18 +248,7 @@ public class UIBuildPanel : MonoBehaviour {
                 switchBtn.gameObject.SetActive(true);
                 onUpgrading(false);
             }, "领取");
-            /*
-            GameMainManager.instance.uiManager.OpenPopupModalBox(content, "领取", () =>
-            {
-                upgradePanel.SetActive(false);
-                box.gameObject.SetActive(false);
-                buildBtn.gameObject.SetActive(true);
 
-                GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UISideBarWindow);
-                GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UITopBarWindow);
-                switchBtn.gameObject.SetActive(true);
-                onUpgrading(false);
-            });*/
         });
     }
 

@@ -11,13 +11,14 @@ public class UpdateBaseDataEvent :BaseEvent {
         star,//星星
         sheild,//盾牌
         wanted,//通缉令
+        vip,//vip
     }
 
-    public UpdateType type;
+    public UpdateType updateType;
     public float delay;
     public UpdateBaseDataEvent(UpdateType type,float delay) : base(EventEnum.UPDATE_BASE_DATA)
     {
-        this.type = type;
+        this.updateType = type;
         this.delay = delay;
     }
 }

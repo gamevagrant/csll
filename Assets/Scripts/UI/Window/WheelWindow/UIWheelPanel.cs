@@ -84,9 +84,15 @@ public class UIWheelPanel : MonoBehaviour {
         panel.anchoredPosition = new Vector2(-600, panel.anchoredPosition.y);
 
         getStarEffect.gameObject.SetActive(false);
+
+        EventDispatcher.instance.AddEventListener(EventEnum.UPDATE_BASE_DATA, OnUpdateBaseData);
     }
 
-  
+    private void OnDestroy()
+    {
+        EventDispatcher.instance.RemoveEventListener(EventEnum.UPDATE_BASE_DATA, OnUpdateBaseData);
+    }
+
 
     private void Start()
     {
@@ -106,6 +112,15 @@ public class UIWheelPanel : MonoBehaviour {
             countDownLabel.text = "";
         }
         
+    }
+
+    private void OnUpdateBaseData(BaseEvent e)
+    {
+        UpdateBaseDataEvent evt = e as UpdateBaseDataEvent;
+        if(evt.updateType == UpdateBaseDataEvent.UpdateType.vip)
+        {
+            energyValue = user.energy;
+        }
     }
 
     public void SetStealerData(TargetData target)

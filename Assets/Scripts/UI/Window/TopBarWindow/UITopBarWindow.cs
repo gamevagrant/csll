@@ -88,7 +88,7 @@ public class UITopBarWindow : UIWindowBase {
     private void OnUpdateData(BaseEvent e)
     {
         UpdateBaseDataEvent evt = e as UpdateBaseDataEvent;
-        switch (evt.type)
+        switch (evt.updateType)
         {
             case UpdateBaseDataEvent.UpdateType.Money:
                 UpdateMoney(user.money, evt.delay);
@@ -136,7 +136,7 @@ public class UITopBarWindow : UIWindowBase {
         Sequence sq = DOTween.Sequence();
         sq.AppendInterval(delay);
         sq.Append(starLabel.transform.DOScale(1.3f, 0.3f).SetEase(Ease.OutCubic));
-        sq.InsertCallback(delay + 0.1f,()=> {
+        sq.InsertCallback(delay,()=> {
 
             starLabel.text = value.ToString();
         });

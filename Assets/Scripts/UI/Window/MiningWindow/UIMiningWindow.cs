@@ -110,7 +110,8 @@ public class UIMiningWindow :UIWindowBase {
                 list.Add(itemData);
             }
             scrollView.SetData(list);
-            scrollView.SetSelected(user.islandId>1? user.islandId-2:0);
+            
+            scrollView.SetSelected(GetCanBuyMinnerIsland());
             long produce = 0;
             foreach (MinesData md in mapinfo.mines)
             {
@@ -127,6 +128,21 @@ public class UIMiningWindow :UIWindowBase {
             UpdateMoneyBox(mapinfo);
 
         }
+    }
+
+    private int GetCanBuyMinnerIsland()
+    {
+        MinesData[] minesDatas = user.mapInfo.mines;
+        for (int i=0;i< minesDatas.Length;i++)
+        {
+            MinesData mines = minesDatas[i];
+            if(mines.miner<5)
+            {
+                return i;
+            }
+        }
+
+        return user.islandId > 1 ? user.islandId - 2 : 0;
     }
 
     private void UpdateMoneyBox(MapInfoData mapInfo)

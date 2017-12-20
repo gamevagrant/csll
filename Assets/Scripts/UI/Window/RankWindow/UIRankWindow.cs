@@ -2,7 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+//using UnityEngine.UI;
+using QY.UI;
 using DG.Tweening;
 public class UIRankWindow : UIWindowBase {
 
@@ -82,8 +83,6 @@ public class UIRankWindow : UIWindowBase {
         });
 
         allToggle.isOn = true;
-        allToggle.enabled = false;
-        allToggle.enabled = true;
 
         TopBar.anchoredPosition = new Vector2(0, 160);
         //toggleGroup.NotifyToggleOn(energyToggle);
@@ -121,6 +120,7 @@ public class UIRankWindow : UIWindowBase {
     private void ShowPanel(RectTransform panel)
     {
         //Sequence sq = DOTween.Sequence();
+        currPanel = panel;
         panel.gameObject.SetActive(true);
         panel.DOAnchorPos(new Vector2(0, 0), 1f).SetEase(Ease.OutBack);
     }
@@ -129,32 +129,30 @@ public class UIRankWindow : UIWindowBase {
     {
         panel.DOAnchorPos(new Vector2(0, 950), 1f).SetEase(Ease.OutCubic).OnComplete(() =>
         {
-            panel.gameObject.SetActive(false);
+            //panel.gameObject.SetActive(false);
         });
     }
 
     private void OnAllValueChange(bool value)
     {
-        currPanel = allPanel;
         if (value)
         {
-            ShowPanel(currPanel);
+            ShowPanel(allPanel);
         }
         else
         {
-            HidePanel(currPanel);
+            HidePanel(allPanel);
         }
     }
     private void OnMyValueChange(bool value)
     {
-        currPanel = friendPanel;
         if (value)
         {
-            ShowPanel(currPanel);
+            ShowPanel(friendPanel);
         }
         else
         {
-            HidePanel(currPanel);
+            HidePanel(friendPanel);
         }
     }
 }

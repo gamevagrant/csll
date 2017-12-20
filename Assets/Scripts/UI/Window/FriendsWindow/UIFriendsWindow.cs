@@ -24,9 +24,9 @@ public class UIFriendsWindow : UIWindowBase {
         }
     }
 
-    public Toggle myFriendsToggle;
-    public Toggle addFriendToggle;
-    public Toggle applyFriendsToggle;
+    //public Toggle myFriendsToggle;
+    //public Toggle addFriendToggle;
+    //public Toggle applyFriendsToggle;
 
     public GameObject myFriendsPanel;
     public GameObject addFriendPanel;
@@ -45,9 +45,9 @@ public class UIFriendsWindow : UIWindowBase {
 
     private void Awake()
     {
-        myFriendsToggle.onValueChanged.AddListener(OnChangeMyFriendsToggle);
-        addFriendToggle.onValueChanged.AddListener(OnChangeAddFriendsToggle);
-        applyFriendsToggle.onValueChanged.AddListener(OnChangeApplyFriendsToggle);
+        //myFriendsToggle.onValueChanged.AddListener(OnChangeMyFriendsToggle);
+        //addFriendToggle.onValueChanged.AddListener(OnChangeAddFriendsToggle);
+        //applyFriendsToggle.onValueChanged.AddListener(OnChangeApplyFriendsToggle);
 
         EventDispatcher.instance.AddEventListener(EventEnum.UPDATE_FRIENDS, OnUpdateFriendsHandle);
         EventDispatcher.instance.AddEventListener(EventEnum.SELECTED_FRIEND, OnSelectedFriendHandle);
@@ -55,9 +55,9 @@ public class UIFriendsWindow : UIWindowBase {
 
     private void OnDestroy()
     {
-        myFriendsToggle.onValueChanged.RemoveAllListeners();
-        addFriendToggle.onValueChanged.RemoveAllListeners();
-        applyFriendsToggle.onValueChanged.RemoveAllListeners();
+        //myFriendsToggle.onValueChanged.RemoveAllListeners();
+        //addFriendToggle.onValueChanged.RemoveAllListeners();
+        //applyFriendsToggle.onValueChanged.RemoveAllListeners();
 
         EventDispatcher.instance.RemoveEventListener(EventEnum.UPDATE_FRIENDS, OnUpdateFriendsHandle);
         EventDispatcher.instance.RemoveEventListener(EventEnum.SELECTED_FRIEND, OnSelectedFriendHandle);
@@ -74,14 +74,14 @@ public class UIFriendsWindow : UIWindowBase {
         });
        
         UpdateAddFriendData();
-        myFriendsToggle.isOn = true;
-        myFriendsToggle.enabled = false;
-        myFriendsToggle.enabled = true;
+        //myFriendsToggle.isOn = true;
+        //myFriendsToggle.enabled = false;
+        //myFriendsToggle.enabled = true;
         addFriendPanel.SetActive(false);
         applyFriendsPanel.SetActive(false);
         menuePanel.parent.gameObject.SetActive(false);
     }
-
+    /*
     private void OnChangeMyFriendsToggle(bool value)
     {
         myFriendsPanel.SetActive(value);
@@ -97,7 +97,7 @@ public class UIFriendsWindow : UIWindowBase {
     {
         applyFriendsPanel.SetActive(value);
     }
-
+    */
     private void OnUpdateFriendsHandle(BaseEvent e)
     {
         UpdateFriendsEvent evt = e as UpdateFriendsEvent;

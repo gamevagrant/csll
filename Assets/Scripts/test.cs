@@ -44,7 +44,11 @@ public class Test : MonoBehaviour {
     }
 	// Update is called once per frame
 	void Update () {
-		
+		if(Input.GetMouseButtonDown(0))
+        {
+            UnityEngine.UI.Toggle t = GetComponent<UnityEngine.UI.Toggle>();
+            t.isOn = !t.isOn;
+        }
 	}
 
     private void OnGUI()
@@ -55,5 +59,10 @@ public class Test : MonoBehaviour {
             wsp.send("{\"uid\":1,\"toid\":2,\"extra\":\"hello\"}");
             Debug.Log("send");
         }
+    }
+
+    public void OnChangeVale(bool a)
+    {
+        Debug.Log("OnChangeVale");
     }
 }

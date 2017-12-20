@@ -46,21 +46,15 @@ public class UIWheelWindow : UIWindowBase {
 
     private void Awake()
     {
-       // EventDispatcher.instance.AddEventListener(EventEnum.LOGIN_COMPLATE, onUpdateUserData);
         currState = OpenState.Closed;
 
         leftBtnPos = leftBtn.anchoredPosition;
     }
 
-
+     /*
     private void Update()
     {
-        /*
-        if(user != null)
-        {
-            wheelPanel.SetEnergyData(user.maxEnergy, user.energy, user.recoverEnergy, energyTimeToRecover - (long)(Time.time - energyTimeToRecoverTag));
-        }
-        */
+       
         if(QY.CrossPlatformInput.CrossPlatformInputManager.GetButtonDown(CrossPlatformInput.LEFT))
         {
             if(GameMainManager.instance.uiManager.isEnable && GameMainManager.instance.uiManager.curWindow.windowData == windowData)
@@ -74,19 +68,10 @@ public class UIWheelWindow : UIWindowBase {
                 onClickShowWheelBtn();
             }
         }
+       
+        
     }
-    /*
-    private void OnDestroy()
-    {
-        //EventDispatcher.instance.RemoveEventListener(EventEnum.LOGIN_COMPLATE, onUpdateUserData);
-    }
-
-
-    private void onUpdateUserData(BaseEvent e)
-    {
-        user = e.datas[0] as UserData;
-        updateUserData(user);
-    }*/
+ */
 
     private void updateUserData(UserData ud)
     {

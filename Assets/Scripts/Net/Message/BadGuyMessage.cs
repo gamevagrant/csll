@@ -2,6 +2,11 @@
 
 public class BadGuyMessage :NetMessage{
 
-    public BadGuyData[] data;
+    public EnemyData data;
 
+}
+
+public class EnemyData
+{
+    public BadGuyData[] enemies;
 }

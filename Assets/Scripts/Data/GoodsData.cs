@@ -13,6 +13,16 @@ public class GoodsData  {
     public int isShow;                             // 是否显示
     public LitJson.JsonData extra;
 
+    public GoodsData()
+    {
+
+    }
+
+    public GoodsData(string id)
+    {
+        goodsId = id;
+    }
+
     /// <summary>
     /// 应用内购买用的id
     /// </summary>

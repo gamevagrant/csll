@@ -226,6 +226,7 @@ GameObject:
   - component: {fileID: 224316960780084734}
   - component: {fileID: 222415954762445938}
   - component: {fileID: 114677389464408670}
+  - component: {fileID: 114174181379611136}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -1772,6 +1773,48 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &114174181379611136
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1158557314114596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3815a1727d20f5a49a8814c9054fe4c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  touchLeft:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114385698893887350}
+        m_MethodName: OnClickClose
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: GestureTrigger+GestureEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  touchRight:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: GestureTrigger+GestureEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  touchUp:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: GestureTrigger+GestureEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  touchDown:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: GestureTrigger+GestureEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!114 &114206519992360318
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4673,7 +4716,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1787310323955788}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 100, y: -192.29999, z: 0}
+  m_LocalPosition: {x: 20, y: -192.29999, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224316960780084734}
@@ -4681,9 +4724,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 100, y: -192.29999}
+  m_AnchoredPosition: {x: 20, y: -192.29999}
   m_SizeDelta: {x: 162, y: 62}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 0.5}
 --- !u!224 &224220399165719116
 RectTransform:
   m_ObjectHideFlags: 1

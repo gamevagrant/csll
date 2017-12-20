@@ -11,9 +11,10 @@ namespace QY.UI
         [System.Serializable]
         public class ToggleEvent : UnityEvent<bool> { };
 
-        public ToggleEvent onValueChanged;
+        public ToggleEvent onValueChanged ;
         
         public bool isSelectedInStart = false;
+
         public GameObject[] activate;//选中时需要开启的
         public GameObject[] deactivate;//没有选中时需要关闭的
 
@@ -27,14 +28,19 @@ namespace QY.UI
             }
             set
             {
-                _isOn = value;
-
                 if (toggleGroup != null)
                 {
-                    toggleGroup.NotifyToggleOn(this);
+                    if(value)
+                    {
+                        toggleGroup.NotifyToggleOn(this);
+                    }else
+                    {
+                        toggleGroup.SetAllTogglesOff();
+                    }
+                    
                 }else
                 {
-                    SetSelected(_isOn);
+                    SetSelected(value);
                 }
             }
         }
@@ -42,11 +48,14 @@ namespace QY.UI
         protected override void Awake()
         {
             base.Awake();
+           
             if (toggleGroup != null)
             {
                 toggleGroup.RegisterToggle(this);
             }
         }
+
+        
 
         protected override void OnDestroy()
         {
@@ -60,29 +69,43 @@ namespace QY.UI
         protected override void Start()
         {
             base.Start();
-            if (isSelectedInStart)
-            {
-                isOn = true;
-               
-            }
+            _isOn = isSelectedInStart;
+            SetState(isSelectedInStart);
         }
 
         internal void SetSelected(bool isSelected)
         {
-            if(activate != null)
+            if(isSelected == _isOn)
+            {
+                return;
+            }
+            _isOn = isSelected;
+            SetState(isSelected);
+            StartCoroutine(ChangeValue(isSelected));
+        }
+
+        IEnumerator ChangeValue(bool isSelected)
+        {
+            yield return null;
+            onValueChanged.Invoke(isSelected);
+        }
+
+        private void SetState(bool isSelected)
+        {
+            if (activate != null)
             {
                 foreach (GameObject go in activate)
                 {
-                    if(go != null)
+                    if (go != null)
                     {
                         go.SetActive(isSelected);
                     }
-                    
+
                 }
-               
+
             }
 
-            if(deactivate!=null)
+            if (deactivate != null)
             {
                 foreach (GameObject go in deactivate)
                 {
@@ -93,22 +116,12 @@ namespace QY.UI
 
                 }
             }
-            
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
             isOn = !isOn;
-            int count = onValueChanged.GetPersistentEventCount();
-            if (count > 0)
-            {
-                for(int i = 0;i<count;i++)
-                {
-                    onValueChanged.Invoke(isOn);
-                    //(onValueChanged.GetPersistentTarget(i) as GameObject).SendMessage(onValueChanged.GetPersistentMethodName(i), true);
-                }
-               
-            }
+            
         }
 
     }

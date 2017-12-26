@@ -58,10 +58,16 @@ public class GameMainManager {
         GuideManager.instance.Init(model.userData.tutorial, configManager.guideDataConfig, OnProcessGuide, OnExecutedComplate);
 
         
-        if((model.userData.last_action == 1 && model.userData.attackTargetUser != null) || model.userData.tutorial == 6 || model.userData.tutorial == 13)
+        if(model.userData.last_action == 1 && model.userData.attackTargetUser != null)
         {
             Dictionary<UISettings.UIWindowID, object> stateData = new Dictionary<UISettings.UIWindowID, object>();
             stateData.Add(UISettings.UIWindowID.UIAttackWindow, model.userData.attackTargetUser);
+            GameMainManager.instance.uiManager.ChangeState(new UIStateChangeBase(stateData));
+        }
+        else if(model.userData.tutorial == 6 || model.userData.tutorial == 13)
+        {
+            Dictionary<UISettings.UIWindowID, object> stateData = new Dictionary<UISettings.UIWindowID, object>();
+            stateData.Add(UISettings.UIWindowID.UIAttackWindow, model.userData.attackTarget.ToAttackTargetUserData());//新手教程中服务器发来的数据都是假的，造成部分数据或者逻辑不同 这里取不到model.userData.attackTargetUser
             GameMainManager.instance.uiManager.ChangeState(new UIStateChangeBase(stateData));
         }
         else if(model.userData.last_action == 2 || model.userData.tutorial == 16)

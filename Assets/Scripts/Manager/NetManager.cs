@@ -340,7 +340,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("获取仇人失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
+                //Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
             }
            
         });

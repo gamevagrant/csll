@@ -18,6 +18,11 @@ public class GameStarter : MonoBehaviour
         SceneManager.LoadScene("Login");
     }
 
+    private void Start()
+    {
+        
+    }
+
     private void OnDestroy()
     {
         EventDispatcher.instance.RemoveEventListener(EventEnum.LOGIN_COMPLATE, OnLoginHandle);
@@ -94,7 +99,7 @@ public class GameStarter : MonoBehaviour
         }
 
         GameMainManager.instance.Init();
-        GameMainManager.instance.uiManager.ChangeState(new MainState(0));
+       
 
     }
 }

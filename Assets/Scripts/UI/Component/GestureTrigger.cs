@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
+using QY.UI;
 
-public class GestureTrigger : MonoBehaviour ,IDragHandler,IBeginDragHandler,IEndDragHandler{
+public class GestureTrigger : Interactable, IDragHandler,IBeginDragHandler,IEndDragHandler{
     [System.Serializable]
     public class GestureEvent : UnityEvent { };
 
@@ -19,13 +20,18 @@ public class GestureTrigger : MonoBehaviour ,IDragHandler,IBeginDragHandler,IEnd
     public void OnBeginDrag(PointerEventData eventData)
     {
         start = eventData.position;
+
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        end = eventData.position;
+        if(isInteractive)
+        {
+            end = eventData.position;
 
-        Process();
+            Process();
+        }
+        
     }
 
     public void OnDrag(PointerEventData eventData)

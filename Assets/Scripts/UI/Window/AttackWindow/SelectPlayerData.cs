@@ -17,11 +17,13 @@ public class SelectPlayerData {
     public bool isWanted = false;//是否呗通缉
     public BuildingData[] buildings;
 
+    public int num = 0;//数据在列表中的位置 用于新手引导 从1开始
+
     public SelectPlayerData()
     {
 
     }
-    public SelectPlayerData(BadGuyData data)
+    public SelectPlayerData(BadGuyData data,int num = 0)
     {
         uid = data.uid;
         gender = data.gender;
@@ -35,6 +37,7 @@ public class SelectPlayerData {
         islandId = data.islandId;
         buildings = data.buildings;
         isWanted = data.isWanted;
+        this.num = num;
     }
 
     public SelectPlayerData(FriendData data)

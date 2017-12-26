@@ -5,11 +5,11 @@ using UnityEngine;
 public class MainState : UIStateChangeBase
 {
     private float delay;
-    public MainState(float delay = 1)
+    public MainState(float delay = 1,int wheelWindowState = 0)
     {
         this.delay = delay;
         needShowWindows = new Dictionary<UISettings.UIWindowID, object>();
-        needShowWindows.Add(UISettings.UIWindowID.UIWheelWindow, null);
+        needShowWindows.Add(UISettings.UIWindowID.UIWheelWindow, wheelWindowState);
         needShowWindows.Add(UISettings.UIWindowID.UISideBarWindow, null);
         needShowWindows.Add(UISettings.UIWindowID.UITopBarWindow, null);
         

@@ -21,6 +21,6 @@ public class BuildData {
     public int upgradeEnergyAfterReward;       // 升级后能量奖励
     public long upgradeMoneyAfterReward;      // 升级后金币奖励
     public RollerItemData[] rollerItems;                   // 转盘items   // RollerItem 数据结构在上面
-    public long tutorial;                    // 新手教程
+    public int tutorial;                    // 新手教程
 
 }

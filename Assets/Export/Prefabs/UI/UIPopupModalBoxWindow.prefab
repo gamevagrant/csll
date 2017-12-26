@@ -21,8 +21,7 @@ GameObject:
   - component: {fileID: 224205791511294122}
   - component: {fileID: 222954275857109230}
   - component: {fileID: 114764069544560986}
-  - component: {fileID: 114715524571117832}
-  - component: {fileID: 114972543305244740}
+  - component: {fileID: 114480999684065490}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -222,7 +221,7 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &114715524571117832
+--- !u!114 &114480999684065490
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -230,7 +229,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1018918726948344}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: e6f017cdba9730d4780625b8c055df0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -258,7 +257,8 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 114764069544560986}
-  m_OnClick:
+  id: PopupModalBoxWindow_OkBtn
+  onClick:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114941531359764740}
@@ -272,8 +272,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+    m_TypeName: QY.UI.Button+ButtonClickEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!114 &114764069544560986
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -427,17 +427,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 114803084376836742}
   okBtnLabel: {fileID: 114273254928523244}
---- !u!114 &114972543305244740
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1018918726948344}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 531eead7af90d3647bb77a9a42072d07, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!222 &222129034441283456
 CanvasRenderer:
   m_ObjectHideFlags: 1

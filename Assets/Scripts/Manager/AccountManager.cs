@@ -77,7 +77,7 @@ public class AccountManager {
             guest.uuid = Guid.NewGuid().ToString("N");
             if (string.IsNullOrEmpty(name))
             {
-                guest.name = "游客_" + UnityEngine.Random.Range(0, 10000).ToString();
+                guest.name = "游客_" + UnityEngine.Random.Range(0, 100000000).ToString();
             }
             else
             {
@@ -178,7 +178,7 @@ public class AccountManager {
     {
         if (data.isOK)
         {
-
+            /*
             if (data.data.tutorial < 18)
             {
                 JumpOverTutorial(18 - (int)data.data.tutorial, () => {
@@ -190,7 +190,8 @@ public class AccountManager {
             {
                 EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.LOGIN_COMPLATE));
             }
-
+            */
+            EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.LOGIN_COMPLATE));
         }
         else
         {

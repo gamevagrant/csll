@@ -5,7 +5,7 @@ public interface INetManager
 {
 
     bool Login(string openid, Action<bool, LoginMessage> callBack);
-    bool TutorialComplete(Action<bool, NetMessage> callBack);
+    bool TutorialComplete(Action<bool, TutorialCompleteMessage> callBack);
     /// <summary>
     /// 转转盘
     /// </summary>

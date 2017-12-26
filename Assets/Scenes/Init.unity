@@ -122,7 +122,6 @@ GameObject:
   m_Component:
   - component: {fileID: 106223022}
   - component: {fileID: 106223021}
-  - component: {fileID: 106223020}
   m_Layer: 0
   m_Name: GameStarter
   m_TagString: Untagged
@@ -130,18 +129,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &106223020
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114165741135722016, guid: bdd43c99aeba7f445bf61ef8e833838e,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 106223019}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14b3cca1e75d6b642839bdd64b3ea405, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &106223021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,8 +257,8 @@ Camera:
   m_GameObject: {fileID: 1405830124}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0.24437125, b: 0.44852942, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -373,8 +360,8 @@ Canvas:
   m_GameObject: {fileID: 2009344193}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 1405830127}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -392,8 +379,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2009344193}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 540, y: 960, z: 0}
-  m_LocalScale: {x: 1.7419355, y: 1.7419355, z: 1.7419355}
+  m_LocalPosition: {x: 0, y: 0, z: 90}
+  m_LocalScale: {x: 0.009072581, y: 0.009072581, z: 0.009072581}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2

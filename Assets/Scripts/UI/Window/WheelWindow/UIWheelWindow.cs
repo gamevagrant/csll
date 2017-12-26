@@ -51,35 +51,15 @@ public class UIWheelWindow : UIWindowBase {
         leftBtnPos = leftBtn.anchoredPosition;
     }
 
-     /*
-    private void Update()
-    {
-       
-        if(QY.CrossPlatformInput.CrossPlatformInputManager.GetButtonDown(CrossPlatformInput.LEFT))
-        {
-            if(GameMainManager.instance.uiManager.isEnable && GameMainManager.instance.uiManager.curWindow.windowData == windowData)
-            {
-                onClickShowBuildBtn();
-            }
-        }else if(QY.CrossPlatformInput.CrossPlatformInputManager.GetButtonDown(CrossPlatformInput.RIGHT))
-        {
-            if (GameMainManager.instance.uiManager.isEnable && GameMainManager.instance.uiManager.curWindow.windowData == windowData)
-            {
-                onClickShowWheelBtn();
-            }
-        }
-       
-        
-    }
- */
+
 
     private void updateUserData(UserData ud)
     {
         if(ud!=null)
         {
-            wheelPanel.setData(ud.rollerItems);
+            wheelPanel.SetData(ud.rollerItems);
             wheelPanel.SetStealerData(ud.stealTarget);
-            buildPanel.setData(ud.islandId, ud.buildings, OnUpgrading);
+            buildPanel.SetData(ud.islandId, ud.buildings, OnUpgrading);
         }
 
     }
@@ -92,82 +72,35 @@ public class UIWheelWindow : UIWindowBase {
         {
             updateUserData(user);
         }
-        openState = OpenState.Wheel;
+       
         if(data!= null && data.Length>0 && data[0]!=null)
         {
             openState = (int)data[0]==0?OpenState.Wheel:OpenState.Building;
            
+        }else
+        {
+            openState = OpenState.Wheel;
         }
         
     }
 
     protected override void EnterAnimation(Action onComplete)
     {
-        if(currState!=OpenState.Closed)
-        {   
-            if(currState != openState)
-            {
-                if (openState == OpenState.Wheel)
-                {
-                    onClickShowWheelBtn();
-                }
-                else
-                {
-                    onClickShowBuildBtn();
-                }
-                currState = openState;
-            }
-            onComplete();
-            return;
+       if(openState== OpenState.Wheel)
+        {
+            ShowWheelState();
+        }else if(openState == OpenState.Building)
+        {
+            ShowBuildState();
         }
-        currState = openState;
-        GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_come);
-        int count = 0;
-        wheelPanel.OpenPanel(()=> {
-            count++;
-            if(count>1)
-            {
-                if (openState == OpenState.Building)
-                {
-                    onClickShowBuildBtn();
-                }
-                onComplete();
-               
-            }
-            });
-        buildPanel.OpenPanel(() => {
-            count++;
-            if (count > 1)
-            {
-                if (openState == OpenState.Building)
-                {
-                    onClickShowBuildBtn();
-                }
-                onComplete();
-            }
-        });
         ShowLeftBtn(true);
+        onComplete();
     }
     protected override void ExitAnimation(Action onComplete)
     {
-        int count = 0;
-        wheelPanel.ClosePanel(() => {
-            count++;
-            if (count > 1)
-            {
-                currState = OpenState.Closed;
-                onComplete();
-            }
-        });
-        buildPanel.ClosePanel(() => {
-            count++;
-            if (count > 1)
-            {
-                currState = OpenState.Closed;
-                onComplete();
-            }
-        });
+        ShowHideState(onComplete);
         ShowLeftBtn(false);
+
     }
 
     private void OnUpgrading(bool isUpgrading)
@@ -187,26 +120,48 @@ public class UIWheelWindow : UIWindowBase {
         }
     }
 
+    private void ShowWheelState()
+    {
+        if (currState != OpenState.Wheel)
+        {
+            wheelPanel.EnterToWheelPanelState();
+            buildPanel.EnterToWheelPanelState();
+            currState = OpenState.Wheel;
+            QY.Guide.GuideManager.instance.state = "wheel";
+        }
+    }
+
+    private void ShowBuildState()
+    {
+        if (currState != OpenState.Building)
+        {
+            wheelPanel.EnterToBuildPanelState();
+            buildPanel.EnterToBuildPanelState();
+            currState = OpenState.Building;
+            QY.Guide.GuideManager.instance.state = "building";
+        }
+    }
+
+    private void ShowHideState(Action onComplate)
+    {
+        wheelPanel.EnterToHideState(()=> {
+
+        });
+        buildPanel.EnterToHideState(()=> {
+            onComplate();
+        });
+        currState = OpenState.Closed;
+    }
+
     public void onClickShowBuildBtn()
     {
-        if(currState!= OpenState.Building)
-        {
-            wheelPanel.enterToBuildPanelState();
-            buildPanel.enterToBuildPanelState();
-            currState = OpenState.Building;
-        }
+        ShowBuildState();
         
     }
 
     public void onClickShowWheelBtn()
     {
-        if(currState!= OpenState.Wheel)
-        {
-            wheelPanel.enterToWheelPanelState();
-            buildPanel.enterToWheelPanelState();
-            currState = OpenState.Wheel;
-        }
-       
+        ShowWheelState();       
     }
 
     public void OnClickLeftDatailBtn()

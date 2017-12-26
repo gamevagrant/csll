@@ -9,7 +9,7 @@ public class UIEnemyPanelItem : BaseItemView {
     public HeadIcon headIcon;
     public TextMeshProUGUI tipsLabel;
     public TextMeshProUGUI attCountLabel;
-    public Button attBtn;
+    public QY.UI.Button attBtn;
     public GameObject img300k;
     public GameObject attImage;
     public GameObject nullImage;
@@ -20,7 +20,11 @@ public class UIEnemyPanelItem : BaseItemView {
     public override void SetData(object data)
     {
         selectData = (SelectPlayerData)data;
-
+        if(selectData.num != 0)
+        {
+            attBtn.id = "AttackWindow_Attack" + selectData.num.ToString();
+        }
+        
         headIcon.setData(selectData.name, selectData.headImg, selectData.crowns, selectData.isVip);
         if(selectData.attactTimes>0)
         {

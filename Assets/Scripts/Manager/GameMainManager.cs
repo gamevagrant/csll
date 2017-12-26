@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using QY.Open;
+using QY.Guide;
+using QY.UI;
 
 public class GameMainManager {
 
@@ -52,7 +54,33 @@ public class GameMainManager {
         audioManager = AudioManager.instance;
         audioManager.SetSoundPathProxy(FilePathTools.getAudioPath);
         audioManager.SetMusicPathProxy(FilePathTools.getAudioPath);
+
+        GuideManager.instance.Init(model.userData.tutorial, configManager.guideDataConfig, OnProcessGuide, OnExecutedComplate);
+
         
+        if((model.userData.last_action == 1 && model.userData.attackTargetUser != null) || model.userData.tutorial == 6 || model.userData.tutorial == 13)
+        {
+            Dictionary<UISettings.UIWindowID, object> stateData = new Dictionary<UISettings.UIWindowID, object>();
+            stateData.Add(UISettings.UIWindowID.UIAttackWindow, model.userData.attackTargetUser);
+            GameMainManager.instance.uiManager.ChangeState(new UIStateChangeBase(stateData));
+        }
+        else if(model.userData.last_action == 2 || model.userData.tutorial == 16)
+        {
+            Dictionary<UISettings.UIWindowID, object> stateData = new Dictionary<UISettings.UIWindowID, object>();
+            stateData.Add(UISettings.UIWindowID.UIStealWindow, model.userData.stealIslands);
+            GameMainManager.instance.uiManager.ChangeState(new UIStateChangeBase(stateData));
+        }
+        else
+        {
+            if (model.userData.tutorial == 1)
+            {
+                GameMainManager.instance.uiManager.ChangeState(new MainState(0, 1));
+            }
+            else
+            {
+                GameMainManager.instance.uiManager.ChangeState(new MainState(0));
+            }
+        }
 
     }
 
@@ -81,5 +109,39 @@ public class GameMainManager {
         }
     }
 
+
+    private void OnProcessGuide(GuideData guideData,Interactable interactable)
+    {
+
+       ShowGuide(guideData, interactable);
+    }
+
+    private void ShowGuide(GuideData guideData, Interactable interactable)
+    {
+        switch (guideData.actionType)
+        {
+            case GuideData.ActionType.click:
+                uiManager.OpenWindow(UISettings.UIWindowID.UIGuideWindow, false, interactable);
+                break;
+            case GuideData.ActionType.tips:
+                uiManager.OpenWindow(UISettings.UIWindowID.UIGuideTipsWindow, guideData.content);
+                break;
+            case GuideData.ActionType.open:
+                UISettings.UIWindowID id = (UISettings.UIWindowID)System.Enum.Parse(typeof(UISettings.UIWindowID), guideData.content);
+                uiManager.OpenWindow(id, guideData.content);
+                break;
+        }
+    }
+
+    private void OnExecutedComplate(GuideData guideData)
+    {
+        switch (guideData.actionType)
+        {
+            case GuideData.ActionType.click:
+                uiManager.CloseWindow(UISettings.UIWindowID.UIGuideWindow);
+                break;
+            
+        }
+    }
 
 }

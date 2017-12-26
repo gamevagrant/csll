@@ -31,7 +31,7 @@ public class UIMiningWindow :UIWindowBase {
     public RectTransform largeGold;
     public GameObject goldEfect;
     public Slider goldSlider;
-    public Button reapBtn;
+    public QY.UI.Button reapBtn;
 
     public GameObject buyMinerPanel;
     public UIMiningBuyMinerItem[] buyMinerItems;

@@ -6,15 +6,18 @@ using System.Collections.Generic;
 using System.Reflection;
 using LitJson;
 using System;
+using QY.Guide;
 using Object = UnityEngine.Object;
 
 public class ConfigManager {
 
     public IslandConfig islandConfig;
+    public GuideDataConfig guideDataConfig;
 
     private Dictionary<string, System.Type> configDic = new Dictionary<string, System.Type>
     {
         { "islandConfig" ,typeof(IslandConfig)},
+        { "guideDataConfig" ,typeof(GuideDataConfig)},
     };
     private int num;
     public void LoadConfig(System.Action onCompalte)

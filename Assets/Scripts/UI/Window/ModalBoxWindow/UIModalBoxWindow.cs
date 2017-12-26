@@ -29,6 +29,15 @@ public class UIModalBoxWindow : UIWindowBase {
     public TextMeshProUGUI cancelBtnLabel;
 
     private ModalBoxData modalData;
+
+    private void Awake()
+    {
+        QY.UI.Button[] btns = transform.GetComponentsInChildren<QY.UI.Button>();
+        foreach(QY.UI.Button btn in btns)
+        {
+            btn.isIgnoreLock = true;
+        }
+    }
     protected override void StartShowWindow(object[] data)
     {
         modalData = data[0] as ModalBoxData;

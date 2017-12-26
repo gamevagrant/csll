@@ -71,9 +71,10 @@ public class UIAttackTopBar : MonoBehaviour {
         
         if (enemys!=null)
         {
-            foreach (BadGuyData badData in enemys)
+            for(int i = 0;i< enemys.Length;i++)
             {
-                this.enemys.Add(new SelectPlayerData(badData));
+                BadGuyData badData = enemys[i];
+                this.enemys.Add(new SelectPlayerData(badData,i+1));
             }
 
         }

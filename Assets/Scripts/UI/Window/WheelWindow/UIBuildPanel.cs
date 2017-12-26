@@ -68,7 +68,7 @@ public class UIBuildPanel : MonoBehaviour {
         EventDispatcher.instance.RemoveEventListener(EventEnum.UPDATE_BUILDING, OnUpdateBuilding);
     }
 
-    public void setData(int islandID,BuildingData[] data,System.Action<bool> onUpgrading)
+    public void SetData(int islandID,BuildingData[] data,System.Action<bool> onUpgrading)
     {
         user = GameMainManager.instance.model.userData;
         //this.islandID = islandID;
@@ -79,18 +79,14 @@ public class UIBuildPanel : MonoBehaviour {
         this.onUpgrading = onUpgrading;
     }
 
+
     /// <summary>
     /// 切换到显示转盘界面时
     /// </summary>
-    public void enterToWheelPanelState()
+    public void EnterToWheelPanelState()
     {
-        //RectTransform buildBtnTF = buildBtn.transform as RectTransform;
         DOTween.To(() => buildBtn.anchoredPosition, p => buildBtn.anchoredPosition = p, new Vector2(buildBtn.anchoredPosition.x, -300), 1).SetEase(Ease.OutQuint);
-
-        //RectTransform switchBtnTF = switchBtn.transform as RectTransform;
         DOTween.To(() => switchBtn.anchoredPosition, p => switchBtn.anchoredPosition = p, new Vector2(-200, switchBtn.anchoredPosition.y), 1);
-
-        //RectTransform buildPanelTF = panel.transform as RectTransform;
         DOTween.To(() => panel.anchoredPosition, x => panel.anchoredPosition = x, new Vector2(200, -150), 1);
         DOTween.To(() => panel.localScale, x => panel.localScale = x, new Vector3(0.5f,0.5f,1), 1).onComplete = () => {
 
@@ -102,20 +98,14 @@ public class UIBuildPanel : MonoBehaviour {
     /// <summary>
     /// 切换到显示建造界面时
     /// </summary>
-    public void enterToBuildPanelState()
+    public void EnterToBuildPanelState()
     {
         GameMainManager.instance.uiManager.DisableOperation();
         buildBtn.gameObject.SetActive(true);
         switchBtn.gameObject.SetActive(true);
 
-        //RectTransform buildBtnTF = buildBtn.transform as RectTransform;
         DOTween.To(() => buildBtn.anchoredPosition, p => buildBtn.anchoredPosition = p, buildBtnOriginalValue, 1).SetEase(Ease.InQuint);
-        //DOTween.To(() => buildBtnTF.localScale, x => buildBtnTF.localScale = x, new Vector3(1.5f, 1.5f, 1), 1);
-
-        //RectTransform switchBtnTF = switchBtn.transform as RectTransform;
         DOTween.To(() => switchBtn.anchoredPosition, p => switchBtn.anchoredPosition = p, switchOriginalValue, 1);
-
-        //RectTransform buildPanelTF = panel.transform as RectTransform;
         DOTween.To(() => panel.anchoredPosition, x => panel.anchoredPosition = x,panelLocalOriginalValue, 1).SetEase(Ease.InQuint);
         DOTween.To(() => panel.localScale, x => panel.localScale = x, Vector3.one, 1).onComplete = () => {
 
@@ -123,53 +113,20 @@ public class UIBuildPanel : MonoBehaviour {
         };
     }
 
-    /// <summary>
-    /// 窗口关闭时调用
-    /// </summary>
-    public void ClosePanel(System.Action onComplate)
+    public void EnterToHideState(System.Action onComplate)
     {
-        //RectTransform buildBtnTF = buildBtn.transform as RectTransform;
-        //RectTransform switchBtnTF = switchBtn.transform as RectTransform;
-        //RectTransform buildPanelTF = panel.transform as RectTransform;
-
         Sequence sq = DOTween.Sequence();
         sq.Append(DOTween.To(() => buildBtn.anchoredPosition, p => buildBtn.anchoredPosition = p, new Vector2(buildBtn.anchoredPosition.x, -300), 1).SetEase(Ease.OutExpo));
-        sq.Insert(0.5f,DOTween.To(() => switchBtn.anchoredPosition, p => switchBtn.anchoredPosition = p, new Vector2(-200, switchBtn.anchoredPosition.y), 1).SetEase(Ease.OutCubic));
+        sq.Insert(0.5f, DOTween.To(() => switchBtn.anchoredPosition, p => switchBtn.anchoredPosition = p, new Vector2(-200, switchBtn.anchoredPosition.y), 1).SetEase(Ease.OutCubic));
         sq.Insert(0.5f, DOTween.To(() => panel.anchoredPosition, x => panel.anchoredPosition = x, new Vector2(500, -150), 1).SetEase(Ease.OutBack));
-        sq.onComplete += () => {
-            //buildBtn.gameObject.SetActive(false);
-            //switchBtn.gameObject.SetActive(false);
-            //panel.gameObject.SetActive(false);
+        sq.OnComplete(() =>
+        {
             onComplate();
-        };
-        
+        });
 
     }
 
-    /// <summary>
-    /// 窗口打开时的初始化
-    /// </summary>
-    public void OpenPanel(System.Action onComplate)
-    {
-        GameMainManager.instance.uiManager.DisableOperation();
-        // buildBtn.SetActive(false);
-        // switchBtn.SetActive(false);
-        // panel.SetActive(true);
 
-        //RectTransform buildBtnTF = buildBtn.transform as RectTransform;
-        //RectTransform switchBtnTF = switchBtn.transform as RectTransform;
-        //RectTransform buildPanelTF = panel.transform as RectTransform;
-        buildBtn.gameObject.SetActive(false);
-        switchBtn.gameObject.SetActive(false);
-        panel.gameObject.SetActive(true);
-        panel.localScale = new Vector3(0.5f, 0.5f, 1);
-
-        DOTween.To(() => panel.anchoredPosition, x => panel.anchoredPosition = x, new Vector2(200, -150), 1).SetEase(Ease.OutCubic).onComplete+=()=> {
-            GameMainManager.instance.uiManager.EnableOperation();
-            onComplate();
-        };
-
-    }
 
     public void onClickBuildBtn()
     {

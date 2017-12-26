@@ -95,6 +95,7 @@ public class NetManager:INetManager
                 GameMainManager.instance.model.userData = res.data;
 
                 ConnectWebSocket(res.data.uid);
+
             }
             else
             {
@@ -106,19 +107,28 @@ public class NetManager:INetManager
     }
 
 
-    public bool TutorialComplete(Action<bool,NetMessage> callBack)
+    public bool TutorialComplete(Action<bool, TutorialCompleteMessage> callBack)
     {
         string url = MakeUrl(APIDomain, "game/reward/tutorialcomplete");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("uid", uid);
         data.Add("token", token);
         data.Add("t", time.ToString());
-        return HttpProxy.SendPostRequest<NetMessage>(url, data, (ret, res) => {
+        return HttpProxy.SendPostRequest<TutorialCompleteMessage>(url, data, (ret, res) => {
 
             callBack(ret, res);
             if (res.isOK)
             {
+                UserData user = GameMainManager.instance.model.userData;
+                user.money = res.data.money;
+                user.energy = res.data.energy;
+                user.timeToRecover = res.data.timeToRecover;
+                user.tutorial = res.data.tutorial;
+                user.timeTag = Time.time;
+               
 
+                EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Energy, 0));
+                EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Money, 0));
             }
             else
             {
@@ -160,11 +170,14 @@ public class NetManager:INetManager
                 user.shields = res.data.shields;
                 user.stealIslands = res.data.stealIslands;
                 user.timeToRecoverInterval = res.data.timeToRecoverInterval;
+                user.tutorial = res.data.tutorial;
 
+               
             }
             else
             {
                 Debug.Log("roll点失败:" + res.errmsg);
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}",res.errmsg,res.errcode));
             }
            
         });
@@ -200,7 +213,8 @@ public class NetManager:INetManager
                 user.buildingCost = res.data.buildingCost;
                 user.buildingRepairCost = res.data.buildingRepairCost;
                 user.rollerItems = res.data.rollerItems==null? user.rollerItems: res.data.rollerItems;
-                if(res.data.mapInfo!= null)
+                user.tutorial = res.data.tutorial;
+                if (res.data.mapInfo!= null)
                 {
                     user.mapInfo = res.data.mapInfo;
                 }
@@ -215,6 +229,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("建造失败:" + res.errmsg);
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
             }
             
         });
@@ -222,7 +237,6 @@ public class NetManager:INetManager
 
     public bool Attack(long puid,int buildIndex, Action<bool, AttackMessage> callBack)
     {
-       
         string url = MakeUrl(APIDomain, "game/pvp/attack");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("uid", uid);
@@ -239,11 +253,14 @@ public class NetManager:INetManager
             if (res.isOK)
             {
                 AttackData attackData = res.data;
-                GameMainManager.instance.model.userData.money = attackData.money;
+                UserData user = GameMainManager.instance.model.userData;
+                user.money = attackData.money;
+                user.tutorial = attackData.tutorial;
             }
             else
             {
                 Debug.Log("攻击失败:" + res.errmsg);
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
             }
             
         });
@@ -265,8 +282,10 @@ public class NetManager:INetManager
             if (res.isOK)
             {
                 StealData stealData = res.data;
-                GameMainManager.instance.model.userData.money = stealData.money;
-                if(stealData.stealTarget != null)
+                UserData user = GameMainManager.instance.model.userData;
+                user.money = stealData.money;
+                user.tutorial = stealData.tutorial;
+                if (stealData.stealTarget != null)
                 {
                     GameMainManager.instance.model.userData.stealTarget = stealData.stealTarget;
                 }
@@ -275,6 +294,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("偷取失败:" + res.errmsg);
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
             }
             
         });
@@ -297,6 +317,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("获取恶人失败:" + res.errmsg);
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
             }
             
         });
@@ -319,6 +340,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("获取仇人失败:" + res.errmsg);
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
             }
            
         });
@@ -343,6 +365,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("获取玩家信息失败:" + res.errmsg);
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
             }
 
         });
@@ -367,6 +390,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("获取好友列表数据:" + res.errmsg);
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
             }
 
         });
@@ -394,6 +418,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("同意好友申请失败:" + res.errmsg);
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
             }
 
         });
@@ -419,6 +444,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("同意所有添加好友失败:" + res.errmsg);
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
             }
 
         });
@@ -444,6 +470,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("添加好友失败:" + res.errmsg);
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
             }
 
         });
@@ -473,6 +500,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("忽略好友失败:" + res.errmsg);
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
             }
 
         });
@@ -498,6 +526,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("忽略所有好友失败:" + res.errmsg);
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
             }
 
         });
@@ -531,6 +560,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("赠送好友能量失败:" + res.errmsg);
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
             }
 
         });
@@ -575,6 +605,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("接受好友能量失败:" + res.errmsg);
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
             }
 
         });
@@ -597,6 +628,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("接受好友能量失败:" + res.errmsg);
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
             }
 
         });
@@ -619,6 +651,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("获取世界排行榜失败:" + res.errmsg);
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
             }
 
         });
@@ -641,6 +674,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("获取好友排行榜失败:" + res.errmsg);
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
             }
 
         });
@@ -662,6 +696,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("获取地图数据失败:" + res.errmsg);
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
             }
 
         });
@@ -692,6 +727,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("购买矿工失败:" + res.errmsg);
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
             }
 
         });
@@ -719,6 +755,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("获取采矿金币失败:" + res.errmsg);
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
             }
 
         });
@@ -743,6 +780,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("通缉玩家失败:" + res.errmsg);
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
             }
 
         });
@@ -766,6 +804,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("获取消息和邮件失败:" + res.errmsg);
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
             }
 
         });
@@ -792,6 +831,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("获取消息和邮件失败:" + res.errmsg);
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
             }
 
         });
@@ -825,6 +865,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("注册失败:" + res.errmsg);
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
             }
             callBack(ret, res);
         });
@@ -916,6 +957,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("获取好友邀请进度失败:" + res.errmsg);
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
             }
             
         });
@@ -940,6 +982,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("设置好友邀请进度失败:" + res.errmsg);
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
             }
 
         });
@@ -964,6 +1007,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("获取可召回好友列表失败:" + res.errmsg);
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
             }
 
         });
@@ -992,6 +1036,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("邀请好友失败:" + res.errmsg);
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
             }
 
         });
@@ -1034,6 +1079,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("召回好友失败:" + res.errmsg);
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
             }
 
         });
@@ -1064,6 +1110,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("支付发放物品失败:" + res.errmsg);
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
             }
 
         });
@@ -1090,6 +1137,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("获取订单失败:" + res.errmsg);
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
             }
 
         });

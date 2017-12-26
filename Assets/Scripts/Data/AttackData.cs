@@ -16,5 +16,5 @@ public class AttackData{
     public bool isNewCannonContestScoreAward;  // 暂时未使用
     public int betCount;                  // 暂时未使用
     public AttackTargetData attackTarget;                   // 攻击对象  // AttackTarget 数据结构在上面
-    public long tutorial;                  // 新手教程
+    public int tutorial;                  // 新手教程
 }

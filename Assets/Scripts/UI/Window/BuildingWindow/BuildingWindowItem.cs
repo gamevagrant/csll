@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 using System;
 using TMPro;
 
-public class BuildingWindowItem : MonoBehaviour,IPointerClickHandler {
+public class BuildingWindowItem : QY.UI.Interactable,IPointerClickHandler {
 
     public TextMeshProUGUI price;
     public Image repair;
@@ -30,23 +30,29 @@ public class BuildingWindowItem : MonoBehaviour,IPointerClickHandler {
         damage,//损坏的
     }
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         icon = GetComponent<Image>();
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        
-        if (state == BuildState.canBuild || state == BuildState.damage)
+        GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.button_click);
+        if (isInteractive)
         {
-            GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.button_click);
-            if (onBuild!=null)
+            Interacted();
+            if (state == BuildState.canBuild || state == BuildState.damage)
             {
-                onBuild(index);
+                
+                if (onBuild != null)
+                {
+                    onBuild(index);
+                }
+
             }
-           
         }
+        
     }
 
     public void setData(BuildingData[] bds,SpriteAtlas sa,int[][] buildingCost,int[][] repairCost)

@@ -87,6 +87,8 @@ public class UIStealWindow : UIWindowBase {
             if(i<buttons.Length)
                 buttons[i].gameObject.SetActive(false);
         }
+
+        QY.Guide.GuideManager.instance.state = "steal";
     }
 
     protected override void EnterAnimation(Action onComplete)

@@ -1,0 +1,229 @@
+﻿{
+    "data": [
+        {
+            "interact_id": "GuideTipsWindow_CloseBtn",
+            "progress": 1,
+            "type": "tips",
+            "content": "如今楼市价格疯涨，财神爷特送来钱财供你建造自己的窝，坐等升值有木有！",
+            "delay": 0
+        },
+        {
+            "interact_id": "WheelWindow_BuildBtn",
+            "progress": 1,
+            "type": "click",
+            "content": "",
+            "delay": 0
+        },
+        {
+            "interact_id": "GuideTipsWindow_CloseBtn",
+            "progress": 1,
+            "type": "tips",
+            "content": "建完此城，你就走上人生巅峰，可以去下个城市继续浪啦！",
+            "delay": 0
+        },
+        {
+            "interact_id": "BuildingWindow_1_1",
+            "progress": 1,
+            "type": "click",
+            "content": "",
+            "delay": 0
+        },
+        {
+            "interact_id": "GuideTipsWindow_CloseBtn",
+            "progress": 2,
+            "type": "tips",
+            "content": "完成所有建筑需要大量金钱，先定一个小目标：赚他一个亿！",
+            "delay": 2
+        },
+        {
+            "interact_id": "WheelWindow_SwitchWheelBtn",
+            "progress": 2,
+            "type": "click",
+            "content": "",
+            "delay": 0
+        },
+        {
+            "interact_id": "WheelWindow_WheelBtn",
+            "progress": 2,
+            "type": "click",
+            "content": "",
+            "delay": 0
+        },
+        {
+            "interact_id": "WheelWindow_WheelBtn",
+            "progress": 3,
+            "type": "click",
+            "content": "",
+            "delay": 5
+        },
+        {
+            "interact_id": "WheelWindow_WheelBtn",
+            "progress": 4,
+            "type": "click",
+            "content": "",
+            "delay": 5
+        },
+        {
+            "interact_id": "WheelWindow_WheelBtn",
+            "progress": 5,
+            "type": "click",
+            "content": "",
+            "delay": 5
+        },
+        {
+            "interact_id": "GuideTipsWindow_CloseBtn",
+            "progress": 6,
+            "type": "tips",
+            "content": "炮击就是：拆别人的房，赚别人的钱！",
+            "delay": 8
+        },
+        {
+            "interact_id": "AttackWindow_SelectBtn1",
+            "progress": 6,
+            "type": "click",
+            "content": "",
+            "delay": 0
+        },
+        {
+            "interact_id": "WheelWindow_WheelBtn",
+            "progress": 7,
+            "type": "click",
+            "content": "",
+            "delay": 0
+        },
+        {
+            "interact_id": "GuideTipsWindow_CloseBtn",
+            "progress": 8,
+            "type": "tips",
+            "content": "又有钱了，快去给自己的城市添砖加瓦，早日登上人生巅峰",
+            "delay": 5
+        },
+        {
+            "interact_id": "WheelWindow_SwitchBuildBtn",
+            "progress": 8,
+            "type": "click",
+            "content": "",
+            "delay": 0
+        },
+        {
+            "interact_id": "WheelWindow_BuildBtn",
+            "progress": 8,
+            "type": "click",
+            "content": "",
+            "delay": 0
+        },
+        {
+            "interact_id": "BuildingWindow_2_1",
+            "progress": 8,
+            "type": "click",
+            "content": "",
+            "delay": 0
+        },
+        {
+            "interact_id": "GuideTipsWindow_CloseBtn",
+            "progress": 9,
+            "type": "tips",
+            "content": "多赚点钱，多盖点房，否则别人会说，你除了好看一无是处！",
+            "delay": 1
+        },
+        {
+            "interact_id": "WheelWindow_SwitchWheelBtn",
+            "progress": 9,
+            "type": "click",
+            "content": "",
+            "delay": 0
+        },
+        {
+            "interact_id": "WheelWindow_WheelBtn",
+            "progress": 9,
+            "type": "click",
+            "content": "",
+            "delay": 0
+        },
+        {
+            "interact_id": "WheelWindow_WheelBtn",
+            "progress": 10,
+            "type": "click",
+            "content": "",
+            "delay": 5
+        },
+        {
+            "interact_id": "WheelWindow_WheelBtn",
+            "progress": 11,
+            "type": "click",
+            "content": "",
+            "delay": 5
+        },
+        {
+            "interact_id": "PopupMessageWindow_OkBtn",
+            "progress": 12,
+            "type": "click",
+            "content": "",
+            "delay": 0
+        },
+        {
+            "interact_id": "WheelWindow_WheelBtn",
+            "progress": 12,
+            "type": "click",
+            "content": "",
+            "delay": 0
+        },
+        {
+            "interact_id": "AttackWindow_ChouRenBtn",
+            "progress": 13,
+            "type": "click",
+            "content": "",
+            "delay": 0
+        },
+        {
+            "interact_id": "AttackWindow_Attack2",
+            "progress": 13,
+            "type": "click",
+            "content": "",
+            "delay": 0
+        },
+        {
+            "interact_id": "AttackWindow_SelectBtn3",
+            "progress": 13,
+            "type": "click",
+            "content": "",
+            "delay": 2.5
+        },
+        {
+            "interact_id": "WheelWindow_WheelBtn",
+            "progress": 14,
+            "type": "click",
+            "content": "",
+            "delay": 0
+        },
+        {
+            "interact_id": "WheelWindow_WheelBtn",
+            "progress": 15,
+            "type": "click",
+            "content": "",
+            "delay": 5
+        },
+        {
+            "interact_id": "GuideTipsWindow_CloseBtn",
+            "progress": 16,
+            "type": "tips",
+            "content": "猜中富豪偷光他所有金币，然后买个地球仪，世界这么大，得多看看呀！",
+            "delay": 10
+        },
+        {
+            "interact_id": "StealWindow_SelectBtn0",
+            "progress": 16,
+            "type": "click",
+            "content": "",
+            "delay": 0
+        },
+        {
+            "interact_id": "GuideRewardWindow_GetRewardBtn",
+            "progress": 17,
+            "type": "open",
+			"state": "wheel",
+            "content": "UIGuideRewardWindow",
+            "delay": 1
+        }
+    ]
+}

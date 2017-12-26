@@ -32,7 +32,9 @@ public class UISettings  {
         UIInviteWindow,
         UIFacebookTipsWindow,
         UISettingWindow,
-
+        UIGuideTipsWindow,
+        UIGuideWindow,
+        UIGuideRewardWindow,
     }
 
     public enum UIWindowType
@@ -98,6 +100,9 @@ public class UISettings  {
         {UIWindowID.UIInviteWindow,"UIInviteWindow"},
         {UIWindowID.UIFacebookTipsWindow,"UIFacebookTipsWindow"},
         {UIWindowID.UISettingWindow,"UISettingWindow"},
+        {UIWindowID.UIGuideTipsWindow,"UIGuideTipsWindow"},
+        {UIWindowID.UIGuideWindow,"UIGuideWindow"},
+        {UIWindowID.UIGuideRewardWindow,"UIGuideRewardWindow"},
     };
 
 

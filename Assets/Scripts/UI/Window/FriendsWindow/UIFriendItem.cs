@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using QY.UI;
 using TMPro;
 
 public class UIFriendItem : BaseItemView {
@@ -43,7 +43,7 @@ public class UIFriendItem : BaseItemView {
                 sendBtn.image.sprite = sprites[0];
             }else if (friend.sendStatus == 1 && friend.receiveStatus == 2)
             {
-                SpriteState state = new SpriteState();
+                UnityEngine.UI.SpriteState state = new UnityEngine.UI.SpriteState();
                 state.disabledSprite = sprites[2];
 
                 sendBtn.spriteState = state;
@@ -52,7 +52,7 @@ public class UIFriendItem : BaseItemView {
             }
             else
             {
-                SpriteState state = new SpriteState();
+                UnityEngine.UI.SpriteState state = new UnityEngine.UI.SpriteState();
                 state.disabledSprite = sprites[3];
 
                 sendBtn.spriteState = state;

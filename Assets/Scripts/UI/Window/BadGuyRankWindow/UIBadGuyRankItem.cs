@@ -15,7 +15,7 @@ public class UIBadGuyRankItem : BaseItemView {
     public TextMeshProUGUI tipsText;
     public TextMeshProUGUI attackNumText;
 
-    public Button wantedBtn;
+    public QY.UI.Button wantedBtn;
 
     BadGuyData badGuy;
     // Use this for initialization

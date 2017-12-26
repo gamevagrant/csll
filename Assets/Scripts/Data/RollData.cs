@@ -15,5 +15,5 @@ public class RollData {
     public RollerItemData rollerItem;                   // 转盘item
     public int betCount;                      // 暂时未用到
     public long timeToRecoverInterval;           // 体力恢复时间间隔
-    public long tutorial;                      // 新手教程
+    public int tutorial;                      // 新手教程
 }

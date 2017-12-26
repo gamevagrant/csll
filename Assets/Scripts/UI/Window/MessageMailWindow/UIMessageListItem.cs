@@ -11,7 +11,7 @@ public class UIMessageListItem : BaseItemView {
     public TextMeshProUGUI startCountText;
     public TextMeshProUGUI timeText;
     public TextMeshProUGUI contentText;
-    public Button button;
+    public QY.UI.Button button;
     public Sprite[] headFrameSprites;
 
     MessageResponseData data;

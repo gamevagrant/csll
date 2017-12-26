@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 namespace QY.UI
 {
-    public class Toggle : UnityEngine.UI.Selectable, IPointerClickHandler
+    public class Toggle : Interactable, IPointerClickHandler
     {
         [System.Serializable]
         public class ToggleEvent : UnityEvent<bool> { };
@@ -120,7 +120,17 @@ namespace QY.UI
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            isOn = !isOn;
+            if (!IsInteractable())
+            {
+                return;
+            }
+            GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.button_click);
+            if(isInteractive)
+            {
+                Interacted();
+                isOn = !isOn;
+            }
+           
             
         }
 

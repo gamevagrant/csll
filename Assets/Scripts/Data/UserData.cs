@@ -13,7 +13,7 @@ public class UserData {
     public bool showSubscribed;                  // 暂时未用到
     public string platformId;                      // openid
     public int platform;                      // 最后一次登录的平台 0 公众号 1 微信扫码 2 游客
-    public long tutorial;                       // 新手教程  数值大于等于18表示已完成新手教程，否则未完成
+    public int tutorial;                       // 新手教程  数值大于等于18表示已完成新手教程，否则未完成
     public long money;                   // 金钱数量
     public int maxEnergy;              // 最大体力值
     public int energy;              // 当前体力值
@@ -70,6 +70,7 @@ public class UserData {
     public int[][] buildingRepairCost;           // 岛屿各建筑维修价格
     public StealIslandData[] stealIslands;                  // 偷取对象  // StealIsland 数据结构在上面
     public AttackTargetData attackTarget;                 // 攻击对象  // AttackTarget 数据结构在上面
+    public AttackTargetUserData attackTargetUser;//可以攻击的对象 攻击重突退出 下次登录会返回此值
     public int betCount;              // 暂时未用到 
     public int islandCount;          // 暂时未用到 
     public bool isTutorialMiner;           // 暂时未用到 
@@ -104,6 +105,7 @@ public class UserData {
     public MailData[] user_mail;//邮件
     public bool isVip;//是否时vip
     public int vip_days;//VIP剩余时间
+    public int last_action;//上次结束游戏时正在干的事情0 默认 无操作，1 攻击, 2 偷取
 
     /// <summary>
     /// 建造提示红点数值

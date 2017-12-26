@@ -10,7 +10,7 @@ public class UIAttackWindow :UIWindowBase {
     public UIAttackTopBar topBar;
     public IslandFactory island;//岛屿
 
-    public Button[] btns;//选择建筑的按钮
+    public QY.UI.Button[] btns;//选择建筑的按钮
     public GameObject btnRoot;//选择目标按钮根节点
     public Image aimIcon;//瞄准器
     public RectTransform artillery;//炮
@@ -74,6 +74,7 @@ public class UIAttackWindow :UIWindowBase {
             }
         });
 
+        QY.Guide.GuideManager.instance.state = "attack";
     }
 
 
@@ -106,10 +107,9 @@ public class UIAttackWindow :UIWindowBase {
         shield.gameObject.SetActive(false);
         GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.shoot_target_leave);
         Sequence sq = DOTween.Sequence();
-        //sq.Append(DOTween.To(() => artillery.anchoredPosition, x => artillery.anchoredPosition = x, new Vector2(0, -250), 0.5f).SetEase(Ease.OutBack));
+
         sq.Append(DOTween.To(() => island.transform.localScale, x => island.transform.localScale = x,Vector3.zero, 2).SetEase(Ease.OutCubic));
-       // sq.Insert(0,DOTween.To(() => (island.transform as RectTransform).anchoredPosition, x => (island.transform as RectTransform).anchoredPosition = x, new Vector2(600, 0), 1).SetEase(Ease.OutQuint));
-       // sq.InsertCallback(0,()=> { topBar.HideBar(); });
+
         sq.onComplete += () => {
             onComplete();
         };
@@ -173,7 +173,7 @@ public class UIAttackWindow :UIWindowBase {
             Sequence sq = DOTween.Sequence();
             sq.Append(artillery.DORotate(new Vector3(0, 0, angle), 0.5f));
             sq.Insert(0,aimIcon.DOFade(1,1));
-            sq.Insert(0, aimIcon.rectTransform.DOShakeScale(2));
+            sq.Insert(0, aimIcon.rectTransform.DOShakeAnchorPos(2, 30));
             sq.AppendCallback(() => {
                 aimIcon.gameObject.SetActive(false);
                 shell.gameObject.SetActive(true);
@@ -212,7 +212,7 @@ public class UIAttackWindow :UIWindowBase {
             Sequence sq = DOTween.Sequence();
             sq.Append(artillery.DORotate(new Vector3(0, 0, angle), 0.5f));
             sq.Insert(0,aimIcon.DOFade(1, 1));
-            sq.Insert(0, aimIcon.rectTransform.DOShakeAnchorPos(2, 60));
+            sq.Insert(0, aimIcon.rectTransform.DOShakeAnchorPos(2, 30));
             sq.AppendCallback(() => {
                 aimIcon.gameObject.SetActive(false);
                 shell.gameObject.SetActive(true);

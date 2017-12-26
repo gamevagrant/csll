@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
+using QY.UI;
 
 public class UIMiningBuyMinerItem : MonoBehaviour {
 

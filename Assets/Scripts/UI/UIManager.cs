@@ -30,7 +30,7 @@ public class UIManager : MonoBehaviour,IUIManager  {
     private UIWindowData curNavWindow;//当前导航窗口
     private UIWindowBase curPopUpWindow;//当前打开的窗口
     private GameObject popupCollider;//模态窗口的遮挡面板
-    private GameObject windowCollider;//全局遮挡面板
+    //private GameObject windowCollider;//全局遮挡面板
 
     private int colliderNum = 0;//打开遮挡面板的计数
     private Queue<Action> queue = new Queue<Action>();
@@ -107,7 +107,7 @@ public class UIManager : MonoBehaviour,IUIManager  {
             return null;
         }
     }
-
+    /*
     private bool openCoilder
     {
         get
@@ -120,13 +120,13 @@ public class UIManager : MonoBehaviour,IUIManager  {
             windowCollider.SetActive(colliderNum>0);
         }
     }
-
+    */
 
 
     private void Awake()
     {
         //------------------------添加全屏遮挡背板start-----------------------
-        windowCollider = GameUtils.createGameObject(FixedRoot.gameObject, "WindwCollider");
+      /*  windowCollider = GameUtils.createGameObject(FixedRoot.gameObject, "WindwCollider");
         RectTransform rt = windowCollider.AddComponent<RectTransform>();
         rt.anchorMin = Vector2.zero;
         rt.anchorMax = Vector2.one;
@@ -134,10 +134,11 @@ public class UIManager : MonoBehaviour,IUIManager  {
         rt.offsetMax = Vector2.zero;
         windowCollider.AddComponent<Image>().color = new Color(0,0,0,0);
         windowCollider.SetActive(false);
+        */
         //------------------------添加全屏遮挡背板end-----------------------
         //-------------------------添加模态窗口的背板start--------------------
         popupCollider = GameUtils.createGameObject(PopUpRoot.gameObject, "popupCollider");
-        rt = popupCollider.AddComponent<RectTransform>();
+        RectTransform rt = popupCollider.AddComponent<RectTransform>();
         rt.anchorMin = Vector2.zero;
         rt.anchorMax = Vector2.one;
         rt.offsetMin = Vector2.zero;
@@ -221,11 +222,11 @@ public class UIManager : MonoBehaviour,IUIManager  {
     {
         OpenWindow(id,true,data);
     }
-    public void OpenWindow(UISettings.UIWindowID id, bool needTransform = true, params object[] data)
+    public void OpenWindow(UISettings.UIWindowID id, bool needTransform, params object[] data)
     {
         OpenWindow(id, needTransform, null, data);
     }
-    public void OpenWindow(UISettings.UIWindowID id,bool needTransform = true,System.Action onComplate = null,params object[] data)
+    public void OpenWindow(UISettings.UIWindowID id,bool needTransform,System.Action onComplate,params object[] data)
     {
         SetWindowState(id, true);
         queue.Enqueue(() =>
@@ -309,16 +310,19 @@ public class UIManager : MonoBehaviour,IUIManager  {
     /// </summary>
     public void EnableOperation()
     {
-        openCoilder = false;
+        //openCoilder = false;
+        QY.UI.Interactable.isLock = false;
     }
     /// <summary>
     /// 禁止界面操作
     /// </summary>
     public void DisableOperation()
     {
-        //windowCollider.GetComponent<Image>().color = new Color(0,0,0,0);
-        openCoilder = true;
-        windowCollider.transform.SetSiblingIndex(windowCollider.transform.parent.childCount);
+
+        //openCoilder = true;
+        //windowCollider.transform.SetSiblingIndex(windowCollider.transform.parent.childCount);
+
+        QY.UI.Interactable.isLock = true;
     }
 
     private void StartOpenWindow(UISettings.UIWindowID id, bool needTransform = true, System.Action onComplate = null, params object[] data)

@@ -117,7 +117,7 @@ public class UIWheelPanel : MonoBehaviour {
     private void OnUpdateBaseData(BaseEvent e)
     {
         UpdateBaseDataEvent evt = e as UpdateBaseDataEvent;
-        if(evt.updateType == UpdateBaseDataEvent.UpdateType.vip)
+        if(evt.updateType == UpdateBaseDataEvent.UpdateType.vip || evt.updateType == UpdateBaseDataEvent.UpdateType.Energy)
         {
             energyValue = user.energy;
         }
@@ -157,7 +157,7 @@ public class UIWheelPanel : MonoBehaviour {
         stealTarget = target;
     }
     //设置转盘
-    public void setData(RollerItemData[] datas)
+    public void SetData(RollerItemData[] datas)
     {
         foreach (RollerItemData data in datas)
         {
@@ -201,18 +201,14 @@ public class UIWheelPanel : MonoBehaviour {
         }
     }
 
-    public void enterToBuildPanelState()
+    public void EnterToBuildPanelState()
     {
         GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_view_switch_in);
-        //RectTransform rollBtnTF = rollBtn.transform as RectTransform;
+
 
         DOTween.To(() => rollBtn.anchoredPosition, p => rollBtn.anchoredPosition = p, new Vector2(rollBtn.anchoredPosition.x, -300), 1).SetEase(Ease.InQuint);
         DOTween.To(() => rollBtn.localScale, x => rollBtn.localScale = x, new Vector3(1.5f,1.5f,1), 1).SetId(1);
-
-        //RectTransform switchBtnTF = switchBtn.transform as RectTransform;
         DOTween.To(() => switchBtn.anchoredPosition, p => switchBtn.anchoredPosition = p, new Vector2(200, switchBtn.anchoredPosition.y), 1);
-
-        //RectTransform rollPanelTF = panel.transform as RectTransform;
         DOTween.To(() => panel.anchoredPosition, x => panel.anchoredPosition = x, new Vector2(-800,1000), 1);
         DOTween.To(() => panel.localScale, x => panel.localScale = x, new Vector3(2f, 2f, 1), 1).onComplete = ()=> {
 
@@ -222,7 +218,7 @@ public class UIWheelPanel : MonoBehaviour {
         };
     }
 
-    public void enterToWheelPanelState()
+    public void EnterToWheelPanelState()
     {
 
         GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_view_switch_out);
@@ -231,14 +227,9 @@ public class UIWheelPanel : MonoBehaviour {
         switchBtn.gameObject.SetActive(true);
         panel.gameObject.SetActive(true);
 
-        //RectTransform rollBtnTF = rollBtn.transform as RectTransform;
         DOTween.To(() => rollBtn.anchoredPosition, p => rollBtn.anchoredPosition = p, rollBtnOriginalValue, 1).SetEase(Ease.OutQuint);
         DOTween.To(() => rollBtn.localScale, x => rollBtn.localScale = x, Vector3.one, 1);
-
-        //RectTransform switchBtnTF = switchBtn.transform as RectTransform;
         DOTween.To(() => switchBtn.anchoredPosition, p => switchBtn.anchoredPosition = p, switchOriginalValue, 1);
-
-       // RectTransform rollPanelTF = panel.transform as RectTransform;
         DOTween.To(() => panel.anchoredPosition, x => panel.anchoredPosition = x, panelLocalOriginalValue, 1);
         DOTween.To(() => panel.localScale, x => panel.localScale = x, Vector3.one, 1).onComplete = () => {
 
@@ -246,51 +237,18 @@ public class UIWheelPanel : MonoBehaviour {
         };
     }
 
-    public void ClosePanel(System.Action onComplate)
+    public void EnterToHideState(System.Action onComplate)
     {
-       // RectTransform rollBtnTF = rollBtn.transform as RectTransform;
-       // RectTransform switchBtnTF = switchBtn.transform as RectTransform;
-        //RectTransform rollPanelTF = panel.transform as RectTransform;
-
         Sequence sq = DOTween.Sequence();
         sq.Append(DOTween.To(() => rollBtn.anchoredPosition, p => rollBtn.anchoredPosition = p, new Vector2(rollBtn.anchoredPosition.x, -300), 1f).SetEase(Ease.OutExpo));
-        sq.Insert(0.5f,DOTween.To(() => switchBtn.anchoredPosition, p => switchBtn.anchoredPosition = p, new Vector2(200, switchBtn.anchoredPosition.y), 1).SetEase(Ease.OutCubic));
+        sq.Insert(0.5f, DOTween.To(() => switchBtn.anchoredPosition, p => switchBtn.anchoredPosition = p, new Vector2(200, switchBtn.anchoredPosition.y), 1).SetEase(Ease.OutCubic));
         sq.Insert(0.5f, DOTween.To(() => panel.anchoredPosition, x => panel.anchoredPosition = x, new Vector2(-600, panel.anchoredPosition.y), 1));
-        sq.onComplete+= () => {
-
-            //rollBtn.gameObject.SetActive(false);
-            //switchBtn.gameObject.SetActive(false);
-            //panel.gameObject.SetActive(false);
+        sq.OnComplete(() =>
+        {
             onComplate();
-        };
+        });
     }
 
-    public void OpenPanel(System.Action onComplate)
-    {
-        GameMainManager.instance.uiManager.DisableOperation();
-        //rollBtn.gameObject.SetActive(true);
-        //switchBtn.gameObject.SetActive(true);
-        //panel.gameObject.SetActive(true);
-
-        //RectTransform rollBtnTF = rollBtn.transform as RectTransform;
-        //RectTransform switchBtnTF = switchBtn.transform as RectTransform;
-        //RectTransform rollPanelTF = panel.transform as RectTransform;
-        rollBtn.gameObject.SetActive(true);
-        switchBtn.gameObject.SetActive(true);
-        panel.gameObject.SetActive(true);
-        rollBtn.localScale = Vector3.one;
-        panel.localScale = Vector3.one;
-
-        Sequence sq = DOTween.Sequence();
-        sq.Append(DOTween.To(() => rollBtn.anchoredPosition, p => rollBtn.anchoredPosition = p, rollBtnOriginalValue, 1f).SetEase(Ease.OutExpo));
-        sq.Insert(0,DOTween.To(() => switchBtn.anchoredPosition, p => switchBtn.anchoredPosition = p, switchOriginalValue, 1).SetEase(Ease.OutCubic));
-        sq.Insert(0, DOTween.To(() => panel.anchoredPosition, x => panel.anchoredPosition = x, panelLocalOriginalValue, 1));
-        sq.onComplete += () => {
-
-            GameMainManager.instance.uiManager.EnableOperation();
-            onComplate();
-        };
-    }
 
     public void onClickRollBtn()
     {
@@ -315,28 +273,7 @@ public class UIWheelPanel : MonoBehaviour {
         }
        
     }
-    /*
-    private void startRotate()
-    {
-        if(!isWorking)
-        {
-            isWorking = true;
-            GameMainManager.instance.uiManager.DisableOperation();
-            GameMainManager.instance.netManager.Roll((ret, data) => {
-                if(data.isOK)
-                {
-                    StartCoroutine(rotateWheel(data.data.rollerItem,()=> {
 
-                        showResault(data.data);
-                    }));
-                }else
-                {
-                    GameMainManager.instance.uiManager.EnableOperation();
-                }
-               
-            });
-        }
-    }*/
 
     private IEnumerator StartRoll()
     {
@@ -356,6 +293,11 @@ public class UIWheelPanel : MonoBehaviour {
                 rollItem = data.data.rollerItem;
 
                 energyValue = user.energy - 1;
+
+                if (data.data.tutorial == 12)
+                {
+                    Invoke("ShowTutorialMessage", 5);
+                }
             }
             else
             {
@@ -363,6 +305,8 @@ public class UIWheelPanel : MonoBehaviour {
                 getRes = true;
                 GameMainManager.instance.uiManager.EnableOperation();
             }
+
+            
 
         });
         AudioSource audio = GetComponent<AudioSource>();
@@ -393,19 +337,16 @@ public class UIWheelPanel : MonoBehaviour {
             isWorking = false;
         });
     }
-    /*
-    private IEnumerator rotateWheel(RollerItemData rollItem,System.Action callback)
-    {
 
-        reflective.gameObject.SetActive(true);
-        wheel.DOLocalRotate(new Vector3(0, 0, -(360 * 6 + 36 * rollItem.index)), 4, RotateMode.FastBeyond360).SetEase(Ease.OutQuart).OnComplete(() => {
-            isWorking = false;
-            callback();
-           
-        });
-        yield return new WaitForSeconds(1.5f);
-        reflective.gameObject.SetActive(false);
-    }*/
+    private void ShowTutorialMessage()
+    {
+        string tutorialStr = "{\"uid\":0,\"toid\":0,\"action\":1,\"result\":0,\"time\":\"0\",\"name\":\"{0}\",\"headImg\":\"{1}\",\"crowns\":0,\"extra\":{\"building\":{\"level\":0,\"status\":0,\"isShield\":false},\"building_index\":0,\"isShielded\":true},\"read\":false,\"isWanted\":false}";
+
+        MessageResponseData msg = LitJson.JsonMapper.ToObject<MessageResponseData>(tutorialStr);
+        msg.name = user.newbie_attack_target.name;
+        msg.headImg = user.newbie_attack_target.headImg;
+        GameMainManager.instance.websocketMsgManager.SendMsg(msg);
+    }
 
     //展示roll结果
     private void showResault(RollData rollData)

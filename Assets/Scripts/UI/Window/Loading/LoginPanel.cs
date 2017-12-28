@@ -20,21 +20,24 @@ public class LoginPanel : MonoBehaviour {
     public Text facebookName;
     public Slider slider;
     public GameObject loginTipPanel;
+    public GameObject updateAppPanel;
     public Text userNameText;
     public Text levelText;
     
 
     private IOpenPlatform open;
+    private string updateUrl;
 
     private void Awake()
     {
         EventDispatcher.instance.AddEventListener(EventEnum.LOADING_PROGRESS, OnLoadingProgress);
         EventDispatcher.instance.AddEventListener(EventEnum.UPDATE_ASSETS_COMPLATE, OnUpdateAssetComplate);
-
+        EventDispatcher.instance.AddEventListener(EventEnum.NEED_UPDATE_APP, OnUpdateApp);
         //inputField.gameObject.SetActive(false);
         guesBtn.SetActive(false);
         facebookBtn.SetActive(false);
         loginTipPanel.SetActive(false);
+        updateAppPanel.SetActive(false);
         slider.value = 0;
         facebookName.text = "";
 
@@ -45,6 +48,7 @@ public class LoginPanel : MonoBehaviour {
     {
         EventDispatcher.instance.RemoveEventListener(EventEnum.LOADING_PROGRESS, OnLoadingProgress);
         EventDispatcher.instance.RemoveEventListener(EventEnum.UPDATE_ASSETS_COMPLATE, OnUpdateAssetComplate);
+        EventDispatcher.instance.RemoveEventListener(EventEnum.NEED_UPDATE_APP, OnUpdateApp);
     }
 
     private void OnLoadingProgress(BaseEvent evt)
@@ -60,6 +64,14 @@ public class LoginPanel : MonoBehaviour {
         slider.gameObject.SetActive(false);
         
         InitPlatform();
+    }
+
+    private void OnUpdateApp(BaseEvent evt)
+    {
+        UpdateAppEvent e = evt as UpdateAppEvent;
+        updateUrl = e.url;
+        updateAppPanel.SetActive(true);
+
     }
 
     private void InitPlatform()
@@ -133,6 +145,14 @@ public class LoginPanel : MonoBehaviour {
     {
         loginTipPanel.SetActive(false);
         LoginGuest();
+    }
+
+    public void OnClickUpdateApp()
+    {
+        if(!string.IsNullOrEmpty(updateUrl))
+        {
+            Application.OpenURL(updateUrl);
+        }
     }
 
 }

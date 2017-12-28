@@ -7,14 +7,17 @@ public class GameSetting {
     //------------------全平台一致的配置--------------------------
     public static string serverPath = "http://api.nutsgamer.com";
     public static string serverPathDevelop = "https://api.dev.nutsgamer.com";
-    public static string websocketPath = "wss://api.nutsgamer.com/ws/conn";
+    public static string websocketPath = "ws://api.nutsgamer.com/ws/conn";
     public static string websocketPathDevelop = "wss://api.dev.nutsgamer.com/ws/conn";
     
 
     public static bool isRelease = true;//是否时发布版本 是使用正式服务器还是测试服务器
 
     //-------------------平台区分的配置-------------------------
-#if UNITY_ANDROID
+#if UNITY_EDITOR
+    public static string appID = "1323902559";
+    public static string updateLookupUrl = "https://itunes.apple.com//lookup";
+#elif UNITY_ANDROID
     public static string appID = "1297843981";
     public static string updateLookupUrl = "https://itunes.apple.com//lookup";
 #elif UNITY_IPHONE

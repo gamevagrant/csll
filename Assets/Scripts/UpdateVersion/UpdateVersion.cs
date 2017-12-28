@@ -12,26 +12,27 @@ using LitJson;
 public class UpdateVersion {
 
     /// <summary>
-    /// 更新完成 bool 是否更新成功，如果时true 可以继续后面的逻辑，如果为false需要去下载最新安装包
+    /// 检测完成可以继续
     /// </summary>
-    public event Action<bool> onComplate;
+    public event Action onComplate;
+    /// <summary>
+    /// 需要更新
+    /// </summary>
+    public event Action<string> onNeedUpdate;
     private string lookupUrl;
     private string localVersion;
 
-    public UpdateVersion(Action<bool> onComplate)
+    public UpdateVersion(Action onComplate,Action<string> onNeedUpdate)
     {
         lookupUrl = string.Format("{0}?id={1}", GameSetting.updateLookupUrl, GameSetting.appID);
         localVersion = Application.version;
         this.onComplate = onComplate;
+        this.onNeedUpdate = onNeedUpdate;
     }
 
     public void StartUpdate()
     {
-#if UNITY_EDITOR
-        UpdateAssets();//跳过版本更新
-#else
         CheckOutVerson();
-#endif
     }
 
     private void CheckOutVerson()
@@ -43,15 +44,15 @@ public class UpdateVersion {
                 LookupData lookupData = res.results[0];
                 if (lookupData != null && NeedUpdate(localVersion, lookupData.version))
                 {
-                    if (onComplate != null)
-                    {
-                        onComplate(false);
-                    }
+
                     string url = lookupData.trackViewUrl;
 #if UNITY_IPHONE
                 url = url.Replace("https", "itms-apps");    
 #endif
-                    Application.OpenURL(url);
+                   if(onNeedUpdate!=null)
+                   {
+                        onNeedUpdate(url);
+                   }
                 }
                 else
                 {
@@ -73,7 +74,7 @@ public class UpdateVersion {
             updateAsset.onComplate += () => {
                 if (onComplate != null)
                 {
-                    onComplate(true);
+                    onComplate();
                 }
             };
             updateAsset.StartUpdate();
@@ -82,7 +83,7 @@ public class UpdateVersion {
         {
             if (onComplate != null)
             {
-                onComplate(true);
+                onComplate();
             }
         }
     }
@@ -109,13 +110,11 @@ public class UpdateVersion {
                         }
                     }
                 }
-                Debug.Log("不需要更新App");
-                return false;
             }
         }
 
-        Debug.Log("需要更新App");
-        return true;
+        Debug.Log("不需要更新App");
+        return false;
     }
 
     public class LookupMessage:NetMessage

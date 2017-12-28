@@ -207,13 +207,13 @@ public class UIStealWindow : UIWindowBase {
                         GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.steal_got_king);
                         victoryTip.gameObject.SetActive(true);
 
-                        Alert.ShowPopupBox(string.Format("恭喜你猜到富豪！\n获得<#D34727FF>{0}</color>金币", GameUtils.GetShortMoneyStr(selectedTarget.money)), OnClickOkBtn);
+                        Alert.ShowPopupBox(string.Format("恭喜你猜到富豪！\n获得<#D34727FF>{0}</color>金币", GameUtils.GetCurrencyString(selectedTarget.money)), OnClickOkBtn);
                        
                     }else
                     {
                         GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.steal_miss_king);
                         
-                        Alert.ShowPopupBox(string.Format("很遗憾没有猜到富豪！\n只得到<#D34727FF>{0}</color>金币", GameUtils.GetShortMoneyStr(selectedTarget.money)), OnClickOkBtn);
+                        Alert.ShowPopupBox(string.Format("很遗憾没有猜到富豪！\n只得到<#D34727FF>{0}</color>金币", GameUtils.GetCurrencyString(selectedTarget.money)), OnClickOkBtn);
                        
                     }
                 });

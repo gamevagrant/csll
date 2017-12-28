@@ -48,12 +48,12 @@ public class GameStarter : MonoBehaviour
 
         GameMainManager.instance.mono = this;
 
-        UpdateVersion updateVersion = new UpdateVersion((isComplate)=> {
-            if(isComplate)
-            {
-                UpdateAssetsComplate();
-            }
+        UpdateVersion updateVersion = new UpdateVersion(()=> {
+            UpdateAssetsComplate();
 
+        },(url)=> {
+
+            EventDispatcher.instance.DispatchEvent(new UpdateAppEvent(url));
         });
         updateVersion.StartUpdate();
 

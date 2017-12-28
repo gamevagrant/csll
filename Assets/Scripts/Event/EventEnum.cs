@@ -3,6 +3,7 @@ using System.Collections;
 
 public class EventEnum {
 
+    public const string NEED_UPDATE_APP = "NEED_UPDATE_APP";//需要更新app
     public const string UPDATE_ASSETS_COMPLATE = "UPDATE_ASSETS_COMPLATE";//资源更新完毕
     public const string LOGIN_COMPLATE = "LOGIN_COMPLATE";//登录成功
     public const string LOADING_PROGRESS = "LOADING_PROGRESS";//加载进度

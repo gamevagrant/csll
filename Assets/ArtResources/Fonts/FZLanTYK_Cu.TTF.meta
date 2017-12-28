@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 01b0e12ba6bcb70459e9081049501411
+timeCreated: 1514436905
+licenseType: Free
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: FZLanTingYuan-B-GBK
+  fontNames:
+  - FZLanTingYuan-B-GBK
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

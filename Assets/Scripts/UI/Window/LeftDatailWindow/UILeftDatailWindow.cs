@@ -130,14 +130,21 @@ public class UILeftDatailWindow : UIWindowBase {
 
     public void OnClickWheelBtn()
     {
-        OnClickClose();
-        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIWheelWindow,0);
+
+        GameMainManager.instance.uiManager.CloseWindow(UISettings.UIWindowID.UILeftDatailWindow, true, () =>
+        {
+            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIWheelWindow, 0);
+        });
+       
     }
 
     public void OnClickBuildBtn()
     {
-        OnClickClose();
-        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIWheelWindow, 1);
+        GameMainManager.instance.uiManager.CloseWindow(UISettings.UIWindowID.UILeftDatailWindow, true, () =>
+        {
+            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIWheelWindow, 1);
+        });
+       
     }
 
     public void OnClickBadGuyBtn()

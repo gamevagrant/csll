@@ -13,6 +13,7 @@ public class HeadIcon : MonoBehaviour {
 
     public void setData(string nicname,string headUrl,int starCount,bool isVip)
     {
+        head.texture = null;
         nicNameLabel.text = nicname;
         if(starCountLabel != null)
             starCountLabel.text = starCount.ToString();

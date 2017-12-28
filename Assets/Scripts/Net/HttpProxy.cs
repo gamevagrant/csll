@@ -109,7 +109,7 @@ public class HttpProxy {
             
         });
 
-        req.AddHeader(JsonHeaderType, JsonHeaderValue);
+        //req.AddHeader(JsonHeaderType, JsonHeaderValue);
         return req;
     }
 

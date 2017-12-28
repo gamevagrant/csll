@@ -208,6 +208,7 @@ public class AssetBundleLoadManager : MonoBehaviour {
             callback((T)obj);
         }
         Debug.Log("---end loadAsync:AssetBundleLoader.loadAsync" + path);
+        yield return null;
         isLoading = false;
     }
 

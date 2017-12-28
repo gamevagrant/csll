@@ -28,55 +28,61 @@ SpriteAtlas:
       enableTightPacking: 0
     packedHash:
       serializedVersion: 2
-      Hash: 25b4fa68e19fce213e8b8859dd0f6c49
+      Hash: 04eace61d98568208282713cadb39eb9
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 4
-    hashString: 25b4fa68e19fce213e8b8859dd0f6c49
-    totalSpriteSurfaceArea: 591791
+    hashString: 04eace61d98568208282713cadb39eb9
+    totalSpriteSurfaceArea: 945636
     packables:
     - {fileID: 102900000, guid: ed2b757cad2200640a1396748a070cf1, type: 3}
     packedSpriteRenderDataKeys:
     - acc911e483ddb4048b1b1fd0f9caabb3: 21300000
+    - aee8b50659aaf4d4c9e985be17e0b021: 21300000
+    - c67aa18f0729c814583c3fed3e60f014: 21300000
+    - 45d29ecf870df4a4bb5a16d64ccee7e2: 21300000
+    - a6570a39a2856da4ea3b53745d7b8059: 21300000
     - 7b631bffee04ec44792ded57a86edf1e: 21300000
-    - 65b765f90cdb3a54e8fb9463efdc8eb7: 21300000
     - 4623ca5ac629fde4c8e2257d5bb93333: 21300000
     - 600b2f20cd653a244b2f16f01a6ed657: 21300000
     - 394b6fd25cc86ef48a44eff4d6408aea: 21300000
-    - f777c483961f93741a25775a045d1c02: 21300000
     - 433e1acd7aac47c4aa1232bd269f874b: 21300000
     - 1f116def9d1dfb04489986dab8cba06b: 21300000
     - aa2bdb2f11596624a8d33b4c075f9fc7: 21300000
-    - 01551e468066ef0498d2075f01e5d966: 21300000
+    - d49831a0df4edcf4387fc280f23735ff: 21300000
     - 906e9d571dc35204ab67f5447094936e: 21300000
     - c74afd664e4962e42bbd880ede514fbd: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: acc911e483ddb4048b1b1fd0f9caabb3, type: 3}
+  - {fileID: 21300000, guid: aee8b50659aaf4d4c9e985be17e0b021, type: 3}
+  - {fileID: 21300000, guid: c67aa18f0729c814583c3fed3e60f014, type: 3}
+  - {fileID: 21300000, guid: 45d29ecf870df4a4bb5a16d64ccee7e2, type: 3}
+  - {fileID: 21300000, guid: a6570a39a2856da4ea3b53745d7b8059, type: 3}
   - {fileID: 21300000, guid: 7b631bffee04ec44792ded57a86edf1e, type: 3}
-  - {fileID: 21300000, guid: 65b765f90cdb3a54e8fb9463efdc8eb7, type: 3}
   - {fileID: 21300000, guid: 4623ca5ac629fde4c8e2257d5bb93333, type: 3}
   - {fileID: 21300000, guid: 600b2f20cd653a244b2f16f01a6ed657, type: 3}
   - {fileID: 21300000, guid: 394b6fd25cc86ef48a44eff4d6408aea, type: 3}
-  - {fileID: 21300000, guid: f777c483961f93741a25775a045d1c02, type: 3}
   - {fileID: 21300000, guid: 433e1acd7aac47c4aa1232bd269f874b, type: 3}
   - {fileID: 21300000, guid: 1f116def9d1dfb04489986dab8cba06b, type: 3}
   - {fileID: 21300000, guid: aa2bdb2f11596624a8d33b4c075f9fc7, type: 3}
-  - {fileID: 21300000, guid: 01551e468066ef0498d2075f01e5d966, type: 3}
+  - {fileID: 21300000, guid: d49831a0df4edcf4387fc280f23735ff, type: 3}
   - {fileID: 21300000, guid: 906e9d571dc35204ab67f5447094936e, type: 3}
   - {fileID: 21300000, guid: c74afd664e4962e42bbd880ede514fbd, type: 3}
   m_PackedSpriteNamesToIndex:
   - denglu_1
-  - loading_2
+  - caishen
   - loading_progressbar_back
+  - loading_progressbar
+  - tips
+  - loading_2
   - denglu_3
   - denglu_2
   - loading_3
-  - loading_progressbar
   - denglu_4
   - publicBtn6_nor
   - loading_1
-  - loading_icon
+  - gold
   - denglu_6
   - denglu_5
   m_Tag: Loading

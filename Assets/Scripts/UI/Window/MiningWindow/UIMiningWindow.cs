@@ -112,6 +112,7 @@ public class UIMiningWindow :UIWindowBase {
             scrollView.SetData(list);
             
             scrollView.SetSelected(GetCanBuyMinnerIsland());
+
             long produce = 0;
             foreach (MinesData md in mapinfo.mines)
             {

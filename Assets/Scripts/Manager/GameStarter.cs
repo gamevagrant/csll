@@ -15,23 +15,24 @@ public class GameStarter : MonoBehaviour
     {
         GameObject.DontDestroyOnLoad(gameObject);
         EventDispatcher.instance.AddEventListener(EventEnum.LOGIN_COMPLATE, OnLoginHandle);
+        SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.LoadScene("Login");
     }
 
     private void Start()
     {
-        
+
     }
 
     private void OnDestroy()
     {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
         EventDispatcher.instance.RemoveEventListener(EventEnum.LOGIN_COMPLATE, OnLoginHandle);
     }
 
 
-    private void OnLevelWasLoaded(int level)
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Scene scene = SceneManager.GetSceneByBuildIndex(level);
         if(scene.name == "Login")
         {
             init();

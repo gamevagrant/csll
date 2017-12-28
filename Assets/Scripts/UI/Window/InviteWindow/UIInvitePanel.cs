@@ -13,7 +13,7 @@ public class UIInvitePanel : MonoBehaviour {
     public QY.UI.Toggle allSelectToggle;
 
     private List<InviteItemData> invitableList;
-    private Dictionary<string, string> invitedFriends;
+    private Dictionary<string, string> invitedFriends;//已经邀请过的好友
 
     public void Start()
     {
@@ -137,13 +137,13 @@ public class UIInvitePanel : MonoBehaviour {
         if(list.Count>0)
         {
             LocalDatasManager.invitedFriends = invitedFriends;
-            RemoveItems(list);
-            //Refresh();
+           
 
             GameMainManager.instance.open.Invite("快来和我一起玩财神来了", 
                 list.ToArray(), 
                 "您正在邀请的好友",
                 (response) => {
+                    RemoveItems(list);
                     GameMainManager.instance.netManager.InviteFriends(response.request, response.to.Split(','), (ret, res) =>
                     {
 

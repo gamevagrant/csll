@@ -28,12 +28,12 @@ SpriteAtlas:
       enableTightPacking: 0
     packedHash:
       serializedVersion: 2
-      Hash: 7689077aa943307c20bf3481f096724a
+      Hash: d5bb1d2f7ef9a52d9d5e185f48953ef9
     variantMultiplier: 1
     bindAsDefault: 0
     finalFormat: 4
-    hashString: 7689077aa943307c20bf3481f096724a
-    totalSpriteSurfaceArea: 33945600
+    hashString: d5bb1d2f7ef9a52d9d5e185f48953ef9
+    totalSpriteSurfaceArea: 33948988
     packables:
     - {fileID: 102900000, guid: 42695d9b4959ac14eab6bfa55d475b05, type: 3}
     packedSpriteRenderDataKeys:
@@ -88,6 +88,7 @@ SpriteAtlas:
     - de488be49c951bd419097c6c1ebe865f: 21300000
     - e4c1a5d7e7c2b0f429210c54c1690e51: 21300000
     - b303db500d51ee243b47ea42e6db344a: 21300000
+    - 5b76447f0c73a5748bde9acea707f1dc: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: cfddb24e8f63c3e4f9d873fb811ab86d, type: 3}
@@ -141,6 +142,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: de488be49c951bd419097c6c1ebe865f, type: 3}
   - {fileID: 21300000, guid: e4c1a5d7e7c2b0f429210c54c1690e51, type: 3}
   - {fileID: 21300000, guid: b303db500d51ee243b47ea42e6db344a, type: 3}
+  - {fileID: 21300000, guid: 5b76447f0c73a5748bde9acea707f1dc, type: 3}
   m_PackedSpriteNamesToIndex:
   - city_1_5_1
   - city_1_5_0
@@ -193,5 +195,6 @@ SpriteAtlas:
   - city_4_3_1
   - city_5_5_1
   - city_5_5_0
+  - ruins
   m_Tag: City_2
   m_IsVariant: 0

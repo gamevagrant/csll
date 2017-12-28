@@ -47,6 +47,7 @@ public class UIMiningMapWindow : UIWindowBase
             if(item.SetData(islandID))
             {
                 Vector2 pos = (item.transform as RectTransform).anchoredPosition;
+                pos = new Vector2(pos.x * content.localScale.y, pos.y * content.localScale.y);
                 content.anchoredPosition = -pos;
                 scrollRect.movementType = ScrollRect.MovementType.Elastic;
                 

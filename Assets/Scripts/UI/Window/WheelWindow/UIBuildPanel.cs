@@ -14,6 +14,7 @@ public class UIBuildPanel : MonoBehaviour {
 
     public GameObject upgradePanel;
     public GetMoneyBoxAnimation box;
+    public GestureTrigger gestureTrigger;
 
     [SerializeField]
     private RectTransform buildBtn;
@@ -149,16 +150,17 @@ public class UIBuildPanel : MonoBehaviour {
             StartCoroutine(showBuildAnimation(evt.buildIndex, evt.level));
         }else
         {
+            GameMainManager.instance.uiManager.DisableOperation();
             StartCoroutine(showBuildAnimation(evt.buildIndex, GameMainManager.instance.model.userData.buildings[evt.buildIndex-1].level+1,()=> 
             {
                 GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.building_level_up);
                 GameMainManager.instance.uiManager.CloseWindow(UISettings.UIWindowID.UISideBarWindow);
                 GameMainManager.instance.uiManager.CloseWindow(UISettings.UIWindowID.UITopBarWindow);
-                switchBtn.gameObject.SetActive(false);
+                
                 upgradePanel.SetActive(true);
                 onUpgrading(true);
             }));
-           
+            switchBtn.gameObject.SetActive(false);
             buildBtn.gameObject.SetActive(false);
 
         }
@@ -175,7 +177,8 @@ public class UIBuildPanel : MonoBehaviour {
         GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.building_island_change);
         //UserData ud = GameMainManager.instance.model.userData;
         upgradePanel.SetActive(false);
-        
+        gestureTrigger.isIgnoreLock = true;
+
         Sequence sq = DOTween.Sequence();
         sq.Append((panel.transform as RectTransform).DOAnchorPos(new Vector2(-800, 0), 1f).SetEase(Ease.InBack));
         sq.AppendCallback(() =>
@@ -192,8 +195,12 @@ public class UIBuildPanel : MonoBehaviour {
             box.SetData(buildComplateData.upgradeEnergyReward > 0, buildComplateData.upgradeMoneyReward > 0);
             EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Energy, 0));
             EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Money, 0));
+            EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.star, 0));
 
-            string content = string.Format("哇哦 恭喜您又建成一个岛屿，送你奖励继续加油哦！能量：{0} 金币：{1}", buildComplateData.upgradeEnergyReward.ToString(), buildComplateData.upgradeMoneyReward.ToString());
+            gestureTrigger.isIgnoreLock = false;
+            GameMainManager.instance.uiManager.EnableOperation();
+
+            string content = string.Format("哇哦 恭喜您又建成一个岛屿，送你奖励继续加油哦！能量：{0} 金币：{1}", buildComplateData.upgradeEnergyReward.ToString(),GameUtils.GetCurrencyString(buildComplateData.upgradeMoneyReward));
             Alert.ShowPopupBox(content, () =>
             {
                 upgradePanel.SetActive(false);
@@ -204,6 +211,8 @@ public class UIBuildPanel : MonoBehaviour {
                 GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UITopBarWindow);
                 switchBtn.gameObject.SetActive(true);
                 onUpgrading(false);
+
+               
             }, "领取");
 
         });
@@ -213,7 +222,7 @@ public class UIBuildPanel : MonoBehaviour {
     {
         yield return new WaitForSeconds(0.5f);
         GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.building_upgrade);
-        buildingAnimation.transform.position = islandFactory.getBuildTransform(index).position;
+        buildingAnimation.transform.position = islandFactory.GetBuildTransform(index).position;
         islandFactory.HideBuild(index);
         buildingAnimation.SetActive(true);
         yield return new WaitForSeconds(1);
@@ -225,7 +234,7 @@ public class UIBuildPanel : MonoBehaviour {
         islandFactory.ShowBuild(index);
         EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Money,0));
         EventDispatcher.instance.DispatchEvent(new GetStarPosEvent((pos) => {
-            star.transform.position = islandFactory.getBuildTransform(index).position;
+            star.transform.position = islandFactory.GetBuildTransform(index).position;
             star.SetActive(true);
             Sequence sq = DOTween.Sequence();
             sq.Append((star.transform as RectTransform).DOAnchorPos(new Vector2(0,30), 0.3f).SetRelative().SetEase(Ease.OutCubic));

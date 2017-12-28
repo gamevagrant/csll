@@ -67,6 +67,11 @@ public class UIFriendItem : BaseItemView {
     {
         if (friend.receiveStatus == 1)//领取
         {
+            if(GameMainManager.instance.model.userData.energy>=GameMainManager.instance.model.userData.maxEnergy)
+            {
+                Alert.Show("您的体力太多，消耗些再来领吧！");
+                return;
+            }
             GameMainManager.instance.netManager.ReceiveEnergy(friendItemData.friend.uid, (ret, res) =>
             {
                 if (res.isOK)
@@ -85,11 +90,7 @@ public class UIFriendItem : BaseItemView {
                 }
                 else
                 {
-                    if (res.errcode == 526)
-                    {
-                        Alert.Show("能量已满，用完再来领吧");
-                        //GameMainManager.instance.uiManager.OpenPopupModalBox("能量已满，用完再来领吧", "", null);
-                    }
+
                 }
             });
         }

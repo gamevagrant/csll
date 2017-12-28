@@ -140,7 +140,7 @@ public class UIAttackWindow :UIWindowBase {
 
     private void Attack(int index, AttackData data)
     {
-        RectTransform target = island.getBuildTransform(index);
+        RectTransform target = island.GetBuildTransform(index);
         aimIcon.transform.position = target.position;
         aimIcon.gameObject.SetActive(true);
         aimIcon.color = new Color(aimIcon.color.r, aimIcon.color.g, aimIcon.color.b, 0);

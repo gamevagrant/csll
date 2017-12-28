@@ -19,6 +19,30 @@ public class UIWaitingWindow : UIWindowBase {
         }
     }
 
+    private CanvasGroup canvasGroup;
+    private float timeTag;
+    private float time;
+
+    private void Awake()
+    {
+        canvasGroup = GetComponent<CanvasGroup>();
+    }
+
+    private void Update()
+    {
+        time = Time.time - timeTag;
+        if (time>1)
+        {
+            canvasGroup.alpha = (time-0.5f)*1.5f;
+        }
+    }
+
+    protected override void StartShowWindow(object[] data)
+    {
+        timeTag = Time.time;
+        canvasGroup.alpha = 0;
+    }
+
     protected override void EnterAnimation(Action onComplete)
     {
         onComplete();

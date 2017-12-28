@@ -10,9 +10,15 @@ public class NetManager:INetManager
     {
         get
         {
-            if (GameSetting.isDebug)
+            if (GameSetting.isRelease)
+            {
+                return GameSetting.serverPath;
+            }
+            else
+            {
                 return GameSetting.serverPathDevelop;
-            return GameSetting.serverPath;
+            }
+
         }
     }
     private string _token;
@@ -49,10 +55,10 @@ public class NetManager:INetManager
     private void ConnectWebSocket(long uid)
     {
         string websocketPath;
-        if (GameSetting.isDebug)
-            websocketPath = GameSetting.websocketPathDevelop;
-        else
+        if (GameSetting.isRelease)
             websocketPath = GameSetting.websocketPath;
+        else
+            websocketPath = GameSetting.websocketPathDevelop;
 
         websocketPath += "?uid=" + uid.ToString();
         Debug.Log("websocket:"+websocketPath);
@@ -139,12 +145,14 @@ public class NetManager:INetManager
     }
     public bool Roll(Action<bool, RollMessage> callBack)
     {
+        Waiting.Enable();
         string url = MakeUrl(APIDomain, "game/roller/roll");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("uid", uid);
         data.Add("token", token);
         data.Add("t", time.ToString());
         return HttpProxy.SendPostRequest<RollMessage>(url, data, (ret, res) => {
+            Waiting.Disable();
             //---盾牌---
             //string jiashuju = "{\"data\":{\"money\":764158,\"maxEnergy\":50,\"energy\":30,\"recoverEnergy\":6,\"timeToRecover\":3600,\"shields\":1,\"stealIslands\":null,\"attackTarget\":{\"uid\":232,\"name\":\"原来如此\",\"headImg\":\"http://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIUKt2UaM9cibOM5RsVDyibbbr1tUHia1jR1eibsjGgmXm2BBAFQbosuBPx4sX4hY50j0Jzhu3y4hx2rQ/0\",\"crowns\":66,\"gender\":1,\"isVip\":false,\"signature\":\"\",\"islandId\":3,\"buildings\":[{\"level\":5,\"status\":0,\"isShield\":true},{\"level\":0,\"status\":0,\"isShield\":true},{\"level\":5,\"status\":2,\"isShield\":true},{\"level\":1,\"status\":1,\"isShield\":true},{\"level\":1,\"status\":0,\"isShield\":true}],\"head_frame\":0},\"FriendOfFriends\":null,\"rollerItem\":{\"index\":6,\"type\":\"shield\",\"value\":65,\"code\":1,\"name\":\"攻击\"},\"timeToRecoverInterval\":3600,\"tutorial\":18},\"errcode\":0,\"errmsg\":\"\"}";
             //---能量---
@@ -172,18 +180,28 @@ public class NetManager:INetManager
                 user.timeToRecoverInterval = res.data.timeToRecoverInterval;
                 user.tutorial = res.data.tutorial;
 
-               
+                if (res.data.tutorial == 12)
+                {
+                    string tutorialStr = "{\"uid\":0,\"toid\":0,\"action\":1,\"result\":0,\"time\":\"0\",\"name\":\"{0}\",\"headImg\":\"{1}\",\"crowns\":0,\"extra\":{\"building\":{\"level\":0,\"status\":0,\"isShield\":false},\"building_index\":0,\"isShielded\":true},\"read\":false,\"isWanted\":false}";
+
+                    MessageResponseData msg = LitJson.JsonMapper.ToObject<MessageResponseData>(tutorialStr);
+                    msg.name = user.newbie_attack_target.name;
+                    msg.headImg = user.newbie_attack_target.headImg;
+                    GameMainManager.instance.websocketMsgManager.SendMsg(msg);
+                }
+
             }
             else
             {
                 Debug.Log("roll点失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}",res.errmsg,res.errcode));
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "转盘失败", res.errcode));
             }
            
         });
     }
     public bool Build(int islandID,int buildIndex, Action<bool, BuildMessage> callBack)
     {
+        Waiting.Enable();
         //Debug.Log("假数据");
         //string str = "{\"data\":{\"money\":2732090199,\"maxEnergy\":50,\"energy\":48,\"recoverEnergy\":6,\"timeToRecover\":0,\"islandId\":4,\"buildings\":[{\"level\":0,\"status\":0,\"isShield\":true},{\"level\":0,\"status\":0,\"isShield\":true},{\"level\":0,\"status\":0,\"isShield\":true},{\"level\":0,\"status\":0,\"isShield\":true},{\"level\":0,\"status\":0,\"isShield\":true}],\"crowns\":75,\"buildingCost\":[[165000,423000,795000,970000,1580000],[205000,463000,805000,990000,1900000],[275000,518000,850000,1150000,2050000],[320000,560000,895000,1350000,2250000],[390000,690000,975000,1550000,2550000]],\"buildingRepairCost\":[[45000,175000,275000,350000,450000],[50000,225000,300000,375000,475000],[100000,250000,325000,400000,500000],[200000,275000,350000,425000,550000],[150000,300000,400000,450000,800000]],\"gainIslandReward\":false,\"canIslandShare\":false,\"playUpgradeAnimation\":true,\"upgradeEnergyAfterReward\":68,\"upgradeMoneyAfterReward\":2732590199,\"rollerItems\":[{\"index\":0,\"type\":\"xcrowns\",\"value\":65,\"code\":200,\"name\":\"星星倍金钱\"},{\"index\":1,\"type\":\"steal\",\"value\":40,\"code\":1,\"name\":\"偷取\"},{\"index\":2,\"type\":\"coin\",\"value\":200,\"code\":25000,\"name\":\"25k\"},{\"index\":3,\"type\":\"energy\",\"value\":5,\"code\":10,\"name\":\"能量\"},{\"index\":4,\"type\":\"coin\",\"value\":215,\"code\":5000,\"name\":\"5000\"},{\"index\":5,\"type\":\"coin\",\"value\":85,\"code\":50000,\"name\":\"50k\"},{\"index\":6,\"type\":\"shield\",\"value\":55,\"code\":1,\"name\":\"护盾\"},{\"index\":7,\"type\":\"coin\",\"value\":220,\"code\":15000,\"name\":\"15k\"},{\"index\":8,\"type\":\"shoot\",\"value\":65,\"code\":1,\"name\":\"攻击\"},{\"index\":9,\"type\":\"coin\",\"value\":50,\"code\":100000,\"name\":\"100k\"}],\"tutorial\":18,\"mapInfo\":{\"islandNames\":[\"北京\",\"呼和浩特\",\"沈阳\",\"天津\",\"黄山\",\"西安\",\"成都\",\"上海\",\"贵阳\",\"乐山\",\"武汉\",\"昆明\",\"香港\",\"台北\",\"三亚\",\"敬请期待\"],\"mines\":[{\"island\":1,\"costs\":[270000,360000,450000,540000,630000],\"produces\":[7200,9600,12000,14400,16800],\"miner\":0},{\"island\":2,\"costs\":[307500,397500,487500,577500,667500],\"produces\":[8200,10600,13000,15400,17800],\"miner\":0},{\"island\":3,\"costs\":[460000,580000,700000,820000,940000],\"produces\":[9200,11600,14000,16400,18800],\"miner\":0},{\"island\":4,\"costs\":[765000,945000,1125000,1305000,1485000],\"produces\":[10200,12600,15000,17400,19800],\"miner\":0}],\"moneyBox\":0,\"producePerSecond\":0,\"limit\":400000}},\"errcode\":0,\"errmsg\":\"\"}";
         //BuildMessage r = LitJson.JsonMapper.ToObject<BuildMessage>(str);
@@ -197,6 +215,7 @@ public class NetManager:INetManager
         data.Add("island",islandID);
         data.Add("building", buildIndex);
         return HttpProxy.SendPostRequest<BuildMessage>(url, data, (ret, res) => {
+            Waiting.Disable();
             callBack(ret, res);
             if (res.isOK)
             {
@@ -222,14 +241,14 @@ public class NetManager:INetManager
                 if(res.data.playUpgradeAnimation)
                 {
                     user.money = res.data.upgradeMoneyAfterReward;
-                    user.maxEnergy = res.data.upgradeEnergyAfterReward;
+                    user.energy = res.data.upgradeEnergyAfterReward;
                 }
 
             }
             else
             {
                 Debug.Log("建造失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "建造失败", res.errcode));
             }
             
         });
@@ -237,6 +256,7 @@ public class NetManager:INetManager
 
     public bool Attack(long puid,int buildIndex, Action<bool, AttackMessage> callBack)
     {
+        Waiting.Enable();
         string url = MakeUrl(APIDomain, "game/pvp/attack");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("uid", uid);
@@ -245,6 +265,7 @@ public class NetManager:INetManager
         data.Add("puid", puid);
         data.Add("building", buildIndex);
         return HttpProxy.SendPostRequest<AttackMessage>(url, data, (ret, res) => {
+            Waiting.Disable();
             //string str = "{\"data\":{\"money\":1162834,\"isShielded\":false,\"isMiniShielded\":false,\"isWanted\":false,\"isBear\":false,\"isSeal\":false,\"reward\":300000,\"isNewCannonContestScoreAward\":false,\"betCount\":0,\"attackTarget\":{\"uid\":18983,\"name\":\"杨重武\",\"headImg\":\"s\",\"crowns\":2,\"signature\":\"\",\"islandId\":1,\"buildings\":[{\"level\":1,\"status\":1,\"isShield\":false},{\"level\":0,\"status\":2,\"isShield\":false},{\"level\":0,\"status\":0,\"isShield\":false},{\"level\":0,\"status\":0,\"isShield\":false},{\"level\":0,\"status\":0,\"isShield\":false}]},\"tutorial\":0},\"errcode\":0,\"errmsg\":\"\"}";
             //res = LitJson.JsonMapper.ToObject<AttackMessage>(str);
             //res.data.isShielded = true;
@@ -260,7 +281,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("攻击失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "攻击失败", res.errcode));
             }
             
         });
@@ -268,6 +289,7 @@ public class NetManager:INetManager
 
     public bool Steal(int idx, Action<bool, StealMessage> callBack)
     {
+        Waiting.Enable();
         string url = MakeUrl(APIDomain, "game/pvp/steal");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("uid", uid);
@@ -275,7 +297,7 @@ public class NetManager:INetManager
         data.Add("t", time.ToString());
         data.Add("idx", idx);
         return HttpProxy.SendPostRequest<StealMessage>(url, data, (ret, res) => {
-
+            Waiting.Disable();
             //string str = "{\"data\":{\"money\":3044355903,\"betCount\":0,\"targets\":[{\"uid\":225,\"gender\":1,\"name\":\"Lucas\",\"headImg\":\"http://wx.qlogo.cn/mmopen/yAICdTftjSmibHa8rytjyFK89EqHCictUKr9JCjyBTBxbwArefHuxR1paOQdbCVf5TbPhSmyasEfep9rbSRiajImQ/0\",\"crowns\":281,\"isVip\":true,\"head_frame\":1,\"money\":145089,\"isRichMan\":false},{\"uid\":83,\"gender\":2,\"name\":\"☒\",\"headImg\":\"http://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLVSicU6zXExkDmURhjkchiaGiacPgicQxibh1kJJwjbjicH0Bf6vibISNFJ8zLicZqKbSeWUia4uqYic5ibibMLQ/0\",\"crowns\":2,\"isVip\":true,\"head_frame\":1,\"money\":748384,\"isRichMan\":true},{\"uid\":88,\"gender\":2,\"name\":\"啊，一只小怪\",\"headImg\":\"http://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTInIuedI6ibt6Dib4wSShf7nCvoM5oRmuy8ZE0ELC0CtvichicQHAqoEdvlfD7Mzia5eq9QGARedgMdSKQ/0\",\"crowns\":302,\"isVip\":false,\"head_frame\":0,\"money\":115413,\"isRichMan\":false}],\"stealTarget\":{\"uid\":224,\"gender\":1,\"name\":\"小野子\",\"headImg\":\"http://wx.qlogo.cn/mmopen/Q3auHgzwzM6ib6xP24BmM6icGJpwPic1e5DibCSOUSic1Wliad9pNr1EW2zl4CNELL8sxDoYfq4bM0niaEsnia538icAUWw/0\",\"crowns\":336,\"isVip\":false,\"head_frame\":0,\"money\":709412,\"isRichMan\":true},\"badLuck\":false,\"tutorial\":18},\"errcode\":0,\"errmsg\":\"\"}";
             //res = LitJson.JsonMapper.ToObject<StealMessage>(str);
             callBack(ret, res);
@@ -294,7 +316,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("偷取失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "偷取失败", res.errcode));
             }
             
         });
@@ -317,7 +339,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("获取恶人失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "获取恶人列表失败", res.errcode));
             }
             
         });
@@ -365,7 +387,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("获取玩家信息失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "获取玩家信息失败", res.errcode));
             }
 
         });
@@ -390,7 +412,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("获取好友列表数据:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "获取好友列表数据", res.errcode));
             }
 
         });
@@ -398,6 +420,7 @@ public class NetManager:INetManager
 
     public bool AgreeAddFriend(long friendUid, Action<bool, AgreeAddFriendMessage> callBack)
     {
+        Waiting.Enable();
         string url = MakeUrl(APIDomain, "game/rank/agreeAddFriend");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("friendUid", friendUid);
@@ -405,7 +428,7 @@ public class NetManager:INetManager
         data.Add("token", token);
         data.Add("t", time.ToString());
         return HttpProxy.SendPostRequest<AgreeAddFriendMessage>(url, data, (ret, res) => {
-
+            Waiting.Disable();
             callBack(ret, res);
             if (res.isOK)
             {
@@ -418,7 +441,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("同意好友申请失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "同意好友申请失败", res.errcode));
             }
 
         });
@@ -426,13 +449,14 @@ public class NetManager:INetManager
 
     public bool AgreeAddAllFriend( Action<bool, FriendMessage> callBack)
     {
+        Waiting.Enable();
         string url = MakeUrl(APIDomain, "game/rank/AddAllFriend");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("uid", uid);
         data.Add("token", token);
         data.Add("t", time.ToString());
         return HttpProxy.SendPostRequest<FriendMessage>(url, data, (ret, res) => {
-
+            Waiting.Disable();
             callBack(ret, res);
             if (res.isOK)
             {
@@ -444,7 +468,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("同意所有添加好友失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "同意所有添加好友失败", res.errcode));
             }
 
         });
@@ -452,6 +476,7 @@ public class NetManager:INetManager
 
     public bool AddFriend(string FriendshipCode, Action<bool, FriendMessage> callBack)
     {
+        Waiting.Enable();
         string url = MakeUrl(APIDomain, "game/rank/addFriend");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("FriendshipCode", FriendshipCode);
@@ -459,7 +484,7 @@ public class NetManager:INetManager
         data.Add("token", token);
         data.Add("t", time.ToString());
         return HttpProxy.SendPostRequest<FriendMessage>(url, data, (ret, res) => {
-
+            Waiting.Disable();
             callBack(ret, res);
             if (res.isOK)
             {
@@ -470,7 +495,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("添加好友失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "添加好友失败", res.errcode));
             }
 
         });
@@ -480,6 +505,7 @@ public class NetManager:INetManager
 
     public bool RemoveFriend(long friendUid, Action<bool, FriendMessage> callBack)
     {
+        Waiting.Enable();
         string url = MakeUrl(APIDomain, "game/rank/removeFriend");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("friendUid", friendUid);
@@ -487,7 +513,7 @@ public class NetManager:INetManager
         data.Add("token", token);
         data.Add("t", time.ToString());
         return HttpProxy.SendPostRequest<FriendMessage>(url, data, (ret, res) => {
-
+            Waiting.Disable();
             callBack(ret, res);
             if (res.isOK)
             {
@@ -500,7 +526,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("忽略好友失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "忽略好友失败", res.errcode));
             }
 
         });
@@ -508,13 +534,14 @@ public class NetManager:INetManager
 
     public bool RemoveAllFriend(Action<bool, FriendMessage> callBack)
     {
+        Waiting.Enable();
         string url = MakeUrl(APIDomain, "game/rank/removeAllFriend");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("uid", uid);
         data.Add("token", token);
         data.Add("t", time.ToString());
         return HttpProxy.SendPostRequest<FriendMessage>(url, data, (ret, res) => {
-
+            Waiting.Disable();
             callBack(ret, res);
             if (res.isOK)
             {
@@ -526,7 +553,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("忽略所有好友失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "忽略所有好友失败", res.errcode));
             }
 
         });
@@ -534,6 +561,7 @@ public class NetManager:INetManager
 
     public bool SendEnergy(long friendUid, Action<bool, SendEnergyMessage> callBack)
     {
+        Waiting.Enable();
         string url = MakeUrl(APIDomain, "game/rank/send-to");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("friendUid", friendUid);
@@ -541,7 +569,7 @@ public class NetManager:INetManager
         data.Add("token", token);
         data.Add("t", time.ToString());
         return HttpProxy.SendPostRequest<SendEnergyMessage>(url, data, (ret, res) => {
-
+            Waiting.Disable();
             callBack(ret, res);
             if (res.isOK)
             {
@@ -560,7 +588,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("赠送好友能量失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "赠送好友能量失败", res.errcode));
             }
 
         });
@@ -568,6 +596,7 @@ public class NetManager:INetManager
 
     public bool ReceiveEnergy(long friendUid, Action<bool, ReceiveEnergyMessage> callBack)
     {
+        Waiting.Enable();
         string url = MakeUrl(APIDomain, "game/rank/receive-from");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("friendUid", friendUid);
@@ -575,7 +604,7 @@ public class NetManager:INetManager
         data.Add("token", token);
         data.Add("t", time.ToString());
         return HttpProxy.SendPostRequest<ReceiveEnergyMessage>(url, data, (ret, res) => {
-
+            Waiting.Disable();
             callBack(ret, res);
             if (res.isOK)
             {
@@ -605,7 +634,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("接受好友能量失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "接受好友能量失败", res.errcode));
             }
 
         });
@@ -627,8 +656,8 @@ public class NetManager:INetManager
             }
             else
             {
-                Debug.Log("接受好友能量失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
+                Debug.Log("获取商店数据失败:" + res.errmsg);
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "获取商店数据失败", res.errcode));
             }
 
         });
@@ -651,7 +680,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("获取世界排行榜失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "获取世界排行榜失败", res.errcode));
             }
 
         });
@@ -674,7 +703,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("获取好友排行榜失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "获取好友排行榜失败", res.errcode));
             }
 
         });
@@ -696,7 +725,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("获取地图数据失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "获取地图数据失败", res.errcode));
             }
 
         });
@@ -704,6 +733,7 @@ public class NetManager:INetManager
 
     public bool BuyMiner(int islanID,Action<bool, BuyMinerMessage> callBack)
     {
+        Waiting.Enable();
         string url = MakeUrl(APIDomain, "game/map/buy-miner");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("island", islanID);
@@ -711,7 +741,7 @@ public class NetManager:INetManager
         data.Add("token", token);
         data.Add("t", time.ToString());
         return HttpProxy.SendPostRequest<BuyMinerMessage>(url, data, (ret, res) => {
-
+            Waiting.Disable();
             callBack(ret, res);
             if (res.isOK)
             {
@@ -727,7 +757,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("购买矿工失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "购买矿工失败", res.errcode));
             }
 
         });
@@ -735,13 +765,14 @@ public class NetManager:INetManager
 
     public bool ReapMine(Action<bool, BuyMinerMessage> callBack)
     {
+        Waiting.Enable();
         string url = MakeUrl(APIDomain, "game/map/reap-mine");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("uid", uid);
         data.Add("token", token);
         data.Add("t", time.ToString());
         return HttpProxy.SendPostRequest<BuyMinerMessage>(url, data, (ret, res) => {
-
+            Waiting.Disable();
             callBack(ret, res);
             if (res.isOK)
             {
@@ -755,7 +786,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("获取采矿金币失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "获取采矿金币失败", res.errcode));
             }
 
         });
@@ -763,6 +794,7 @@ public class NetManager:INetManager
 
     public bool Wanted(long wid,Action<bool, WantedMessage> callBack)
     {
+        Waiting.Enable();
         string url = MakeUrl(APIDomain, "game/pvp/wanted");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("wid", wid);
@@ -770,7 +802,7 @@ public class NetManager:INetManager
         data.Add("token", token);
         data.Add("t", time.ToString());
         return HttpProxy.SendPostRequest<WantedMessage>(url, data, (ret, res) => {
-
+            Waiting.Disable();
             callBack(ret, res);
             if (res.isOK)
             {
@@ -780,7 +812,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("通缉玩家失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "通缉玩家失败", res.errcode));
             }
 
         });
@@ -804,7 +836,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("获取消息和邮件失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "获取消息和邮件失败", res.errcode));
             }
 
         });
@@ -830,8 +862,8 @@ public class NetManager:INetManager
             }
             else
             {
-                Debug.Log("获取消息和邮件失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
+                Debug.Log("获取奖励失败:" + res.errmsg);
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "获取奖励失败", res.errcode));
             }
 
         });
@@ -957,7 +989,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("获取好友邀请进度失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "获取好友邀请进度失败", res.errcode));
             }
             
         });
@@ -982,7 +1014,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("设置好友邀请进度失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "设置好友邀请进度失败", res.errcode));
             }
 
         });
@@ -1007,7 +1039,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("获取可召回好友列表失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "获取可召回好友列表失败", res.errcode));
             }
 
         });
@@ -1036,7 +1068,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("邀请好友失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "邀请好友失败", res.errcode));
             }
 
         });
@@ -1044,6 +1076,7 @@ public class NetManager:INetManager
 
     public bool RecallFriends(int limit, string[] to, Action<bool, RecallFriendsMessage> callBack)
     {
+        Waiting.Enable();
         string url = MakeUrl(APIDomain, "game/user/recall");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("limit", limit);
@@ -1066,6 +1099,7 @@ public class NetManager:INetManager
 
         return HttpProxy.SendPostRequest<RecallFriendsMessage>(url, data, (ret, res) =>
         {
+            Waiting.Disable();
             callBack(ret, res);
             if (res.isOK && res.data != null)
             {
@@ -1079,7 +1113,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("召回好友失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "召回好友失败", res.errcode));
             }
 
         });
@@ -1110,7 +1144,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("支付发放物品失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "支付发放物品失败", res.errcode));
             }
 
         });
@@ -1137,7 +1171,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("获取订单失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "获取订单失败", res.errcode));
             }
 
         });

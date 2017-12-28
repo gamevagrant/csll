@@ -267,7 +267,7 @@ public class UIWheelPanel : MonoBehaviour {
             else
             {
 
-                Alert.Show("能量不足");
+                Alert.Show("能量不足!");
             }
             
         }
@@ -294,10 +294,7 @@ public class UIWheelPanel : MonoBehaviour {
 
                 energyValue = user.energy - 1;
 
-                if (data.data.tutorial == 12)
-                {
-                    Invoke("ShowTutorialMessage", 5);
-                }
+               
             }
             else
             {
@@ -314,7 +311,7 @@ public class UIWheelPanel : MonoBehaviour {
         audio.loop = true;
         audio.Play();
         reflective.DOFade(1, 0.5f);
-        while (!getRes || (Time.time - timeTag)<3 )
+        while (!getRes || (Time.time - timeTag)<2 )
         {
             wheel.Rotate(new Vector3(0, 0, -360 * 4) * Time.deltaTime);
 
@@ -324,13 +321,13 @@ public class UIWheelPanel : MonoBehaviour {
         reflective.DOFade(0, 1f);
         if (rollItem == null)
         {
-            wheel.DOLocalRotate(new Vector3(0, 0, -(360 * 1 + 36 * 0)), 2.3f, RotateMode.FastBeyond360).SetEase(Ease.OutCirc);
+            wheel.DOLocalRotate(new Vector3(0, 0, -(360 * 1 + 36 * 0)), 2f, RotateMode.FastBeyond360).SetEase(Ease.OutCirc);
             yield break;
         }
         audio.clip = audioClips[1];
         audio.loop = false;
         audio.Play();
-        wheel.DOLocalRotate(new Vector3(0, 0, -(360 * 1 + 36 * rollItem.index)), 2.3f, RotateMode.FastBeyond360).SetEase(Ease.OutCirc).OnComplete(() => {
+        wheel.DOLocalRotate(new Vector3(0, 0, -(360 * 1 + 36 * rollItem.index)), 2f, RotateMode.FastBeyond360).SetEase(Ease.OutCirc).OnComplete(() => {
            
             showResault(rollData);
             audio.Stop();
@@ -338,15 +335,7 @@ public class UIWheelPanel : MonoBehaviour {
         });
     }
 
-    private void ShowTutorialMessage()
-    {
-        string tutorialStr = "{\"uid\":0,\"toid\":0,\"action\":1,\"result\":0,\"time\":\"0\",\"name\":\"{0}\",\"headImg\":\"{1}\",\"crowns\":0,\"extra\":{\"building\":{\"level\":0,\"status\":0,\"isShield\":false},\"building_index\":0,\"isShielded\":true},\"read\":false,\"isWanted\":false}";
-
-        MessageResponseData msg = LitJson.JsonMapper.ToObject<MessageResponseData>(tutorialStr);
-        msg.name = user.newbie_attack_target.name;
-        msg.headImg = user.newbie_attack_target.headImg;
-        GameMainManager.instance.websocketMsgManager.SendMsg(msg);
-    }
+    
 
     //展示roll结果
     private void showResault(RollData rollData)

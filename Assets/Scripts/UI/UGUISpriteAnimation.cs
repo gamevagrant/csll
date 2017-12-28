@@ -50,6 +50,7 @@ public class UGUISpriteAnimation : MonoBehaviour {
 
     public void Play()
     {
+        ImageSource.enabled = true;
         IsPlaying = true;
         Foward = true;
     }
@@ -89,6 +90,7 @@ public class UGUISpriteAnimation : MonoBehaviour {
                 else
                 {
                     IsPlaying = false;
+                    ImageSource.enabled = false;
                     return;
                 }
             }
@@ -101,6 +103,7 @@ public class UGUISpriteAnimation : MonoBehaviour {
                 else
                 {
                     IsPlaying = false;
+                    ImageSource.enabled = false;
                     return;
                 }
             }

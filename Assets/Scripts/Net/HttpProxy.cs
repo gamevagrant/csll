@@ -10,8 +10,8 @@ using System.Text;
 /// </summary>
 public class HttpProxy {
 
-    public static readonly string JsonHeaderType = "Content-Type";
-    public static readonly string JsonHeaderValue = "application/json; charset=utf-8";
+    //public static readonly string JsonHeaderType = "Content-Type";
+    //public static readonly string JsonHeaderValue = "application/x-www-form-urlencoded";
     public static float MaxInterval = 1 / 10;
 
     private static string LastUrl = "";
@@ -108,6 +108,7 @@ public class HttpProxy {
 
             
         });
+
         req.AddHeader(JsonHeaderType, JsonHeaderValue);
         return req;
     }

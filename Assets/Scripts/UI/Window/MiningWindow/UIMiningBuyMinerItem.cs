@@ -42,8 +42,8 @@ public class UIMiningBuyMinerItem : MonoBehaviour {
             purchasedTag.SetActive(true);
         }else
         {
-            button.enabled = true;
-            button.interactable = false;
+            button.enabled = false;
+            button.interactable = true;
             costPanel.SetActive(false);
             purchasedTag.SetActive(false);
         }
@@ -51,6 +51,11 @@ public class UIMiningBuyMinerItem : MonoBehaviour {
 
     private void OnClickBuyBtn()
     {
+        if(GameMainManager.instance.model.userData.money< data.costs[index])
+        {
+            Alert.Show("金币不足");
+            return;
+        }
         GameMainManager.instance.netManager.BuyMiner(data.island, (ret, res) =>
         {
 

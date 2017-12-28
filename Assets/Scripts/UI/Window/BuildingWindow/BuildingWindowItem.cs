@@ -20,6 +20,7 @@ public class BuildingWindowItem : QY.UI.Interactable,IPointerClickHandler {
     public int level;//此格子显示的建筑等级
 
     private BuildState state = BuildState.Null;
+    private int needMoney;
 
     private enum BuildState
     {
@@ -38,6 +39,16 @@ public class BuildingWindowItem : QY.UI.Interactable,IPointerClickHandler {
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (!IsInteractable())
+        {
+            return;
+        }
+        if(GameMainManager.instance.model.userData.money< needMoney)
+        {
+            Alert.Show("金币不足！");
+            return;
+        }
+
         GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.button_click);
         if (isInteractive)
         {
@@ -68,7 +79,7 @@ public class BuildingWindowItem : QY.UI.Interactable,IPointerClickHandler {
                 icon.SetNativeSize();
             }
 
-            int needMoney = 0;
+            needMoney = 0;
             if(bd.status != 0)
             {
                 needMoney = repairCost[index - 1][level - 1];

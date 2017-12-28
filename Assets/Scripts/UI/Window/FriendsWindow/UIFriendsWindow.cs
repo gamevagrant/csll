@@ -200,6 +200,11 @@ public class UIFriendsWindow : UIWindowBase {
 
     public void OnClickReceiveBtn()
     {
+        if(GameMainManager.instance.model.userData.energy>= GameMainManager.instance.model.userData.maxEnergy)
+        {
+            Alert.Show("您的体力太多，消耗些再来领吧！");
+            return;
+        }
         GameMainManager.instance.netManager.ReceiveEnergy(0,(ret, res) =>
         {
             if (res.isOK)
@@ -208,11 +213,7 @@ public class UIFriendsWindow : UIWindowBase {
                 {
                     UpdateMyFriendsData(res.data.friends);
                 });
-                /*
-                GameMainManager.instance.uiManager.OpenPopupModalBox("一键领取成功", "", ()=> {
-                    UpdateMyFriendsData(res.data.friends);
 
-                });*/
             }
         });
     }

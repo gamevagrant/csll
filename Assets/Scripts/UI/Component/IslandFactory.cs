@@ -8,15 +8,17 @@ using UnityEngine.U2D;
 public class IslandFactory : MonoBehaviour {
 
     private Image[] citySprites;
+    private GameObject[] effects;
+    private Image[] ruins;
     private const int SpriteCount = 6;
     private int[] sort = { 0, 1, 5, 4, 3, 2 };
     private Vector2[] positions = {
         new Vector2 (0,-66),
-        new Vector2(65,-37),
+        new Vector2(65,-15),
         new Vector2(170,-147),
         new Vector2(-180,-15),
-        new Vector2(-73,-28),
-        new Vector2(158,-17),
+        new Vector2(-73,-52),
+        new Vector2(160,-60),
     };
 
     private SpriteAtlas spriteAtlas;
@@ -29,15 +31,18 @@ public class IslandFactory : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         //假数据
-       // string str = "[{\"level\":5,\"status\":0,\"isShield\":true},{\"level\":5,\"status\":0,\"isShield\":true},{\"level\":5,\"status\":0,\"isShield\":true},{\"level\":4,\"status\":0,\"isShield\":true},{\"level\":3,\"status\":0,\"isShield\":true}]";
-       // BuildingData[] data = LitJson.JsonMapper.ToObject<BuildingData[]>(str);
-       // UpdateCityData(1,data);
+        //string str = "[{\"level\":5,\"status\":1,\"isShield\":true},{\"level\":5,\"status\":1,\"isShield\":true},{\"level\":5,\"status\":1,\"isShield\":true},{\"level\":4,\"status\":1,\"isShield\":true},{\"level\":3,\"status\":1,\"isShield\":true}]";
+        //BuildingData[] data = LitJson.JsonMapper.ToObject<BuildingData[]>(str);
+        //UpdateCityData(1,data);
     }
 	
     private void init()
     {
         citySprites = new Image[SpriteCount];
-        for(int i = 0;i< SpriteCount; i++)
+
+        effects = new GameObject[SpriteCount];
+        ruins = new Image[SpriteCount];
+        for (int i = 0;i< SpriteCount; i++)
         {
             int index = sort[i];
             GameObject go = GameUtils.createGameObject(gameObject, index.ToString());
@@ -92,7 +97,7 @@ public class IslandFactory : MonoBehaviour {
         citySprites[index].enabled = true;
     }
 
-    public RectTransform getBuildTransform(int index)
+    public RectTransform GetBuildTransform(int index)
     {
         return citySprites[index].transform.GetChild(0) as RectTransform;
     }
@@ -128,6 +133,7 @@ public class IslandFactory : MonoBehaviour {
         string name = string.Format("city_{0}_{1}_{2}", index.ToString(), bd.level.ToString(), bd.status.ToString());
         Sprite sp = sa.GetSprite(name);
         SetCityItemSprite(index, sp);
+        SetBuildingState(index, bd.status,sa.GetSprite("ruins"));
     }
 
     private void SetCityItemSprite(int index, Sprite sprite)
@@ -146,6 +152,66 @@ public class IslandFactory : MonoBehaviour {
                 citySprites[index].SetNativeSize();
             }
         }
+        
+    }
+
+    private void SetBuildingState(int index, int state, Sprite ruinsSprite)
+    {
+        if(index == 2 || index == 3)//排除动物和载具
+        {
+            return;
+        }
+        //状态值 0正常 1损坏 2摧毁
+        if (effects != null && ruins != null && index < citySprites.Length)
+        {
+            if (effects[index] != null)
+            {
+                effects[index].SetActive(false);
+
+            }
+            if (ruins[index] != null)
+            {
+                ruins[index].gameObject.SetActive(false);
+            }
+
+            if (state == 1)
+            {
+                if(effects[index]!=null)
+                {
+                    effects[index].SetActive(true);
+
+                }else
+                {
+                    string path = FilePathTools.getEffectPath("SmokeLight");
+                    AssetBundleLoadManager.Instance.LoadAsset<GameObject>(path, (go) => {
+
+                        GameObject effect = GameUtils.createGameObject(citySprites[index].transform.GetChild(0).gameObject, go);
+                        Quaternion q = Quaternion.identity;
+                        q.eulerAngles = new Vector3(-90, 0, 0);
+                        effect.transform.localRotation = q;
+                        effect.transform.localPosition = new Vector3(0, 50,-100);
+                        effects[index] = effect;
+                    });
+                }
+            }
+            else if (state == 2)
+            {
+                if(ruins[index]!=null)
+                {
+                    ruins[index].gameObject.SetActive(true);
+                }else
+                {
+                    GameObject ruinsGo = GameUtils.createGameObject(citySprites[index].transform.GetChild(0).gameObject, "ruins");
+                    ruins[index] = ruinsGo.AddComponent<Image>();
+                    ruins[index].sprite = ruinsSprite;
+                    ruins[index].SetNativeSize();
+                }
+            }else
+            {
+                
+            }
+        }
+            
         
     }
 }

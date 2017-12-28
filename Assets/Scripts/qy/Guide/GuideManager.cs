@@ -126,7 +126,7 @@ namespace QY.Guide
         /// </summary>
         public void TryProcess()
         {
-            UnityEngine.Debug.Log("TryProcess");
+            //UnityEngine.Debug.Log("TryProcess");
             Process();
         }
 
@@ -158,8 +158,9 @@ namespace QY.Guide
 
         IEnumerator StartAction(GuideData guideData,Interactable interactable)
         {
-            yield return new WaitForSeconds((float)guideData.delay);
             Interactable.isLock = true;
+            yield return new WaitForSeconds((float)guideData.delay);
+            
             if(interactable!=null)
                 interactable.isIgnoreLock = true;
             onProcess(curData, interactable);

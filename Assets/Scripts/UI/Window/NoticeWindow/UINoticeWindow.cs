@@ -46,10 +46,14 @@ public class UINoticeWindow : UIWindowBase {
 
         if (!string.IsNullOrEmpty(this.data.img_url))
         {
+            topImage.enabled = true;
             AssetLoadManager.Instance.LoadAsset<Texture2D>(this.data.img_url, (tex) =>
             {
                 topImage.texture = tex;
             });
+        }else
+        {
+            topImage.enabled = false;
         }
        
         if(this.data.sections!=null)

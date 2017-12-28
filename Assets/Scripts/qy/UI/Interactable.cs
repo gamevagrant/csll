@@ -18,7 +18,7 @@ namespace QY.UI
             {
                 
                 lockNum+=value?1:-1;
-                UnityEngine.Debug.Log("--Lock--" + value + " locNum:" + lockNum);
+                //UnityEngine.Debug.Log("--Lock--" + value + " locNum:" + lockNum);
             }
         }
         private static Dictionary<string, string> ignoreList = new Dictionary<string, string>();

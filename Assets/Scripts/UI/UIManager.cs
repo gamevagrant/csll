@@ -32,20 +32,13 @@ public class UIManager : MonoBehaviour,IUIManager  {
     private GameObject popupCollider;//模态窗口的遮挡面板
     //private GameObject windowCollider;//全局遮挡面板
 
-    private int colliderNum = 0;//打开遮挡面板的计数
     private Queue<Action> queue = new Queue<Action>();
     private bool isOpening = false;
 
     private CanvasScaler canvasScaler;
     private Canvas canvas;
 
-    public bool isEnable
-    {
-        get
-        {
-            return colliderNum == 0;
-        }
-    }
+
 
     public bool isWaiting
     {

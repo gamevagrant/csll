@@ -42,13 +42,16 @@ public class UIBuildingWindow : UIWindowBase {
                         evt.level = data.data.buildings[index - 1].level;
                         evt.islandID = data.data.islandId;
                         evt.isUpgrade = data.data.playUpgradeAnimation;
-                        evt.upgradeEnergyReward = data.data.upgradeEnergyAfterReward;
-                        evt.upgradeMoneyReward = data.data.upgradeMoneyAfterReward;
+                        evt.upgradeEnergyReward = data.data.upgradeEnergyAfterReward - data.data.energy;
+                        evt.upgradeMoneyReward = data.data.upgradeMoneyAfterReward - data.data.money;
                         EventDispatcher.instance.DispatchEvent(evt);
+
                         GameMainManager.instance.uiManager.CloseWindow(windowData.id);
-                        
                     }
+                    
                 });
+
+               
             };
         }
     }

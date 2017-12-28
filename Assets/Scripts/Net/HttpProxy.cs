@@ -44,6 +44,7 @@ public class HttpProxy {
             {
                 Debug.LogErrorFormat("请求失败失败 request.State = {0} [{1}]", request.State.ToString(), url);
                 EventDispatcher.instance.DispatchEvent(new RequestErrorEvent(request, reponse));
+                
             }
             else
             {

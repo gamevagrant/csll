@@ -48,17 +48,14 @@ public class GameStarter : MonoBehaviour
 
         GameMainManager.instance.mono = this;
 
+        UpdateVersion updateVersion = new UpdateVersion((isComplate)=> {
+            if(isComplate)
+            {
+                UpdateAssetsComplate();
+            }
 
-        if (GameSetting.isUseAssetBundle)
-        {
-            UpdateAssets updateAsset = new UpdateAssets();
-            updateAsset.onComplate += UpdateAssetsComplate;
-            updateAsset.StartUpdate();
-        }
-        else
-        {
-            UpdateAssetsComplate();
-        }
+        });
+        updateVersion.StartUpdate();
 
     }
 

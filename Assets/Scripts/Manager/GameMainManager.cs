@@ -97,7 +97,7 @@ public class GameMainManager {
     private void OnRequestErrorHandle(BaseEvent e)
     {
         RequestErrorEvent evt = e as RequestErrorEvent;
-        if(evt.request.State != BestHTTP.HTTPRequestStates.TimedOut)
+        if(evt.request.State != BestHTTP.HTTPRequestStates.TimedOut && evt.request.State != BestHTTP.HTTPRequestStates.ConnectionTimedOut)
         {
             Debug.Log(string.Format("请求失败：{0} ", evt.request.State.ToString()));
             return;
@@ -113,6 +113,8 @@ public class GameMainManager {
                 }
                
             }, "重试");
+
+            Waiting.Disable();
         }
         else
         {

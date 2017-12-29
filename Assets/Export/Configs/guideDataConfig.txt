@@ -54,28 +54,28 @@
             "progress": 3,
             "type": "click",
             "content": "",
-            "delay": 5
+            "delay": 4
         },
         {
             "interact_id": "WheelWindow_WheelBtn",
             "progress": 4,
             "type": "click",
             "content": "",
-            "delay": 5
+            "delay": 4
         },
         {
             "interact_id": "WheelWindow_WheelBtn",
             "progress": 5,
             "type": "click",
             "content": "",
-            "delay": 5
+            "delay": 4
         },
         {
             "interact_id": "GuideTipsWindow_CloseBtn",
             "progress": 6,
             "type": "tips",
             "content": "炮击就是：拆别人的房，赚别人的钱！",
-            "delay": 8
+            "delay": 7
         },
         {
             "interact_id": "AttackWindow_SelectBtn1",
@@ -96,7 +96,7 @@
             "progress": 8,
             "type": "tips",
             "content": "又有钱了，快去给自己的城市添砖加瓦，早日登上人生巅峰",
-            "delay": 5
+            "delay": 4
         },
         {
             "interact_id": "WheelWindow_SwitchBuildBtn",
@@ -145,14 +145,14 @@
             "progress": 10,
             "type": "click",
             "content": "",
-            "delay": 5
+            "delay": 4
         },
         {
             "interact_id": "WheelWindow_WheelBtn",
             "progress": 11,
             "type": "click",
             "content": "",
-            "delay": 5
+            "delay": 4
         },
         {
             "interact_id": "PopupMessageWindow_OkBtn",
@@ -201,7 +201,7 @@
             "progress": 15,
             "type": "click",
             "content": "",
-            "delay": 5
+            "delay": 4
         },
         {
             "interact_id": "GuideTipsWindow_CloseBtn",

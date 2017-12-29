@@ -43,15 +43,16 @@ public class BuildingWindowItem : QY.UI.Interactable,IPointerClickHandler {
         {
             return;
         }
-        if(GameMainManager.instance.model.userData.money< needMoney)
-        {
-            Alert.Show("金币不足！");
-            return;
-        }
+        
 
         GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.button_click);
         if (isInteractive)
         {
+            if (GameMainManager.instance.model.userData.money < needMoney)
+            {
+                Alert.Show("金币不足！");
+                return;
+            }
             Interacted();
             if (state == BuildState.canBuild || state == BuildState.damage)
             {

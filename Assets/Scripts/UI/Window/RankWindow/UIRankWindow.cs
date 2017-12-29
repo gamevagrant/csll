@@ -120,6 +120,7 @@ public class UIRankWindow : UIWindowBase {
     private void ShowPanel(RectTransform panel)
     {
         //Sequence sq = DOTween.Sequence();
+        GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.panel_in);
         currPanel = panel;
         panel.gameObject.SetActive(true);
         panel.DOAnchorPos(new Vector2(0, 0), 1f).SetEase(Ease.OutBack);
@@ -127,6 +128,7 @@ public class UIRankWindow : UIWindowBase {
 
     private void HidePanel(RectTransform panel)
     {
+        GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.panel_out);
         panel.DOAnchorPos(new Vector2(0, 950), 1f).SetEase(Ease.OutCubic).OnComplete(() =>
         {
             //panel.gameObject.SetActive(false);

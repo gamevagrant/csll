@@ -33,6 +33,7 @@ public class UIGetRewardWindow : UIWindowBase {
 
     protected override void StartShowWindow(object[] data)
     {
+        GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.building_box_down);
         getRewardWindowData = data[0] as GetRewardWindowData;
         RewardData reward = getRewardWindowData.reward;
         if(reward.type == "money")

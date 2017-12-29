@@ -71,6 +71,7 @@ public class UINoticeWindow : UIWindowBase {
 
     protected override void EnterAnimation(Action onComplete)
     {
+        GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.panel_in);
         Sequence sq = DOTween.Sequence();
         sq.Append(panel.DOAnchorPos(new Vector2(0, -55), 1f).SetEase(Ease.OutCubic));
         sq.Insert(0.2f, topBar.DOAnchorPos(new Vector2(0, 0), 0.5f).SetEase(Ease.OutCubic)).OnComplete(()=> {
@@ -80,6 +81,7 @@ public class UINoticeWindow : UIWindowBase {
 
     protected override void ExitAnimation(Action onComplete)
     {
+        GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.panel_out);
         Sequence sq = DOTween.Sequence();
         sq.Append(panel.DOAnchorPos(new Vector2(0, 900), 1).SetEase(Ease.OutCubic));
         sq.Insert(0.1f,topBar.DOAnchorPos(new Vector2(0, 110), 0.5f).SetEase(Ease.InCubic)).OnComplete(() => {

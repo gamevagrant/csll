@@ -50,18 +50,18 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
         string str = "";
         if((bool)msg.extra["isShielded"])
         {
-            str = string.Format("你成功防御了{0}的攻击", msg.name);
+            str = string.Format("你成功防御了<#1995BCFF>{0}</color>的攻击", msg.name);
         }else
         {
             int buildingIndex = (int)msg.extra["building_index"];
             int buildingStatus = (int)msg.extra["building"]["status"];
             if (buildingStatus == 2)
             {
-                str = string.Format("{0}损坏了你的{1}", msg.name, GameMainManager.instance.configManager.islandConfig.GetBuildingName(buildingIndex));
+                str = string.Format("<#1995BCFF>{0}</color>损坏了你的{1}", msg.name, GameMainManager.instance.configManager.islandConfig.GetBuildingName(buildingIndex));
             }
             else
             {
-                str = string.Format("{0}摧毁了你的{1}", msg.name, GameMainManager.instance.configManager.islandConfig.GetBuildingName(buildingIndex));
+                str = string.Format("<#1995BCFF>{0}</color>摧毁了你的{1}", msg.name, GameMainManager.instance.configManager.islandConfig.GetBuildingName(buildingIndex));
             }
             GameMainManager.instance.model.userData.buildings[buildingIndex].status = buildingStatus;
         }

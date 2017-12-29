@@ -56,6 +56,7 @@ public class UIBadGuyRankWindow : UIWindowBase {
 
     protected override void EnterAnimation(Action onComplete)
     {
+        GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.panel_in);
         Sequence sq = DOTween.Sequence();
         sq.Append(panel.DOAnchorPos(new Vector2(0, -92), 1f).SetEase(Ease.OutCubic));
         sq.Insert(0.3f, topBar.DOAnchorPos(new Vector2(0, 0), 0.5f).SetEase(Ease.OutCubic));
@@ -66,6 +67,7 @@ public class UIBadGuyRankWindow : UIWindowBase {
 
     protected override void ExitAnimation(Action onComplete)
     {
+        GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.panel_out);
         Sequence sq = DOTween.Sequence();
         sq.Append(panel.DOAnchorPos(new Vector2(0, 900), 1).SetEase(Ease.OutCubic));
         sq.Insert(0.1f, topBar.DOAnchorPos(new Vector2(0, 110), 0.5f).SetEase(Ease.InCubic)).OnComplete(() => {

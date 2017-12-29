@@ -71,6 +71,9 @@ public class UIAttackWindow :UIWindowBase {
             {
                 topBar.SetEnemysData(res.data.enemies, randomAttackTarget);
                 topBar.SetFriendsData(GameMainManager.instance.model.userData.friendInfo);
+            }else
+            {
+                topBar.SetEnemysData(null, randomAttackTarget);
             }
         });
 
@@ -145,6 +148,7 @@ public class UIAttackWindow :UIWindowBase {
         aimIcon.gameObject.SetActive(true);
         aimIcon.color = new Color(aimIcon.color.r, aimIcon.color.g, aimIcon.color.b, 0);
         boomAnimation.position = target.position;
+        (boomAnimation as RectTransform).anchoredPosition += new Vector2(0,80);
         particSys.anchoredPosition3D = target.anchoredPosition3D + new Vector3(0, 0, -100);
         shell.position = artillery.position;
 

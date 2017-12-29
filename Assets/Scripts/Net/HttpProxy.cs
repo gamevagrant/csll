@@ -50,8 +50,8 @@ public class HttpProxy {
             {
                 string msgStr = (reponse != null && !string.IsNullOrEmpty(reponse.DataAsText)) ? reponse.DataAsText : "";
 
-                if (!GameSetting.isRelease)
-                    Debug.Log(msgStr);
+               
+                Debug.Log(msgStr);
 
                 if (callback != null)
                 {
@@ -91,8 +91,8 @@ public class HttpProxy {
             else
             {
                 string msgStr = (reponse != null && !string.IsNullOrEmpty(reponse.DataAsText)) ? reponse.DataAsText : "";
-                if (!GameSetting.isRelease)
-                    Debug.Log(msgStr);
+
+                Debug.Log(msgStr);
                 if (callback != null)
                 {
                     try

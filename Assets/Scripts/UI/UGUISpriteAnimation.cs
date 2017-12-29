@@ -30,7 +30,7 @@ public class UGUISpriteAnimation : MonoBehaviour {
         ImageSource = GetComponent<Image>();
     }
 
-    void Start()
+    void OnEnable()
     {
         if (AutoPlay)
         {
@@ -50,6 +50,7 @@ public class UGUISpriteAnimation : MonoBehaviour {
 
     public void Play()
     {
+        SetSprite(mCurFrame);
         ImageSource.enabled = true;
         IsPlaying = true;
         Foward = true;
@@ -89,8 +90,7 @@ public class UGUISpriteAnimation : MonoBehaviour {
                 }
                 else
                 {
-                    IsPlaying = false;
-                    ImageSource.enabled = false;
+                    Stop();
                     return;
                 }
             }
@@ -102,8 +102,7 @@ public class UGUISpriteAnimation : MonoBehaviour {
                 }
                 else
                 {
-                    IsPlaying = false;
-                    ImageSource.enabled = false;
+                    Stop();
                     return;
                 }
             }
@@ -128,7 +127,7 @@ public class UGUISpriteAnimation : MonoBehaviour {
     public void Stop()
     {
         mCurFrame = 0;
-        SetSprite(mCurFrame);
+        ImageSource.enabled = false;
         IsPlaying = false;
     }
 

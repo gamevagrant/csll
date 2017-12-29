@@ -86,6 +86,7 @@ public class UIPopupMessageWindow : UIWindowBase {
     {
         if(queue.Count>0)
         {
+            
             PopupMessageData msg = queue.Peek();
 
             AssetLoadManager.Instance.LoadAsset<Texture2D>(msg.headImg, (tex) =>
@@ -105,11 +106,13 @@ public class UIPopupMessageWindow : UIWindowBase {
 
     private void Show()
     {
+        GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.panel_in);
         rectTransform.DOAnchorPos(new Vector2(0, 60), 0.5f).SetEase(Ease.OutBack);
     }
 
     private void Hide(Action onComplate)
     {
+        GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.panel_out);
         rectTransform.DOAnchorPos(new Vector2(-700, 60), 0.5f).SetEase(Ease.OutBack).OnComplete(()=> {
 
             onComplate();

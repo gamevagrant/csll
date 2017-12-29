@@ -207,8 +207,10 @@ public class UIBuildPanel : MonoBehaviour {
                 box.gameObject.SetActive(false);
                 buildBtn.gameObject.SetActive(true);
 
+                GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIWheelWindow, 0);
                 GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UISideBarWindow);
                 GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UITopBarWindow);
+               
                 switchBtn.gameObject.SetActive(true);
                 onUpgrading(false);
 

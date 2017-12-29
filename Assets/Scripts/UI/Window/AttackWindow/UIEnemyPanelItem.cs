@@ -68,6 +68,7 @@ public class UIEnemyPanelItem : BaseItemView {
             SpriteState spriteState = new SpriteState();
             spriteState.disabledSprite = btnSprites[1];
             attBtn.spriteState = spriteState;
+            attBtn.interactable = true;
             attBtn.interactable = !selectData.isSelected;
             /*
             if (selectData.isSelected)
@@ -86,6 +87,7 @@ public class UIEnemyPanelItem : BaseItemView {
             SpriteState spriteState = new SpriteState();
             spriteState.disabledSprite = btnSprites[3];
             attBtn.spriteState = spriteState;
+            attBtn.interactable = true;
             attBtn.interactable = !selectData.isSelected;
             /*
             if (selectData.isSelected)

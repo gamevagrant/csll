@@ -31,9 +31,9 @@ public class UIWaitingWindow : UIWindowBase {
     private void Update()
     {
         time = Time.time - timeTag;
-        if (time>1)
+        if (time>2)
         {
-            canvasGroup.alpha = (time-0.5f)*1.5f;
+            canvasGroup.alpha = (time-1.5f)*1.5f;
         }
     }
 

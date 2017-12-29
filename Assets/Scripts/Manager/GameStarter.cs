@@ -43,7 +43,7 @@ public class GameStarter : MonoBehaviour
     {
         gameObject.AddComponent<AssetBundleLoadManager>();
         gameObject.AddComponent<AssetLoadManager>();
-        if (GameSetting.isDebug)
+        if (!GameSetting.isRelease)
             gameObject.AddComponent<QY.Debug.DebugTools>();
 
         GameMainManager.instance.mono = this;

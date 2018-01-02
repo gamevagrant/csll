@@ -44,11 +44,7 @@ public class Test : MonoBehaviour {
     }
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetMouseButtonDown(0))
-        {
-            UnityEngine.UI.Toggle t = GetComponent<UnityEngine.UI.Toggle>();
-            t.isOn = !t.isOn;
-        }
+
 	}
 
     private void OnGUI()
@@ -64,5 +60,12 @@ public class Test : MonoBehaviour {
     public void OnChangeVale(bool a)
     {
         Debug.Log("OnChangeVale");
+    }
+
+    public QY.UI.Button btn;
+    public void OnEnableButton()
+    {
+        btn.isIgnoreLock = true;
+        QY.UI.Interactable.isLock = !QY.UI.Interactable.isLock;
     }
 }

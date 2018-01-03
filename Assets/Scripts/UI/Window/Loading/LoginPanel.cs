@@ -19,14 +19,15 @@ public class LoginPanel : MonoBehaviour {
     public GameObject facebookBtn;
     public Text facebookName;
     public Slider slider;
-    public GameObject loginTipPanel;
-    public GameObject updateAppPanel;
     public Text userNameText;
     public Text levelText;
-    
+    public GameObject loginTipPanel;
+    public GameObject updateAppPanel;
+    public GameObject privacyTipsPanel;
 
     private IOpenPlatform open;
     private string updateUrl;
+    private Action onStartLogin;
 
     private void Awake()
     {
@@ -40,7 +41,6 @@ public class LoginPanel : MonoBehaviour {
         updateAppPanel.SetActive(false);
         slider.value = 0;
         facebookName.text = "";
-
 
     }
 
@@ -80,6 +80,7 @@ public class LoginPanel : MonoBehaviour {
 
             facebookBtn.SetActive(true);
             guesBtn.SetActive(true);
+
         });
        
 
@@ -87,22 +88,52 @@ public class LoginPanel : MonoBehaviour {
 
     private void LoinPlatform()
     {
-        AccountManager.instance.LoinPlatform((issuccess)=> {
-            if(!issuccess)
-            {
-                facebookName.text = "登录平台失败请重试...";
-                facebookBtn.SetActive(true);
-                guesBtn.SetActive(true);
-            }else
-            {
-                facebookName.text = "正在登录游戏服务器...";
-            }
-        });
+        onStartLogin = () =>
+        {
+            AccountManager.instance.LoinPlatform((issuccess) => {
+                if (!issuccess)
+                {
+                    facebookName.text = "登录平台失败请重试...";
+                    facebookBtn.SetActive(true);
+                    guesBtn.SetActive(true);
+                }
+                else
+                {
+                    facebookName.text = "正在登录游戏服务器...";
+                }
+            });
+        };
+
+        if (!LocalDatasManager.isShowPrivacyTips)
+        {
+           
+            privacyTipsPanel.SetActive(true);
+        }
+        else
+        {
+            onStartLogin();
+        }
+       
     }
 
     private void LoginGuest()
     {
-        AccountManager.instance.LoginGuest();
+        onStartLogin = () =>
+        {
+            AccountManager.instance.LoginGuest();
+        };
+
+        if (!LocalDatasManager.isShowPrivacyTips)
+        {
+           
+            privacyTipsPanel.SetActive(true);
+
+        }
+        else
+        {
+            onStartLogin();
+        }
+       
     }
 
 
@@ -127,7 +158,7 @@ public class LoginPanel : MonoBehaviour {
 
     public void OnClickFacebookLogin()
     {
-       
+        
         facebookName.text = "";
         facebookBtn.SetActive(false);
         guesBtn.SetActive(false);
@@ -152,6 +183,17 @@ public class LoginPanel : MonoBehaviour {
         if(!string.IsNullOrEmpty(updateUrl))
         {
             Application.OpenURL(updateUrl);
+        }
+    }
+
+    public void OnClickPrivacyTipsBtn()
+    {
+        LocalDatasManager.isShowPrivacyTips = true;
+
+        privacyTipsPanel.SetActive(false);
+        if(onStartLogin!=null)
+        {
+            onStartLogin();
         }
     }
 

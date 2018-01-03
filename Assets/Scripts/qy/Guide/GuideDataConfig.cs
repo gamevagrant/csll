@@ -16,7 +16,7 @@ namespace QY.Guide
             this.progress = progress;
             for(int i = 0;i< data.Length;i++)
             {
-                if(data[i].progress == progress)
+                if(data[i].progress == this.progress)
                 {
                     index = i;
                     return data[index];

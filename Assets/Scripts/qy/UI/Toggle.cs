@@ -92,6 +92,10 @@ namespace QY.UI
 
         private void SetState(bool isSelected)
         {
+            if(!Application.isPlaying)
+            {
+                return;
+            }
             if (activate != null)
             {
                 foreach (GameObject go in activate)

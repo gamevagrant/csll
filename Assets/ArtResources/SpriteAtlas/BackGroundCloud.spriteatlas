@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: BackGroundCloud
+  m_EditorData:
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 1
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 0
+    platformSettings: []
+    packingParameters:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    packedHash:
+      serializedVersion: 2
+      Hash: bf60ebe2f0279d763e84e90d99364de1
+    variantMultiplier: 1
+    bindAsDefault: 1
+    finalFormat: 47
+    hashString: bf60ebe2f0279d763e84e90d99364de1
+    totalSpriteSurfaceArea: 1150206
+    packables:
+    - {fileID: 102900000, guid: 50ed0255f535c5947b5ecc77df2ce0a3, type: 3}
+    packedSpriteRenderDataKeys:
+    - 19fff668a1447014483c4d94735459dd: 21300000
+    - 7e7737c856f1d714c8a4f1cb71fb20c7: 21300000
+    - 81abf853d041e7647bab30bb83099ea8: 21300000
+    - d18dac847a2260340b6ae498ba9f3cce: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 19fff668a1447014483c4d94735459dd, type: 3}
+  - {fileID: 21300000, guid: 7e7737c856f1d714c8a4f1cb71fb20c7, type: 3}
+  - {fileID: 21300000, guid: 81abf853d041e7647bab30bb83099ea8, type: 3}
+  - {fileID: 21300000, guid: d18dac847a2260340b6ae498ba9f3cce, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - BackCloud3
+  - BackCloud2
+  - BackCloud1
+  - BackCloud
+  m_Tag: BackGroundCloud
+  m_IsVariant: 0

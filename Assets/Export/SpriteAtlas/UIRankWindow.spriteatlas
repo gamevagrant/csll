@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: UIRankWindow
+  m_EditorData:
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 1
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 0
+    platformSettings: []
+    packingParameters:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    packedHash:
+      serializedVersion: 2
+      Hash: 54f3903b34a4f1bcf41634e7cbe684e0
+    variantMultiplier: 1
+    bindAsDefault: 0
+    finalFormat: 47
+    hashString: 54f3903b34a4f1bcf41634e7cbe684e0
+    totalSpriteSurfaceArea: 102682
+    packables:
+    - {fileID: 102900000, guid: f36914ea97ff1394abe0e4ef427be3cc, type: 3}
+    packedSpriteRenderDataKeys:
+    - fe70799b9c37bfa46bc45040689bc2dd: 21300000
+    - b88ce117be746f44c931bd08cc3ae8c2: 21300000
+    - d9e942cd3341cbc4a9e0743f71441c98: 21300000
+    - 4669cf6d6cfb17a439ffffbefedefbf9: 21300000
+    - 14af05be42082e241accb80bc75cecd4: 21300000
+    - 12c5acb9e54eb0e4c8baaf6af5eff844: 21300000
+    - 094a75ac42813ef44865a7041ae85e76: 21300000
+    - ee54c985cec8f344ab7cd1c8b419e546: 21300000
+    - 0c41ed94135a5234fba0f59e3e917e38: 21300000
+    - 941283f03e6c259499956697b5a81c8b: 21300000
+    - a28bb827265e80347a0b194c39423deb: 21300000
+    - 693770ebb590ded458062036d8bed906: 21300000
+    - 69c0073b715cfa244b1b4f87285045a6: 21300000
+    - f9ea2dd894f8763409ecbb0ac91f0a89: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: fe70799b9c37bfa46bc45040689bc2dd, type: 3}
+  - {fileID: 21300000, guid: b88ce117be746f44c931bd08cc3ae8c2, type: 3}
+  - {fileID: 21300000, guid: d9e942cd3341cbc4a9e0743f71441c98, type: 3}
+  - {fileID: 21300000, guid: 4669cf6d6cfb17a439ffffbefedefbf9, type: 3}
+  - {fileID: 21300000, guid: 14af05be42082e241accb80bc75cecd4, type: 3}
+  - {fileID: 21300000, guid: 12c5acb9e54eb0e4c8baaf6af5eff844, type: 3}
+  - {fileID: 21300000, guid: 094a75ac42813ef44865a7041ae85e76, type: 3}
+  - {fileID: 21300000, guid: ee54c985cec8f344ab7cd1c8b419e546, type: 3}
+  - {fileID: 21300000, guid: 0c41ed94135a5234fba0f59e3e917e38, type: 3}
+  - {fileID: 21300000, guid: 941283f03e6c259499956697b5a81c8b, type: 3}
+  - {fileID: 21300000, guid: a28bb827265e80347a0b194c39423deb, type: 3}
+  - {fileID: 21300000, guid: 693770ebb590ded458062036d8bed906, type: 3}
+  - {fileID: 21300000, guid: 69c0073b715cfa244b1b4f87285045a6, type: 3}
+  - {fileID: 21300000, guid: f9ea2dd894f8763409ecbb0ac91f0a89, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - wheel_paihang_01_06
+  - wheel_paihang_02_06
+  - menu_friend_46
+  - menu_friend_37
+  - wheel_paihang_01_05
+  - wheel_paihang_01_02
+  - wheel_paihang_01_03
+  - wheel_paihang_01_01
+  - wheel_paihang_01_00
+  - wheel_paihang_01_04
+  - wheel_paihang_01_09
+  - wheel_paihang_02_01
+  - wheel_paihang_02_02
+  - wheel_paihang_01_08
+  m_Tag: UIRankWindow
+  m_IsVariant: 0

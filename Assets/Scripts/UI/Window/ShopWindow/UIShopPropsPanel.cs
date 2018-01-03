@@ -10,9 +10,8 @@ public class UIShopPropsPanel : MonoBehaviour {
     public TextMeshProUGUI energyText;
     public TextMeshProUGUI dailyEneregyText;
     public TextMeshProUGUI vipPriceText;
-    public TextMeshProUGUI wantedPriceText;
     public TextMeshProUGUI contentText;
-    public DynamicScrollView scrollView;
+    public GridBaseScrollView scrollView;
 
     private GoodsData goodsVip;
     private Product productVip;
@@ -50,7 +49,7 @@ public class UIShopPropsPanel : MonoBehaviour {
                 propsList.Add(goods);
             }
         }
-        scrollView.setDatas(propsList);
+        scrollView.SetData(propsList);
     }
 
 	public void OnClickBuyVIPBtn()

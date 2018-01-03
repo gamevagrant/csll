@@ -32,8 +32,8 @@ public class UIFriendsWindow : UIWindowBase {
     public GameObject addFriendPanel;
     public GameObject applyFriendsPanel;
 
-    public DynamicScrollView myFriendsScrollView;
-    public DynamicScrollView notAgreeScrollView;
+    public BaseScrollView myFriendsScrollView;
+    public BaseScrollView notAgreeScrollView;
 
     public TextMeshProUGUI receiveCountText;
     public Button receiveBtn;
@@ -145,7 +145,7 @@ public class UIFriendsWindow : UIWindowBase {
             }
             receiveBtn.interactable = tag;
         }
-        myFriendsScrollView.setDatas(friendItems);
+        myFriendsScrollView.SetData (friendItems);
     }
 
     private void UpdateAddFriendData()
@@ -156,7 +156,7 @@ public class UIFriendsWindow : UIWindowBase {
     private void UpdateNotAgreeFriendsData(FriendData[] friendDatas)
     {
        // FriendData[] friendDatas = GameMainManager.instance.model.userData.friendNotAgreeInfo;
-        notAgreeScrollView.setDatas(friendDatas);
+        notAgreeScrollView.SetData(friendDatas);
     }
 
     public void OnClickAllAgreeBtn()

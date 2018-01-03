@@ -83,7 +83,11 @@ namespace QY.UI
 
         protected override void OnEnable()
         {
-            GuideManager.instance.TryProcess();
+            if(Application.isPlaying)
+            {
+                GuideManager.instance.TryProcess();
+            }
+           
         }
 
         protected override void Start()

@@ -26,7 +26,7 @@ public class UIBadGuyRankWindow : UIWindowBase {
 
     public RectTransform topBar;
     public RectTransform panel;
-    public DynamicScrollView scrollView;
+    public BaseScrollView scrollView;
     public TextMeshProUGUI wantedNumText;
 
     private BadGuyData[] badGuys;
@@ -50,7 +50,7 @@ public class UIBadGuyRankWindow : UIWindowBase {
         GameMainManager.instance.netManager.Enemy((ret, res) =>
         {
             badGuys = res.data.enemies;
-            scrollView.setDatas(badGuys);
+            scrollView.SetData(badGuys);
         });
     }
 

@@ -18,7 +18,7 @@ public class GameSetting {
     public static string appID = "1323902559";
     public static string updateLookupUrl = "https://itunes.apple.com//lookup";
 #elif UNITY_ANDROID
-    public static string appID = "1297843981";
+    public static string appID = "1323902559";
     public static string updateLookupUrl = "https://itunes.apple.com//lookup";
 #elif UNITY_IPHONE
     public static string appID = "1323902559";

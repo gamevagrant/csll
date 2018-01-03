@@ -1,0 +1,155 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: UIWheelWindow
+  m_EditorData:
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 1
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 0
+    platformSettings: []
+    packingParameters:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    packedHash:
+      serializedVersion: 2
+      Hash: e7f59907da172639e081ea2468ff2279
+    variantMultiplier: 1
+    bindAsDefault: 0
+    finalFormat: 47
+    hashString: e7f59907da172639e081ea2468ff2279
+    totalSpriteSurfaceArea: 2929659
+    packables:
+    - {fileID: 102900000, guid: 9e3d56e820801f94496b9739c24ecab7, type: 3}
+    packedSpriteRenderDataKeys:
+    - 3ab91eb12a7a3c54993237e348888638: 21300000
+    - 032552d5c1563db41a379d6a8cf1966a: 21300000
+    - e824e80f36920db469525902ab1fa12d: 21300000
+    - 0911c3b1cbb6fbd40a772b1f9e6d3ea1: 21300000
+    - d78edbb9a874ff1469d7aa63a8d13036: 21300000
+    - f369b744505ec474fa16abc62335f9dd: 21300000
+    - 8b0aa5c1414776344b7a1d33fa790187: 21300000
+    - 2b8db289a8a48a945a8cd7de6fbdd494: 21300000
+    - 778e4f4882681eb49afe2feef97e8dd3: 21300000
+    - 3aa6210a7b1b7ff4f8272a3855bf2eae: 21300000
+    - d7aa98ffad1b4f04e980fed834f5e992: 21300000
+    - a624847d9652b2e47a454c90e4648046: 21300000
+    - 1fc1c47340b343c43a02875f2d111849: 21300000
+    - 38e045f370ecbb34fa8872a81fc5bc9b: 21300000
+    - 3a6a40e33503d36479b3c44163f97266: 21300000
+    - 59b75c43cb45c584a8b7852a65920682: 21300000
+    - b4109e484fcd40f438ab8b68ead3b6f9: 21300000
+    - 6f21c542cf173b74488f526353a1ba0f: 21300000
+    - 9933e768166ff4748b0cbeff0528e438: 21300000
+    - dde7c478b75bf8f4485131868d2b5c28: 21300000
+    - 467e2e03ea4bddd4a8ecaf0f25e047e2: 21300000
+    - 82aea9ade3528a34082c6880a5fadecb: 21300000
+    - 83e3f96f519c0b7469fcbc1de50cd6da: 21300000
+    - 73cc210b460abba449630dd31179036f: 21300000
+    - 86edadec90efa264e9a823ec2565c350: 21300000
+    - d7d44b039f990044283d75fb36f8c8e1: 21300000
+    - 8c34f6eca6f7cf340aad2d7baccf2910: 21300000
+    - 7b944ea685f282e4f9ba4126aacfeb5e: 21300000
+    - 4fe78e5bcf6cfae49a9918d48f80f922: 21300000
+    - 4c1b12f0e663f3944a7c92c1bd550702: 21300000
+    - 697a4ff558b484a449ec4108fea84920: 21300000
+    - d6dd76bb73d34b946956795c14450299: 21300000
+    - 06b9d4bf8bdc44049a86fe4bd949e3f3: 21300000
+    - f69fe66244dc1724b9d7381c30366610: 21300000
+    - 43f98ac6336bdd942bdebb95511b337d: 21300000
+    - 0b6b11377b0753f40aef5a52276123a5: 21300000
+    - e34c8c60ceb6b254d8d53edd182fa17c: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 3ab91eb12a7a3c54993237e348888638, type: 3}
+  - {fileID: 21300000, guid: 032552d5c1563db41a379d6a8cf1966a, type: 3}
+  - {fileID: 21300000, guid: e824e80f36920db469525902ab1fa12d, type: 3}
+  - {fileID: 21300000, guid: 0911c3b1cbb6fbd40a772b1f9e6d3ea1, type: 3}
+  - {fileID: 21300000, guid: d78edbb9a874ff1469d7aa63a8d13036, type: 3}
+  - {fileID: 21300000, guid: f369b744505ec474fa16abc62335f9dd, type: 3}
+  - {fileID: 21300000, guid: 8b0aa5c1414776344b7a1d33fa790187, type: 3}
+  - {fileID: 21300000, guid: 2b8db289a8a48a945a8cd7de6fbdd494, type: 3}
+  - {fileID: 21300000, guid: 778e4f4882681eb49afe2feef97e8dd3, type: 3}
+  - {fileID: 21300000, guid: 3aa6210a7b1b7ff4f8272a3855bf2eae, type: 3}
+  - {fileID: 21300000, guid: d7aa98ffad1b4f04e980fed834f5e992, type: 3}
+  - {fileID: 21300000, guid: a624847d9652b2e47a454c90e4648046, type: 3}
+  - {fileID: 21300000, guid: 1fc1c47340b343c43a02875f2d111849, type: 3}
+  - {fileID: 21300000, guid: 38e045f370ecbb34fa8872a81fc5bc9b, type: 3}
+  - {fileID: 21300000, guid: 3a6a40e33503d36479b3c44163f97266, type: 3}
+  - {fileID: 21300000, guid: 59b75c43cb45c584a8b7852a65920682, type: 3}
+  - {fileID: 21300000, guid: b4109e484fcd40f438ab8b68ead3b6f9, type: 3}
+  - {fileID: 21300000, guid: 6f21c542cf173b74488f526353a1ba0f, type: 3}
+  - {fileID: 21300000, guid: 9933e768166ff4748b0cbeff0528e438, type: 3}
+  - {fileID: 21300000, guid: dde7c478b75bf8f4485131868d2b5c28, type: 3}
+  - {fileID: 21300000, guid: 467e2e03ea4bddd4a8ecaf0f25e047e2, type: 3}
+  - {fileID: 21300000, guid: 82aea9ade3528a34082c6880a5fadecb, type: 3}
+  - {fileID: 21300000, guid: 83e3f96f519c0b7469fcbc1de50cd6da, type: 3}
+  - {fileID: 21300000, guid: 73cc210b460abba449630dd31179036f, type: 3}
+  - {fileID: 21300000, guid: 86edadec90efa264e9a823ec2565c350, type: 3}
+  - {fileID: 21300000, guid: d7d44b039f990044283d75fb36f8c8e1, type: 3}
+  - {fileID: 21300000, guid: 8c34f6eca6f7cf340aad2d7baccf2910, type: 3}
+  - {fileID: 21300000, guid: 7b944ea685f282e4f9ba4126aacfeb5e, type: 3}
+  - {fileID: 21300000, guid: 4fe78e5bcf6cfae49a9918d48f80f922, type: 3}
+  - {fileID: 21300000, guid: 4c1b12f0e663f3944a7c92c1bd550702, type: 3}
+  - {fileID: 21300000, guid: 697a4ff558b484a449ec4108fea84920, type: 3}
+  - {fileID: 21300000, guid: d6dd76bb73d34b946956795c14450299, type: 3}
+  - {fileID: 21300000, guid: 06b9d4bf8bdc44049a86fe4bd949e3f3, type: 3}
+  - {fileID: 21300000, guid: f69fe66244dc1724b9d7381c30366610, type: 3}
+  - {fileID: 21300000, guid: 43f98ac6336bdd942bdebb95511b337d, type: 3}
+  - {fileID: 21300000, guid: 0b6b11377b0753f40aef5a52276123a5, type: 3}
+  - {fileID: 21300000, guid: e34c8c60ceb6b254d8d53edd182fa17c, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - wheelWrap
+  - pointer
+  - wheelRound_001
+  - wheelRound
+  - light
+  - build_03_01
+  - wheel_turn_mask
+  - pass_light
+  - steal
+  - energy
+  - shield
+  - main_btn_1
+  - main_btn_2
+  - build_btn
+  - main_btn1
+  - smallEnergy
+  - baoxiang_2
+  - baoxiang_1
+  - build_hammer
+  - shop_money_2
+  - shop_energy_4
+  - menu_btn_nor
+  - build_04_01
+  - wheel_ling qu_ (2)
+  - build_wheel
+  - pass_get_btn
+  - main_island
+  - build_03_02
+  - build_03_03
+  - main_wheel_physical
+  - main_wheel_steal
+  - main_wheel_shield
+  - main_wheel_attack
+  - main_star
+  - xiaoquan
+  - 1
+  - 2
+  m_Tag: UIWheelWindow
+  m_IsVariant: 0

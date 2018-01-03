@@ -229,7 +229,7 @@ PlayerSettings:
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
   AndroidKeystoreName: E:/WorkSpace/Unity/hailigm/csll_unity_new/nutsplay.keystore
-  AndroidKeyaliasName: 
+  AndroidKeyaliasName: nutsplay
   AndroidTVCompatibility: 1
   AndroidIsGame: 1
   AndroidEnableTango: 0

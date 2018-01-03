@@ -28,8 +28,8 @@ public class UIMessageMailWindow : UIWindowBase {
     public Toggle mailToggle;
     public RectTransform messagePanel;
     public RectTransform mailPanel;
-    public DynamicScrollView messageScrollView;
-    public DynamicScrollView mailScrollView;
+    public BaseScrollView messageScrollView;
+    public BaseScrollView mailScrollView;
 
     public RectTransform topBar;
 
@@ -63,7 +63,7 @@ public class UIMessageMailWindow : UIWindowBase {
                     }
                 }
                
-                messageScrollView.setDatas(messages);
+                messageScrollView.SetData(messages);
             }
            
         });
@@ -106,7 +106,7 @@ public class UIMessageMailWindow : UIWindowBase {
         if (value)
         {
             GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.button_click);
-            messageScrollView.setDatas(messages);
+            messageScrollView.SetData(messages);
             ShowPanel(messagePanel);
         }
         else 
@@ -119,7 +119,7 @@ public class UIMessageMailWindow : UIWindowBase {
         if (value)
         {
             GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.button_click);
-            mailScrollView.setDatas(mails);
+            mailScrollView.SetData(mails);
             ShowPanel(mailPanel);
         }
         else 

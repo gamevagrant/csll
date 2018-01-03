@@ -21,7 +21,7 @@ public class GameStarter : MonoBehaviour
 
     private void Start()
     {
-
+       
     }
 
     private void OnDestroy()

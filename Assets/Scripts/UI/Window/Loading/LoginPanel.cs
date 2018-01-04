@@ -17,7 +17,7 @@ public class LoginPanel : MonoBehaviour {
     //public InputField inputField;
     public GameObject guesBtn;
     public GameObject facebookBtn;
-    public Text facebookName;
+    public Text loadingTips;
     public Slider slider;
     public Text userNameText;
     public Text levelText;
@@ -40,7 +40,7 @@ public class LoginPanel : MonoBehaviour {
         loginTipPanel.SetActive(false);
         updateAppPanel.SetActive(false);
         slider.value = 0;
-        facebookName.text = "";
+        loadingTips.text = "";
 
     }
 
@@ -54,7 +54,31 @@ public class LoginPanel : MonoBehaviour {
     private void OnLoadingProgress(BaseEvent evt)
     {
         LoadingEvent e = evt as LoadingEvent;
-        slider.value = e.progress;
+        float progress = e.progress;
+
+        
+
+        switch (e.name)
+        {
+            case "UpdateAssets":
+                loadingTips.text = "正在加载本地资源，不会消耗流量";
+                progress = progress*0.8f;
+                break;
+            case "Preloader":
+                loadingTips.text = "正在预加载资源";
+                progress = 0.8f + progress * 0.2f;
+                break;
+            case "Login":
+                loadingTips.text = "正在登录服务器";
+                break;
+            case "LoadScene":
+                loadingTips.text = "正在切换场景";
+                progress = 0.5f + progress * 0.5f;
+                break;
+            default:
+                break;
+        }
+        slider.value = progress;
         slider.gameObject.SetActive(true);
     }
 
@@ -93,13 +117,13 @@ public class LoginPanel : MonoBehaviour {
             AccountManager.instance.LoinPlatform((issuccess) => {
                 if (!issuccess)
                 {
-                    facebookName.text = "登录平台失败请重试...";
+                    loadingTips.text = "登录平台失败请重试...";
                     facebookBtn.SetActive(true);
                     guesBtn.SetActive(true);
                 }
                 else
                 {
-                    facebookName.text = "正在登录游戏服务器...";
+                    loadingTips.text = "正在登录游戏服务器...";
                 }
             });
         };
@@ -139,7 +163,7 @@ public class LoginPanel : MonoBehaviour {
 
     public void OnClickGuestLogin()
     {
-        facebookName.text = "";
+        loadingTips.text = "";
         facebookBtn.SetActive(false);
         guesBtn.SetActive(false);
 
@@ -159,7 +183,7 @@ public class LoginPanel : MonoBehaviour {
     public void OnClickFacebookLogin()
     {
         
-        facebookName.text = "";
+        loadingTips.text = "";
         facebookBtn.SetActive(false);
         guesBtn.SetActive(false);
         loginTipPanel.SetActive(false);

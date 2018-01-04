@@ -6,7 +6,7 @@ public class IslandConfig {
     public string[] islandNames;
 
     /// <summary>
-    /// index 从1开始
+    /// index 从0开始
     /// </summary>
     /// <param name="index"></param>
     /// <returns></returns>
@@ -18,12 +18,16 @@ public class IslandConfig {
         }
         return "";
     }
-
+    /// <summary>
+    /// index 从1开始
+    /// </summary>
+    /// <param name="index"></param>
+    /// <returns></returns>
     public string GetIslandName(int index)
     {
-        if (index >= 0 && index < islandNames.Length)
+        if (index > 0 && index <= islandNames.Length)
         {
-            return islandNames[index];
+            return islandNames[index-1];
         }
         return "";
     }

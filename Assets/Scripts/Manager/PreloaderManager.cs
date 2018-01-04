@@ -49,8 +49,10 @@ public class PreloaderManager {
 
     private IEnumerator Preloader(System.Action onComplate)
     {
-        foreach (string fileName in needPreloaderAssetBundles)
+        for (int i =0;i< needPreloaderAssetBundles.Count;i++)
         {
+            EventDispatcher.instance.DispatchEvent(new LoadingEvent("Preloader", i / (float)needPreloaderAssetBundles.Count));
+            string fileName = needPreloaderAssetBundles[i];
             string path = FilePathTools.downLoadSavePath + fileName.ToLower();
             if(preloadAssetBundles.ContainsKey(path))
             {
@@ -71,8 +73,9 @@ public class PreloaderManager {
             {
                 Debug.Log("预加载依赖资源出错");
             }
+            
         }
-
+        EventDispatcher.instance.DispatchEvent(new LoadingEvent("Preloader", 1));
         onComplate();
     }
 }

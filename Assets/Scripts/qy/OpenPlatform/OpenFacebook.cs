@@ -118,9 +118,21 @@ namespace QY.Open
         {
             FB.API("me/invitable_friends", HttpMethod.GET, (res) =>
             {
-                string str = LitJson.JsonMapper.ToJson(res.ResultDictionary["data"]);
-                InvitableFriendsData[] datas = LitJson.JsonMapper.ToObject<InvitableFriendsData[]>(str);
-                callBack(datas);
+                try
+                {
+                    if(res!=null && res.ResultDictionary!=null && res.ResultDictionary.ContainsKey("data"))
+                    {
+                        string str = LitJson.JsonMapper.ToJson(res.ResultDictionary["data"]);
+                        InvitableFriendsData[] datas = LitJson.JsonMapper.ToObject<InvitableFriendsData[]>(str);
+                        callBack(datas);
+                    }
+                   
+                }
+                catch
+                {
+
+                }
+               
             });
         }
 

@@ -19,7 +19,7 @@ public class CacheManager
 			if (_instance == null)
 			{
 				_instance = new CacheManager();
-				Debug.Log("cachePath=" + _instance.cacheFileRoot);
+				//Debug.Log("cachePath=" + _instance.cacheFileRoot);
 			}
 			return _instance;
 		}
@@ -44,7 +44,7 @@ public class CacheManager
        
         if (!cache.ContainsKey(fileName))
 		{
-            Debug.Log("缓存文件:" + url + " 到 " + cacheFileRoot + fileName);
+            //Debug.Log("缓存文件:" + url + " 到 " + cacheFileRoot + fileName);
             try
 			{
 				string path = cacheFileRoot + fileName;
@@ -72,7 +72,7 @@ public class CacheManager
 		string path;
 		if (cache.TryGetValue(fileName, out path))
 		{
-            Debug.Log("获取缓存文件:"+url+" | " +path);
+            //Debug.Log("获取缓存文件:"+url+" | " +path);
 			return path;
 		}
 		return path;

@@ -85,8 +85,8 @@ public class BaseScrollView : MonoBehaviour {
         {
             scrollRect.horizontalNormalizedPosition = 1;
         }
-        
-        
+
+        updateItems();
     }
 
     private void updateItems()

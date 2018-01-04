@@ -152,27 +152,32 @@ public class AssetBundleLoadManager : MonoBehaviour {
 
             //3加载依赖资源
             Dictionary<string, AssetBundle> dependencyAssetBundles = new Dictionary<string, AssetBundle>();
-            Debug.Log("---开始加载依赖资源:" + dependencies.Length.ToString());
+            //Debug.Log("---开始加载依赖资源:" + dependencies.Length.ToString());
             foreach (string fileName in dependencies)
             {
                 string dependencyPath = FilePathTools.root + "/" + fileName;
-                Debug.Log("---开始加载依赖资源:" + dependencyPath);
+                if(!GameMainManager.instance.preloader.Contains(dependencyPath))
+                {
+                    Debug.Log("---开始加载依赖资源:" + dependencyPath);
 
-                createRequest = AssetBundle.LoadFromFileAsync( dependencyPath);
-                yield return createRequest;
-                if (createRequest.isDone)
-                {
-                    dependencyAssetBundles.Add(dependencyPath, createRequest.assetBundle);
+                    createRequest = AssetBundle.LoadFromFileAsync(dependencyPath);
+                    yield return createRequest;
+                    if (createRequest.isDone)
+                    {
+                        dependencyAssetBundles.Add(dependencyPath, createRequest.assetBundle);
+                       
+                    }
+                    else
+                    {
+                        Debug.Log("加载依赖资源出错");
+                    }
                 }
-                else
-                {
-                    Debug.Log("加载依赖资源出错");
-                }
+               
 
             }
             //4加载目标资源
             Object obj = null;
-            Debug.Log("---开始加载目标资源:" + path);
+            //Debug.Log("---开始加载目标资源:" + path);
             //www = new WWW(prefix + path);
             createRequest = AssetBundle.LoadFromFileAsync(path);
             yield return createRequest;
@@ -184,7 +189,7 @@ public class AssetBundleLoadManager : MonoBehaviour {
 
                 addCache(path,obj);
                 //5释放目标资源
-                Debug.Log("---释放目标资源:" + path);
+                //Debug.Log("---释放目标资源:" + path);
                 assetBundle.Unload(false);
                 assetBundle = null;
             }
@@ -193,12 +198,14 @@ public class AssetBundleLoadManager : MonoBehaviour {
                 Debug.Log("加载目标资源出错 ");
             }
 
+
+         
             if (dependencyAssetBundles != null)
             {
                 //6释放依赖资源
                 foreach (string key in dependencyAssetBundles.Keys)
                 {
-                    Debug.Log("---释放依赖资源:" + key);
+                    //Debug.Log("---释放依赖资源:" + key);
                     AssetBundle dependencyAB = dependencyAssetBundles[key];
                     dependencyAB.Unload(false);
                 }
@@ -207,7 +214,7 @@ public class AssetBundleLoadManager : MonoBehaviour {
             tryClearCache();
             callback((T)obj);
         }
-        Debug.Log("---end loadAsync:AssetBundleLoader.loadAsync" + path);
+        //Debug.Log("---end loadAsync:AssetBundleLoader.loadAsync" + path);
         yield return null;
         isLoading = false;
     }

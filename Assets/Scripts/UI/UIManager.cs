@@ -196,8 +196,24 @@ public class UIManager : MonoBehaviour,IUIManager  {
 
     private void OnLoadAtlas(string tag,Action<SpriteAtlas> act)
     {
-        Debug.Log("开始加载[" + tag + "]图集");
         string path = FilePathTools.getSpriteAtlasPath(tag);
+        
+        if (GameSetting.isUseAssetBundle && GameMainManager.instance.preloader.Contains(path))
+        {
+            AssetBundle assetbundle = GameMainManager.instance.preloader.GetPreloaderAssetBundle(path);
+            SpriteAtlas sa = assetbundle.LoadAsset<SpriteAtlas>(System.IO.Path.GetFileNameWithoutExtension(path));
+            act(sa);
+            assetbundle.Unload(false);
+            canvasScaler.enabled = false;
+            canvas.enabled = false;
+
+            canvasScaler.enabled = true;
+            canvas.enabled = true;
+            Debug.Log("从预加载中获得"+tag);
+            return;
+        }
+        Debug.Log("开始加载[" + tag + "]图集");
+        
         AssetBundleLoadManager.Instance.LoadAsset<SpriteAtlas>(path, (sa) => {
             act(sa);
 

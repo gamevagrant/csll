@@ -4,7 +4,7 @@
             "interact_id": "GuideTipsWindow_CloseBtn",
             "progress": 1,
             "type": "tips",
-            "content": "如今楼市价格疯涨，财神爷特送来钱财供你建造自己的窝，坐等升值有木有！",
+            "content": "大吉大利，财神来啦！财神爷送你金钱，祝你早日建成自己的私人城池",
             "delay": 0
         },
         {
@@ -18,7 +18,7 @@
             "interact_id": "GuideTipsWindow_CloseBtn",
             "progress": 1,
             "type": "tips",
-            "content": "建完此城，你就走上人生巅峰，可以去下个城市继续浪啦！",
+            "content": "建完此城的25个建筑，你就走上人生巅峰啦，大奖在前方等着你",
             "delay": 0
         },
         {
@@ -32,7 +32,7 @@
             "interact_id": "GuideTipsWindow_CloseBtn",
             "progress": 2,
             "type": "tips",
-            "content": "完成所有建筑需要大量金钱，先定一个小目标：赚他一个亿！",
+            "content": "完成所有建筑需要大量金钱，现在去试试转盘，一转好运来！",
             "delay": 2
         },
         {
@@ -74,7 +74,7 @@
             "interact_id": "GuideTipsWindow_CloseBtn",
             "progress": 6,
             "type": "tips",
-            "content": "炮击就是：拆别人的房，赚别人的钱！",
+            "content": "炮击可以阻止别人前进的步伐，让你一马当先",
             "delay": 7
         },
         {
@@ -95,7 +95,7 @@
             "interact_id": "GuideTipsWindow_CloseBtn",
             "progress": 8,
             "type": "tips",
-            "content": "又有钱了，快去给自己的城市添砖加瓦，早日登上人生巅峰",
+            "content": "幸运之神总是这么眷顾你，又有足够的金币了，快去再建一个建筑吧",
             "delay": 4
         },
         {
@@ -123,7 +123,7 @@
             "interact_id": "GuideTipsWindow_CloseBtn",
             "progress": 9,
             "type": "tips",
-            "content": "多赚点钱，多盖点房，否则别人会说，你除了好看一无是处！",
+            "content": "城市快速发展需要更多金币，快去转动你的幸运转盘，你会赚的更多",
             "delay": 1
         },
         {
@@ -207,7 +207,7 @@
             "interact_id": "GuideTipsWindow_CloseBtn",
             "progress": 16,
             "type": "tips",
-            "content": "猜中富豪偷光他所有金币，然后买个地球仪，世界这么大，得多看看呀！",
+            "content": "猜中富豪偷光他所有金币，最有钱的人只能是你！",
             "delay": 10
         },
         {

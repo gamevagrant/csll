@@ -17,8 +17,6 @@ public class AccountManager {
         }
     }
 
-    public event System.Action onComplate;
-
     private IOpenPlatform open;
 
     public AccountManager()

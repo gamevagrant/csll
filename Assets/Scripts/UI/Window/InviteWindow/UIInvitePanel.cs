@@ -7,7 +7,7 @@ using QY.Open;
 
 public class UIInvitePanel : MonoBehaviour {
 
-    public AutoScrollView scrollView;
+    public BaseScrollView scrollView;
     public Slider slider;
     public TextMeshProUGUI sliderText;
     public QY.UI.Toggle allSelectToggle;

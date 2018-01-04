@@ -6,7 +6,7 @@ using TMPro;
 
 public class UIRecallPanel : MonoBehaviour {
 
-    public AutoScrollView scrollView;
+    public BaseScrollView scrollView;
     private List<RecallFriendData> recallableList;
 
     public void Start()

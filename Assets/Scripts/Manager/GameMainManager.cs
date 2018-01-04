@@ -29,6 +29,7 @@ public class GameMainManager {
     public GameModel model;
 	public IAPManager iap;
     public MonoBehaviour mono;//全局脚本，可以使用monobehaviour方法
+    public PreloaderManager preloader;
 
     public GameMainManager()
     {
@@ -38,7 +39,7 @@ public class GameMainManager {
         open = new OpenFacebook();
         configManager = new ConfigManager();
         iap = new IAPManager();
-
+        preloader = PreloaderManager.instance;
         EventDispatcher.instance.AddEventListener(EventEnum.REQUEST_ERROR, OnRequestErrorHandle);
     }
 

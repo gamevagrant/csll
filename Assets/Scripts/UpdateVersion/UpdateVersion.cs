@@ -22,16 +22,18 @@ public class UpdateVersion {
     private string lookupUrl;
     private string localVersion;
 
-    public UpdateVersion(Action onComplate,Action<string> onNeedUpdate)
+    public UpdateVersion()
     {
         lookupUrl = string.Format("{0}?id={1}", GameSetting.updateLookupUrl, GameSetting.appID);
         localVersion = Application.version;
-        this.onComplate = onComplate;
-        this.onNeedUpdate = onNeedUpdate;
+        
     }
 
-    public void StartUpdate()
+
+    public void StartUpdate(Action onComplate, Action<string> onNeedUpdate)
     {
+        this.onComplate = onComplate;
+        this.onNeedUpdate = onNeedUpdate;
         CheckOutVerson();
     }
 
@@ -52,6 +54,7 @@ public class UpdateVersion {
                    if(onNeedUpdate!=null)
                    {
                         onNeedUpdate(url);
+
                    }
                 }
                 else
@@ -71,20 +74,21 @@ public class UpdateVersion {
         if (GameSetting.isUseAssetBundle)
         {
             UpdateAssets updateAsset = new UpdateAssets();
-            updateAsset.onComplate += () => {
-                if (onComplate != null)
-                {
-                    onComplate();
-                }
-            };
+            updateAsset.onComplate += OnComplate;
             updateAsset.StartUpdate();
         }
         else
         {
-            if (onComplate != null)
-            {
-                onComplate();
-            }
+            OnComplate();
+        }
+    }
+
+    private void OnComplate()
+    {
+        if (onComplate != null)
+        {
+            onComplate();
+
         }
     }
 

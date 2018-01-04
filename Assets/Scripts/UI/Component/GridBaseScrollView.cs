@@ -96,6 +96,7 @@ public class GridBaseScrollView : MonoBehaviour {
         {
             scrollRect.horizontalNormalizedPosition = 1;
         }
+        updateItems();
     }
 
     private void updateItems()

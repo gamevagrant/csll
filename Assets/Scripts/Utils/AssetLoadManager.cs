@@ -86,7 +86,7 @@ public class AssetLoadManager:MonoBehaviour
         isLoading = true;
 
         
-		Debug.Log("==开始使用WWW下载==:" + path);
+		//Debug.Log("==开始使用WWW下载==:" + path);
 
 		path = FilePathTools.normalizePath(path);
 		WWW www = new WWW(path);

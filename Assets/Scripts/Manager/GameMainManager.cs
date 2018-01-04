@@ -39,7 +39,7 @@ public class GameMainManager {
         open = new OpenFacebook();
         configManager = new ConfigManager();
         iap = new IAPManager();
-        preloader = PreloaderManager.instance;
+        preloader = new PreloaderManager();
         EventDispatcher.instance.AddEventListener(EventEnum.REQUEST_ERROR, OnRequestErrorHandle);
     }
 

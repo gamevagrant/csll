@@ -4,18 +4,7 @@ using UnityEngine;
 
 public class PreloaderManager {
 
-    private static PreloaderManager _instance;
-    public static PreloaderManager instance
-    {
-        get
-        {
-            if(_instance == null)
-            {
-                _instance = new PreloaderManager();
-            }
-            return _instance;
-        }
-    }
+
 
     private static List<string> needPreloaderAssetBundles = new List<string>{
             "/fonts&materials/fzlantyk_cu_sdf",
@@ -27,18 +16,13 @@ public class PreloaderManager {
             "/fonts&materials/fzlantyk_cu_sdf_shadow",
             "/fonts&materials/fzlantyk_cu_sdf_shadow&redoutline",
             "/fonts&materials/fzlantyk_cu_sdf_whiteoutline",
-            "/spriteatlas/uipublicwindow",
-            "/spriteatlas/uiwheelwindow",
         };
 
     private Dictionary<string, AssetBundle> preloadAssetBundles;
 
     public PreloaderManager()
     {
-        if(PreloaderManager._instance==null)
-        {
-            PreloaderManager._instance = this;
-        }
+
         preloadAssetBundles = new Dictionary<string, AssetBundle>();
     }
 

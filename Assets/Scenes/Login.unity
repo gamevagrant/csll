@@ -2169,7 +2169,7 @@ AudioListener:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1759777708}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!124 &1759777710
 Behaviour:
   m_ObjectHideFlags: 0
@@ -2198,7 +2198,7 @@ Camera:
   field of view: 60
   orthographic: 1
   orthographic size: 5
-  m_Depth: -10
+  m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295

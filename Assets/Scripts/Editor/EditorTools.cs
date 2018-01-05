@@ -5,11 +5,6 @@ using UnityEngine.UI;
 
 public class EditorTools  {
 
-	[@MenuItem("Tools/清除用户数据")]
-	public static void buildAllAsset()
-	{
-		PlayerPrefs.DeleteAll ();
-	}
 
     [MenuItem("Tools/设置面板raycastTarget = false")]
     public static void SetRayTask()
@@ -33,4 +28,23 @@ public class EditorTools  {
     {
         PlayerPrefs.DeleteAll();
     }
+ 
+
+    [MenuItem("GameObject/UI/Image")]
+    static void CreatImage()
+    {
+        if (Selection.activeTransform)
+        {
+            if (Selection.activeTransform.GetComponentInParent<Canvas>())
+            {
+                GameObject go = new GameObject("Image", typeof(Image));
+                go.GetComponent<Image>().raycastTarget = false;
+                go.transform.SetParent(Selection.activeTransform);
+                go.transform.localScale = Vector3.one;
+                (go.transform as RectTransform).anchoredPosition = Vector2.zero;
+            }
+        }
+    }
+
+
 }

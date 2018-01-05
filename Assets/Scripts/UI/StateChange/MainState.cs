@@ -16,6 +16,7 @@ public class MainState : UIStateChangeBase
     }
     public override void ChangeState(Dictionary<UISettings.UIWindowID, UIWindowBase> showingWindows)
     {
+
         if (showingWindows != null)
         {
             List<UISettings.UIWindowID> needHide = new List<UISettings.UIWindowID>();

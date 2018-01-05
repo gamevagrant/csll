@@ -58,8 +58,7 @@ public class GameMainManager {
 
         GuideManager.instance.Init(model.userData.tutorial, configManager.guideDataConfig, OnProcessGuide, OnExecutedComplate);
 
-        
-        if(model.userData.last_action == 1 && model.userData.attackTargetUser != null)
+        if (model.userData.last_action == 1 && model.userData.attackTargetUser != null)
         {
             Dictionary<UISettings.UIWindowID, object> stateData = new Dictionary<UISettings.UIWindowID, object>();
             stateData.Add(UISettings.UIWindowID.UIAttackWindow, model.userData.attackTargetUser);
@@ -81,14 +80,19 @@ public class GameMainManager {
         {
             if (model.userData.tutorial == 1)
             {
-                GameMainManager.instance.uiManager.ChangeState(new MainState(0, 1));
+               // GameMainManager.instance.uiManager.ChangeState(new MainState(0, 1));
+
+                GameMainManager.instance.uiManager.OpenWindow( UISettings.UIWindowID.UIWheelWindow,false,1);
+               
             }
             else
             {
-                GameMainManager.instance.uiManager.ChangeState(new MainState(0));
+               // GameMainManager.instance.uiManager.ChangeState(new MainState(0));
+                GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIWheelWindow, false, 0);
             }
+            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UISideBarWindow, false);
+            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UITopBarWindow, false);
         }
-
     }
 
 

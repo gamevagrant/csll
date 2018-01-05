@@ -28,13 +28,15 @@ public class UIBuildingWindow : UIWindowBase {
         }
     }
 
-    private void Awake()
+
+    private void Start()
     {
         items = GetComponentsInChildren<BuildingWindowItem>();
         foreach (BuildingWindowItem item in items)
         {
             item.onBuild += (index) => {
-                GameMainManager.instance.netManager.Build( userData.islandId, index - 1, (ret, data) => {
+                GameMainManager.instance.uiManager.CloseWindow(windowData.id);
+                GameMainManager.instance.netManager.Build(userData.islandId, index - 1, (ret, data) => {
                     if (ret && data.isOK)
                     {
                         BuildComplateEvent evt = new BuildComplateEvent();
@@ -46,19 +48,14 @@ public class UIBuildingWindow : UIWindowBase {
                         evt.upgradeMoneyReward = data.data.upgradeMoneyAfterReward - data.data.money;
                         EventDispatcher.instance.DispatchEvent(evt);
 
-                        GameMainManager.instance.uiManager.CloseWindow(windowData.id);
+
                     }
-                    
+
                 });
 
-               
+
             };
         }
-    }
-
-    private void Start()
-    {
-        
     }
 
     protected override void StartShowWindow(object[] data)

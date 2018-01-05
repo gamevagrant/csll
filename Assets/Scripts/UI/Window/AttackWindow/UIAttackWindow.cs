@@ -164,11 +164,11 @@ public class UIAttackWindow :UIWindowBase {
 
             if(data.attackTarget.buildings[index - 1].status == 2)
             {
-                tips = string.Format("恭喜您，您成功摧毁了<#1995BCFF>{0}</color>的建筑，获得了<#D34727FF>{1}</color>金币", data.attackTarget.name, GameUtils.GetShortMoneyStr(data.reward));
+                tips = string.Format("恭喜您，您成功摧毁了<#1995BCFF>{0}</color>的{2}，获得了<#D34727FF>{1}</color>金币", data.attackTarget.name, GameUtils.GetShortMoneyStr(data.reward), GameMainManager.instance.configManager.islandConfig.GetBuildingName(index-1));
             }
             else 
             {
-                tips = string.Format("恭喜您，您成功损坏了<#1995BCFF>{0}</color>的建筑，获得了<#D34727FF>{1}</color>金币", data.attackTarget.name, GameUtils.GetShortMoneyStr(data.reward));
+                tips = string.Format("恭喜您，您成功损坏了<#1995BCFF>{0}</color>的{2}，获得了<#D34727FF>{1}</color>金币", data.attackTarget.name, GameUtils.GetShortMoneyStr(data.reward), GameMainManager.instance.configManager.islandConfig.GetBuildingName(index-1));
             }
             
            

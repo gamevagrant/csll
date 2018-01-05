@@ -127,7 +127,27 @@ public class UIBuildPanel : MonoBehaviour {
 
     }
 
+    public void ShowBuildState()
+    {
+        buildBtn.gameObject.SetActive(true);
+        switchBtn.gameObject.SetActive(true);
 
+        buildBtn.anchoredPosition = buildBtnOriginalValue;
+        switchBtn.anchoredPosition = switchOriginalValue;
+        panel.anchoredPosition = panelLocalOriginalValue;
+        panel.localScale = Vector3.one;
+    }
+
+    public void ShowWheelState()
+    {
+        buildBtn.anchoredPosition = new Vector2(buildBtn.anchoredPosition.x, -300);
+        switchBtn.anchoredPosition = new Vector2(-200, switchBtn.anchoredPosition.y);
+        panel.anchoredPosition = new Vector2(200, -150);
+        panel.localScale = new Vector3(0.5f, 0.5f, 1);
+
+        buildBtn.gameObject.SetActive(false);
+        switchBtn.gameObject.SetActive(false);
+    }
 
     public void onClickBuildBtn()
     {
@@ -222,7 +242,7 @@ public class UIBuildPanel : MonoBehaviour {
 
     private IEnumerator showBuildAnimation(int index,int level,System.Action onComplate = null)
     {
-        yield return new WaitForSeconds(0.5f);
+        //yield return new WaitForSeconds(0.5f);
         GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.building_upgrade);
         buildingAnimation.transform.position = islandFactory.GetBuildTransform(index).position;
         islandFactory.HideBuild(index);

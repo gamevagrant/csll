@@ -96,20 +96,30 @@ public class GameStarter : MonoBehaviour
    
     private IEnumerator LoadMainScene()
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Main");
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Main",LoadSceneMode.Additive);
         float progress = 0;
         while (!asyncLoad.isDone)
         {
             if (asyncLoad.progress != progress)
             {
-                progress = asyncLoad.progress;
+                progress = asyncLoad.progress/2;
                 EventDispatcher.instance.DispatchEvent(new LoadingEvent("LoadScene", progress));
             }
             yield return null;
         }
-
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName("Main"));
         GameMainManager.instance.Init();
-       
 
+        yield return new WaitForSeconds(2);
+        asyncLoad = SceneManager.UnloadSceneAsync("Login");
+        while (!asyncLoad.isDone)
+        {
+            if (asyncLoad.progress != progress)
+            {
+                progress = 0.5f + asyncLoad.progress/2;
+                EventDispatcher.instance.DispatchEvent(new LoadingEvent("LoadScene", progress));
+            }
+            yield return null;
+        }
     }
 }

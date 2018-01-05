@@ -88,19 +88,37 @@ public class UIWheelWindow : UIWindowBase {
     {
        if(openState== OpenState.Wheel)
         {
-            ShowWheelState();
+            ShowWheelStateAnimation();
         }else if(openState == OpenState.Building)
         {
-            ShowBuildState();
+            ShowBuildStateAnimation();
         }
         ShowLeftBtn(true);
         onComplete();
     }
     protected override void ExitAnimation(Action onComplete)
     {
-        ShowHideState(onComplete);
+        ShowHideStateAnimation(onComplete);
         ShowLeftBtn(false);
 
+    }
+
+    protected override void EndShowWindow()
+    {
+        base.EndShowWindow();
+        if (openState == OpenState.Wheel)
+        {
+            ShowWheelState();
+        }
+        else if (openState == OpenState.Building)
+        {
+            ShowBuildState();
+        }
+        ShowLeftBtn(true);
+    }
+    protected override void EndHideWindow()
+    {
+        base.EndHideWindow();
     }
 
     private void OnUpgrading(bool isUpgrading)
@@ -120,7 +138,29 @@ public class UIWheelWindow : UIWindowBase {
         }
     }
 
-    private void ShowWheelState()
+   
+
+    public void ShowWheelState()
+    {
+        if (currState != OpenState.Wheel)
+        {
+            wheelPanel.ShowWheelState();
+            buildPanel.ShowWheelState();
+            currState = OpenState.Wheel;
+            QY.Guide.GuideManager.instance.state = "wheel";
+        }
+    }
+    private void ShowBuildState()
+    {
+        if (currState != OpenState.Building)
+        {
+            wheelPanel.ShowBuildState();
+            buildPanel.ShowBuildState();
+            currState = OpenState.Building;
+            QY.Guide.GuideManager.instance.state = "building";
+        }
+    }
+    private void ShowWheelStateAnimation()
     {
         if (currState != OpenState.Wheel)
         {
@@ -131,7 +171,7 @@ public class UIWheelWindow : UIWindowBase {
         }
     }
 
-    private void ShowBuildState()
+    private void ShowBuildStateAnimation()
     {
         if (currState != OpenState.Building)
         {
@@ -142,7 +182,7 @@ public class UIWheelWindow : UIWindowBase {
         }
     }
 
-    private void ShowHideState(Action onComplate)
+    private void ShowHideStateAnimation(Action onComplate)
     {
         wheelPanel.EnterToHideState(()=> {
 
@@ -155,13 +195,13 @@ public class UIWheelWindow : UIWindowBase {
 
     public void onClickShowBuildBtn()
     {
-        ShowBuildState();
+        ShowBuildStateAnimation();
         
     }
 
     public void onClickShowWheelBtn()
     {
-        ShowWheelState();       
+        ShowWheelStateAnimation();       
     }
 
     public void OnClickLeftDatailBtn()

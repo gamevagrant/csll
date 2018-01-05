@@ -249,6 +249,32 @@ public class UIWheelPanel : MonoBehaviour {
         });
     }
 
+    public void ShowBuildState()
+    {
+        rollBtn.anchoredPosition = new Vector2(rollBtn.anchoredPosition.x, -300);
+        rollBtn.localScale = new Vector3(1.5f, 1.5f, 1);
+        switchBtn.anchoredPosition = new Vector2(200, switchBtn.anchoredPosition.y);
+        panel.anchoredPosition = new Vector2(-800, 1000);
+        panel.localScale = new Vector3(2f, 2f, 1);
+
+        rollBtn.gameObject.SetActive(false);
+        switchBtn.gameObject.SetActive(false);
+        panel.gameObject.SetActive(false);
+    }
+
+    public void ShowWheelState()
+    {
+
+        rollBtn.gameObject.SetActive(true);
+        switchBtn.gameObject.SetActive(true);
+        panel.gameObject.SetActive(true);
+
+        rollBtn.anchoredPosition = rollBtnOriginalValue;
+        rollBtn.localScale = Vector3.one;
+        switchBtn.anchoredPosition = switchOriginalValue;
+        panel.anchoredPosition = panelLocalOriginalValue;
+        panel.localScale = Vector3.one;
+    }
 
     public void onClickRollBtn()
     {

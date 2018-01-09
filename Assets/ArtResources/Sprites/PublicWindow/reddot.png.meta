@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: a624847d9652b2e47a454c90e4648046
-timeCreated: 1508222205
+guid: d72631b07da899f41ba573b209e48f84
+timeCreated: 1510038842
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}
@@ -97,7 +97,7 @@ TextureImporter:
     sprites: []
     outline: []
     physicsShape: []
-  spritePackingTag: WheelWindow
+  spritePackingTag: 
   userData: 
   assetBundleName: 
   assetBundleVariant: 

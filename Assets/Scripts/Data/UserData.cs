@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using QY.Open;
 
 public class UserData {
 
@@ -106,6 +107,8 @@ public class UserData {
     public bool isVip;//是否时vip
     public int vip_days;//VIP剩余时间
     public int last_action;//上次结束游戏时正在干的事情0 默认 无操作，1 攻击, 2 偷取
+    public List<InvitableFriendsData> invitableList;//可邀请好友列表
+    public List<ShareData.RecallableFriendData> recallableList;//可召回好友列表
 
     /// <summary>
     /// 建造提示红点数值
@@ -159,13 +162,48 @@ public class UserData {
         }
     }
 
+
+    /// <summary>
+    /// 地图红点
+    /// </summary>
+    public int mapTip
+    {
+        get
+        {
+            if(mapInfo!=null)
+            {
+                for(int i =0;i< mapInfo.mines.Length;i++)
+                {
+                    MinesData mines = mapInfo.mines[i];
+                    if(mines.miner<mines.costs.Length)
+                    {
+                        if(money>mines.costs[mines.miner])
+                        {
+                            return 1;
+                        }
+                        break;
+                    }
+                }
+                if(mapInfo.moneyBox>=mapInfo.limit)
+                {
+                    return 1;
+                }
+            }
+
+            return 0;
+        }
+    }
+    /// <summary>
+    /// 消息邮件红点
+    /// </summary>
     public int mailTip
     {
         get
         {
-            int num = 0;
+           
             if (user_mail != null)
             {
+                int num = 0;
                 foreach (MailData mail in user_mail)
                 {
                     if (mail.is_get == 1)
@@ -173,9 +211,45 @@ public class UserData {
                         num++;
                     }
                 }
+                return num;
             }
            
-            return num;
+            if(messages !=null)
+            {
+                foreach(MessageResponseData m in messages)
+                {
+                    if(!m.read)
+                    {
+                        return 1;
+                    }
+                }
+            }
+            return 0;
+           
+        }
+    }
+
+    public int invitTip
+    {
+        get
+        {
+            if(invitableList!=null)
+            {
+                return invitableList.Count;
+            }
+            return 0;
+        }
+    }
+
+    public int recallTip
+    {
+        get
+        {
+            if(recallableList!=null)
+            {
+                return recallableList.Count;
+            }
+            return 0;
         }
     }
 

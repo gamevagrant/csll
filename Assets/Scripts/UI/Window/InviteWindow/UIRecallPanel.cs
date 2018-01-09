@@ -30,6 +30,7 @@ public class UIRecallPanel : MonoBehaviour {
             {
                 if(res.data.recall_friend_rewards!=null)
                 {
+                    GameMainManager.instance.model.userData.recallableList = new List<ShareData.RecallableFriendData>(res.data.recall_friend_rewards);
                     recallableList = new List<RecallFriendData>();
                     foreach (ShareData.RecallableFriendData friend in res.data.recall_friend_rewards)
                     {
@@ -39,6 +40,9 @@ public class UIRecallPanel : MonoBehaviour {
                         recallableList.Add(data);
                     }
                     scrollView.SetData(recallableList);
+                }else
+                {
+                    GameMainManager.instance.model.userData.recallableList = new List<ShareData.RecallableFriendData>();
                 }
                 
             }else

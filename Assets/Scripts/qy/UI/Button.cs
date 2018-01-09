@@ -7,14 +7,15 @@ using UnityEngine.EventSystems;
 
 namespace QY.UI
 {
-    public class Button :Interactable,IPointerClickHandler,IPointerDownHandler
+    public class Button :Interactable,IPointerClickHandler
     {
         [System.Serializable]
         public class ButtonClickEvent : UnityEvent { };
 
-        public ButtonClickEvent onClick;
+        [SerializeField]
+        internal ButtonClickEvent onClick;
 
-        void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
+        public virtual void OnPointerClick(PointerEventData eventData)
         {
             if (!IsInteractable())
             {
@@ -29,6 +30,9 @@ namespace QY.UI
 
             }
         }
+
+
+
 
     }
 

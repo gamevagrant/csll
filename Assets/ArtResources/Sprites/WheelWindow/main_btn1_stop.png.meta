@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 1fc1c47340b343c43a02875f2d111849
-timeCreated: 1508222205
+guid: 9b51f99eabe8908438a522814b1ec1cf
+timeCreated: 1515404500
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}
@@ -65,39 +65,12 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-  - buildTarget: Standalone
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-  - buildTarget: iPhone
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-  - buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
   spriteSheet:
     serializedVersion: 2
     sprites: []
     outline: []
     physicsShape: []
-  spritePackingTag: WheelWindow
+  spritePackingTag: 
   userData: 
   assetBundleName: 
   assetBundleVariant: 

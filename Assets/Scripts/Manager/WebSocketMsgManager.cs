@@ -53,8 +53,8 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
             str = string.Format("你成功防御了<#1995BCFF>{0}</color>的攻击", msg.name);
         }else
         {
-            int buildingIndex = (int)msg.extra["building_index"];
-            int buildingStatus = (int)msg.extra["building"]["status"];
+            int buildingIndex = int.Parse(msg.extra["building_index"].ToString());
+            int buildingStatus = int.Parse(msg.extra["building"]["status"].ToString());
             if (buildingStatus == 2)
             {
                 str = string.Format("<#1995BCFF>{0}</color>损坏了你的{1}", msg.name, GameMainManager.instance.configManager.islandConfig.GetBuildingName(buildingIndex));
@@ -99,8 +99,8 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
  */
     private void StealAction(MessageResponseData msg)
     {
-        long reward = (long)msg.extra["reward"];
-        long money = (long)msg.extra["money"];
+        long reward = long.Parse(msg.extra["reward"].ToString());
+        long money = long.Parse(msg.extra["money"].ToString());
 
         string str = string.Format("{0}偷走了{1}金币", msg.name,GameUtils.GetCurrencyString(reward));
         PopupMessageData data = new PopupMessageData();

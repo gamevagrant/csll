@@ -93,9 +93,47 @@ public class GameMainManager {
             GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UISideBarWindow, false);
             GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UITopBarWindow, false);
         }
+        UpdateInviteData();
     }
 
 
+    private void UpdateInviteData()
+    {
+        open.GetInvitableFriends((res) =>
+        {
+            Dictionary<string, string> invitedFriends = LocalDatasManager.invitedFriends;
+            if (invitedFriends == null)
+            {
+                invitedFriends = new Dictionary<string, string>();
+            }
+
+            model.userData.invitableList = new List<InvitableFriendsData>();
+
+            for (int i = 0; i < res.Length; i++)
+            {
+                InvitableFriendsData data = res[i];
+                if (!invitedFriends.ContainsKey(data.name))
+                {
+                    model.userData.invitableList.Add(data);
+                }
+
+            }
+        });
+
+        GameMainManager.instance.netManager.GetRecallableFriends((ret, res) =>
+        {
+            if (res.isOK)
+            {
+                if (res.data.recall_friend_rewards != null)
+                {
+
+                    model.userData.recallableList = new List<ShareData.RecallableFriendData>(res.data.recall_friend_rewards);
+
+                }
+
+            }
+        });
+    }
 
 
 

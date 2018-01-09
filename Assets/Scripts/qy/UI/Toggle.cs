@@ -53,6 +53,8 @@ namespace QY.UI
             {
                 toggleGroup.RegisterToggle(this);
             }
+            _isOn = isSelectedInStart;
+            SetState(isSelectedInStart);
         }
 
         
@@ -69,8 +71,7 @@ namespace QY.UI
         protected override void Start()
         {
             base.Start();
-            _isOn = isSelectedInStart;
-            SetState(isSelectedInStart);
+           
         }
 
         internal void SetSelected(bool isSelected)

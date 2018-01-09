@@ -46,5 +46,18 @@ public class EditorTools  {
         }
     }
 
-
+    [MenuItem("GameObject/UI/CustomButton")]
+    static void CreatCustomButton()
+    {
+        if (Selection.activeTransform)
+        {
+            if (Selection.activeTransform.GetComponentInParent<Canvas>())
+            {
+                GameObject go = new GameObject("Button", typeof(Image),typeof(QY.UI.Button));
+                go.transform.SetParent(Selection.activeTransform);
+                go.transform.localScale = Vector3.one;
+                (go.transform as RectTransform).anchoredPosition = Vector2.zero;
+            }
+        }
+    }
 }

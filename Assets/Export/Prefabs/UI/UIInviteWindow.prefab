@@ -1408,6 +1408,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   invitePanel: {fileID: 114786211586328654}
   recallPanel: {fileID: 114708004531755892}
+  inviteToggle: {fileID: 114001034694864394}
+  recallToggle: {fileID: 114244715657234688}
 --- !u!114 &114036177277939424
 MonoBehaviour:
   m_ObjectHideFlags: 1

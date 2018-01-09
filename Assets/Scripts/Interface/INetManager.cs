@@ -166,7 +166,13 @@ public interface INetManager
     /// <param name="callBack"></param>
     /// <returns></returns>
     bool GetReward(int index,Action<bool, GetRewardMessage> callBack);
-
+    /// <summary>
+    /// 获取每日任务奖励
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool GetDailyTaskReward(int type, Action<bool, DailyTaskMessage> callBack);
     //------------------------平台区分---------------------------------------
 
     /// <summary>

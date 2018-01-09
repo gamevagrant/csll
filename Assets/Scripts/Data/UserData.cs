@@ -253,4 +253,26 @@ public class UserData {
         }
     }
 
+    public int dailyTaskTip
+    {
+        get
+        {
+            if(daily_task!=null)
+            {
+                if(daily_task.extra_reward.status!=2)
+                {
+                    return 1;
+                }
+                foreach(TaskItemData data in daily_task.tasks)
+                {
+                    if(data.status!=2)
+                    {
+                        return 1;
+                    }
+                }
+            }
+            return 0;
+        }
+    }
+
 }

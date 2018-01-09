@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIInviteWindow : UIWindowBase {
+public class UIEveryDayTaskWindow : UIWindowBase {
 
     public override UIWindowData windowData
     {
@@ -11,7 +11,7 @@ public class UIInviteWindow : UIWindowBase {
             if (_windowData == null)
             {
                 _windowData = new UIWindowData();
-                _windowData.id = UISettings.UIWindowID.UIInviteWindow;
+                _windowData.id = UISettings.UIWindowID.UIEveryDayTaskWindow;
                 _windowData.type = UISettings.UIWindowType.PopUp;
                 _windowData.colliderMode = UISettings.UIWindowColliderMode.Normal;
                 _windowData.colliderType = UISettings.UIWindowColliderType.SemiTransparent;
@@ -21,25 +21,32 @@ public class UIInviteWindow : UIWindowBase {
             return _windowData;
         }
     }
+    [SerializeField]
+    private QY.UI.Button getRewardBtn;
+    [SerializeField]
+    private BaseScrollView scrollView;
 
-    public UIInvitePanel invitePanel;
-    public UIRecallPanel recallPanel;
 
-    public QY.UI.Toggle inviteToggle;
-    public QY.UI.Toggle recallToggle;
+    private DailyTaskData dailyTaskData;
 
     protected override void StartShowWindow(object[] data)
     {
-        invitePanel.Refresh();
-        recallPanel.Refresh();
+        dailyTaskData = GameMainManager.instance.model.userData.daily_task;
+        UpdateData();
+    }
 
-        if(data!=null && data.Length>0 && (int)data[0] == 1)
+    private void UpdateData()
+    {
+        getRewardBtn.interactable = dailyTaskData.extra_reward.status == 1 ? true : false;
+        scrollView.SetData(dailyTaskData.tasks);
+    }
+
+    public void OnClickGetRewardBtn()
+    {
+        GameMainManager.instance.netManager.GetDailyTaskReward(0, (ret,res) =>
         {
-            recallToggle.isOn = true;
-        }
-        else
-        {
-            inviteToggle.isOn = false;
-        }
+            dailyTaskData = res.data.daily_task;
+            UpdateData();
+        });
     }
 }

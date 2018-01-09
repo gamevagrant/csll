@@ -83,6 +83,7 @@ namespace QY.UI
 
         protected override void OnEnable()
         {
+            base.OnEnable();
             if(Application.isPlaying)
             {
                 GuideManager.instance.TryProcess();

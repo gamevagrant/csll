@@ -75,6 +75,9 @@ public class RedDot : MonoBehaviour {
             case RedDotType.InviteAndRecall:
                 isShow = GameMainManager.instance.model.userData.invitTip + GameMainManager.instance.model.userData.recallTip > 0 ? true : false;
                 break;
+            case RedDotType.EveryTask:
+                isShow = GameMainManager.instance.model.userData.dailyTaskTip > 0 ? true : false;
+                break;
         }
         show = isShow;
     }

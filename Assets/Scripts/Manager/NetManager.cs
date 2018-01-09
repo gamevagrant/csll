@@ -869,6 +869,31 @@ public class NetManager:INetManager
         });
     }
 
+    public bool GetDailyTaskReward(int type, Action<bool, DailyTaskMessage> callBack)
+    {
+        string url = MakeUrl(APIDomain, "game/dailyTask/reward");
+        Dictionary<string, object> data = new Dictionary<string, object>();
+        data.Add("task_type", type);
+        data.Add("uid", uid);
+        data.Add("token", token);
+        data.Add("t", time.ToString());
+        return HttpProxy.SendPostRequest<DailyTaskMessage>(url, data, (ret, res) => {
+
+            callBack(ret, res);
+            if (res.isOK)
+            {
+                GameMainManager.instance.model.userData.daily_task = res.data.daily_task;
+                GameMainManager.instance.model.userData.money = res.data.money;
+                GameMainManager.instance.model.userData.energy = res.data.energy;
+            }
+            else
+            {
+                Debug.Log("获取每日任务奖励失败:" + res.errmsg);
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "获取每日任务奖励失败", res.errcode));
+            }
+
+        });
+    }
     //-------------------------facebook接口------------------------------------
 
     /// <summary>

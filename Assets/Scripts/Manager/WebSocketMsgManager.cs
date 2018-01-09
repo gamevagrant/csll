@@ -173,7 +173,7 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
 
     private void DailyTaskAction(MessageResponseData msg)
     {
-
+        Debug.LogAssertion("每日任务领取奖励wetsocket的返回没实现/n"+LitJson.JsonMapper.ToJson(msg));
     }
 
     private void MailAction(MessageResponseData msg)

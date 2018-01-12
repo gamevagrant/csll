@@ -53,9 +53,9 @@ namespace QY.UI
             {
                 toggleGroup.RegisterToggle(this);
             }
+           
         }
 
-        
 
         protected override void OnDestroy()
         {
@@ -81,15 +81,16 @@ namespace QY.UI
             }
             _isOn = isSelected;
             SetState(isSelected);
-            StartCoroutine(ChangeValue(isSelected));
+            onValueChanged.Invoke(isSelected);
+            //StartCoroutine(ChangeValue(isSelected));
         }
-
+        /*
         IEnumerator ChangeValue(bool isSelected)
         {
             yield return null;
             onValueChanged.Invoke(isSelected);
         }
-
+        */
         private void SetState(bool isSelected)
         {
             if(!Application.isPlaying)

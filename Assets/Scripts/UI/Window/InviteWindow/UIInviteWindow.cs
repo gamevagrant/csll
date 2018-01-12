@@ -25,10 +25,21 @@ public class UIInviteWindow : UIWindowBase {
     public UIInvitePanel invitePanel;
     public UIRecallPanel recallPanel;
 
+    public QY.UI.Toggle inviteToggle;
+    public QY.UI.Toggle recallToggle;
+
     protected override void StartShowWindow(object[] data)
     {
         invitePanel.Refresh();
         recallPanel.Refresh();
 
+        if(data!=null && data.Length>0 && (int)data[0] == 1)
+        {
+            recallToggle.isOn = true;
+        }
+        else
+        {
+            inviteToggle.isOn = true;
+        }
     }
 }

@@ -28,13 +28,15 @@ public abstract class UIWindowBase : MonoBehaviour {
     /// </summary>
     public virtual void Init()
     {
-
+        transform.localScale = Vector3.zero;
     }
 
-    public void ShowWindow(Action onComplate = null,  bool needTransform = true,params object[] data)
+    public IEnumerator ShowWindow(Action onComplate = null,  bool needTransform = true,params object[] data)
     {
         //transform.SetSiblingIndex(100);
         gameObject.SetActive(true);
+        yield return new WaitForEndOfFrame();
+        transform.localScale = Vector3.one;
         StartShowWindow(data);
         if(needTransform)
         {
@@ -54,7 +56,6 @@ public abstract class UIWindowBase : MonoBehaviour {
                 onComplate();
             }
         }
-        
     }
 
     public void HideWindow(Action onComplate = null, bool needTransform = true)

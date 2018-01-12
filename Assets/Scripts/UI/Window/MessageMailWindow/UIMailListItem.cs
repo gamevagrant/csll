@@ -60,7 +60,7 @@ public class UIMailListItem : BaseItemView
         int index = 0;
         GetRewardWindowData data = new GetRewardWindowData();
         data.reward = rewards[index];
-        data.OnGetReward = () => {
+        data.onGetReward = () => {
             index++;
             if(index<rewards.Length)
             {

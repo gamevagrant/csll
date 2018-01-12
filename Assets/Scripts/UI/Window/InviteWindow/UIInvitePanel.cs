@@ -47,15 +47,15 @@ public class UIInvitePanel : MonoBehaviour {
         GameMainManager.instance.open.GetInvitableFriends((res) => {
             invitableList = new List<InviteItemData>();
 
-           /* //假数据
-            res = new InvitableFriendsData[10];
-            for(int i = 0;i<res.Length;i++)
-            {
-                res[i] = new InvitableFriendsData();
-                res[i].name = "游客7" + i.ToString();
-                res[i].id = i.ToString();
-            }*/
-            
+            /* //假数据
+             res = new InvitableFriendsData[10];
+             for(int i = 0;i<res.Length;i++)
+             {
+                 res[i] = new InvitableFriendsData();
+                 res[i].name = "游客7" + i.ToString();
+                 res[i].id = i.ToString();
+             }*/
+            GameMainManager.instance.model.userData.invitableList = new List<InvitableFriendsData>();
             for (int i = 0; i < res.Length; i++)
             {
                 InvitableFriendsData data = res[i];
@@ -68,6 +68,7 @@ public class UIInvitePanel : MonoBehaviour {
                     itemData.isSelected = allSelectToggle.isOn;
 
                     invitableList.Add(itemData);
+                    GameMainManager.instance.model.userData.invitableList.Add(data);
                 }
                 
             }

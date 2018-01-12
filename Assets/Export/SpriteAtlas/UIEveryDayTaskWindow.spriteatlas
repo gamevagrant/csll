@@ -1,0 +1,116 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: UIEveryDayTaskWindow
+  m_EditorData:
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 0
+    platformSettings: []
+    packingParameters:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    packedHash:
+      serializedVersion: 2
+      Hash: 8cad48c1b64d2f0a393cb2ba8abd7fa7
+    variantMultiplier: 1
+    bindAsDefault: 0
+    finalFormat: 4
+    hashString: 8cad48c1b64d2f0a393cb2ba8abd7fa7
+    totalSpriteSurfaceArea: 880733
+    packables:
+    - {fileID: 102900000, guid: 7501276720d473048a2d12550458af3e, type: 3}
+    packedSpriteRenderDataKeys:
+    - 4785156efa75a63468c30a13b67cf0b0: 21300000
+    - 3c0b0c46f14f42145b49cfde779838a2: 21300000
+    - dfe2a8e7349deda4ca8a21f1174b315b: 21300000
+    - 56fb4875ba588e34da5e54edd3c94262: 21300000
+    - 23bbd1898a5dce9448cfc0e5088b46f2: 21300000
+    - cd3d6be18cba7a7479fc9092ee04c308: 21300000
+    - 766af5d076429d74692cd1f694ce6f48: 21300000
+    - fbea726b00fc4ac41abed46764686314: 21300000
+    - 62bff5896e2a9dd4c94d8c7e06f1574b: 21300000
+    - f2643ed33409fdf40a865da035444169: 21300000
+    - f98b57a13a825e240a852c30131c733e: 21300000
+    - c6bbdea085a1d6d4981fde02f4a8b3ed: 21300000
+    - d396ffd014c02be439190f5c1537f58b: 21300000
+    - 29b4064a292c3ff4a9bd75c8bc0a6091: 21300000
+    - 6b524ffb3fdd13342af75c19a50b5c17: 21300000
+    - e5206c342bdfa014ebf64e10ec9bc704: 21300000
+    - a538dd67fc50b8b4188b86ed625ca91a: 21300000
+    - 716eeb063fc12b14a8693623d2965e9d: 21300000
+    - 4fb33fdf42d613e4a90f0fdd1dac9476: 21300000
+    - 3588c7fa41f3ddc4cac4749f0d78cb80: 21300000
+    - a2aea1c9e0bf858428cfd707a6e1c777: 21300000
+    - fa9bc5991f5587b498ec6f625afca72c: 21300000
+    - 9cd85b427c27c744ba8a804c212f5c4f: 21300000
+    - 78d6596ee257fb74d8dc3c5c3da0b40d: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 4785156efa75a63468c30a13b67cf0b0, type: 3}
+  - {fileID: 21300000, guid: 3c0b0c46f14f42145b49cfde779838a2, type: 3}
+  - {fileID: 21300000, guid: dfe2a8e7349deda4ca8a21f1174b315b, type: 3}
+  - {fileID: 21300000, guid: 56fb4875ba588e34da5e54edd3c94262, type: 3}
+  - {fileID: 21300000, guid: 23bbd1898a5dce9448cfc0e5088b46f2, type: 3}
+  - {fileID: 21300000, guid: cd3d6be18cba7a7479fc9092ee04c308, type: 3}
+  - {fileID: 21300000, guid: 766af5d076429d74692cd1f694ce6f48, type: 3}
+  - {fileID: 21300000, guid: fbea726b00fc4ac41abed46764686314, type: 3}
+  - {fileID: 21300000, guid: 62bff5896e2a9dd4c94d8c7e06f1574b, type: 3}
+  - {fileID: 21300000, guid: f2643ed33409fdf40a865da035444169, type: 3}
+  - {fileID: 21300000, guid: f98b57a13a825e240a852c30131c733e, type: 3}
+  - {fileID: 21300000, guid: c6bbdea085a1d6d4981fde02f4a8b3ed, type: 3}
+  - {fileID: 21300000, guid: d396ffd014c02be439190f5c1537f58b, type: 3}
+  - {fileID: 21300000, guid: 29b4064a292c3ff4a9bd75c8bc0a6091, type: 3}
+  - {fileID: 21300000, guid: 6b524ffb3fdd13342af75c19a50b5c17, type: 3}
+  - {fileID: 21300000, guid: e5206c342bdfa014ebf64e10ec9bc704, type: 3}
+  - {fileID: 21300000, guid: a538dd67fc50b8b4188b86ed625ca91a, type: 3}
+  - {fileID: 21300000, guid: 716eeb063fc12b14a8693623d2965e9d, type: 3}
+  - {fileID: 21300000, guid: 4fb33fdf42d613e4a90f0fdd1dac9476, type: 3}
+  - {fileID: 21300000, guid: 3588c7fa41f3ddc4cac4749f0d78cb80, type: 3}
+  - {fileID: 21300000, guid: a2aea1c9e0bf858428cfd707a6e1c777, type: 3}
+  - {fileID: 21300000, guid: fa9bc5991f5587b498ec6f625afca72c, type: 3}
+  - {fileID: 21300000, guid: 9cd85b427c27c744ba8a804c212f5c4f, type: 3}
+  - {fileID: 21300000, guid: 78d6596ee257fb74d8dc3c5c3da0b40d, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - 016
+  - 014
+  - 017
+  - 009
+  - 018
+  - menu_richang02_ (3)
+  - menu_richang02_ (2)
+  - 015
+  - 004
+  - 007
+  - 012
+  - 011
+  - 008
+  - 005
+  - 006
+  - 001
+  - 003
+  - 002
+  - 013
+  - menu_richang02_ (8)
+  - 010
+  - 019
+  - menu_richang02_ (5)
+  - mask
+  m_Tag: UIEveryDayTaskWindow
+  m_IsVariant: 0

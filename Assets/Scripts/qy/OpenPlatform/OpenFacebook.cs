@@ -136,15 +136,17 @@ namespace QY.Open
             });
         }
 
+        public void ShareLink(string url)
+        {
+            FB.ShareLink(new Uri(url), callback: this.HandleResult);
+        }
+
         private void AppInvite()
         {
             FB.Mobile.AppInvite(new Uri("https://csll.app.link/invite"), callback: this.HandleResult);//桌面
         }
 
-        private void ShareLink()
-        {
-            FB.ShareLink(new Uri("https://csll.app.link/invite"), callback: this.HandleResult);
-        }
+        
 
         protected void HandleResult(IResult result)
         {

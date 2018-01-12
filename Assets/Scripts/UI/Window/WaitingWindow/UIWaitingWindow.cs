@@ -26,6 +26,7 @@ public class UIWaitingWindow : UIWindowBase {
     private void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
+        canvasGroup.alpha = 0;
     }
 
     private void Update()

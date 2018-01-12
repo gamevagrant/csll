@@ -28,24 +28,24 @@ SpriteAtlas:
       enableTightPacking: 0
     packedHash:
       serializedVersion: 2
-      Hash: 7e49daa6714ae21093f7a9c38f59438c
+      Hash: 0feeea3b0ea1efcd0caa91e72fec7a0d
     variantMultiplier: 1
     bindAsDefault: 0
     finalFormat: 4
-    hashString: 7e49daa6714ae21093f7a9c38f59438c
-    totalSpriteSurfaceArea: 71131
+    hashString: 0feeea3b0ea1efcd0caa91e72fec7a0d
+    totalSpriteSurfaceArea: 71657
     packables:
     - {fileID: 102900000, guid: b8a0d9f1c6c4e904ebd621c8c9a163be, type: 3}
     packedSpriteRenderDataKeys:
     - 3b48eff242a6dbb478f5758a18c1b47c: 21300000
     - 483f4e6deb1e06c46b49773ebe685030: 21300000
     - 0830e4445f1edac41bb4c45ff4f5a10c: 21300000
+    - 29f2459f52fbaba41908374f5e304fbb: 21300000
     - e278c3e3f2746a04f8cb1c2d014776f6: 21300000
     - 45754df38c252154a8f0964e169c6475: 21300000
     - 142e7a8e1fb359843978782566ceea70: 21300000
     - e6c203b6dfb2fd74e9bd90bd48ddd40f: 21300000
     - 271209d2015c3594c8af574eb697258b: 21300000
-    - 29f2459f52fbaba41908374f5e304fbb: 21300000
     - 163fb7ea5d8052b49856ff008ee01404: 21300000
     - 2853439079b375142ae6a6182b576a51: 21300000
     - eed3e6854bf252a45b93c78e8ebc78d5: 21300000
@@ -58,12 +58,12 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 3b48eff242a6dbb478f5758a18c1b47c, type: 3}
   - {fileID: 21300000, guid: 483f4e6deb1e06c46b49773ebe685030, type: 3}
   - {fileID: 21300000, guid: 0830e4445f1edac41bb4c45ff4f5a10c, type: 3}
+  - {fileID: 21300000, guid: 29f2459f52fbaba41908374f5e304fbb, type: 3}
   - {fileID: 21300000, guid: e278c3e3f2746a04f8cb1c2d014776f6, type: 3}
   - {fileID: 21300000, guid: 45754df38c252154a8f0964e169c6475, type: 3}
   - {fileID: 21300000, guid: 142e7a8e1fb359843978782566ceea70, type: 3}
   - {fileID: 21300000, guid: e6c203b6dfb2fd74e9bd90bd48ddd40f, type: 3}
   - {fileID: 21300000, guid: 271209d2015c3594c8af574eb697258b, type: 3}
-  - {fileID: 21300000, guid: 29f2459f52fbaba41908374f5e304fbb, type: 3}
   - {fileID: 21300000, guid: 163fb7ea5d8052b49856ff008ee01404, type: 3}
   - {fileID: 21300000, guid: 2853439079b375142ae6a6182b576a51, type: 3}
   - {fileID: 21300000, guid: eed3e6854bf252a45b93c78e8ebc78d5, type: 3}
@@ -75,12 +75,12 @@ SpriteAtlas:
   - 11
   - roundWrap
   - everydayEnergy
+  - shareGame
   - giftPacks
   - activitiesPark
   - everydayTask
   - superPackage
   - rank
-  - shareGame
   - jigsaw
   - wannengJigsaw
   - everydaylogin

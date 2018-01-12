@@ -28,21 +28,12 @@ public class UISideBarWindow :UIWindowBase {
     public RectTransform leftPanel;
     public RectTransform rightPanel;
 
-    public RectTransform rank;
 
     private void Awake()
     {
-        rank.GetComponentInChildren<Button>().onClick.AddListener(() =>
-        {
-            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIRankWindow);
-        });
+
         leftPanel.anchoredPosition = new Vector2(0, 800);
         rightPanel.anchoredPosition = new Vector2(0, 800);
-    }
-
-    private void OnDestroy()
-    {
-        rank.GetComponentInChildren<Button>().onClick.RemoveAllListeners();
     }
 
 
@@ -80,5 +71,31 @@ public class UISideBarWindow :UIWindowBase {
     {
         leftPanel.anchoredPosition = new Vector2(0, 800);
         rightPanel.anchoredPosition = new Vector2(0, 800);
+    }
+
+
+    public void OnClickRankBtn()
+    {
+        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIRankWindow);
+    }
+
+    public void OnClickDailyTaskBtn()
+    {
+        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIEveryDayTaskWindow);
+    }
+
+    public void OnClickDailyRewardBtn()
+    {
+        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIEveryDayRewardWindow);
+    }
+
+    public void OnClickDailyEnergyBtn()
+    {
+        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIEveryDayEnergyWindow);
+    }
+
+    public void OnClickFreeRewardBtn()
+    {
+        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIFreeRewardWindow);
     }
 }

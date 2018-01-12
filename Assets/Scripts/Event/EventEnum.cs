@@ -17,4 +17,5 @@ public class EventEnum {
     public const string SELECTED_FRIEND = "SELECTED_FRIEND";//选中好友事件
     public const string UPDATE_MAPINFO = "UPDATE_MAPINFO";//更新地图信息
     public const string UPDATE_BUILDING = "UPDATE_BUILDING";//更新自己建筑的信息
+    public const string UPDATE_REDDOT = "UPDATE_REDDOT";//更新红点逻辑
 }

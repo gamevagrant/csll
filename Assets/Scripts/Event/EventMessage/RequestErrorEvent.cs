@@ -5,12 +5,20 @@ using BestHTTP;
 
 public class RequestErrorEvent : BaseEvent {
 
-    public HTTPRequest request;
-    public HTTPResponse response;
+    public enum Type
+    {
+        TimeOut,
+        Error,
+        Other,
+        AnalysisError,
+    }
 
-    public RequestErrorEvent(HTTPRequest request, HTTPResponse response) :base(EventEnum.REQUEST_ERROR)
+    public HTTPRequest request;
+    public Type type;
+
+    public RequestErrorEvent(Type type ,HTTPRequest request) :base(EventEnum.REQUEST_ERROR)
     {
         this.request = request;
-        this.response = response;
+        this.type = type;
     }
 }

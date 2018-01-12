@@ -42,8 +42,29 @@ public class HttpProxy {
             bool ret = request.State == HTTPRequestStates.Finished;
             if (!ret)
             {
-                Debug.LogErrorFormat("请求失败失败 request.State = {0} [{1}]", request.State.ToString(), url);
-                EventDispatcher.instance.DispatchEvent(new RequestErrorEvent(request, reponse));
+                Debug.LogAssertionFormat("请求失败失败 request.State = {0} [{1}]\n[{2}]", request.State.ToString(), url,request.Exception.ToString());
+
+                RequestErrorEvent.Type errorType;
+               switch(request.State)
+                {
+                    case HTTPRequestStates.ConnectionTimedOut:
+                    case HTTPRequestStates.TimedOut:
+                        errorType = RequestErrorEvent.Type.TimeOut;
+                        break;
+                    case HTTPRequestStates.Error:
+                        errorType = RequestErrorEvent.Type.Error;
+                        break;
+                    case HTTPRequestStates.Queued://排队
+                    case HTTPRequestStates.Aborted://终止
+                    case HTTPRequestStates.Initial://初始
+                    case HTTPRequestStates.Processing://处理
+                        errorType = RequestErrorEvent.Type.Other;
+                        break;
+                    default:
+                        errorType = RequestErrorEvent.Type.Other;
+                        break;
+                }
+                EventDispatcher.instance.DispatchEvent(new RequestErrorEvent(errorType, request));
                 
             }
             else
@@ -62,7 +83,14 @@ public class HttpProxy {
                     }
                     catch (Exception ex)
                     {
-                        Debug.LogError(ex.ToString());
+                        if(ex is LitJson.JsonException)
+                        {
+                            EventDispatcher.instance.DispatchEvent(new RequestErrorEvent(RequestErrorEvent.Type.AnalysisError, request));
+                        }else
+                        {
+                            EventDispatcher.instance.DispatchEvent(new RequestErrorEvent(RequestErrorEvent.Type.Other, request));
+                        }
+                        Debug.LogAssertion(ex.ToString());
                     }
                 }
             }
@@ -86,7 +114,27 @@ public class HttpProxy {
             if (!ret)
             {
                 Debug.LogErrorFormat("request.State = {0} [{1}]", request.State.ToString(), url);
-                EventDispatcher.instance.DispatchEvent(new RequestErrorEvent(request, reponse));
+                RequestErrorEvent.Type errorType;
+                switch (request.State)
+                {
+                    case HTTPRequestStates.ConnectionTimedOut:
+                    case HTTPRequestStates.TimedOut:
+                        errorType = RequestErrorEvent.Type.TimeOut;
+                        break;
+                    case HTTPRequestStates.Error:
+                        errorType = RequestErrorEvent.Type.Error;
+                        break;
+                    case HTTPRequestStates.Queued://排队
+                    case HTTPRequestStates.Aborted://终止
+                    case HTTPRequestStates.Initial://初始
+                    case HTTPRequestStates.Processing://处理
+                        errorType = RequestErrorEvent.Type.Other;
+                        break;
+                    default:
+                        errorType = RequestErrorEvent.Type.Other;
+                        break;
+                }
+                EventDispatcher.instance.DispatchEvent(new RequestErrorEvent(errorType, request));
             }
             else
             {

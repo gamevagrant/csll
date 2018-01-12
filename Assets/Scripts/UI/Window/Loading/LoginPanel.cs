@@ -28,6 +28,7 @@ public class LoginPanel : MonoBehaviour {
     private IOpenPlatform open;
     private string updateUrl;
     private Action onStartLogin;
+    private float progress;
 
     private void Awake()
     {
@@ -51,12 +52,19 @@ public class LoginPanel : MonoBehaviour {
         EventDispatcher.instance.RemoveEventListener(EventEnum.NEED_UPDATE_APP, OnUpdateApp);
     }
 
+    private void Update()
+    {
+        if(slider.gameObject.activeSelf)
+        {
+            slider.value = Mathf.Min(slider.value + 1 * Time.deltaTime, progress);
+        }
+        
+    }
+
     private void OnLoadingProgress(BaseEvent evt)
     {
         LoadingEvent e = evt as LoadingEvent;
-        float progress = e.progress;
-
-        
+        progress = e.progress;
 
         switch (e.name)
         {
@@ -70,6 +78,7 @@ public class LoginPanel : MonoBehaviour {
                 break;
             case "Login":
                 loadingTips.text = "正在登录服务器";
+                progress = progress * 0.5f;
                 break;
             case "LoadScene":
                 loadingTips.text = "正在切换场景";
@@ -78,7 +87,7 @@ public class LoginPanel : MonoBehaviour {
             default:
                 break;
         }
-        slider.value = progress;
+       
         slider.gameObject.SetActive(true);
     }
 

@@ -64,19 +64,10 @@ public class UILeftDatailWindow : UIWindowBase {
 
         if(ud.buildingTip>0)
         {
-            buttonTips[1].transform.parent.gameObject.SetActive(true);
-            buttonTips[1].text = ud.buildingTip.ToString();
+            buttonTips[0].transform.parent.gameObject.SetActive(true);
+            buttonTips[0].text = ud.buildingTip.ToString();
         }
-        if(ud.friendTip>0)
-        {
-            buttonTips[3].transform.parent.gameObject.SetActive(true);
-            buttonTips[3].text = ud.friendTip.ToString();
-        }
-        if(ud.mailTip>0)
-        {
-            buttonTips[4].transform.parent.gameObject.SetActive(true);
-            buttonTips[4].text = ud.mailTip.ToString();
-        }
+       
     }
 
     protected override void StartHideWindow()

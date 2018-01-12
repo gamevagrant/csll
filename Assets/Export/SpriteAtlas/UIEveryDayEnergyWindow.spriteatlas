@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: UIEveryDayEnergyWindow
+  m_EditorData:
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 0
+    platformSettings: []
+    packingParameters:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    packedHash:
+      serializedVersion: 2
+      Hash: 6994d139b2dcd19763630f549449a50c
+    variantMultiplier: 1
+    bindAsDefault: 0
+    finalFormat: 4
+    hashString: 6994d139b2dcd19763630f549449a50c
+    totalSpriteSurfaceArea: 163144
+    packables:
+    - {fileID: 102900000, guid: 0e31c4bf6d8771f46a2dd5d655e5308f, type: 3}
+    packedSpriteRenderDataKeys:
+    - e7acee10bf9d9cb46b3285e1c3c00278: 21300000
+    - 57a41056fb8d43c4d8f71030576d0ec4: 21300000
+    - 0201409f0cf1a4d47bfad9f666bf17fc: 21300000
+    - ef54e5eb6c26cdf4baf59e72273cdf36: 21300000
+    - 88f302bb6bc816b45aeb688d8885b181: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: e7acee10bf9d9cb46b3285e1c3c00278, type: 3}
+  - {fileID: 21300000, guid: 57a41056fb8d43c4d8f71030576d0ec4, type: 3}
+  - {fileID: 21300000, guid: 0201409f0cf1a4d47bfad9f666bf17fc, type: 3}
+  - {fileID: 21300000, guid: ef54e5eb6c26cdf4baf59e72273cdf36, type: 3}
+  - {fileID: 21300000, guid: 88f302bb6bc816b45aeb688d8885b181, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - banner
+  - btn_dis
+  - btn_get
+  - title
+  - menu_mei-ri
+  m_Tag: UIEveryDayEnergyWindow
+  m_IsVariant: 0

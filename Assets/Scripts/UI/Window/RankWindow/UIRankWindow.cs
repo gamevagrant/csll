@@ -42,6 +42,16 @@ public class UIRankWindow : UIWindowBase {
     {
         allToggle.onValueChanged.AddListener(OnAllValueChange);
         friendToggle.onValueChanged.AddListener(OnMyValueChange);
+
+       
+    }
+
+    private void Start()
+    {
+
+        TopBar.anchoredPosition = new Vector2(0, 160);
+        allPanel.anchoredPosition = new Vector2(0, 950);
+        friendPanel.anchoredPosition = new Vector2(0, 950);
     }
 
     private void OnDestroy()
@@ -84,8 +94,9 @@ public class UIRankWindow : UIWindowBase {
 
         allToggle.isOn = true;
 
+        TopBar.gameObject.SetActive(true);
         TopBar.anchoredPosition = new Vector2(0, 160);
-        //toggleGroup.NotifyToggleOn(energyToggle);
+
         allPanel.gameObject.SetActive(true);
         allPanel.anchoredPosition = new Vector2(0, 950);
 

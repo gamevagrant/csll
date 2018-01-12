@@ -55,7 +55,7 @@ public class IAPManager : IStoreListener {
 	{
 		Debug.Log ("IAP支付失败:"+p);
         Alert.Show("支付失败：" + p);
-        GameMainManager.instance.uiManager.isWaiting = false;
+        Waiting.Disable();
     }
 
 	public PurchaseProcessingResult ProcessPurchase (PurchaseEventArgs e)
@@ -89,7 +89,7 @@ public class IAPManager : IStoreListener {
                 {
                     Alert.Show("发放物品失败：" + data.errmsg);
                 }
-                GameMainManager.instance.uiManager.isWaiting = false;
+                Waiting.Disable();
             });
 
         });
@@ -103,7 +103,7 @@ public class IAPManager : IStoreListener {
 
 	public void Purchase(string productID)
 	{
-        GameMainManager.instance.uiManager.isWaiting = true;
+        Waiting.Enable();
 		Debug.Log ("IAP点击购买:"+productID);
 		if (controller != null) {
 			

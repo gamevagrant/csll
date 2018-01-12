@@ -36,6 +36,9 @@ public class UISettings  {
         UIGuideWindow,
         UIGuideRewardWindow,
         UIEveryDayTaskWindow,
+        UIEveryDayRewardWindow,
+        UIEveryDayEnergyWindow,
+        UIFreeRewardWindow,
     }
 
     public enum UIWindowType
@@ -105,6 +108,9 @@ public class UISettings  {
         {UIWindowID.UIGuideWindow,"UIGuideWindow"},
         {UIWindowID.UIGuideRewardWindow,"UIGuideRewardWindow"},
         {UIWindowID.UIEveryDayTaskWindow,"UIEveryDayTaskWindow"},
+        {UIWindowID.UIEveryDayRewardWindow,"UIEveryDayRewardWindow"},
+        {UIWindowID.UIEveryDayEnergyWindow,"UIEveryDayEnergyWindow"},
+        {UIWindowID.UIFreeRewardWindow,"UIFreeRewardWindow"},
     };
 
 

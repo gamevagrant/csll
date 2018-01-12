@@ -140,29 +140,45 @@ public class GameMainManager {
     private void OnRequestErrorHandle(BaseEvent e)
     {
         RequestErrorEvent evt = e as RequestErrorEvent;
-        if(evt.request.State != BestHTTP.HTTPRequestStates.TimedOut && evt.request.State != BestHTTP.HTTPRequestStates.ConnectionTimedOut)
+        if(evt.type == RequestErrorEvent.Type.AnalysisError)
         {
-            Debug.Log(string.Format("请求失败：{0} ", evt.request.State.ToString()));
-            return;
-        }
-        Debug.Log(string.Format("请求失败：{0} 正在尝试重新请求", evt.request.State.ToString()));
-        if (GameMainManager.instance.uiManager != null)
+            if (GameMainManager.instance.uiManager != null)
+            {
+                Alert.Show("数据解析错误");
+                Waiting.Disable();
+            }
+                
+        }else if(evt.type == RequestErrorEvent.Type.TimeOut)
         {
-            GameMainManager.instance.uiManager.isWaiting = false;
-            Alert.Show("连接失败：" + evt.request.State.ToString(), Alert.OK|Alert.CANCEL, (isOK) => {
-                if(isOK == Alert.OK)
-                {
-                    HttpProxy.SendRequest(evt.request);
-                }
-               
-            }, "重试");
+            Debug.Log(string.Format("请求失败：{0} 正在尝试重新请求", evt.request.State.ToString()));
+            if (GameMainManager.instance.uiManager != null)
+            {
+                GameMainManager.instance.uiManager.isWaiting = false;
+                Alert.Show("连接失败：" + evt.request.State.ToString(), Alert.OK | Alert.CANCEL, (isOK) => {
+                    if (isOK == Alert.OK)
+                    {
+                        HttpProxy.SendRequest(evt.request);
+                    }
 
-            Waiting.Disable();
+                }, "重试");
+
+                Waiting.Disable();
+            }
+            else
+            {
+                HttpProxy.SendRequest(evt.request);
+            }
         }
         else
         {
-            HttpProxy.SendRequest(evt.request);
+            if (GameMainManager.instance.uiManager != null)
+            {
+                Debug.Log(string.Format("请求失败：{0} |{1}", evt.type.ToString(), evt.request.Uri));
+                Waiting.Disable();
+            }
+               
         }
+
     }
 
 

@@ -39,6 +39,11 @@ namespace QY.Open
         /// </summary>
         /// <param name="callBack"></param>
         void GetInvitableFriends(System.Action<InvitableFriendsData[]> callBack);
+        /// <summary>
+        /// 分享链接
+        /// </summary>
+        /// <param name="url"></param>
+        void ShareLink(string url);
     }
 }
 

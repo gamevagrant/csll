@@ -36,6 +36,7 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
                 MailAction(msg);
                 break;
             default:
+                Debug.LogAssertion(msg.action.ToString()+" wetsocket的返回没实现/n" + LitJson.JsonMapper.ToJson(msg));
                 break;
         }
 
@@ -102,7 +103,7 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
         long reward = long.Parse(msg.extra["reward"].ToString());
         long money = long.Parse(msg.extra["money"].ToString());
 
-        string str = string.Format("{0}偷走了{1}金币", msg.name,GameUtils.GetCurrencyString(reward));
+        string str = string.Format("<#1995BCFF>{0}</color>偷走了你<#1995BCFF>{1}</color>金币", msg.name,GameUtils.GetCurrencyString(reward));
         PopupMessageData data = new PopupMessageData();
         data.headImg = msg.headImg;
         data.content = str;
@@ -113,7 +114,7 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
 
     private void AddFriendAction(MessageResponseData msg)
     {
-
+        Debug.LogAssertion("添加好友wetsocket的返回没实现/n" + LitJson.JsonMapper.ToJson(msg));
     }
 
     private void PayAction(MessageResponseData msg)
@@ -168,17 +169,55 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
 
     private void NoticeAction(MessageResponseData msg)
     {
-
+        Debug.LogAssertion("公告wetsocket的返回没实现/n" + LitJson.JsonMapper.ToJson(msg));
     }
-
+    /*
+ {
+  "uid": 0, 
+  "toid": 1125, 
+  "action": 11, 
+  "result": 0, 
+  "time": "", 
+  "name": "", 
+  "headImg": "", 
+  "crowns": 0, 
+  "extra": {
+    "task": {
+      "type": 10, 
+      "status": 1, 
+      "totalProgress": 800000, 
+      "progress": 1011874, 
+      "reward": {
+        "type": "gold", 
+        "num": 50000, 
+        "name": ""
+      }, 
+      "name": "一个小目标", 
+      "desc": "累计获得800K金币"
+    }
+  }, 
+  "read": false, 
+  "isWanted": false, 
+  "isVip": false, 
+  "head_frame": 0
+} 
+     */
     private void DailyTaskAction(MessageResponseData msg)
     {
-        Debug.LogAssertion("每日任务领取奖励wetsocket的返回没实现/n"+LitJson.JsonMapper.ToJson(msg));
+
+        string str = string.Format("您已经完成了每日任务【{0}】快去领奖吧！",msg.extra["task"]["name"].ToString());
+        PopupMessageData data = new PopupMessageData();
+        data.headImg = msg.headImg;
+        data.content = str;
+
+        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIPopupMessageWindow, data);
+
+        
     }
 
     private void MailAction(MessageResponseData msg)
     {
-
+        Debug.LogAssertion("邮件的wetsocket的返回没实现/n" + LitJson.JsonMapper.ToJson(msg));
     }
 
 

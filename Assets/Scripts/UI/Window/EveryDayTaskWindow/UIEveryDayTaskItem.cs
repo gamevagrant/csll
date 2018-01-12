@@ -118,7 +118,7 @@ public class UIEveryDayTaskItem : BaseItemView {
                 {
                     if (item.type == data.type)
                     {
-                        data = item;
+                        data.status = item.status;
                         SetData(data);
                         break;
                     }

@@ -109,6 +109,7 @@ public class UserData {
     public int last_action;//上次结束游戏时正在干的事情0 默认 无操作，1 攻击, 2 偷取
     public List<InvitableFriendsData> invitableList;//可邀请好友列表
     public List<ShareData.RecallableFriendData> recallableList;//可召回好友列表
+    public int daily_energy;//每日能量
 
     /// <summary>
     /// 建造提示红点数值
@@ -275,4 +276,34 @@ public class UserData {
         }
     }
 
+    public int dailyRewardTip
+    {
+        get
+        {
+            if (!daily_prize_limit)
+            {
+                return 1;
+            }
+            if(weekly_prize_confs!=null)
+            {
+                foreach (DailyPrizeConfData item in weekly_prize_confs)
+                {
+                    if(item.status == 1)
+                    {
+                        return 1;
+                    }
+                }
+            }
+           
+            return 0;
+        }
+    }
+
+    public int dailyEnergyTip
+    {
+        get
+        {
+            return daily_energy;
+        }
+    }
 }

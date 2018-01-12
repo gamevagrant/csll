@@ -83,4 +83,19 @@ public class UISideBarWindow :UIWindowBase {
     {
         GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIEveryDayTaskWindow);
     }
+
+    public void OnClickDailyRewardBtn()
+    {
+        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIEveryDayRewardWindow);
+    }
+
+    public void OnClickDailyEnergyBtn()
+    {
+        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIEveryDayEnergyWindow);
+    }
+
+    public void OnClickFreeRewardBtn()
+    {
+        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIFreeRewardWindow);
+    }
 }

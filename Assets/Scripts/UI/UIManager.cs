@@ -112,7 +112,8 @@ public class UIManager : MonoBehaviour,IUIManager  {
         rt.anchorMax = Vector2.one;
         rt.offsetMin = Vector2.zero;
         rt.offsetMax = Vector2.zero;
-        popupCollider.AddComponent<Image>().color = new Color(0,0,0,0.4f);
+        popupCollider.AddComponent<Image>().color = new Color(0,0,0,0);
+        popupCollider.AddComponent<FadeIn>();
 
         EventTrigger eventTrigger = popupCollider.AddComponent<EventTrigger>();
         EventTrigger.Entry entry = new EventTrigger.Entry();
@@ -227,7 +228,8 @@ public class UIManager : MonoBehaviour,IUIManager  {
             {
                 showingWindows.Remove(id);
             }
-           
+
+            popupCollider.GetComponent<FadeIn>().to = 0;
             window.HideWindow(() =>
             {
                 UIWindowData windowdata = window.windowData;
@@ -326,8 +328,10 @@ public class UIManager : MonoBehaviour,IUIManager  {
                 }
                 else
                 {
-                    popupCollider.GetComponent<Image>().color = new Color(0, 0, 0, 0.3f);
+                    popupCollider.GetComponent<Image>().color = new Color(0, 0, 0, 0f);
+                    popupCollider.GetComponent<FadeIn>().to = 0.4f;
                 }
+                
                 //popupCollider.GetComponent<Image>().color = new Color(0.8f,0.8f,0.8f,0.5f);
             }
             else if (windowdata.type == UISettings.UIWindowType.Normal)
@@ -346,13 +350,13 @@ public class UIManager : MonoBehaviour,IUIManager  {
                 showingWindows.Add(id, window);
             }
             isOpening = false;
-            window.ShowWindow(() =>
+            StartCoroutine(window.ShowWindow(() =>
             {
                 if (onComplate != null)
                 {
                     onComplate();
                 }
-            }, needTransform, data);
+            }, needTransform, data));
         }
         else
         {
@@ -410,7 +414,7 @@ public class UIManager : MonoBehaviour,IUIManager  {
         window.transform.localScale = Vector3.one;
         //(window.transform as RectTransform).anchoredPosition = Vector2.zero;
         window.Init();
-        yield return new WaitForSeconds(0.1f);
+        yield return null;
         if(windowsState[id])
         {
             StartOpenWindow(id, needTransform, onComplate, data);
@@ -451,7 +455,7 @@ public class UIManager : MonoBehaviour,IUIManager  {
             if (backSequence.Count > 0)
             {
                 UIWindowBase backWindow = backSequence.Peek();
-                backWindow.ShowWindow();
+                StartCoroutine(backWindow.ShowWindow());
 
             }
         }

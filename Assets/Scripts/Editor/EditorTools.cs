@@ -41,7 +41,9 @@ public class EditorTools  {
                 go.GetComponent<Image>().raycastTarget = false;
                 go.transform.SetParent(Selection.activeTransform);
                 go.transform.localScale = Vector3.one;
+                go.transform.localPosition = Vector3.zero;
                 (go.transform as RectTransform).anchoredPosition = Vector2.zero;
+                Selection.activeGameObject = go;
             }
         }
     }
@@ -56,7 +58,12 @@ public class EditorTools  {
                 GameObject go = new GameObject("Button", typeof(Image),typeof(QY.UI.Button));
                 go.transform.SetParent(Selection.activeTransform);
                 go.transform.localScale = Vector3.one;
+                go.transform.localPosition = Vector3.zero;
                 (go.transform as RectTransform).anchoredPosition = Vector2.zero;
+                Navigation nav = new Navigation();
+                nav.mode = Navigation.Mode.None;
+                go.GetComponent<QY.UI.Button>().navigation = nav;
+                Selection.activeGameObject = go;
             }
         }
     }

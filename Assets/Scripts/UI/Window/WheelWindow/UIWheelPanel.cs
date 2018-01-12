@@ -207,11 +207,12 @@ public class UIWheelPanel : MonoBehaviour {
             {
                 stealNameLabel.text = target.name;
                 stealMoneyLabel.text = GameUtils.GetCurrencyString(target.money);
+                stealHead.transform.parent.DOScale(Vector3.one, 1);
+                canvasGroup.DOFade(1, 1);
                 AssetLoadManager.Instance.LoadAsset<Texture2D>(target.headImg, (text) =>
                 {
                     stealHead.texture = text;
-                    stealHead.transform.parent.DOScale(Vector3.one, 1);
-                    canvasGroup.DOFade(1, 1);
+                    
                 });
             });
 

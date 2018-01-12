@@ -39,7 +39,22 @@ public class RedDot : MonoBehaviour {
         }
     }
 
+    private void Awake()
+    {
+        EventDispatcher.instance.AddEventListener(EventEnum.UPDATE_REDDOT, OnUpdateHandle);
+    }
+
+    private void OnDestroy()
+    {
+        EventDispatcher.instance.RemoveEventListener(EventEnum.UPDATE_REDDOT, OnUpdateHandle);
+    }
+
     public void OnEnable()
+    {
+        Refresh();
+    }
+
+    private void OnUpdateHandle(BaseEvent e)
     {
         Refresh();
     }
@@ -77,6 +92,12 @@ public class RedDot : MonoBehaviour {
                 break;
             case RedDotType.EveryTask:
                 isShow = GameMainManager.instance.model.userData.dailyTaskTip > 0 ? true : false;
+                break;
+            case RedDotType.EveryLogin:
+                isShow = GameMainManager.instance.model.userData.dailyRewardTip > 0 ? true : false;
+                break;
+            case RedDotType.EveryEnergy:
+                isShow = GameMainManager.instance.model.userData.dailyEnergyTip > 0 ? true : false;
                 break;
         }
         show = isShow;

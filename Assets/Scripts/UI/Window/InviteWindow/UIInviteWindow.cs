@@ -39,7 +39,7 @@ public class UIInviteWindow : UIWindowBase {
         }
         else
         {
-            inviteToggle.isOn = false;
+            inviteToggle.isOn = true;
         }
     }
 }

@@ -24,9 +24,6 @@ public class UIFriendsWindow : UIWindowBase {
         }
     }
 
-    //public Toggle myFriendsToggle;
-    //public Toggle addFriendToggle;
-    //public Toggle applyFriendsToggle;
 
     public GameObject myFriendsPanel;
     public GameObject addFriendPanel;
@@ -45,9 +42,6 @@ public class UIFriendsWindow : UIWindowBase {
 
     private void Awake()
     {
-        //myFriendsToggle.onValueChanged.AddListener(OnChangeMyFriendsToggle);
-        //addFriendToggle.onValueChanged.AddListener(OnChangeAddFriendsToggle);
-        //applyFriendsToggle.onValueChanged.AddListener(OnChangeApplyFriendsToggle);
 
         EventDispatcher.instance.AddEventListener(EventEnum.UPDATE_FRIENDS, OnUpdateFriendsHandle);
         EventDispatcher.instance.AddEventListener(EventEnum.SELECTED_FRIEND, OnSelectedFriendHandle);
@@ -55,9 +49,6 @@ public class UIFriendsWindow : UIWindowBase {
 
     private void OnDestroy()
     {
-        //myFriendsToggle.onValueChanged.RemoveAllListeners();
-        //addFriendToggle.onValueChanged.RemoveAllListeners();
-        //applyFriendsToggle.onValueChanged.RemoveAllListeners();
 
         EventDispatcher.instance.RemoveEventListener(EventEnum.UPDATE_FRIENDS, OnUpdateFriendsHandle);
         EventDispatcher.instance.RemoveEventListener(EventEnum.SELECTED_FRIEND, OnSelectedFriendHandle);
@@ -74,30 +65,12 @@ public class UIFriendsWindow : UIWindowBase {
         });
        
         UpdateAddFriendData();
-        //myFriendsToggle.isOn = true;
-        //myFriendsToggle.enabled = false;
-        //myFriendsToggle.enabled = true;
+
         addFriendPanel.SetActive(false);
         applyFriendsPanel.SetActive(false);
         menuePanel.parent.gameObject.SetActive(false);
     }
-    /*
-    private void OnChangeMyFriendsToggle(bool value)
-    {
-        myFriendsPanel.SetActive(value);
 
-    }
-
-    private void OnChangeAddFriendsToggle(bool value)
-    {
-        addFriendPanel.SetActive(value);
-    }
-
-    private void OnChangeApplyFriendsToggle(bool value)
-    {
-        applyFriendsPanel.SetActive(value);
-    }
-    */
     private void OnUpdateFriendsHandle(BaseEvent e)
     {
         UpdateFriendsEvent evt = e as UpdateFriendsEvent;
@@ -126,7 +99,7 @@ public class UIFriendsWindow : UIWindowBase {
 
         List<FriendItemData> friendItems = new List<FriendItemData>();
         friendItems.Add(new FriendItemData(0,null));
-       // FriendData[] friendDatas = GameMainManager.instance.model.userData.friendInfo;
+
         if(friendDatas!= null)
         {
             foreach (FriendData fd in friendDatas)
@@ -155,7 +128,7 @@ public class UIFriendsWindow : UIWindowBase {
 
     private void UpdateNotAgreeFriendsData(FriendData[] friendDatas)
     {
-       // FriendData[] friendDatas = GameMainManager.instance.model.userData.friendNotAgreeInfo;
+
         notAgreeScrollView.SetData(friendDatas);
     }
 
@@ -169,12 +142,7 @@ public class UIFriendsWindow : UIWindowBase {
                 {
                     UpdateNotAgreeFriendsData(res.data.friends);
                 });
-                /*
-                GameMainManager.instance.uiManager.OpenPopupModalBox("添加成功", "", ()=> {
 
-                    UpdateNotAgreeFriendsData(res.data.friends);
-                });
-                */
             }
         });
     }
@@ -189,11 +157,7 @@ public class UIFriendsWindow : UIWindowBase {
                 {
                     UpdateNotAgreeFriendsData(res.data.friendsNotAgree);
                 });
-                /*
-                GameMainManager.instance.uiManager.OpenPopupModalBox("忽略成功", "", ()=>
-                {
-                    UpdateNotAgreeFriendsData(res.data.friendsNotAgree);
-                });*/
+
             }
         });
     }

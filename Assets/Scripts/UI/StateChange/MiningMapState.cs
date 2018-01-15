@@ -8,7 +8,7 @@ public class MiningMapState : UIStateChangeBase
     {
 
     }
-    public override void ChangeState(Dictionary<UISettings.UIWindowID, UIWindowBase> showingWindows)
+    public override void ChangeState(Dictionary<UISettings.UIWindowID, UIWindowBase> showingWindows,bool needTransform = false)
     {
         GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UICloudCover, true, () => {
 
@@ -27,10 +27,10 @@ public class MiningMapState : UIStateChangeBase
             }
 
            
-            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UISideBarWindow, false);
-            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UITopBarWindow, false);
-            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIWheelWindow, false);
-            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIMiningMapWindow,false);
+            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UISideBarWindow, needTransform);
+            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UITopBarWindow, needTransform);
+            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIWheelWindow, needTransform);
+            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIMiningMapWindow, needTransform);
 
             GameMainManager.instance.uiManager.CloseWindow(UISettings.UIWindowID.UICloudCover);
         });

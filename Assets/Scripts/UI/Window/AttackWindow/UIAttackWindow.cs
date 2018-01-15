@@ -134,11 +134,11 @@ public class UIAttackWindow :UIWindowBase {
 
     public void OnClickOkBtn()
     {
-        Dictionary<UISettings.UIWindowID, object> data = new Dictionary<UISettings.UIWindowID, object>();
-        data.Add(UISettings.UIWindowID.UITopBarWindow, null);
-        data.Add(UISettings.UIWindowID.UIWheelWindow, null);
-        data.Add(UISettings.UIWindowID.UISideBarWindow, null);
-        GameMainManager.instance.uiManager.ChangeState(new UIStateChangeBase(data,null,2));
+        //Dictionary<UISettings.UIWindowID, object> data = new Dictionary<UISettings.UIWindowID, object>();
+        //data.Add(UISettings.UIWindowID.UITopBarWindow, null);
+        //data.Add(UISettings.UIWindowID.UIWheelWindow, null);
+        //data.Add(UISettings.UIWindowID.UISideBarWindow, null);
+        GameMainManager.instance.uiManager.ChangeState(new MainState(2));
     }
 
     private void Attack(int index, AttackData data)

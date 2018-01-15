@@ -11,7 +11,7 @@ public interface IUIManager {
 
     void CloseWindow(UISettings.UIWindowID id, bool needTransform = true, System.Action onComplate = null);
     void CloseWindow(UISettings.UIWindowID id);
-    void ChangeState(UIStateChangeBase state);
+    void ChangeState(UIStateChangeBase state,bool needTransform = true);
     /// <summary>
     /// 打开只有一个确认按钮的模态窗口 
     /// </summary>

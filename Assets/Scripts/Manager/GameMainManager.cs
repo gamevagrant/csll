@@ -82,16 +82,19 @@ public class GameMainManager {
             {
                // GameMainManager.instance.uiManager.ChangeState(new MainState(0, 1));
 
-                GameMainManager.instance.uiManager.OpenWindow( UISettings.UIWindowID.UIWheelWindow,false,1);
-               
+               // GameMainManager.instance.uiManager.OpenWindow( UISettings.UIWindowID.UIWheelWindow,false,1);
+
+                GameMainManager.instance.uiManager.ChangeState(new MainState(0, 1), false);
             }
             else
             {
                // GameMainManager.instance.uiManager.ChangeState(new MainState(0));
-                GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIWheelWindow, false, 0);
+                //GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIWheelWindow, false, 0);
+
+                GameMainManager.instance.uiManager.ChangeState(new MainState(0, 0), false);
             }
-            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UISideBarWindow, false);
-            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UITopBarWindow, false);
+           // GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UISideBarWindow, false);
+           // GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UITopBarWindow, false);
         }
         UpdateInviteData();
     }

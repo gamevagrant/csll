@@ -277,9 +277,9 @@ public class UIManager : MonoBehaviour,IUIManager  {
 
 
 
-    public void ChangeState(UIStateChangeBase state)
+    public void ChangeState(UIStateChangeBase state,bool needTransform)
     {
-        state.ChangeState(showingWindows);
+        state.ChangeState(showingWindows, needTransform);
     }
 
 
@@ -319,9 +319,10 @@ public class UIManager : MonoBehaviour,IUIManager  {
             else if (windowdata.type == UISettings.UIWindowType.PopUp)
             {
                 curPopUpWindow = window;
-                window.transform.SetSiblingIndex(PopUpRoot.childCount);
-                popupCollider.transform.SetSiblingIndex(PopUpRoot.childCount - 2);
                 popupCollider.SetActive(true);
+                popupCollider.transform.SetSiblingIndex(PopUpRoot.childCount);
+                window.transform.SetSiblingIndex(PopUpRoot.childCount);
+
                 if(window.windowData.colliderType == UISettings.UIWindowColliderType.Transparent)
                 {
                     popupCollider.GetComponent<Image>().color = new Color(0.8f, 0.8f, 0.8f, 0f);

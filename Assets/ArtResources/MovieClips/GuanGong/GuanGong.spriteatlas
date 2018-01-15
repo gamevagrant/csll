@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: GuanGong
+  m_EditorData:
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 0
+    platformSettings: []
+    packingParameters:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    packedHash:
+      serializedVersion: 2
+      Hash: 7b199b976e181d881f2d2b292b957319
+    variantMultiplier: 1
+    bindAsDefault: 1
+    finalFormat: 4
+    hashString: 7b199b976e181d881f2d2b292b957319
+    totalSpriteSurfaceArea: 362880
+    packables:
+    - {fileID: 102900000, guid: 8dde12921744d9f488f18841e922c384, type: 3}
+    packedSpriteRenderDataKeys:
+    - b4f01f5c5677b8c4293ee2d3458c1a06: 21300000
+    - b0594899eb878ff46b6aa1acc57eeca7: 21300000
+    - 6dc127027ff8baa48b312e7a18a32853: 21300000
+    - 80d636828a2b5dd45b6bf777691fcd0b: 21300000
+    - ccbc85be263427b4791c5135f2dc9d84: 21300000
+    - 9a83c1d1322501143a8f06bc6fd367bc: 21300000
+    - fd819dfd5688c2e4f88f58e766ed4449: 21300000
+    - 0add502611a160a4d99dd87a7ce5830e: 21300000
+    - 5dbe61a4d25ed6247b30e7546c8a206e: 21300000
+    - 8b8dff90c67fc2640bf32f69d333b674: 21300000
+    - 6e2e2142d5a5f5d42860c332a4b3ae0c: 21300000
+    - f0d55a399194ee8448c17cf9aa3a787a: 21300000
+    - 57d1aa6fe93df1f4dab1b090978db5e6: 21300000
+    - 2878331ad6fae2747b43b06d34b07435: 21300000
+    - 036abcc46c075a545be90c3f786c15d8: 21300000
+    - d8f70f63f50b2bb45947e3ff55c9a672: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: b4f01f5c5677b8c4293ee2d3458c1a06, type: 3}
+  - {fileID: 21300000, guid: b0594899eb878ff46b6aa1acc57eeca7, type: 3}
+  - {fileID: 21300000, guid: 6dc127027ff8baa48b312e7a18a32853, type: 3}
+  - {fileID: 21300000, guid: 80d636828a2b5dd45b6bf777691fcd0b, type: 3}
+  - {fileID: 21300000, guid: ccbc85be263427b4791c5135f2dc9d84, type: 3}
+  - {fileID: 21300000, guid: 9a83c1d1322501143a8f06bc6fd367bc, type: 3}
+  - {fileID: 21300000, guid: fd819dfd5688c2e4f88f58e766ed4449, type: 3}
+  - {fileID: 21300000, guid: 0add502611a160a4d99dd87a7ce5830e, type: 3}
+  - {fileID: 21300000, guid: 5dbe61a4d25ed6247b30e7546c8a206e, type: 3}
+  - {fileID: 21300000, guid: 8b8dff90c67fc2640bf32f69d333b674, type: 3}
+  - {fileID: 21300000, guid: 6e2e2142d5a5f5d42860c332a4b3ae0c, type: 3}
+  - {fileID: 21300000, guid: f0d55a399194ee8448c17cf9aa3a787a, type: 3}
+  - {fileID: 21300000, guid: 57d1aa6fe93df1f4dab1b090978db5e6, type: 3}
+  - {fileID: 21300000, guid: 2878331ad6fae2747b43b06d34b07435, type: 3}
+  - {fileID: 21300000, guid: 036abcc46c075a545be90c3f786c15d8, type: 3}
+  - {fileID: 21300000, guid: d8f70f63f50b2bb45947e3ff55c9a672, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - guangong_00008
+  - guangong_00009
+  - guangong_00000
+  - guangong_00001
+  - guangong_00002
+  - guangong_00003
+  - guangong_00013
+  - guangong_00004
+  - guangong_00012
+  - guangong_00005
+  - guangong_00011
+  - guangong_00006
+  - guangong_00010
+  - guangong_00007
+  - guangong_00015
+  - guangong_00014
+  m_Tag: GuanGong
+  m_IsVariant: 0

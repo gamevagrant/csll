@@ -82,7 +82,7 @@ public class UITopBarWindow : UIWindowBase {
 
     public void OnClickBuyBtn()
     {
-        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIShopWindow);
+        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIShopWindow,new ShowShopWindowData(ShowShopWindowData.PanelType.Gold));
     }
 
     private void OnUpdateData(BaseEvent e)

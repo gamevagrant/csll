@@ -1019,6 +1019,36 @@ public class NetManager:INetManager
 
         });
     }
+
+    public bool UseExchangeCode(string code,Action<bool, ExchangeCodeMessage> callBack)
+    {
+        Waiting.Enable();
+        string url = MakeUrl(APIDomain, "active_redeem_code");
+        Dictionary<string, object> data = new Dictionary<string, object>();
+        data.Add("code", code);
+        data.Add("uid", uid);
+        data.Add("token", token);
+        data.Add("t", time.ToString());
+        return HttpProxy.SendPostRequest<ExchangeCodeMessage>(url, data, (ret, res) => {
+            Waiting.Disable();
+            callBack(ret, res);
+            if (res.isOK)
+            {
+                UserData user = GameMainManager.instance.model.userData;
+                user.money = res.data.user_state.money;
+                user.energy = res.data.user_state.energy;
+                user.wantedCount = res.data.user_state.wanted;
+                user.vip_days = res.data.user_state.vip;
+
+            }
+            else
+            {
+                Debug.Log("获取兑换码失败:" + res.errmsg);
+                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "获取兑换码失败", res.errcode));
+            }
+
+        });
+    }
     //-------------------------facebook接口------------------------------------
 
     /// <summary>

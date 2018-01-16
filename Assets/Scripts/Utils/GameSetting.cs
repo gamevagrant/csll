@@ -11,7 +11,7 @@ public class GameSetting {
     public static string websocketPathDevelop = "wss://api.dev.nutsgamer.com/ws/conn";
 
     public static string shareFinishTaskLink = "https://csll.app.link/ShareFinishTask";
-
+    public static string homePage = "https://www.facebook.com/caishenlaile";
     public static bool isRelease = false;//是否时发布版本 是使用正式服务器还是测试服务器
 
     //-------------------平台区分的配置-------------------------

@@ -51,6 +51,16 @@ public class UIStealWindow : UIWindowBase {
        
     }
 
+    public override void Init()
+    {
+        base.Init();
+        goldEffect.SetActive(false);
+        victoryTip.gameObject.SetActive(false);
+        effect.gameObject.SetActive(false);
+        stealTips.gameObject.SetActive(false);
+        topBar.gameObject.SetActive(false);
+    }
+
     protected override void StartShowWindow(object[] data)
     {
         StealIslandData[] stealTargets = data[0] as StealIslandData[];

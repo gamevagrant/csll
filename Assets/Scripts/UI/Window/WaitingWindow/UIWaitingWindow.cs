@@ -22,6 +22,7 @@ public class UIWaitingWindow : UIWindowBase {
     private CanvasGroup canvasGroup;
     private float timeTag;
     private float time;
+    private const float WAIT_TIME = 3;
 
     private void Awake()
     {
@@ -32,9 +33,9 @@ public class UIWaitingWindow : UIWindowBase {
     private void Update()
     {
         time = Time.time - timeTag;
-        if (time>2)
+        if (time> WAIT_TIME)
         {
-            canvasGroup.alpha = (time-1.5f)*1.5f;
+            canvasGroup.alpha = (time - WAIT_TIME + 0.5f) * 1.2f;
         }
     }
 

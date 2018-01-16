@@ -41,6 +41,8 @@ public class UISettings  {
         UIFreeRewardWindow,
         UIEmptyEnergyGuideWindow,
         UINewUserGuiderWindow,
+        UIExchangeCodeWindow,
+        UIExchangeRewardWindow,
     }
 
     public enum UIWindowType
@@ -115,6 +117,8 @@ public class UISettings  {
         {UIWindowID.UIFreeRewardWindow,"UIFreeRewardWindow"},
         {UIWindowID.UIEmptyEnergyGuideWindow,"UIEmptyEnergyGuideWindow"},
         {UIWindowID.UINewUserGuiderWindow,"UINewUserGuiderWindow"},
+        {UIWindowID.UIExchangeCodeWindow,"UIExchangeCodeWindow"},
+        {UIWindowID.UIExchangeRewardWindow,"UIExchangeRewardWindow"},
     };
 
 

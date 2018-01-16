@@ -61,4 +61,15 @@ public class UISettingWindow : UIWindowBase {
             }
         });
     }
+
+    public void OnClickLikeBtn()
+    {
+        Application.OpenURL(GameSetting.homePage);
+    }
+
+    public void OnClickExchangeBtn()
+    {
+        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIExchangeCodeWindow);
+        OnClickClose();
+    }
 }

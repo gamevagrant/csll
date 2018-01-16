@@ -198,6 +198,13 @@ public interface INetManager
     /// <param name="callBack"></param>
     /// <returns></returns>
     bool GetDailyEnergyReward(Action<bool, DailyEnergyMessage> callBack);
+    /// <summary>
+    /// 使用兑换码
+    /// </summary>
+    /// <param name="code"></param>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool UseExchangeCode(string code, Action<bool, ExchangeCodeMessage> callBack);
     //------------------------平台区分---------------------------------------
 
     /// <summary>

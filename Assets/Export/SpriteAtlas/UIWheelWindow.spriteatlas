@@ -28,12 +28,12 @@ SpriteAtlas:
       enableTightPacking: 0
     packedHash:
       serializedVersion: 2
-      Hash: a45c2163a4016736d23d084b6905a493
+      Hash: 5e7ab8ccae3ec8c931ff8a7c478265ed
     variantMultiplier: 1
     bindAsDefault: 0
     finalFormat: 4
-    hashString: a45c2163a4016736d23d084b6905a493
-    totalSpriteSurfaceArea: 3142175
+    hashString: 5e7ab8ccae3ec8c931ff8a7c478265ed
+    totalSpriteSurfaceArea: 3149138
     packables:
     - {fileID: 102900000, guid: 9e3d56e820801f94496b9739c24ecab7, type: 3}
     packedSpriteRenderDataKeys:
@@ -70,6 +70,8 @@ SpriteAtlas:
     - 697a4ff558b484a449ec4108fea84920: 21300000
     - d6dd76bb73d34b946956795c14450299: 21300000
     - 06b9d4bf8bdc44049a86fe4bd949e3f3: 21300000
+    - 0ac2522bee7641d4f8e11d602dce1b1d: 21300000
+    - b515f5d25fb145b43b1009c8c430e058: 21300000
     - f69fe66244dc1724b9d7381c30366610: 21300000
     - 43f98ac6336bdd942bdebb95511b337d: 21300000
     - 0b6b11377b0753f40aef5a52276123a5: 21300000
@@ -109,6 +111,8 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 697a4ff558b484a449ec4108fea84920, type: 3}
   - {fileID: 21300000, guid: d6dd76bb73d34b946956795c14450299, type: 3}
   - {fileID: 21300000, guid: 06b9d4bf8bdc44049a86fe4bd949e3f3, type: 3}
+  - {fileID: 21300000, guid: 0ac2522bee7641d4f8e11d602dce1b1d, type: 3}
+  - {fileID: 21300000, guid: b515f5d25fb145b43b1009c8c430e058, type: 3}
   - {fileID: 21300000, guid: f69fe66244dc1724b9d7381c30366610, type: 3}
   - {fileID: 21300000, guid: 43f98ac6336bdd942bdebb95511b337d, type: 3}
   - {fileID: 21300000, guid: 0b6b11377b0753f40aef5a52276123a5, type: 3}
@@ -147,6 +151,8 @@ SpriteAtlas:
   - main_wheel_steal
   - main_wheel_shield
   - main_wheel_attack
+  - build_repair
+  - main_headBg
   - main_star
   - xiaoquan
   - 1

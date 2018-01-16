@@ -182,6 +182,7 @@ public class UILeftDatailWindow : UIWindowBase {
 
     public void OnClickSettingBtn()
     {
+        OnClickClose();
         GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UISettingWindow);
     }
 }

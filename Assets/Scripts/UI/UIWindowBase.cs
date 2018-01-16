@@ -151,7 +151,7 @@ public abstract class UIWindowBase : MonoBehaviour {
         });
     }
 
-    public void OnClickClose()
+    public virtual void OnClickClose()
     {
         GameMainManager.instance.uiManager.CloseWindow(windowData.id);
     }

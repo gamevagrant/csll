@@ -42,6 +42,8 @@ public class UIBuildingWindow : UIWindowBase {
                         BuildComplateEvent evt = new BuildComplateEvent();
                         evt.buildIndex = index;
                         evt.level = data.data.buildings[index - 1].level;
+                        evt.status = data.data.buildings[index - 1].status;
+                        evt.isRepair = userData.buildings[index - 1].status == 1;
                         evt.islandID = data.data.islandId;
                         evt.isUpgrade = data.data.playUpgradeAnimation;
                         evt.upgradeEnergyReward = data.data.upgradeEnergyAfterReward - data.data.energy;

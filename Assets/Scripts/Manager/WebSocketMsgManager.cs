@@ -204,7 +204,7 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
      */
     private void DailyTaskAction(MessageResponseData msg)
     {
-
+       
         string str = string.Format("您已经完成了每日任务【{0}】快去领奖吧！",msg.extra["task"]["name"].ToString());
         PopupMessageData data = new PopupMessageData();
         data.headImg = msg.headImg;

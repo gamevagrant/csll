@@ -70,8 +70,13 @@ public class NetManager:INetManager
         wsp.onMessage += (str) => 
         {
             Debug.Log("onMessage" + str);
-            MessageResponseData msg = LitJson.JsonMapper.ToObject<MessageResponseData>(str);
-            GameMainManager.instance.websocketMsgManager.SendMsg(msg);
+            if (GameMainManager.instance.model.userData.tutorial >= GameSetting.TUTORIAL_MAX)
+            {
+                MessageResponseData msg = LitJson.JsonMapper.ToObject<MessageResponseData>(str);
+                GameMainManager.instance.websocketMsgManager.SendMsg(msg);
+            }
+            
+           
 
             //Debug.Log("假数据");
             //string json = "{\"uid\":101,\"toid\":2,\"action\":1,\"result\":0,\"time\":\"2006-01-0215:04:05\",\"name\":\"Badlwin\",\"headImg\":\"http://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIUKt2UaM9cibOM5RsVDyibbbr1tUHia1jR1eibsjGgmXm2BBAFQbosuBPx4sX4hY50j0Jzhu3y4hx2rQ/0\",\"Crowns\":100,\"extra\":{\"crows\":138,\"building\":{\"isShield\":false,\"level\":1,\"status\":1},\"building_index\":1,\"isShielded\":false},\"read\":false,\"isWanted\":false,\"isVip\":false}";
@@ -242,6 +247,7 @@ public class NetManager:INetManager
                 {
                     user.money = res.data.upgradeMoneyAfterReward;
                     user.energy = res.data.upgradeEnergyAfterReward;
+                    EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.island,0));
                 }
 
             }

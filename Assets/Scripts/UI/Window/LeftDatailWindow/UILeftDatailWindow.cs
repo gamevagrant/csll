@@ -113,7 +113,7 @@ public class UILeftDatailWindow : UIWindowBase {
         }else
         {
             string name = GameMainManager.instance.configManager.islandConfig.GetIslandName(3);
-            Alert.Show(string.Format("到达{0}后开启地图功能", name));
+            Alert.Show(string.Format("到达3号岛屿（{0}）后开启地图功能", name));
             //GameMainManager.instance.uiManager.OpenPopupModalBox(string.Format("到达{0}后开启地图功能",name),"",null);
         }
         OnClickClose();

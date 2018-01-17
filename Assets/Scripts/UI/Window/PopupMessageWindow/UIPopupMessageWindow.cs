@@ -107,7 +107,16 @@ public class UIPopupMessageWindow : UIWindowBase {
     private void Show()
     {
         GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.panel_in);
-        rectTransform.DOAnchorPos(new Vector2(0, 60), 0.5f).SetEase(Ease.OutBack);
+        rectTransform.DOAnchorPos(new Vector2(0, 60), 0.5f).SetEase(Ease.OutBack).OnComplete(()=> {
+
+            StartCoroutine(StartConfirmMsg());
+        });
+    }
+
+    private IEnumerator StartConfirmMsg()
+    {
+        yield return new WaitForSeconds(2);
+        ConfirmMsg();
     }
 
     private void Hide(Action onComplate)

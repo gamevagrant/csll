@@ -32,6 +32,7 @@ public class UIWheelPanel : MonoBehaviour {
     public TextMeshProUGUI surplusEnergyLabel;
     public Slider energyProgressSlider;
     public AudioClip[] audioClips;
+    public UGUISpriteAnimation energyWaveAnimation;
     
 
     [SerializeField]
@@ -299,7 +300,7 @@ public class UIWheelPanel : MonoBehaviour {
 
     public void OnHoldOnRollBtn(bool isHold)
     {
-        if(isHold)
+        if(isHold )
         {
             isHoldOn = true;
             if (!isWorking)
@@ -352,8 +353,9 @@ public class UIWheelPanel : MonoBehaviour {
                 rollItem = data.data.rollerItem;
 
                 energyValue = user.energy - 1;
+                energyWaveAnimation.Play();
 
-               
+
             }
             else
             {

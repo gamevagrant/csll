@@ -28,65 +28,98 @@ SpriteAtlas:
       enableTightPacking: 0
     packedHash:
       serializedVersion: 2
-      Hash: 9006a5c055768a6a00a4dc8d438ffce4
+      Hash: 564477ab5bd90a118b5c8687a72a48da
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 4
-    hashString: 9006a5c055768a6a00a4dc8d438ffce4
-    totalSpriteSurfaceArea: 1092252
+    hashString: 564477ab5bd90a118b5c8687a72a48da
+    totalSpriteSurfaceArea: 1280063
     packables:
     - {fileID: 102900000, guid: ed2b757cad2200640a1396748a070cf1, type: 3}
     packedSpriteRenderDataKeys:
     - acc911e483ddb4048b1b1fd0f9caabb3: 21300000
     - aee8b50659aaf4d4c9e985be17e0b021: 21300000
     - 07e9c2a268e09104599aa6475c8103e5: 21300000
+    - e8b82629e1d1e7e419e1ada3bf1be459: 21300000
     - c67aa18f0729c814583c3fed3e60f014: 21300000
     - 45d29ecf870df4a4bb5a16d64ccee7e2: 21300000
     - a6570a39a2856da4ea3b53745d7b8059: 21300000
     - 7b631bffee04ec44792ded57a86edf1e: 21300000
+    - 65061cd2e9820cb44a49e0c2582c84d8: 21300000
     - 4623ca5ac629fde4c8e2257d5bb93333: 21300000
     - 600b2f20cd653a244b2f16f01a6ed657: 21300000
     - 394b6fd25cc86ef48a44eff4d6408aea: 21300000
     - 433e1acd7aac47c4aa1232bd269f874b: 21300000
+    - c3836a0289a948844a410633f5225225: 21300000
+    - 1eae719192e5bef4db8e190a31cc007f: 21300000
     - 1f116def9d1dfb04489986dab8cba06b: 21300000
     - aa2bdb2f11596624a8d33b4c075f9fc7: 21300000
+    - 6470e41ba7121e84f8a4d64980dc52eb: 21300000
     - d49831a0df4edcf4387fc280f23735ff: 21300000
     - 906e9d571dc35204ab67f5447094936e: 21300000
+    - 44fcfdf7f2186b24bacd0bc68b547783: 21300000
+    - 0319ef047b886dc459aee0322e5c4b13: 21300000
+    - 3497373029f6d484b8a3a1ae9f5ba9c9: 21300000
+    - 6404f41119228f9408ee4185449d01f3: 21300000
+    - 1c082c11c3c8e3f4491e2b95b2fcf267: 21300000
+    - 3464a29bcd8ffdd47b16c318d31492d6: 21300000
     - c74afd664e4962e42bbd880ede514fbd: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: acc911e483ddb4048b1b1fd0f9caabb3, type: 3}
   - {fileID: 21300000, guid: aee8b50659aaf4d4c9e985be17e0b021, type: 3}
   - {fileID: 21300000, guid: 07e9c2a268e09104599aa6475c8103e5, type: 3}
+  - {fileID: 21300000, guid: e8b82629e1d1e7e419e1ada3bf1be459, type: 3}
   - {fileID: 21300000, guid: c67aa18f0729c814583c3fed3e60f014, type: 3}
   - {fileID: 21300000, guid: 45d29ecf870df4a4bb5a16d64ccee7e2, type: 3}
   - {fileID: 21300000, guid: a6570a39a2856da4ea3b53745d7b8059, type: 3}
   - {fileID: 21300000, guid: 7b631bffee04ec44792ded57a86edf1e, type: 3}
+  - {fileID: 21300000, guid: 65061cd2e9820cb44a49e0c2582c84d8, type: 3}
   - {fileID: 21300000, guid: 4623ca5ac629fde4c8e2257d5bb93333, type: 3}
   - {fileID: 21300000, guid: 600b2f20cd653a244b2f16f01a6ed657, type: 3}
   - {fileID: 21300000, guid: 394b6fd25cc86ef48a44eff4d6408aea, type: 3}
   - {fileID: 21300000, guid: 433e1acd7aac47c4aa1232bd269f874b, type: 3}
+  - {fileID: 21300000, guid: c3836a0289a948844a410633f5225225, type: 3}
+  - {fileID: 21300000, guid: 1eae719192e5bef4db8e190a31cc007f, type: 3}
   - {fileID: 21300000, guid: 1f116def9d1dfb04489986dab8cba06b, type: 3}
   - {fileID: 21300000, guid: aa2bdb2f11596624a8d33b4c075f9fc7, type: 3}
+  - {fileID: 21300000, guid: 6470e41ba7121e84f8a4d64980dc52eb, type: 3}
   - {fileID: 21300000, guid: d49831a0df4edcf4387fc280f23735ff, type: 3}
   - {fileID: 21300000, guid: 906e9d571dc35204ab67f5447094936e, type: 3}
+  - {fileID: 21300000, guid: 44fcfdf7f2186b24bacd0bc68b547783, type: 3}
+  - {fileID: 21300000, guid: 0319ef047b886dc459aee0322e5c4b13, type: 3}
+  - {fileID: 21300000, guid: 3497373029f6d484b8a3a1ae9f5ba9c9, type: 3}
+  - {fileID: 21300000, guid: 6404f41119228f9408ee4185449d01f3, type: 3}
+  - {fileID: 21300000, guid: 1c082c11c3c8e3f4491e2b95b2fcf267, type: 3}
+  - {fileID: 21300000, guid: 3464a29bcd8ffdd47b16c318d31492d6, type: 3}
   - {fileID: 21300000, guid: c74afd664e4962e42bbd880ede514fbd, type: 3}
   m_PackedSpriteNamesToIndex:
   - denglu_1
   - caishen
   - public_scale
+  - menu_shaizi_ 01
   - loading_progressbar_back
   - loading_progressbar
   - tips
   - loading_2
+  - menu_shaizi_ 06
   - denglu_3
   - denglu_2
   - loading_3
   - denglu_4
+  - menu_shaizi_ 04
+  - menu_shaizi_ 03
   - publicBtn6_nor
   - loading_1
+  - menu_shaizi_ 05
   - gold
   - denglu_6
+  - 5
+  - 4
+  - 6
+  - 1
+  - 3
+  - 2
   - denglu_5
   m_Tag: Loading
   m_IsVariant: 0

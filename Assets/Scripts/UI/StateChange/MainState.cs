@@ -12,7 +12,7 @@ public class MainState : UIStateChangeBase
         needShowWindows.Add(UISettings.UIWindowID.UIWheelWindow, wheelWindowState);
         needShowWindows.Add(UISettings.UIWindowID.UISideBarWindow, null);
         needShowWindows.Add(UISettings.UIWindowID.UITopBarWindow, null);
-        if(GameMainManager.instance.model.userData.islandId<9)
+        if(GameMainManager.instance.model.userData.tutorial>=GameSetting.TUTORIAL_MAX && GameMainManager.instance.model.userData.islandId<3)
         {
             needShowWindows.Add(UISettings.UIWindowID.UINewUserGuiderWindow, null);
         }

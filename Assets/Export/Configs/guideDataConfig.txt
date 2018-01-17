@@ -155,18 +155,11 @@
             "delay": 4
         },
         {
-            "interact_id": "PopupMessageWindow_OkBtn",
-            "progress": 12,
-            "type": "click",
-            "content": "",
-            "delay": 0
-        },
-        {
             "interact_id": "WheelWindow_WheelBtn",
             "progress": 12,
             "type": "click",
             "content": "",
-            "delay": 0
+            "delay": 4
         },
         {
             "interact_id": "AttackWindow_ChouRenBtn",
@@ -181,13 +174,6 @@
             "type": "click",
             "content": "",
             "delay": 0
-        },
-        {
-            "interact_id": "AttackWindow_SelectBtn3",
-            "progress": 13,
-            "type": "click",
-            "content": "",
-            "delay": 2.5
         },
         {
             "interact_id": "WheelWindow_WheelBtn",
@@ -209,13 +195,6 @@
             "type": "tips",
             "content": "猜中富豪偷光他所有金币，最有钱的人只能是你！",
             "delay": 10
-        },
-        {
-            "interact_id": "StealWindow_SelectBtn0",
-            "progress": 16,
-            "type": "click",
-            "content": "",
-            "delay": 0
         },
         {
             "interact_id": "GuideRewardWindow_GetRewardBtn",

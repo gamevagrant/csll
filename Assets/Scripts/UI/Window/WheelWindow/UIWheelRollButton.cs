@@ -20,7 +20,7 @@ public class UIWheelRollButton : QY.UI.Button
 
     private void Update()
     {
-        if (downTag > 0 && Time.time - downTag > HOLD_ON_TIME)
+        if (GameMainManager.instance.model.userData.tutorial >= GameSetting.TUTORIAL_MAX && downTag > 0 && Time.time - downTag > HOLD_ON_TIME)
         {
             downTag = 0;
             if (isInteractive)

@@ -20,6 +20,7 @@ public class RedDot : MonoBehaviour {
         Friend,
         LeftDatail,
         InviteAndRecall,
+        Activity,
     }
 
     [SerializeField]
@@ -98,6 +99,9 @@ public class RedDot : MonoBehaviour {
                 break;
             case RedDotType.EveryEnergy:
                 isShow = GameMainManager.instance.model.userData.dailyEnergyTip > 0 ? true : false;
+                break;
+            case RedDotType.Activity:
+                isShow = GameMainManager.instance.model.userData.dailyEnergyTip + GameMainManager.instance.model.userData.dailyRewardTip > 0 ? true : false;
                 break;
         }
         show = isShow;

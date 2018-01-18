@@ -29,9 +29,12 @@ public class BuildAssetBundles {
     [@MenuItem("Build/直接打包所有资源")]
     public static void TestBuildAllAsset()
     {
+        Debug.Log("开始打包");
+        AssetDatabase.SaveAssets();
         AssetBundleBuild[] buildMap = GetBuildFileListNew(buildRootPath);
         FilePathTools.createFolder(exportPath);
         BuildPipeline.BuildAssetBundles(exportPath,buildMap, BuildAssetBundleOptions.DeterministicAssetBundle, buildTarget);
+        Debug.Log("打包完毕");
     }
     
     static AssetBundleBuild[] GetBuildFileListNew(string buildRoot)
@@ -51,7 +54,7 @@ public class BuildAssetBundles {
             buildMap.Add(build);
         }
 
-
+        Debug.Log("获取所有打包资源完毕:"+buildMap.Count);
         return buildMap.ToArray();
     }
 

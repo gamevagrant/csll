@@ -38,6 +38,7 @@ public class UIWheelWindow : UIWindowBase {
                 _windowData.type = UISettings.UIWindowType.Fixed;
                 _windowData.showMode = UISettings.UIWindowShowMode.DoNothing;
                 _windowData.navMode = UISettings.UIWindowNavigationMode.NormalNavigation;
+                _windowData.siblingNum = 0;
             }
            
             return _windowData;

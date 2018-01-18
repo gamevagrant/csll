@@ -314,16 +314,19 @@ public class UIManager : MonoBehaviour,IUIManager  {
 
             if (windowdata.type == UISettings.UIWindowType.Fixed)
             {
-                window.transform.SetSiblingIndex(FixedRoot.childCount);
+                //window.transform.SetSiblingIndex(FixedRoot.childCount);
+                SetSiblingIndex(window,FixedRoot);
             }
             else if (windowdata.type == UISettings.UIWindowType.PopUp)
             {
                 curPopUpWindow = window;
                 popupCollider.SetActive(true);
-                popupCollider.transform.SetSiblingIndex(PopUpRoot.childCount);
-                window.transform.SetSiblingIndex(PopUpRoot.childCount);
+                popupCollider.transform.SetAsLastSibling();
+                SetSiblingIndex(window, PopUpRoot);
+                //popupCollider.transform.SetSiblingIndex(PopUpRoot.childCount);
+                // window.transform.SetSiblingIndex(PopUpRoot.childCount);
 
-                if(window.windowData.colliderType == UISettings.UIWindowColliderType.Transparent)
+                if (window.windowData.colliderType == UISettings.UIWindowColliderType.Transparent)
                 {
                     popupCollider.GetComponent<Image>().color = new Color(0.8f, 0.8f, 0.8f, 0f);
                 }
@@ -337,12 +340,14 @@ public class UIManager : MonoBehaviour,IUIManager  {
             }
             else if (windowdata.type == UISettings.UIWindowType.Normal)
             {
-                window.transform.SetSiblingIndex(NormalRoot.childCount);
+                SetSiblingIndex(window, NormalRoot);
+                //window.transform.SetSiblingIndex(NormalRoot.childCount);
                 showNavigationWindow(window);
 
             }else if(windowdata.type == UISettings.UIWindowType.Cover)
             {
-                window.transform.SetSiblingIndex(coverRoot.childCount);
+                SetSiblingIndex(window, coverRoot);
+                //window.transform.SetSiblingIndex(coverRoot.childCount);
             }
 
 
@@ -472,5 +477,24 @@ public class UIManager : MonoBehaviour,IUIManager  {
         {
             windowsState[id] = state;
         }
+    }
+
+    private void SetSiblingIndex(UIWindowBase window,Transform root)
+    {
+
+        for(int i=0;i<root.childCount;i++)
+        {
+            Transform tf = root.GetChild(i);
+            UIWindowBase tw = tf.GetComponent<UIWindowBase>();
+            if(tw!=null && tw!=window && window.windowData.siblingNum<tw.windowData.siblingNum)
+            {
+                window.transform.SetSiblingIndex(tw.transform.GetSiblingIndex()-1);
+                return;
+            }
+            
+        }
+
+        window.transform.SetAsLastSibling();
+
     }
 }

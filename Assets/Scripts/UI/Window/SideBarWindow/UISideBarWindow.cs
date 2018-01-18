@@ -20,6 +20,7 @@ public class UISideBarWindow :UIWindowBase {
                 _windowData.colliderMode = UISettings.UIWindowColliderMode.Normal;
                 _windowData.showMode = UISettings.UIWindowShowMode.DoNothing;
                 _windowData.navMode = UISettings.UIWindowNavigationMode.IgnoreNavigation;
+                _windowData.siblingNum = 0.1f;
             }
             return _windowData;
         }

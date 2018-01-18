@@ -18,6 +18,7 @@ public class UITopBarWindow : UIWindowBase {
                 _windowData.type = UISettings.UIWindowType.Fixed;
                 _windowData.showMode = UISettings.UIWindowShowMode.DoNothing;
                 _windowData.navMode = UISettings.UIWindowNavigationMode.IgnoreNavigation;
+                _windowData.siblingNum = 0.2f;
             }
             return _windowData;
         }

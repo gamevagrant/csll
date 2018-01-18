@@ -32,7 +32,9 @@ public class LocalDatasManager {
             SaveData("LOGGED_GUEST", value);
         }
     }
-
+    /// <summary>
+    /// 邀请过的好友
+    /// </summary>
     public static Dictionary<string,string> invitedFriends
     {
         get
@@ -44,7 +46,9 @@ public class LocalDatasManager {
             SaveData("INVITED_FRIENDS", value);
         }
     }
-
+    /// <summary>
+    /// 召回过的好友
+    /// </summary>
     public static Dictionary<string,string> callbackedFriends
     {
         get
@@ -56,7 +60,21 @@ public class LocalDatasManager {
             SaveData("CALLBACKED_FRIENDS", value);
         }
     }
-
+    /// <summary>
+    /// 是否展示过隐私提示
+    /// </summary>
+    public static bool isShowPrivacyTips
+    {
+        get
+        {
+            bool b = PlayerPrefs.GetInt("IS_SHOW_PRIVACY_TIPS", 0)==1?true:false;
+            return b;
+        }
+        set
+        {
+            PlayerPrefs.SetInt("IS_SHOW_PRIVACY_TIPS", value ?1:0);
+        }
+    }
 
 
     private static T GetData<T>(string name)

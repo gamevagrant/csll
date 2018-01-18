@@ -16,25 +16,20 @@ namespace QY.UI
 
         void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
         {
-            
-        }
-
-        public override void OnPointerDown(PointerEventData eventData)
-        {
-            if(!IsInteractable())
+            if (!IsInteractable())
             {
                 return;
             }
-            
-            base.OnPointerDown(eventData);
+
             GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.button_click);
             if (isInteractive)
             {
                 Interacted();
                 onClick.Invoke();
-                
+
             }
         }
+
     }
 
 

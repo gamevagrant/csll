@@ -70,7 +70,6 @@ public class IslandFactory : MonoBehaviour {
         else
         {
             string path = FilePathTools.getSpriteAtlasPath("City_" + islandID.ToString());
-            Debug.Log(path);
             AssetBundleLoadManager.Instance.LoadAsset<SpriteAtlas>(path, (sa) => {
 
                 this.islandID = islandID;

@@ -17,8 +17,6 @@ public class AccountManager {
         }
     }
 
-    public event System.Action onComplate;
-
     private IOpenPlatform open;
 
     public AccountManager()
@@ -145,6 +143,7 @@ public class AccountManager {
     private void LoginGameServer(string accessToken)
     {
         Debug.Log("登录游戏服务器");
+        EventDispatcher.instance.DispatchEvent(new LoadingEvent("Login", 0.3f));
         GameMainManager.instance.netManager.LoginFB(accessToken, (ret, res) =>
         {
             if (res.isOK)
@@ -167,10 +166,11 @@ public class AccountManager {
     /// <param name="name"></param>
     private void LoginGameServer(string uuid,string name)
     {
+        EventDispatcher.instance.DispatchEvent(new LoadingEvent("Login", 0.3f));
         GameMainManager.instance.netManager.LoginGuest(uuid, name, (ret, res) =>
         {
             OnLoginComplateHandle(res);
-
+           
         });
     }
 
@@ -191,6 +191,7 @@ public class AccountManager {
                 EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.LOGIN_COMPLATE));
             }
             */
+            EventDispatcher.instance.DispatchEvent(new LoadingEvent("Login", 1));
             EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.LOGIN_COMPLATE));
         }
         else

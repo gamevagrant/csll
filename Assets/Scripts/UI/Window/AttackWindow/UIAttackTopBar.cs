@@ -10,7 +10,7 @@ public class UIAttackTopBar : MonoBehaviour {
 
     public RectTransform topBar;
     public RectTransform panel;
-    public DynamicScrollView scrollView;
+    public BaseScrollView scrollView;
     public Toggle enemyToggle;
     public Toggle friendToggle;
 
@@ -228,10 +228,10 @@ public class UIAttackTopBar : MonoBehaviour {
                 data.isRandomUser = data.uid == randomTarget.uid ? true : false;
                 data.isSelected = data.uid == selectedTarget.uid ? true : false;
             }
-            scrollView.setDatas(list);
+            scrollView.SetData (list);
         }else
         {
-            scrollView.setDatas(new List<SelectPlayerData>());
+            scrollView.SetData (new List<SelectPlayerData>());
         }
        
     }

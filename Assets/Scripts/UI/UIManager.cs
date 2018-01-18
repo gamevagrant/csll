@@ -196,8 +196,9 @@ public class UIManager : MonoBehaviour,IUIManager  {
 
     private void OnLoadAtlas(string tag,Action<SpriteAtlas> act)
     {
-        Debug.Log("开始加载[" + tag + "]图集");
         string path = FilePathTools.getSpriteAtlasPath(tag);
+        Debug.Log("开始加载[" + tag + "]图集");
+        
         AssetBundleLoadManager.Instance.LoadAsset<SpriteAtlas>(path, (sa) => {
             act(sa);
 

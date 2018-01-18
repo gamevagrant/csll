@@ -53,33 +53,40 @@ public class AssetLoadManager:MonoBehaviour
 		string path = url;
 
 		path = FilePathTools.normalizePath(path);
-		object res;
-		if (callback != null && cache.TryGetValue(path, out res) && res != null)
-		{
-			callback((T)res);
-		}
-		else
-		{
-			queue.Enqueue(() =>
-			{
-				StartCoroutine(loadAsync<T>(path, callback,isCache));
-			});
-		}
-	
-	}
-
-	private IEnumerator loadAsync<T>(string url,Action<T> callback ,bool iscache)
-	{
-        object obj;
-        if (callback != null && cache.TryGetValue(url, out obj) && obj != null)
+        queue.Enqueue(() =>
         {
-            callback((T)obj);
-            yield break;
+            StartCoroutine(loadAsync<T>(path, callback, isCache));
+        });
+
+    }
+
+
+
+	private IEnumerator loadAsync<T>(string url,Action<T> callback,bool isCache)
+	{
+        string path = url;
+
+        if (isCache)
+        {
+            object obj;
+            if (callback != null && cache.TryGetValue(url, out obj) && obj != null)
+            {
+                callback((T)obj);
+                yield break;
+            }
+
+            string localPath = CacheManager.instance.GetLocalPath(url);
+            if (!string.IsNullOrEmpty(localPath))
+            {
+                path = localPath;
+            }
+
         }
+
         isLoading = true;
-		//string path = CacheManager.instance.getLocalPath(url);
-        string path= url;
-		Debug.Log("==开始使用WWW下载==:" + path);
+
+        
+		//Debug.Log("==开始使用WWW下载==:" + path);
 
 		path = FilePathTools.normalizePath(path);
 		WWW www = new WWW(path);
@@ -106,21 +113,28 @@ public class AssetLoadManager:MonoBehaviour
                 res = www.bytes;
             }
 
-            if (iscache && !cache.ContainsKey(url))
-			{
-				cache.Add(url, res);
-			}
-				
-			callback((T)res);
+            if (isCache)
+            {
+                if (!cache.ContainsKey(url))
+                {
+                    cache.Add(url, res);
+                }
+                CacheManager.instance.AddCache(url, www.bytes);
+            }
+
+            www.Dispose();
+            isLoading = false;
+            callback((T)res);
 			
 		}
 		else
 		{
             Debug.Log(url);
 			Debug.Log(www.error);
-		}
-		www.Dispose();
-		isLoading = false;
+            www.Dispose();
+            isLoading = false;
+        }
+		
 	}
 
 

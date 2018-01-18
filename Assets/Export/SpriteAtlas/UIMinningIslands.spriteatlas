@@ -1,0 +1,137 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: UIMinningIslands
+  m_EditorData:
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 0
+    platformSettings: []
+    packingParameters:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    packedHash:
+      serializedVersion: 2
+      Hash: 4d1ed12b1c19018335e302b702ddacc2
+    variantMultiplier: 1
+    bindAsDefault: 0
+    finalFormat: 4
+    hashString: 4d1ed12b1c19018335e302b702ddacc2
+    totalSpriteSurfaceArea: 4960000
+    packables:
+    - {fileID: 102900000, guid: 3967ff779be5dc641ac752ca3e99e7c6, type: 3}
+    packedSpriteRenderDataKeys:
+    - 7b45ea26e6c31b046bc8e0a5162475b6: 21300000
+    - b305a25610f223b458ad4ef1fdb3f609: 21300000
+    - cd78bb22a97e51642af125e3df070f12: 21300000
+    - 886a731d5006ecf4d85e1c067ae70fae: 21300000
+    - 56f47abad5f76ef4791eb1be8f2a91f7: 21300000
+    - e8d020ccdb1cebf48bf180173a7f1e5b: 21300000
+    - 614ccea3cef1887458eab7a7feb7bc13: 21300000
+    - 86d48aa103648034c97c61be4a75d83f: 21300000
+    - 12f7741dd0ac48b40b36e5218d6df31c: 21300000
+    - 1fdd15faf53a1f44d992d852aff4102c: 21300000
+    - 7b6ed88130b1f634c84c1dc99c5eac3a: 21300000
+    - 4e0430708f6d8f84db0aec8f52573ef7: 21300000
+    - e76dc578b8828b44087a1ae926ad6026: 21300000
+    - bc318746be00fec4db08ff99be5bfd40: 21300000
+    - 0f967c5364f7b654db620a39350a3dcc: 21300000
+    - 1db672b0c707ece4f99f96fe6b2a9de3: 21300000
+    - b00a3b304103bb743a59010fe57a2a18: 21300000
+    - c643b2116e0270349b7f3b24a99e504b: 21300000
+    - 05e95a986cc36514e9ce4b136306782a: 21300000
+    - 23e602bbf4fd8994c880e1d8abc22582: 21300000
+    - db5340f4909c889439ce2456c773da50: 21300000
+    - 3d86e9ee5eb21e342b4f7e2ab7eb78d6: 21300000
+    - f1915acdec907e74eaf5fce19734a27f: 21300000
+    - 4da77df675ec75644af35cd7747bb10e: 21300000
+    - 6eb38c0504971144ba3ce95ce54f916d: 21300000
+    - 038b635707482e54484180cfe88f5164: 21300000
+    - 0af2fa4fd49fc194fbb86dd0b95188bb: 21300000
+    - e2067aef19b885b4791b8197f90733b1: 21300000
+    - 7d0a56e87f6231a478667779e5216dcb: 21300000
+    - 4ad3fe06b5c71f14d9727ede168ad4d8: 21300000
+    - 30cd9c6ec900d934583495bd00cb4ab1: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 7b45ea26e6c31b046bc8e0a5162475b6, type: 3}
+  - {fileID: 21300000, guid: b305a25610f223b458ad4ef1fdb3f609, type: 3}
+  - {fileID: 21300000, guid: cd78bb22a97e51642af125e3df070f12, type: 3}
+  - {fileID: 21300000, guid: 886a731d5006ecf4d85e1c067ae70fae, type: 3}
+  - {fileID: 21300000, guid: 56f47abad5f76ef4791eb1be8f2a91f7, type: 3}
+  - {fileID: 21300000, guid: e8d020ccdb1cebf48bf180173a7f1e5b, type: 3}
+  - {fileID: 21300000, guid: 614ccea3cef1887458eab7a7feb7bc13, type: 3}
+  - {fileID: 21300000, guid: 86d48aa103648034c97c61be4a75d83f, type: 3}
+  - {fileID: 21300000, guid: 12f7741dd0ac48b40b36e5218d6df31c, type: 3}
+  - {fileID: 21300000, guid: 1fdd15faf53a1f44d992d852aff4102c, type: 3}
+  - {fileID: 21300000, guid: 7b6ed88130b1f634c84c1dc99c5eac3a, type: 3}
+  - {fileID: 21300000, guid: 4e0430708f6d8f84db0aec8f52573ef7, type: 3}
+  - {fileID: 21300000, guid: e76dc578b8828b44087a1ae926ad6026, type: 3}
+  - {fileID: 21300000, guid: bc318746be00fec4db08ff99be5bfd40, type: 3}
+  - {fileID: 21300000, guid: 0f967c5364f7b654db620a39350a3dcc, type: 3}
+  - {fileID: 21300000, guid: 1db672b0c707ece4f99f96fe6b2a9de3, type: 3}
+  - {fileID: 21300000, guid: b00a3b304103bb743a59010fe57a2a18, type: 3}
+  - {fileID: 21300000, guid: c643b2116e0270349b7f3b24a99e504b, type: 3}
+  - {fileID: 21300000, guid: 05e95a986cc36514e9ce4b136306782a, type: 3}
+  - {fileID: 21300000, guid: 23e602bbf4fd8994c880e1d8abc22582, type: 3}
+  - {fileID: 21300000, guid: db5340f4909c889439ce2456c773da50, type: 3}
+  - {fileID: 21300000, guid: 3d86e9ee5eb21e342b4f7e2ab7eb78d6, type: 3}
+  - {fileID: 21300000, guid: f1915acdec907e74eaf5fce19734a27f, type: 3}
+  - {fileID: 21300000, guid: 4da77df675ec75644af35cd7747bb10e, type: 3}
+  - {fileID: 21300000, guid: 6eb38c0504971144ba3ce95ce54f916d, type: 3}
+  - {fileID: 21300000, guid: 038b635707482e54484180cfe88f5164, type: 3}
+  - {fileID: 21300000, guid: 0af2fa4fd49fc194fbb86dd0b95188bb, type: 3}
+  - {fileID: 21300000, guid: e2067aef19b885b4791b8197f90733b1, type: 3}
+  - {fileID: 21300000, guid: 7d0a56e87f6231a478667779e5216dcb, type: 3}
+  - {fileID: 21300000, guid: 4ad3fe06b5c71f14d9727ede168ad4d8, type: 3}
+  - {fileID: 21300000, guid: 30cd9c6ec900d934583495bd00cb4ab1, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - island_15_0
+  - island_15_1
+  - island_14_1
+  - island_14_0
+  - island_0_0
+  - island_13_0
+  - island_13_1
+  - island_8_0
+  - island_8_1
+  - island_12_1
+  - island_12_0
+  - island_4_0
+  - island_4_1
+  - island_9_1
+  - island_9_0
+  - island_11_0
+  - island_11_1
+  - island_10_1
+  - island_10_0
+  - island_2_0
+  - island_2_1
+  - island_3_1
+  - island_3_0
+  - island_6_0
+  - island_6_1
+  - island_1_1
+  - island_1_0
+  - island_7_1
+  - island_7_0
+  - island_5_1
+  - island_5_0
+  m_Tag: UIMinningIslands
+  m_IsVariant: 0

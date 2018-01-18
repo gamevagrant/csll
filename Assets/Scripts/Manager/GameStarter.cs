@@ -21,7 +21,7 @@ public class GameStarter : MonoBehaviour
 
     private void Start()
     {
-
+       
     }
 
     private void OnDestroy()
@@ -48,21 +48,32 @@ public class GameStarter : MonoBehaviour
 
         GameMainManager.instance.mono = this;
 
-        UpdateVersion updateVersion = new UpdateVersion(()=> {
+        UpdateVersion updateVersion = new UpdateVersion();
+        updateVersion.StartUpdate(() => {
             UpdateAssetsComplate();
 
-        },(url)=> {
+        }, (url) => {
 
             EventDispatcher.instance.DispatchEvent(new UpdateAppEvent(url));
         });
-        updateVersion.StartUpdate();
 
     }
 
     private void UpdateAssetsComplate()
     {
-
-        LoadConfig();
+        if(GameSetting.isUseAssetBundle)
+        {
+            GameMainManager.instance.preloader.StartPreloader(this, () =>
+            {
+                Debug.Log("预加载完成");
+                LoadConfig();
+            });
+        }else
+        {
+            LoadConfig();
+        }
+        
+        
 
     }
 
@@ -70,6 +81,7 @@ public class GameStarter : MonoBehaviour
     {
         GameMainManager.instance.configManager.LoadConfig(() =>
         {
+            Debug.Log("配置文件加载完成");
             EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_ASSETS_COMPLATE));
         });
 

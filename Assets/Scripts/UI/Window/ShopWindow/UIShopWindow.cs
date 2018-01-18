@@ -34,8 +34,8 @@ public class UIShopWindow : UIWindowBase {
     public RectTransform goldPanel;
     public RectTransform propsPanel;
 
-    public DynamicScrollView energyScrollView;
-    public DynamicScrollView goldScrollView;
+    public GridBaseScrollView energyScrollView;
+    public GridBaseScrollView goldScrollView;
     public UIShopPropsPanel propsShopPanel;
 
 
@@ -66,8 +66,8 @@ public class UIShopWindow : UIWindowBase {
         GameMainManager.instance.netManager.ShopList((ret, res) =>
         {
             goodsList = res.goods;
-            energyScrollView.setDatas(goodsList.energy);
-            goldScrollView.setDatas(goodsList.money);
+            energyScrollView.SetData (goodsList.energy);
+            goldScrollView.SetData (goodsList.money);
             propsShopPanel.SetData(goodsList.prop);
         });
 

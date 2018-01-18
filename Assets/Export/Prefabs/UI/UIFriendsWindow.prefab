@@ -463,7 +463,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224347010112280170}
   - component: {fileID: 114302386302237648}
-  - component: {fileID: 114688010454164738}
+  - component: {fileID: 114984964501645404}
   m_Layer: 5
   m_Name: Scroll View
   m_TagString: Untagged
@@ -722,7 +722,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224566323477542112}
   - component: {fileID: 114420482670244684}
-  - component: {fileID: 114972666209341928}
+  - component: {fileID: 114664744082928186}
   m_Layer: 5
   m_Name: Scroll View
   m_TagString: Untagged
@@ -2247,7 +2247,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3112,7 +3112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3586,7 +3586,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -4130,7 +4130,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -4412,7 +4412,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -4597,6 +4597,20 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: QY.UI.Button+ButtonClickEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+--- !u!114 &114664744082928186
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1383679992459734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5be942387065e7b4bb6d02992fff2b14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemTemplate: {fileID: 224206575651000364}
+  direction: 1
+  spacing: 10
 --- !u!114 &114665483089271260
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4651,26 +4665,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114688010454164738
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1239405095875652}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6fd544f7851c0d46986dcbcf1839827, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scrollRect: {fileID: 114302386302237648}
-  itemTemplate: {fileID: 224554056492956792}
-  content: {fileID: 224876887528028534}
-  buffer: 1
-  direction: 1
-  spacing: 8
-  row: 5
-  col: 1
-  itemSize: {x: 535, y: 117}
 --- !u!114 &114688770467788300
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5387,7 +5381,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -5877,8 +5871,8 @@ MonoBehaviour:
   myFriendsPanel: {fileID: 1109891163531268}
   addFriendPanel: {fileID: 1604536511837512}
   applyFriendsPanel: {fileID: 1402907379103940}
-  myFriendsScrollView: {fileID: 114688010454164738}
-  notAgreeScrollView: {fileID: 114972666209341928}
+  myFriendsScrollView: {fileID: 114984964501645404}
+  notAgreeScrollView: {fileID: 114664744082928186}
   receiveCountText: {fileID: 114149299467771116}
   receiveBtn: {fileID: 114441021316049666}
   friendCodeText: {fileID: 114071333430091870}
@@ -5911,26 +5905,20 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114972666209341928
+--- !u!114 &114984964501645404
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1383679992459734}
+  m_GameObject: {fileID: 1239405095875652}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6fd544f7851c0d46986dcbcf1839827, type: 3}
+  m_Script: {fileID: 11500000, guid: 5be942387065e7b4bb6d02992fff2b14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scrollRect: {fileID: 114420482670244684}
-  itemTemplate: {fileID: 224206575651000364}
-  content: {fileID: 224399849360028168}
-  buffer: 1
+  itemTemplate: {fileID: 224554056492956792}
   direction: 1
-  spacing: 8
-  row: 5
-  col: 1
-  itemSize: {x: 535, y: 117}
+  spacing: 10
 --- !u!114 &114994254539718944
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5971,7 +5959,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []

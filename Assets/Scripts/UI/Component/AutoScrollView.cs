@@ -5,6 +5,9 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using DG.Tweening;
 
+/// <summary>
+/// 可以始终让item对准center所指的位置
+/// </summary>
 [RequireComponent(typeof(ScrollRect))]
 public class AutoScrollView : MonoBehaviour {
 

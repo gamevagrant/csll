@@ -83,13 +83,17 @@ namespace QY.UI
 
         protected override void OnEnable()
         {
-            GuideManager.instance.TryProcess();
+            if(Application.isPlaying)
+            {
+                GuideManager.instance.TryProcess();
+            }
+           
         }
 
         protected override void Start()
         {
             base.Start();
-            if(enableController && GuideManager.instance.enable)
+            if(Application.isPlaying && enableController && GuideManager.instance.enable)
             {
                 GuideManager.instance.RegisterInteractable(id,this);
             }

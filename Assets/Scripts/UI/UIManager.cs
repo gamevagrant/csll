@@ -178,7 +178,7 @@ public class UIManager : MonoBehaviour,IUIManager  {
             SpriteAtlas sa = ab.LoadAsset<SpriteAtlas>(System.IO.Path.GetFileNameWithoutExtension(path));
             act(sa);
             //同一图集只会请求一次，所以用完就卸载掉
-            GameMainManager.instance.preloader.RemovePreloaderAssetBundle(path);
+            GameMainManager.instance.preloader.RemovePreloaderAssetBundle(this,path);
         }
         else
         {

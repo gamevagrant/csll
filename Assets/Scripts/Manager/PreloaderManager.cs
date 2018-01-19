@@ -34,6 +34,7 @@ public class PreloaderManager {
     public void StartPreloader(MonoBehaviour mono, System.Action onComplate)
     {
         mono.StartCoroutine(Preloader(onComplate));
+
     }
 
     public bool Contains(string path)
@@ -50,8 +51,14 @@ public class PreloaderManager {
         return null;
     }
 
-    public void RemovePreloaderAssetBundle(string path)
+    public void RemovePreloaderAssetBundle(MonoBehaviour mono,string path)
     {
+        mono.StartCoroutine(RemoveAssetBundle(path));
+    }
+
+    private IEnumerator RemoveAssetBundle(string path)
+    {
+        yield return null;
         if (preloadAssetBundles.ContainsKey(path))
         {
             preloadAssetBundles[path].Unload(false);

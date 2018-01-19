@@ -298,7 +298,7 @@ public class AssetBundleLoadManager : MonoBehaviour {
 
             return (T)obj;
         }
-
+        return null;
     }
 
     private IEnumerator UnloadAssetbundle(List<AssetBundle> list)

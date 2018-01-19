@@ -86,7 +86,7 @@ public class UISideBarWindow :UIWindowBase {
 
     public void OnClickDailyTaskBtn()
     {
-        if(GameMainManager.instance.model.userData.tutorial<GameSetting.TUTORIAL_MAX)
+        if(GameMainManager.instance.model.userData.islandId <2)
         {
             Alert.Show(string.Format("2号岛屿（{0}）解锁该功能，快去升级岛屿吧！",GameMainManager.instance.configManager.islandConfig.GetIslandName(2)));
         }else
@@ -108,7 +108,15 @@ public class UISideBarWindow :UIWindowBase {
 
     public void OnClickFreeRewardBtn()
     {
-        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIFreeRewardWindow);
+       
+        if (AccountManager.instance.isLoginAccount)
+        {
+            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIFreeRewardWindow);
+        }
+        else
+        {
+            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIFacebookTipsWindow);
+        }
     }
 
 

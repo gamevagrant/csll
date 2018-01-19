@@ -197,11 +197,11 @@
             "delay": 10
         },
         {
-            "interact_id": "GuideRewardWindow_GetRewardBtn",
+            "interact_id": "EmptyEnergyGuideWindow_GetRewardBtn",
             "progress": 17,
             "type": "open",
 			"state": "wheel",
-            "content": "UIGuideRewardWindow",
+            "content": "UIEmptyEnergyGuideWindow",
             "delay": 1
         }
     ]

@@ -63,12 +63,16 @@ public class UIWheelPanel : MonoBehaviour {
         }
         set
         {
+            if(_energyValue!=value)
+            {
+                energyWaveAnimation.Play();
+            }
             _energyValue = value;
             energyLabel.text = string.Format("{0}/{1}",Mathf.Min(value,user.maxEnergy), user.maxEnergy);
             surplusEnergyLabel.text = value>user.maxEnergy?(value - user.maxEnergy).ToString():"";
             energyProgressSlider.value = value / (float)user.maxEnergy;
             addEnergyCountLabel.text = value < user.maxEnergy ? "+ " + user.recoverEnergy.ToString() : "";
-
+            
         }
     }
     // Use this for initialization
@@ -331,7 +335,7 @@ public class UIWheelPanel : MonoBehaviour {
         else
         {
 
-            Alert.Show("能量不足!");
+            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIEmptyEnergyGuideWindow, new ShowEmptyGuideWindowData(ShowEmptyGuideWindowData.PanelType.EmptyEnergy));
         }
     }
 
@@ -353,8 +357,6 @@ public class UIWheelPanel : MonoBehaviour {
                 rollItem = data.data.rollerItem;
 
                 energyValue = user.energy - 1;
-                energyWaveAnimation.Play();
-
 
             }
             else

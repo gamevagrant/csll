@@ -194,7 +194,7 @@ public class NetManager:INetManager
                     msg.headImg = user.newbie_attack_target.headImg;
                     GameMainManager.instance.websocketMsgManager.SendMsg(msg);
                 }
-
+                EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_REDDOT));
             }
             else
             {
@@ -249,7 +249,7 @@ public class NetManager:INetManager
                     user.energy = res.data.upgradeEnergyAfterReward;
                     EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.island,0));
                 }
-
+                EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_REDDOT));
             }
             else
             {
@@ -443,6 +443,7 @@ public class NetManager:INetManager
                 GameMainManager.instance.model.userData.friendNotAgreeInfo = agreeAddFriendData.friendsNotAgree;
 
                 EventDispatcher.instance.DispatchEvent(new UpdateFriendsEvent(UpdateFriendsEvent.UpdateType.AgreeFriend));
+                EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_REDDOT));
             }
             else
             {
@@ -470,6 +471,7 @@ public class NetManager:INetManager
                 GameMainManager.instance.model.userData.friendInfo = friendData.friends;
                 GameMainManager.instance.model.userData.friendNotAgreeInfo = friendData.friendsNotAgree;
                 EventDispatcher.instance.DispatchEvent(new UpdateFriendsEvent(UpdateFriendsEvent.UpdateType.AgreeFriend));
+                EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_REDDOT));
             }
             else
             {
@@ -497,6 +499,7 @@ public class NetManager:INetManager
                 FriendsData friendData = res.data;
                 GameMainManager.instance.model.userData.friendInfo = friendData.friends;
                 GameMainManager.instance.model.userData.friendNotAgreeInfo = friendData.friendsNotAgree;
+                EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_REDDOT));
             }
             else
             {
@@ -528,6 +531,7 @@ public class NetManager:INetManager
                 GameMainManager.instance.model.userData.friendNotAgreeInfo = friendData.friendsNotAgree;
                 EventDispatcher.instance.DispatchEvent(new UpdateFriendsEvent(UpdateFriendsEvent.UpdateType.IgnoreFriend ));
                 EventDispatcher.instance.DispatchEvent(new UpdateFriendsEvent(UpdateFriendsEvent.UpdateType.RemoveFriend));
+                EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_REDDOT));
             }
             else
             {
@@ -555,6 +559,7 @@ public class NetManager:INetManager
                 GameMainManager.instance.model.userData.friendInfo = friendData.friends;
                 GameMainManager.instance.model.userData.friendNotAgreeInfo = friendData.friendsNotAgree;
                 EventDispatcher.instance.DispatchEvent(new UpdateFriendsEvent(UpdateFriendsEvent.UpdateType.IgnoreFriend));
+                EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_REDDOT));
             }
             else
             {
@@ -590,6 +595,7 @@ public class NetManager:INetManager
                     }
                 }
                 EventDispatcher.instance.DispatchEvent(new UpdateFriendsEvent(UpdateFriendsEvent.UpdateType.SendEnergy));
+                EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_REDDOT));
             }
             else
             {
@@ -636,6 +642,7 @@ public class NetManager:INetManager
                 }
 
                 EventDispatcher.instance.DispatchEvent(new UpdateFriendsEvent(UpdateFriendsEvent.UpdateType.ReceiveEnergy));
+                EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_REDDOT));
             }
             else
             {
@@ -759,6 +766,7 @@ public class NetManager:INetManager
 
                 EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_MAPINFO));
                 EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Money,0));
+                EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_REDDOT));
             }
             else
             {
@@ -788,6 +796,7 @@ public class NetManager:INetManager
                 user.money = buyMinerData.money;
                 user.mapInfo = buyMinerData.mapInfo;
                 EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Money,0));
+                EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_REDDOT));
             }
             else
             {
@@ -866,6 +875,7 @@ public class NetManager:INetManager
             if (res.isOK)
             {
                 GameMainManager.instance.model.userData.user_mail = res.data.user_mail;
+                EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_REDDOT));
             }
             else
             {
@@ -1254,6 +1264,7 @@ public class NetManager:INetManager
                 ud.money = res.data.money;
                 EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Money, 0));
                 EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Energy, 0));
+                EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_REDDOT));
             }
             else
             {
@@ -1299,6 +1310,7 @@ public class NetManager:INetManager
 
                 EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Money,0));
                 EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Energy, 0));
+                EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_REDDOT));
             }
             else
             {

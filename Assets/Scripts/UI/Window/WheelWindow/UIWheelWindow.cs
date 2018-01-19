@@ -149,6 +149,7 @@ public class UIWheelWindow : UIWindowBase {
             buildPanel.ShowWheelState();
             currState = OpenState.Wheel;
             QY.Guide.GuideManager.instance.state = "wheel";
+            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UISideBarWindow, false);
         }
     }
     private void ShowBuildState()
@@ -159,6 +160,7 @@ public class UIWheelWindow : UIWindowBase {
             buildPanel.ShowBuildState();
             currState = OpenState.Building;
             QY.Guide.GuideManager.instance.state = "building";
+            GameMainManager.instance.uiManager.CloseWindow(UISettings.UIWindowID.UISideBarWindow, false);
         }
     }
     private void ShowWheelStateAnimation()
@@ -169,6 +171,7 @@ public class UIWheelWindow : UIWindowBase {
             buildPanel.EnterToWheelPanelState();
             currState = OpenState.Wheel;
             QY.Guide.GuideManager.instance.state = "wheel";
+            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UISideBarWindow, true);
         }
     }
 
@@ -180,6 +183,7 @@ public class UIWheelWindow : UIWindowBase {
             buildPanel.EnterToBuildPanelState();
             currState = OpenState.Building;
             QY.Guide.GuideManager.instance.state = "building";
+            GameMainManager.instance.uiManager.CloseWindow(UISettings.UIWindowID.UISideBarWindow, true);
         }
     }
 

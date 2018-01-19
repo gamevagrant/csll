@@ -5,11 +5,67 @@ using UnityEditor;
 using UnityEngine.UI;
 using System.IO;
 using LitJson;
+using System;
+using System.Text.RegularExpressions;
+
 
 public class EditorTools  {
 
+    [MenuItem("Tools/通过json数据裁切图集")]
+    static void SetTextureMultipleSpriteEditor()
+    {
+        if (Selection.activeObject && Selection.activeObject is Texture)
+        {
+            string path = AssetDatabase.GetAssetPath(Selection.activeObject);
+            int height = (Selection.activeObject as Texture).height;
 
-    [MenuItem("Tools/设置面板raycastTarget = false")]
+            string jsonPath = path.Replace(Path.GetExtension(path), ".json");
+            object jsonObj = AssetDatabase.LoadMainAssetAtPath(jsonPath);
+            if (jsonObj != null)
+            {
+                string json = jsonObj.ToString();
+                JsonData jsonData = JsonMapper.ToObject(json);
+                List<SpriteMetaData> list = new List<SpriteMetaData>();
+                foreach (string key in jsonData["res"].Keys)
+                {
+                    JsonData jd = jsonData["res"][key];
+                    int x = int.Parse(jd["x"].ToString());
+                    int y = int.Parse(jd["y"].ToString());
+                    int w = int.Parse(jd["w"].ToString());
+                    int h = int.Parse(jd["h"].ToString());
+                    SpriteMetaData md = new SpriteMetaData()
+                    {
+                        name = key + "Q",
+                        rect = new Rect(x, height - y - h, w, h),
+                    };
+
+                    list.Add(md);
+                }
+
+                TextureImporter importer = AssetImporter.GetAtPath(path) as TextureImporter;
+                importer.spritesheet = list.ToArray();
+                importer.mipmapEnabled = !importer.mipmapEnabled;
+                importer.SaveAndReimport();
+                importer.mipmapEnabled = !importer.mipmapEnabled;
+                importer.SaveAndReimport();
+
+
+            }
+            else
+            {
+                Debug.LogAssertion("没有找到与图片命名一致的json数据" + jsonPath);
+            }
+
+        }
+        else
+        {
+            Debug.LogAssertion("只能对图片进行操作");
+        }
+    }
+
+
+
+   // [MenuItem("Tools/设置面板raycastTarget = false")]
     public static void SetRayTask()
     {
         Graphic[] graphics = Selection.activeTransform.GetComponentsInChildren<Graphic>();
@@ -70,54 +126,57 @@ public class EditorTools  {
             }
         }
     }
-    [MenuItem("Tools/通过json数据裁切图集")]
-    static void SetTextureMultipleSpriteEditor()
+
+    // [MenuItem("Tools/转换csv")]
+    static void ChangeCSV()
     {
-        if (Selection.activeObject && Selection.activeObject is Texture)
+        string path = "Assets/Export/Configs/GuestNames.csv";
+        string str = AssetDatabase.LoadMainAssetAtPath(path).ToString();
+
+        Dictionary<string, List<string>> data = new Dictionary<string, List<string>>();
+        string[] lineArray = Regex.Split(str, @"\r\n", RegexOptions.IgnoreCase);
+        string[] keys = lineArray[0].Split(',');
+        foreach (string key in keys)
         {
-            string path = AssetDatabase.GetAssetPath(Selection.activeObject);
-            int height = (Selection.activeObject as Texture).height;
-
-            string jsonPath = path.Replace(Path.GetExtension(path), ".json");
-            object jsonObj = AssetDatabase.LoadMainAssetAtPath(jsonPath);
-            if(jsonObj!=null)
+            data[key] = new List<string>();
+        }
+        for (int i = 1; i < lineArray.Length; i++)
+        {
+            if (lineArray[i] != "")
             {
-                string json = jsonObj.ToString();
-                JsonData jsonData = JsonMapper.ToObject(json);
-                List<SpriteMetaData> list = new List<SpriteMetaData>();
-                foreach (string key in jsonData["res"].Keys)
+                string[] strs = lineArray[i].Split(',');
+                for (int j = 0; j < strs.Length; j++)
                 {
-                    JsonData jd = jsonData["res"][key];
-                    int x = int.Parse(jd["x"].ToString());
-                    int y = int.Parse(jd["y"].ToString());
-                    int w = int.Parse(jd["w"].ToString());
-                    int h = int.Parse(jd["h"].ToString());
-                    SpriteMetaData md = new SpriteMetaData()
-                    {
-                        name = key + "Q",
-                        rect = new Rect(x, height - y - h, w, h),
-                    };
-
-                    list.Add(md);
+                    data[keys[j]].Add(strs[j]);
                 }
 
-                TextureImporter importer = AssetImporter.GetAtPath(path) as TextureImporter;
-                importer.spritesheet = list.ToArray();
-                importer.mipmapEnabled = !importer.mipmapEnabled;
-                importer.SaveAndReimport();
-                importer.mipmapEnabled = !importer.mipmapEnabled;
-                importer.SaveAndReimport();
-
-
-            }else
-            {
-                Debug.LogAssertion("没有找到与图片命名一致的json数据"+ jsonPath);
             }
+        }
 
-        }
-        else
+        string json = JsonMapper.ToJson(data);
+        Regex reg = new Regex(@"(?i)\\[uU]([0-9a-f]{4})");
+        var ss = reg.Replace(json, delegate (Match m) { return ((char)Convert.ToInt32(m.Groups[1].Value, 16)).ToString(); });
+
+        writeFile(path.Replace("csv", "txt"), ss);
+    }
+
+    static void writeFile(string path, string str)
+    {
+        FileInfo fi = new FileInfo(path);
+        DirectoryInfo dir = fi.Directory;
+        if (!dir.Exists)
         {
-            Debug.LogAssertion("只能对图片进行操作");
+            dir.Create();
         }
+
+        FileStream fs = new FileStream(path, FileMode.Create);//文本加入不覆盖
+        StreamWriter sw = new StreamWriter(fs, System.Text.Encoding.UTF8);//转码
+
+        sw.WriteLine(str);
+        //清空缓冲区
+        sw.Flush();
+        //关闭流
+        sw.Close();
+        fs.Close();
     }
 }

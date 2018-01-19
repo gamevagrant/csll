@@ -10,6 +10,11 @@ public class InputNamePanel : MonoBehaviour {
     public event System.Action<string> onConfirmName;
     public event System.Action onCancle;
 
+    private void Start()
+    {
+        inputField.text = GameMainManager.instance.configManager.randomNamesConfig.GetRandomName();
+    }
+
     public void OnClickRandomName()
     {
         StartCoroutine(StartRandomName());
@@ -20,7 +25,7 @@ public class InputNamePanel : MonoBehaviour {
         spriteAnimation.Play();
         yield return new WaitForSeconds(1);
         spriteAnimation.Pause();
-        inputField.text = "游客"+ Random.Range(1,10000).ToString();
+        inputField.text = GameMainManager.instance.configManager.randomNamesConfig.GetRandomName();
     }
 
     public void OnClickConfirm()

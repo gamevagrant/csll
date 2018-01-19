@@ -203,7 +203,7 @@ public class GameMainManager {
                 break;
             case GuideData.ActionType.open:
                 UISettings.UIWindowID id = (UISettings.UIWindowID)System.Enum.Parse(typeof(UISettings.UIWindowID), guideData.content);
-                uiManager.OpenWindow(id, guideData.content);
+                uiManager.OpenWindow(id);
                 break;
         }
     }

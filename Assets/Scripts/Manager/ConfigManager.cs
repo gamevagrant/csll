@@ -14,12 +14,13 @@ public class ConfigManager {
     public IslandConfig islandConfig;
     public GuideDataConfig guideDataConfig;
     public GuiderTipsConfig guiderTipsConfig;
-
+    public RandomNamesConfig randomNamesConfig;
     private Dictionary<string, System.Type> configDic = new Dictionary<string, System.Type>
     {
         { "islandConfig" ,typeof(IslandConfig)},
         { "guideDataConfig" ,typeof(GuideDataConfig)},
         { "guiderTipsConfig" ,typeof(GuiderTipsConfig)},
+        { "randomNamesConfig" ,typeof(RandomNamesConfig)},
     };
     private int num;
     public void LoadConfig(System.Action onCompalte)

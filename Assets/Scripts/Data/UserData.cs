@@ -306,4 +306,12 @@ public class UserData {
             return daily_energy;
         }
     }
+
+    public bool isTutorialing
+    {
+        get
+        {
+            return tutorial < GameSetting.TUTORIAL_MAX;
+        }
+    }
 }

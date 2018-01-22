@@ -237,8 +237,9 @@ public class UIStealWindow : UIWindowBase {
     {
         //Dictionary<UISettings.UIWindowID, object> data = new Dictionary<UISettings.UIWindowID, object>();
         //data.Add(UISettings.UIWindowID.UITopBarWindow, null);
-       // data.Add(UISettings.UIWindowID.UIWheelWindow, null);
+        // data.Add(UISettings.UIWindowID.UIWheelWindow, null);
         //data.Add(UISettings.UIWindowID.UISideBarWindow, null);
+        goldEffect.SetActive(false);
         GameMainManager.instance.uiManager.ChangeState(new MainState(3));
     }
 

@@ -28,12 +28,12 @@ SpriteAtlas:
       enableTightPacking: 0
     packedHash:
       serializedVersion: 2
-      Hash: d81e41c2f671a7c63c481c5990bb0f13
+      Hash: a1e432aad4fb6c28a72a757c729232ee
     variantMultiplier: 1
     bindAsDefault: 0
     finalFormat: 4
-    hashString: d81e41c2f671a7c63c481c5990bb0f13
-    totalSpriteSurfaceArea: 3149138
+    hashString: a1e432aad4fb6c28a72a757c729232ee
+    totalSpriteSurfaceArea: 3172997
     packables:
     - {fileID: 102900000, guid: 9e3d56e820801f94496b9739c24ecab7, type: 3}
     packedSpriteRenderDataKeys:
@@ -56,6 +56,7 @@ SpriteAtlas:
     - b4109e484fcd40f438ab8b68ead3b6f9: 21300000
     - 6f21c542cf173b74488f526353a1ba0f: 21300000
     - 9933e768166ff4748b0cbeff0528e438: 21300000
+    - 636221b238560da4e8d8b34c2bca0732: 21300000
     - dde7c478b75bf8f4485131868d2b5c28: 21300000
     - 467e2e03ea4bddd4a8ecaf0f25e047e2: 21300000
     - 82aea9ade3528a34082c6880a5fadecb: 21300000
@@ -97,6 +98,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: b4109e484fcd40f438ab8b68ead3b6f9, type: 3}
   - {fileID: 21300000, guid: 6f21c542cf173b74488f526353a1ba0f, type: 3}
   - {fileID: 21300000, guid: 9933e768166ff4748b0cbeff0528e438, type: 3}
+  - {fileID: 21300000, guid: 636221b238560da4e8d8b34c2bca0732, type: 3}
   - {fileID: 21300000, guid: dde7c478b75bf8f4485131868d2b5c28, type: 3}
   - {fileID: 21300000, guid: 467e2e03ea4bddd4a8ecaf0f25e047e2, type: 3}
   - {fileID: 21300000, guid: 82aea9ade3528a34082c6880a5fadecb, type: 3}
@@ -137,6 +139,7 @@ SpriteAtlas:
   - baoxiang_2
   - baoxiang_1
   - build_hammer
+  - word
   - shop_money_2
   - shop_energy_4
   - menu_btn_nor

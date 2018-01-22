@@ -111,14 +111,10 @@ public class UITopBarWindow : UIWindowBase {
             if(!shieldImages[i].gameObject.activeSelf)
             {
                 evt.emptyShieldPos(shieldImages[i].transform.position);
-                break;
-            }
-            if(i == shieldImages.Length - 1)
-            {
-                evt.emptyShieldPos(shieldImages[i].transform.position);
+                return;
             }
         }
-
+        evt.emptyShieldPos(shieldImages[shieldImages.Length-1].transform.position);
     }
 
     private void OnGetStar(BaseEvent e)
@@ -168,15 +164,7 @@ public class UITopBarWindow : UIWindowBase {
         {
             for (int i = 0; i < shieldImages.Length; i++)
             {
-                if (i < user.shields)
-                {
-                    shieldImages[i].gameObject.SetActive(true);
-                }
-                else
-                {
-                    shieldImages[i].gameObject.SetActive(false);
-                }
-
+                shieldImages[i].gameObject.SetActive(i < value);
             }
         });
     }

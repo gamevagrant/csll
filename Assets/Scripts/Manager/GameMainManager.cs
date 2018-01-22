@@ -12,7 +12,7 @@ public class GameMainManager {
     {
         get
         {
-            if(_instance == null)
+            if(Application.isPlaying && _instance == null)
             {
                 _instance = new GameMainManager();
             }

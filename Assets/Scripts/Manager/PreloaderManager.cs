@@ -58,7 +58,7 @@ public class PreloaderManager {
 
     private IEnumerator RemoveAssetBundle(string path)
     {
-        yield return null;
+        yield return new WaitForSeconds(1);
         if (preloadAssetBundles.ContainsKey(path))
         {
             preloadAssetBundles[path].Unload(false);

@@ -42,7 +42,7 @@ public class HttpProxy {
             bool ret = request.State == HTTPRequestStates.Finished;
             if (!ret)
             {
-                Debug.LogAssertionFormat("请求失败失败 request.State = {0} [{1}]\n", request.State.ToString(), url,request.Exception.ToString());
+                Debug.LogAssertionFormat("请求失败失败 request.State = {0},[{1}]\n", request.State.ToString(),request.Uri);
 
                 RequestErrorEvent.Type errorType;
                switch(request.State)

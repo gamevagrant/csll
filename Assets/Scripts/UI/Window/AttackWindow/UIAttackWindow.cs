@@ -138,6 +138,7 @@ public class UIAttackWindow :UIWindowBase {
         //data.Add(UISettings.UIWindowID.UITopBarWindow, null);
         //data.Add(UISettings.UIWindowID.UIWheelWindow, null);
         //data.Add(UISettings.UIWindowID.UISideBarWindow, null);
+        particSys.gameObject.SetActive(false);
         GameMainManager.instance.uiManager.ChangeState(new MainState(2));
     }
 

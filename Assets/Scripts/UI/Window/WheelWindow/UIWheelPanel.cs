@@ -517,8 +517,8 @@ public class UIWheelPanel : MonoBehaviour {
             GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_energy_transform);
         });
         sq.Insert(1.5f,backLight.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutQuart));
-        sq.Insert(1.5f,icon.transform.DOLocalMove(moveTarget, 1).SetEase(Ease.OutCubic));
-        sq.Insert(1.5f, icon.transform.DOScale(new Vector3(0.2f,0.2f,1), 0.5f).SetEase(Ease.OutQuart));
+        sq.Insert(1.5f,icon.transform.DOLocalMove(moveTarget, 0.5f).SetEase(Ease.InQuad));
+        sq.Insert(1.5f, icon.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InQuad));
         //sq.AppendInterval(0.5f);
         sq.onComplete += () => {
             GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_energy_change);

@@ -11,6 +11,7 @@ public class UIInvitePanel : MonoBehaviour {
     public Slider slider;
     public TextMeshProUGUI sliderText;
     public QY.UI.Toggle allSelectToggle;
+    public GameObject helpPanel;
 
     private List<InviteItemData> invitableList;
     private Dictionary<string, string> invitedFriends;//已经邀请过的好友
@@ -19,6 +20,7 @@ public class UIInvitePanel : MonoBehaviour {
     {
         slider.value = 0;
         sliderText.text = "";
+        helpPanel.SetActive(false);
     }
 
     public void Refresh()
@@ -161,7 +163,13 @@ public class UIInvitePanel : MonoBehaviour {
 
     public void OnClickHelpBtn()
     {
-        Alert.Show("1.邀请所有好友获得20能量\n2.每邀请成功一个好友可额外获得20能量和其他奖励",Alert.OK,null,"","",TextAlignmentOptions.Left);
+        helpPanel.SetActive(true);
+        //Alert.Show("1.邀请所有好友获得20能量\n2.每邀请成功一个好友可额外获得20能量和其他奖励",Alert.OK,null,"","",TextAlignmentOptions.Left);
+    }
+
+    public void OnClickCloseHelpBtn()
+    {
+        helpPanel.SetActive(false);
     }
 	
 }

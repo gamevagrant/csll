@@ -171,7 +171,7 @@ public class HttpProxy {
         }
 
         HTTPRequest req = MakePostRequest<T>(url, data, callback);
-        req.Timeout = new TimeSpan(0,0,30);
+        req.Timeout = new TimeSpan(0,0,15);
         Debug.Log("正在请求："+ url);
         MarkCheck(url);
         return HTTPManager.SendRequest(req) != null;

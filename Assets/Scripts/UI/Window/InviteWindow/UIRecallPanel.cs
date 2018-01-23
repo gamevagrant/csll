@@ -8,9 +8,11 @@ public class UIRecallPanel : MonoBehaviour {
 
     public BaseScrollView scrollView;
     private List<RecallFriendData> recallableList;
+    public GameObject helpPanel;
 
     public void Start()
     {
+        helpPanel.SetActive(false);
     }
 
     public void Refresh()
@@ -117,9 +119,16 @@ public class UIRecallPanel : MonoBehaviour {
 
     public void OnClickHelpBtn()
     {
-        Alert.Show("1.成功召回一个好友可获得15点能量，成功召回好友才可领取奖励\n" +
+        helpPanel.SetActive(true);
+        /*Alert.Show("1.成功召回一个好友可获得15点能量，成功召回好友才可领取奖励\n" +
             "2.召回邀请7日内有效，好友通过您的邀请链接7日内回到游戏，则算为成功召回\n" +
             "3.当多名玩家同时向一人发送召回邀请时，只有前30发送召回邀请的人才能获得召回奖励\n" +
             "4.你可以召回任意好友，但每个好友最多只能召回1次", Alert.OK, null, "", "", TextAlignmentOptions.Left);
+            */
+    }
+
+    public void OnClickCloseHelpBtn()
+    {
+        helpPanel.SetActive(false);
     }
 }

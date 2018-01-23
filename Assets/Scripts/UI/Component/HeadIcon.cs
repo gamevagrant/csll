@@ -11,17 +11,25 @@ public class HeadIcon : MonoBehaviour {
     public Image bottomFrame;
     public Sprite[] sprites;
 
+    private string headUrl;
+
     public void setData(string nicname,string headUrl,int starCount,bool isVip)
     {
-        head.texture = null;
         nicNameLabel.text = nicname;
         if(starCountLabel != null)
             starCountLabel.text = starCount.ToString();
         bottomFrame.sprite = isVip ? sprites[1] : sprites[0];
-        AssetLoadManager.Instance.LoadAsset<Texture2D>(headUrl, (tex) =>
+
+        if(this.headUrl!= headUrl)
         {
-            head.texture = tex;
-        });
+            this.headUrl = headUrl;
+            head.texture = null;
+            AssetLoadManager.Instance.LoadAsset<Texture2D>(headUrl, (tex) =>
+            {
+                head.texture = tex;
+            });
+        }
+       
     }
 
 }

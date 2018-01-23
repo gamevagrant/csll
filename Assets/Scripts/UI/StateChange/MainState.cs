@@ -10,9 +10,13 @@ public class MainState : UIStateChangeBase
         this.delay = delay;
         needShowWindows = new Dictionary<UISettings.UIWindowID, object>();
         needShowWindows.Add(UISettings.UIWindowID.UIWheelWindow, wheelWindowState);
-        needShowWindows.Add(UISettings.UIWindowID.UISideBarWindow, null);
+        if (!GameMainManager.instance.model.userData.isTutorialing)
+        {
+            needShowWindows.Add(UISettings.UIWindowID.UISideBarWindow, null);
+        }
+        
         needShowWindows.Add(UISettings.UIWindowID.UITopBarWindow, null);
-        if(GameMainManager.instance.model.userData.tutorial>=GameSetting.TUTORIAL_MAX && GameMainManager.instance.model.userData.islandId<3)
+        if(!GameMainManager.instance.model.userData.isTutorialing && GameMainManager.instance.model.userData.islandId<3)
         {
             needShowWindows.Add(UISettings.UIWindowID.UINewUserGuiderWindow, null);
         }

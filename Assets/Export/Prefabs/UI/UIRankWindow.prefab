@@ -1713,7 +1713,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: QY.UI.Toggle+ToggleEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  isSelectedInStart: 0
+  isSelectedInStart: 1
   activate:
   - {fileID: 1897397901395474}
   - {fileID: 0}
@@ -3417,7 +3417,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: QY.UI.Toggle+ToggleEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  isSelectedInStart: 1
+  isSelectedInStart: 0
   activate:
   - {fileID: 1005612859698780}
   - {fileID: 0}

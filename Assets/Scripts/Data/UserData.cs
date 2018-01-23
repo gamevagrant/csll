@@ -311,7 +311,7 @@ public class UserData {
     {
         get
         {
-            return tutorial < GameSetting.TUTORIAL_MAX;
+            return tutorial > 0 && tutorial < GameSetting.TUTORIAL_MAX;
         }
     }
 }

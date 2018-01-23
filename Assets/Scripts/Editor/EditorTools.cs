@@ -87,7 +87,12 @@ public class EditorTools  {
     {
         PlayerPrefs.DeleteAll();
     }
- 
+
+    [MenuItem("Tools/保存资源")]
+    public static void SaveAssets()
+    {
+        AssetDatabase.SaveAssets();
+    }
 
     [MenuItem("GameObject/UI/Image")]
     static void CreatImage()
@@ -127,56 +132,5 @@ public class EditorTools  {
         }
     }
 
-    // [MenuItem("Tools/转换csv")]
-    static void ChangeCSV()
-    {
-        string path = "Assets/Export/Configs/GuestNames.csv";
-        string str = AssetDatabase.LoadMainAssetAtPath(path).ToString();
 
-        Dictionary<string, List<string>> data = new Dictionary<string, List<string>>();
-        string[] lineArray = Regex.Split(str, @"\r\n", RegexOptions.IgnoreCase);
-        string[] keys = lineArray[0].Split(',');
-        foreach (string key in keys)
-        {
-            data[key] = new List<string>();
-        }
-        for (int i = 1; i < lineArray.Length; i++)
-        {
-            if (lineArray[i] != "")
-            {
-                string[] strs = lineArray[i].Split(',');
-                for (int j = 0; j < strs.Length; j++)
-                {
-                    data[keys[j]].Add(strs[j]);
-                }
-
-            }
-        }
-
-        string json = JsonMapper.ToJson(data);
-        Regex reg = new Regex(@"(?i)\\[uU]([0-9a-f]{4})");
-        var ss = reg.Replace(json, delegate (Match m) { return ((char)Convert.ToInt32(m.Groups[1].Value, 16)).ToString(); });
-
-        writeFile(path.Replace("csv", "txt"), ss);
-    }
-
-    static void writeFile(string path, string str)
-    {
-        FileInfo fi = new FileInfo(path);
-        DirectoryInfo dir = fi.Directory;
-        if (!dir.Exists)
-        {
-            dir.Create();
-        }
-
-        FileStream fs = new FileStream(path, FileMode.Create);//文本加入不覆盖
-        StreamWriter sw = new StreamWriter(fs, System.Text.Encoding.UTF8);//转码
-
-        sw.WriteLine(str);
-        //清空缓冲区
-        sw.Flush();
-        //关闭流
-        sw.Close();
-        fs.Close();
-    }
 }

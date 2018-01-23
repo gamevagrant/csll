@@ -106,13 +106,7 @@ public class AccountManager {
                             isSuccess(false);
                         }else
                         {
-                            GameMainManager.instance.netManager.BindAccount(user.uuid, open.token.tokenString, (rt, rs) =>
-                            {
-                                if (rs.isOK)
-                                {
-                                    isSuccess(true);
-                                }
-                            });
+                            Binding(user);
                         }
                     }else
                     {
@@ -134,6 +128,22 @@ public class AccountManager {
             open.Logout();
         }
        
+    }
+
+    private void Binding(SimpleUserData user)
+    {
+        Debug.Log("正在绑定facebook帐号");
+        GameMainManager.instance.netManager.BindAccount(user.uuid, open.token.tokenString, (ret, res) =>
+        {
+            if (res.isOK)
+            {
+                SimpleUserData simpleUser = new SimpleUserData();
+                simpleUser.name = res.data.name;
+                simpleUser.level = res.data.crowns;
+                LocalDatasManager.loggedAccount = simpleUser;
+            }
+            OnLoginComplateHandle(res);
+        });
     }
 
     /// <summary>

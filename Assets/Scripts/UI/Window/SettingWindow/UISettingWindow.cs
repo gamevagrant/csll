@@ -54,7 +54,7 @@ public class UISettingWindow : UIWindowBase {
 
     public void OnClickFacebookBtn()
     {
-        AccountManager.instance.LoinPlatform((issuccess)=> {
+        AccountManager.instance.BindAccount((issuccess)=> {
             if (issuccess)
             {
                 OnClickClose();

@@ -93,33 +93,46 @@ public class GameStarter : MonoBehaviour
 
     }
 
-   
+
     private IEnumerator LoadMainScene()
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Main",LoadSceneMode.Additive);
-        float progress = 0;
-        while (!asyncLoad.isDone)
+        Scene currentScene = SceneManager.GetActiveScene();
+        if(currentScene.name == "Main")
         {
-            if (asyncLoad.progress != progress)
-            {
-                progress = asyncLoad.progress/2;
-                EventDispatcher.instance.DispatchEvent(new LoadingEvent("LoadScene", progress));
-            }
-            yield return null;
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Main");
+            yield return asyncLoad;
+            GameMainManager.instance.Init();
         }
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName("Main"));
-        GameMainManager.instance.Init();
+        else
+        {
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Main", LoadSceneMode.Additive);
+            float progress = 0;
+            while (!asyncLoad.isDone)
+            {
+                if (asyncLoad.progress != progress)
+                {
+                    progress = asyncLoad.progress / 2;
+                    EventDispatcher.instance.DispatchEvent(new LoadingEvent("LoadScene", progress));
+                }
+                yield return null;
+            }
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName("Main"));
+            GameMainManager.instance.Init();
 
-        yield return new WaitForSeconds(2);
-        asyncLoad = SceneManager.UnloadSceneAsync("Login");
-        while (!asyncLoad.isDone)
-        {
-            if (asyncLoad.progress != progress)
+            yield return new WaitForSeconds(2);
+            asyncLoad = SceneManager.UnloadSceneAsync("Login");
+            while (!asyncLoad.isDone)
             {
-                progress = 0.5f + asyncLoad.progress/2;
-                EventDispatcher.instance.DispatchEvent(new LoadingEvent("LoadScene", progress));
+                if (asyncLoad.progress != progress)
+                {
+                    progress = 0.5f + asyncLoad.progress / 2;
+                    EventDispatcher.instance.DispatchEvent(new LoadingEvent("LoadScene", progress));
+                }
+                yield return null;
             }
-            yield return null;
         }
+
+        yield return null;
     }
+
 }

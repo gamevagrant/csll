@@ -46,6 +46,14 @@ public class UIFreeRewardWindow : UIWindowBase {
     public void OnClickInviteBtn()
     {
         OnClickClose();
-        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIInviteWindow);
+       
+        if (AccountManager.instance.isLoginAccount)
+        {
+            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIInviteWindow);
+        }
+        else
+        {
+            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIFacebookTipsWindow);
+        }
     }
 }

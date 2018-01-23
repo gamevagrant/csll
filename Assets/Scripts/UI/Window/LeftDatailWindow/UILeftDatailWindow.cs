@@ -54,7 +54,7 @@ public class UILeftDatailWindow : UIWindowBase {
     {
         UserData ud = GameMainManager.instance.model.userData;
         head.setData(ud.name, ud.headImg, ud.crowns, ud.isVip);
-        friendCode.text = "友情码：" + ud.friendshipCode;
+        friendCode.text = "ID：" + ud.friendshipCode;
         facebookBtn.SetActive(!AccountManager.instance.isLoginAccount);
 
         for (int i = 0;i<buttonTips.Length;i++)

@@ -92,18 +92,18 @@ public class UIRankWindow : UIWindowBase {
             }
         });
 
-        allToggle.isOn = true;
+        friendToggle.isOn = true;
 
         TopBar.gameObject.SetActive(true);
         TopBar.anchoredPosition = new Vector2(0, 160);
 
-        allPanel.gameObject.SetActive(true);
+        allPanel.gameObject.SetActive(false);
         allPanel.anchoredPosition = new Vector2(0, 950);
 
-        friendPanel.gameObject.SetActive(false);
+        friendPanel.gameObject.SetActive(true);
         friendPanel.anchoredPosition = new Vector2(0, 950);
 
-        currPanel = allPanel;
+        currPanel = friendPanel;
     }
 
     protected override void EnterAnimation(Action onComplete)

@@ -118,6 +118,7 @@ public class UIEmptyEnergyGuideWindow : UIWindowBase {
         GameMainManager.instance.netManager.TutorialComplete((ret, res) =>
         {
             GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UINewUserGuiderWindow);
+            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UISideBarWindow);
         });
 
         OnClickClose();

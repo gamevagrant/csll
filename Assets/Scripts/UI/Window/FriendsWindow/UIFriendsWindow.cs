@@ -66,8 +66,8 @@ public class UIFriendsWindow : UIWindowBase {
        
         UpdateAddFriendData();
 
-        addFriendPanel.SetActive(false);
-        applyFriendsPanel.SetActive(false);
+        //addFriendPanel.SetActive(false);
+        //applyFriendsPanel.SetActive(false);
         menuePanel.parent.gameObject.SetActive(false);
     }
 
@@ -123,7 +123,7 @@ public class UIFriendsWindow : UIWindowBase {
 
     private void UpdateAddFriendData()
     {
-        friendCodeText.text = "我的邀请码：" + GameMainManager.instance.model.userData.friendshipCode;
+        friendCodeText.text = "我的ID：" + GameMainManager.instance.model.userData.friendshipCode;
     }
 
     private void UpdateNotAgreeFriendsData(FriendData[] friendDatas)
@@ -173,10 +173,7 @@ public class UIFriendsWindow : UIWindowBase {
         {
             if (res.isOK)
             {
-                Alert.Show("一键领取成功", Alert.OK, (flag) =>
-                {
-                    UpdateMyFriendsData(res.data.friends);
-                });
+                UpdateMyFriendsData(res.data.friends);
 
             }
         });

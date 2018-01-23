@@ -108,15 +108,8 @@ public class UISideBarWindow :UIWindowBase {
 
     public void OnClickFreeRewardBtn()
     {
+        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIFreeRewardWindow);
        
-        if (AccountManager.instance.isLoginAccount)
-        {
-            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIFreeRewardWindow);
-        }
-        else
-        {
-            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIFacebookTipsWindow);
-        }
     }
 
 

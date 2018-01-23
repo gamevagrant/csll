@@ -37,7 +37,7 @@ public class UIWheelRollButton : QY.UI.Button
 
     private void Update()
     {
-        if (Application.isPlaying && GameMainManager.instance.model.userData.tutorial >= GameSetting.TUTORIAL_MAX && downTag > 0 && Time.time - downTag > HOLD_ON_TIME)
+        if (Application.isPlaying && !GameMainManager.instance.model.userData.isTutorialing && downTag > 0 && Time.time - downTag > HOLD_ON_TIME)
         {
             downTag = 0;
             isHoldOn = true;

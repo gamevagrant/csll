@@ -310,6 +310,11 @@ public class UIManager : MonoBehaviour,IUIManager  {
         allWindows.TryGetValue(id, out window);
         if (window != null)
         {
+            if(!window.canOpen)
+            {
+                isOpening = false;
+                return;
+            }
             UIWindowData windowdata = window.windowData;
 
             if (windowdata.type == UISettings.UIWindowType.Fixed)
@@ -481,20 +486,18 @@ public class UIManager : MonoBehaviour,IUIManager  {
 
     private void SetSiblingIndex(UIWindowBase window,Transform root)
     {
-
-        for(int i=0;i<root.childCount;i++)
+        window.transform.SetAsLastSibling();
+        for (int i=0;i<root.childCount;i++)
         {
             Transform tf = root.GetChild(i);
             UIWindowBase tw = tf.GetComponent<UIWindowBase>();
             if(tw!=null && tw!=window && window.windowData.siblingNum<tw.windowData.siblingNum)
             {
-                window.transform.SetSiblingIndex(tw.transform.GetSiblingIndex()-1);
+                window.transform.SetSiblingIndex(tw.transform.GetSiblingIndex());
                 return;
             }
             
         }
-
-        window.transform.SetAsLastSibling();
 
     }
 }

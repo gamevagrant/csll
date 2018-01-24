@@ -77,7 +77,7 @@ public class UIAttackWindow :UIWindowBase {
             }
         });
 
-        QY.Guide.GuideManager.instance.state = "attack";
+       
     }
 
 
@@ -98,8 +98,10 @@ public class UIAttackWindow :UIWindowBase {
         });
         sq.Insert(1.8f,DOTween.To(() => island.transform.localScale, x => island.transform.localScale = x, Vector3.one, 1).SetEase(Ease.OutBack));
         sq.onComplete += () => {
+            QY.Guide.GuideManager.instance.state = "attack";
             btnRoot.SetActive(true);
             onComplete();
+            
         };
 
 

@@ -114,6 +114,7 @@ public class UIBuildPanel : MonoBehaviour {
         DOTween.To(() => panel.anchoredPosition, x => panel.anchoredPosition = x,panelLocalOriginalValue, 1).SetEase(Ease.InQuint);
         DOTween.To(() => panel.localScale, x => panel.localScale = x, Vector3.one, 1).onComplete = () => {
 
+            QY.Guide.GuideManager.instance.state = "building";
             GameMainManager.instance.uiManager.EnableOperation();
         };
     }

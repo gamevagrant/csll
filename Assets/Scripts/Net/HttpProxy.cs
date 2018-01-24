@@ -172,7 +172,9 @@ public class HttpProxy {
 
         HTTPRequest req = MakePostRequest<T>(url, data, callback);
         req.Timeout = new TimeSpan(0,0,15);
-        Debug.Log("正在请求："+ url);
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
+        Debug.Log("正在请求："+ url+"\n"+JsonMapper.ToJson(data));
+#endif
         MarkCheck(url);
         return HTTPManager.SendRequest(req) != null;
     }

@@ -107,15 +107,7 @@ public class UILeftDatailWindow : UIWindowBase {
 
     public void OnClickMapBtn()
     {
-        if(GameMainManager.instance.model.userData.islandId>=3)
-        {
-            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIMiningMapWindow);
-        }else
-        {
-            string name = GameMainManager.instance.configManager.islandConfig.GetIslandName(3);
-            Alert.Show(string.Format("到达3号岛屿（{0}）后开启地图功能", name));
-            //GameMainManager.instance.uiManager.OpenPopupModalBox(string.Format("到达{0}后开启地图功能",name),"",null);
-        }
+        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIMiningMapWindow);
         OnClickClose();
     }
 

@@ -23,6 +23,14 @@ public abstract class UIWindowBase : MonoBehaviour {
         }
     }
 
+    public virtual bool canOpen
+    {
+        get
+        {
+            return true;
+        }
+    }
+
     /// <summary>
     /// 第一次创建的时候会被调用
     /// </summary>

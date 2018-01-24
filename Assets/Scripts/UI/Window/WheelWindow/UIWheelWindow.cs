@@ -172,7 +172,6 @@ public class UIWheelWindow : UIWindowBase {
             wheelPanel.EnterToWheelPanelState();
             buildPanel.EnterToWheelPanelState();
             currState = OpenState.Wheel;
-            QY.Guide.GuideManager.instance.state = "wheel";
             if (!GameMainManager.instance.model.userData.isTutorialing)
                 GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UISideBarWindow, true);
         }
@@ -185,7 +184,7 @@ public class UIWheelWindow : UIWindowBase {
             wheelPanel.EnterToBuildPanelState();
             buildPanel.EnterToBuildPanelState();
             currState = OpenState.Building;
-            QY.Guide.GuideManager.instance.state = "building";
+
             if (!GameMainManager.instance.model.userData.isTutorialing)
                 GameMainManager.instance.uiManager.CloseWindow(UISettings.UIWindowID.UISideBarWindow, true);
         }

@@ -98,7 +98,7 @@ public class UIStealWindow : UIWindowBase {
                 buttons[i].gameObject.SetActive(false);
         }
 
-        QY.Guide.GuideManager.instance.state = "steal";
+       
     }
 
     protected override void EnterAnimation(Action onComplete)
@@ -127,6 +127,7 @@ public class UIStealWindow : UIWindowBase {
         });
         
         sq.onComplete += () => {
+            QY.Guide.GuideManager.instance.state = "steal";
             onComplete();
         };
     }

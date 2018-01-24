@@ -151,7 +151,7 @@ public class UIWheelPanel : MonoBehaviour {
         DOTween.To(() => switchBtn.anchoredPosition, p => switchBtn.anchoredPosition = p, switchOriginalValue, 1);
         DOTween.To(() => panel.anchoredPosition, x => panel.anchoredPosition = x, panelLocalOriginalValue, 1);
         DOTween.To(() => panel.localScale, x => panel.localScale = x, Vector3.one, 1).onComplete = () => {
-
+            QY.Guide.GuideManager.instance.state = "wheel";
             GameMainManager.instance.uiManager.EnableOperation();
             if(isHoldOn)
             {

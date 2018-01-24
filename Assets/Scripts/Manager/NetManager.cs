@@ -109,7 +109,7 @@ public class NetManager:INetManager
             
             string describe = GameMainManager.instance.configManager.errorDescribeConfig.GetDescribe(res.errcode.ToString(), res.errmsg);
             Debug.Log(title + ":" + describe);
-            Alert.Show(string.Format("{0}\n{1}:{2}", title, res.errcode, describe));
+            Alert.Show(string.Format("{0}\n{1}:{2}", describe , title, res.errcode ));
         }
        
     }
@@ -607,18 +607,21 @@ public class NetManager:INetManager
             callBack(ret, res);
             if (res.isOK)
             {
-                FriendData[] friends = res.data;
-                for(int i = 0;i<GameMainManager.instance.model.userData.friendInfo.Length;i++)
+                if(GameMainManager.instance.model.userData.friendInfo!=null)
                 {
-                    FriendData fd = GameMainManager.instance.model.userData.friendInfo[i];
-                    if (fd.uid == res.data[0].uid)
+                    FriendData[] friends = res.data;
+                    for (int i = 0; i < GameMainManager.instance.model.userData.friendInfo.Length; i++)
                     {
-                        GameMainManager.instance.model.userData.friendInfo[i] = friends[0];
-                        break;
+                        FriendData fd = GameMainManager.instance.model.userData.friendInfo[i];
+                        if (fd.uid == res.data[0].uid)
+                        {
+                            GameMainManager.instance.model.userData.friendInfo[i] = friends[0];
+                            break;
+                        }
                     }
+                    EventDispatcher.instance.DispatchEvent(new UpdateFriendsEvent(UpdateFriendsEvent.UpdateType.SendEnergy));
+                    EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_REDDOT));
                 }
-                EventDispatcher.instance.DispatchEvent(new UpdateFriendsEvent(UpdateFriendsEvent.UpdateType.SendEnergy));
-                EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_REDDOT));
             }
             else
             {
@@ -654,18 +657,23 @@ public class NetManager:INetManager
                 ud.dailyLimit = receiveFromData.dailyLimit;
                 ud.friendInfo = receiveFromData.friends;
 
-                for (int i = 0; i < GameMainManager.instance.model.userData.friendInfo.Length; i++)
+                if (GameMainManager.instance.model.userData.friendInfo!=null)
                 {
-                    FriendData fd = GameMainManager.instance.model.userData.friendInfo[i];
-                    if (fd.uid == receiveFromData.friends[0].uid)
+                    for (int i = 0; i < GameMainManager.instance.model.userData.friendInfo.Length; i++)
                     {
-                        GameMainManager.instance.model.userData.friendInfo[i] = receiveFromData.friends[0];
-                        break;
+                        FriendData fd = GameMainManager.instance.model.userData.friendInfo[i];
+                        if (fd.uid == receiveFromData.friends[0].uid)
+                        {
+                            GameMainManager.instance.model.userData.friendInfo[i] = receiveFromData.friends[0];
+                            break;
+                        }
                     }
+                    EventDispatcher.instance.DispatchEvent(new UpdateFriendsEvent(UpdateFriendsEvent.UpdateType.ReceiveEnergy));
+                    EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_REDDOT));
                 }
 
-                EventDispatcher.instance.DispatchEvent(new UpdateFriendsEvent(UpdateFriendsEvent.UpdateType.ReceiveEnergy));
-                EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_REDDOT));
+                EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Energy,0));
+
             }
             else
             {

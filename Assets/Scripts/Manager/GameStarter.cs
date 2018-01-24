@@ -43,9 +43,12 @@ public class GameStarter : MonoBehaviour
     {
         gameObject.AddComponent<AssetBundleLoadManager>();
         gameObject.AddComponent<AssetLoadManager>();
-        if (!GameSetting.isRelease)
-            gameObject.AddComponent<QY.Debug.DebugTools>();
 
+#if DEVELOPMENT_BUILD
+        gameObject.AddComponent<QY.Debug.DebugTools>();
+#elif !UNITY_EDITOR
+        Debug.unityLogger.logEnabled = false;
+#endif
         GameMainManager.instance.mono = this;
 
         UpdateVersion updateVersion = new UpdateVersion();

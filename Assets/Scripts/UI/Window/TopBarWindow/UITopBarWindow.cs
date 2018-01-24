@@ -31,6 +31,20 @@ public class UITopBarWindow : UIWindowBase {
 
     private UserData user;
 
+    private void Awake()
+    {
+        EventDispatcher.instance.AddEventListener(EventEnum.UPDATE_BASE_DATA, OnUpdateData);
+        EventDispatcher.instance.AddEventListener(EventEnum.GET_SHIELD, OnGetShield);
+        EventDispatcher.instance.AddEventListener(EventEnum.GET_STAR, OnGetStar);
+    }
+
+    private void OnDestroy()
+    {
+        EventDispatcher.instance.RemoveEventListener(EventEnum.UPDATE_BASE_DATA, OnUpdateData);
+        EventDispatcher.instance.RemoveEventListener(EventEnum.GET_SHIELD, OnGetShield);
+        EventDispatcher.instance.RemoveEventListener(EventEnum.GET_STAR, OnGetStar);
+    }
+
     public override void Init()
     {
         panel.anchoredPosition = new Vector2(0, 70);
@@ -48,17 +62,13 @@ public class UITopBarWindow : UIWindowBase {
         UpdateStar(user.crowns, 0);
         UpdateShield(user.shields, 0);
 
-        EventDispatcher.instance.AddEventListener(EventEnum.UPDATE_BASE_DATA, OnUpdateData);
-        EventDispatcher.instance.AddEventListener(EventEnum.GET_SHIELD, OnGetShield);
-        EventDispatcher.instance.AddEventListener(EventEnum.GET_STAR, OnGetStar);
+        
     }
 
     protected override void StartHideWindow()
     {
 
-        EventDispatcher.instance.RemoveEventListener(EventEnum.UPDATE_BASE_DATA, OnUpdateData);
-        EventDispatcher.instance.RemoveEventListener(EventEnum.GET_SHIELD, OnGetShield);
-        EventDispatcher.instance.RemoveEventListener(EventEnum.GET_STAR, OnGetStar);
+       
     }
 
 

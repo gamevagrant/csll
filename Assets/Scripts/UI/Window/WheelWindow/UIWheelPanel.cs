@@ -307,7 +307,7 @@ public class UIWheelPanel : MonoBehaviour {
         if(isHold )
         {
             isHoldOn = true;
-            if (!isWorking)
+            if (!isWorking && !QY.UI.Interactable.isLock)
             {
                 Roll();
 

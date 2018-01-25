@@ -95,6 +95,10 @@ public class UIPopupMessageWindow : UIWindowBase {
             });
 
             contentLabel.text = msg.content;
+            if (msg.confirmHandle != null)
+            {
+                msg.confirmHandle();
+            }
             Show();
         }
         else
@@ -107,7 +111,7 @@ public class UIPopupMessageWindow : UIWindowBase {
     private void Show()
     {
         GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.panel_in);
-        rectTransform.DOAnchorPos(new Vector2(0, 60), 0.5f).SetEase(Ease.OutBack).OnComplete(()=> {
+        rectTransform.DOAnchorPos(new Vector2(0, 60), 0.8f).SetEase(Ease.OutBack).OnComplete(()=> {
 
             StartCoroutine(StartConfirmMsg());
         });
@@ -122,7 +126,7 @@ public class UIPopupMessageWindow : UIWindowBase {
     private void Hide(Action onComplate)
     {
         GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.panel_out);
-        rectTransform.DOAnchorPos(new Vector2(-700, 60), 0.5f).SetEase(Ease.OutBack).OnComplete(()=> {
+        rectTransform.DOAnchorPos(new Vector2(-700, 60), 0.8f).SetEase(Ease.OutBack).OnComplete(()=> {
 
             onComplate();
         });

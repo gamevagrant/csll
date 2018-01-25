@@ -61,6 +61,10 @@ public class UIBuyWantedWindow : UIWindowBase {
 
     public void OnBuyBtn()
     {
-        GameMainManager.instance.iap.Purchase(wanted.definition.id);
+        if (wanted != null)
+        {
+            GameMainManager.instance.iap.Purchase(wanted.definition.id);
+        }
+            
     }
 }

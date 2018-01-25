@@ -58,14 +58,21 @@ public class UIEmptyEnergyGuideWindow : UIWindowBase {
             guideRewardPanel.SetActive(false);
             buyVipPanel.SetActive(true);
 
-            productVip = GameMainManager.instance.iap.GetProductWithID(new GoodsData("304").GetPurchaseID());
-            vipPriceText.text = productVip.metadata.localizedPriceString;
-
             btns[0].interactable = GameMainManager.instance.model.userData.dailyRewardTip > 0 ? true : false;
             btns[1].interactable = GameMainManager.instance.model.userData.dailyEnergyTip > 0 ? true : false;
             btns[2].interactable = GameMainManager.instance.model.userData.friendTip > 0 ? true : false;
             btns[3].interactable = false;
             btns[4].interactable = GameMainManager.instance.model.userData.dailyTaskTip > 0 ? true : false;
+
+            productVip = GameMainManager.instance.iap.GetProductWithID(new GoodsData("304").GetPurchaseID());
+            if(productVip!=null)
+            {
+                vipPriceText.text = productVip.metadata.localizedPriceString;
+            }else
+            {
+                vipPriceText.text = "";
+            }
+           
         }
        
     }

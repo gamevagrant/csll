@@ -107,9 +107,10 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
         PopupMessageData data = new PopupMessageData();
         data.headImg = msg.headImg;
         data.content = str;
-        GameMainManager.instance.model.userData.money = money;
-
         GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIPopupMessageWindow, data);
+
+        GameMainManager.instance.model.userData.money = money;
+        EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Money, 1));
     }
 
     private void AddFriendAction(MessageResponseData msg)

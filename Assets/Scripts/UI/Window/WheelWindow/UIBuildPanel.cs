@@ -233,6 +233,7 @@ public class UIBuildPanel : MonoBehaviour {
     private void OnUpdateBuilding(BaseEvent e)
     {
         islandFactory.UpdateCityData(user.islandId, user.buildings);
+        UpdateRepairBtns(user.buildings);
     }
 
     private void UpgradeIsland()

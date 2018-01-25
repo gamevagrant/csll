@@ -48,14 +48,25 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
 
     private void AttackAction(MessageResponseData msg)
     {
+        PopupMessageData data = new PopupMessageData();
+        data.headImg = msg.headImg;
+
         string str = "";
         if((bool)msg.extra["isShielded"])
         {
             str = string.Format("你成功防御了<#1995BCFF>{0}</color>的攻击", msg.name);
-        }else
+            GameMainManager.instance.model.userData.shields = Mathf.Max(0, GameMainManager.instance.model.userData.shields - 1);
+            data.confirmHandle = () => {
+
+                EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.sheild, 0));
+            };
+           
+        }
+        else
         {
             int buildingIndex = int.Parse(msg.extra["building_index"].ToString());
             int buildingStatus = int.Parse(msg.extra["building"]["status"].ToString());
+            int level = int.Parse(msg.extra["building"]["level"].ToString());
             if (buildingStatus == 2)
             {
                 str = string.Format("<#1995BCFF>{0}</color>损坏了你的{1}", msg.name, GameMainManager.instance.configManager.islandConfig.GetBuildingName(buildingIndex));
@@ -65,14 +76,15 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
                 str = string.Format("<#1995BCFF>{0}</color>摧毁了你的{1}", msg.name, GameMainManager.instance.configManager.islandConfig.GetBuildingName(buildingIndex));
             }
             GameMainManager.instance.model.userData.buildings[buildingIndex].status = buildingStatus;
-        }
-        PopupMessageData data = new PopupMessageData();
-        data.headImg = msg.headImg;
-        data.content = str;
-        data.confirmHandle = () => {
+            GameMainManager.instance.model.userData.buildings[buildingIndex].level = level;
+            data.confirmHandle = () => {
 
-            EventDispatcher.instance.DispatchEvent(new UpdateBuildingEvent());
-        };
+                EventDispatcher.instance.DispatchEvent(new UpdateBuildingEvent());
+            };
+        }
+
+        data.content = str;
+       
 
         GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIPopupMessageWindow, data);
     }

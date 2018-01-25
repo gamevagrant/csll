@@ -326,16 +326,16 @@ public class UIWheelPanel : MonoBehaviour {
         if (GameMainManager.instance.model.userData.energy > 0)
         {
             StartCoroutine(StartRoll());
-
         }
         else if (!AccountManager.instance.isLoginAccount)
         {
             GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIFacebookTipsWindow);
+            isHoldOn = false;
         }
         else
         {
-
             GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIEmptyEnergyGuideWindow, new ShowEmptyGuideWindowData(ShowEmptyGuideWindowData.PanelType.EmptyEnergy));
+            isHoldOn = false;
         }
     }
 
@@ -401,7 +401,7 @@ public class UIWheelPanel : MonoBehaviour {
             rollData.rollerItem.type == "xcrowns" || 
             rollData.rollerItem.type == "energy"))
             {
-                StartCoroutine(StartRoll());
+                Roll();
             }
         });
     }

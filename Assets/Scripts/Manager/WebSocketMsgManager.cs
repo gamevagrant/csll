@@ -36,7 +36,7 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
                 MailAction(msg);
                 break;
             default:
-                Debug.LogAssertion(msg.action.ToString()+" wetsocket的返回没实现/n" + LitJson.JsonMapper.ToJson(msg));
+                Debug.LogAssertion(msg.action.ToString()+" websocket的返回没实现");
                 break;
         }
 

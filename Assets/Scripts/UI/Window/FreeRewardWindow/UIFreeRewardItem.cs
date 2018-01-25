@@ -98,13 +98,6 @@ public class UIFreeRewardItem : BaseItemView {
     {
         GameMainManager.instance.uiManager.CloseWindow(UISettings.UIWindowID.UIFreeRewardWindow);
 
-        if (AccountManager.instance.isLoginAccount)
-        {
-            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIInviteWindow);
-        }
-        else
-        {
-            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIFacebookTipsWindow);
-        }
+        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIInviteWindow);
     }
 }

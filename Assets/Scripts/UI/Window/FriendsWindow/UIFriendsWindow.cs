@@ -166,7 +166,7 @@ public class UIFriendsWindow : UIWindowBase {
     {
         if(GameMainManager.instance.model.userData.energy>= GameMainManager.instance.model.userData.maxEnergy)
         {
-            Alert.Show("您的体力太多，消耗些再来领吧！");
+            Alert.Show("能量已满，用掉些再来吧");
             return;
         }
         GameMainManager.instance.netManager.ReceiveEnergy(0,(ret, res) =>

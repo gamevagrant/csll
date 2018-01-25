@@ -372,6 +372,7 @@ public class UIWheelPanel : MonoBehaviour {
         AudioSource audio = GetComponent<AudioSource>();
         audio.clip = audioClips[0];
         audio.loop = true;
+        audio.volume = AudioManager.instance.soundVolume;
         audio.Play();
         reflective.DOFade(1, 0.5f);
         while (!getRes || (Time.time - timeTag)<2 )
@@ -389,6 +390,7 @@ public class UIWheelPanel : MonoBehaviour {
         }
         audio.clip = audioClips[1];
         audio.loop = false;
+        audio.volume = AudioManager.instance.soundVolume;
         audio.Play();
         wheel.DOLocalRotate(new Vector3(0, 0, -(360 * 1 + 36 * rollItem.index)), 2f, RotateMode.FastBeyond360).SetEase(Ease.OutCirc).OnComplete(() => {
            

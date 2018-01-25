@@ -141,6 +141,7 @@ public class AccountManager {
                 simpleUser.name = res.data.name;
                 simpleUser.level = res.data.crowns;
                 LocalDatasManager.loggedAccount = simpleUser;
+                LocalDatasManager.loggedGuest = null;
             }
             OnLoginComplateHandle(res);
         });

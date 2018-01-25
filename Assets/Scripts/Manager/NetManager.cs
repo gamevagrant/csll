@@ -437,6 +437,7 @@ public class NetManager:INetManager
             {
                 GameMainManager.instance.model.userData.friendInfo = res.data.friends;
                 GameMainManager.instance.model.userData.friendNotAgreeInfo = res.data.friendsNotAgree;
+
             }
             else
             {
@@ -1220,7 +1221,12 @@ public class NetManager:INetManager
             
         });
     }
-
+    /// <summary>
+    /// 服务器只接受这个玩家第一次给服务器传输的值，之后不管传什么服务器都忽略
+    /// </summary>
+    /// <param name="limit">玩家好友总数</param>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
     public bool SetInviteProgress(int limit, Action<bool, NetMessage> callBack)
     {
         string url = MakeUrl(APIDomain, "game/friend/getinvitetimesfb");

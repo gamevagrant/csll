@@ -30,7 +30,7 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
                 NoticeAction(msg);
                 break;
             case 11://完成每日任务
-                DailyTaskAction(msg);
+                //DailyTaskAction(msg);
                 break;
             case 12://获得邮件通知
                 MailAction(msg);
@@ -124,10 +124,83 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
         GameMainManager.instance.model.userData.money = money;
         EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Money, 1));
     }
-
+    /*
+     * {
+    "uid": 10411,
+    "toid": 1125,
+    "action": 3,
+    "result": 0,
+    "time": "今天 18:15:14",
+    "name": "Linda",
+    "headImg": "https://scontent.xx.fbcdn.net/v/t1.0-1/c15.0.50.50/p50x50/1379841_10150004552801901_469209496895221757_n.jpg?oh=ef2ea8eb8c792b56ff67f460f47f79dd&oe=5ADEBA33",
+    "crowns": 6,
+    "extra": {
+        "friend": {
+            "uid": 10411,
+            "crowns": 6,
+            "crownsUpdateTime": 0,
+            "friendName": "Linda",
+            "gender": 2,
+            "headImg": "https://scontent.xx.fbcdn.net/v/t1.0-1/c15.0.50.50/p50x50/1379841_10150004552801901_469209496895221757_n.jpg?oh=ef2ea8eb8c792b56ff67f460f47f79dd&oe=5ADEBA33",
+            "isEmpty": false,
+            "isVip": false,
+            "name": "Linda",
+            "openId": "",
+            "rank": 0,
+            "recallCount": 0,
+            "signature": "",
+            "updateTime": "",
+            "guild": null,
+            "status": 0,
+            "sendStatus": 0,
+            "receiveStatus": 0,
+            "buildings": [
+                {
+                    "level": 2,
+                    "status": 0,
+                    "isShield": true
+                },
+                {
+                    "level": 1,
+                    "status": 0,
+                    "isShield": true
+                },
+                {
+                    "level": 0,
+                    "status": 0,
+                    "isShield": true
+                },
+                {
+                    "level": 0,
+                    "status": 0,
+                    "isShield": true
+                },
+                {
+                    "level": 3,
+                    "status": 0,
+                    "isShield": true
+                }
+            ],
+            "islandId": 1,
+            "head_frame": 0
+        }
+    },
+    "read": false,
+    "isWanted": false,
+    "isVip": false,
+    "head_frame": 0
+}
+     * */
     private void AddFriendAction(MessageResponseData msg)
     {
-        Debug.LogAssertion("添加好友wetsocket的返回没实现/n" + LitJson.JsonMapper.ToJson(msg));
+        GameMainManager.instance.netManager.Friend(0, (ret,res) => {
+
+            GameMainManager.instance.model.userData.friendInfo = res.data.friends;
+            GameMainManager.instance.model.userData.friendNotAgreeInfo = res.data.friendsNotAgree;
+            EventDispatcher.instance.DispatchEvent(new UpdateFriendsEvent(UpdateFriendsEvent.UpdateType.AgreeFriend));
+
+        });
+        
     }
 
     private void PayAction(MessageResponseData msg)

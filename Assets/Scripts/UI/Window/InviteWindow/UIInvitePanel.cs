@@ -12,6 +12,8 @@ public class UIInvitePanel : MonoBehaviour {
     public TextMeshProUGUI sliderText;
     public QY.UI.Toggle allSelectToggle;
     public GameObject helpPanel;
+    public TextMeshProUGUI inviteEnergyText;
+    public QY.UI.Button inviteAllBtn;
 
     private List<InviteItemData> invitableList;
     private Dictionary<string, string> invitedFriends;//已经邀请过的好友
@@ -39,6 +41,8 @@ public class UIInvitePanel : MonoBehaviour {
                 {
                     SetProgress(res.data.times,res.data.limit);
                 }
+                inviteEnergyText.text = res.data.is_first ? "50" : "20";
+
             }
             else
             {
@@ -81,6 +85,7 @@ public class UIInvitePanel : MonoBehaviour {
                 SetProgress(0, invitableList.Count);
             }
             GameMainManager.instance.netManager.SetInviteProgress(invitableList.Count, (ret, rs) =>{});
+            inviteAllBtn.interactable = invitableList.Count > 0;
         });
     }
 
@@ -149,7 +154,19 @@ public class UIInvitePanel : MonoBehaviour {
                     RemoveItems(list);
                     GameMainManager.instance.netManager.InviteFriends(response.request, response.to.Split(','), (ret, res) =>
                     {
-
+                        if(ret && res.isOK)
+                        {
+                            if(res.data.reward_list!=null && res.data.reward_list.Length>0)
+                            {
+                                foreach(RewardData reward in res.data.reward_list)
+                                {
+                                    GetRewardWindowData getRewardData = new GetRewardWindowData();
+                                    getRewardData.reward = reward;
+                                    GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIGetRewardWindow, getRewardData);
+                                }
+                                
+                            }
+                        }
                         
                     });
                 });

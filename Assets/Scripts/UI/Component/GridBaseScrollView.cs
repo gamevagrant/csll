@@ -57,10 +57,10 @@ public class GridBaseScrollView : MonoBehaviour {
 
     public void SetData(IList datas)
     {
+        itemPool.resetAllTarget();
+
         if (datas == null)
             return;
-
-        itemPool.resetAllTarget();
 
         displayRect.x = 0;
         displayRect.y = 0;

@@ -21,10 +21,11 @@ public class UIGetBindingRewardWindow : UIWindowBase {
         }
     }
 
-    protected override void EndShowWindow()
+    protected override void StartShowWindow(object[] data)
     {
         GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.building_box_down);
     }
+
 
     public void OnCLickGetRewardBtn()
     {

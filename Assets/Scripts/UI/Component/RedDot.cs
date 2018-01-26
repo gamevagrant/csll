@@ -32,11 +32,11 @@ public class RedDot : MonoBehaviour {
     {
         get
         {
-            return redDot.enabled;
+            return gameObject.activeSelf;
         }
         set
         {
-            redDot.enabled = value;
+            gameObject.SetActive(value);
         }
     }
 

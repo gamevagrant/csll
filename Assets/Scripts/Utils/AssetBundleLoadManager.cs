@@ -305,7 +305,8 @@ public class AssetBundleLoadManager : MonoBehaviour {
     {
         //为了解决在ios上同步加载后直接释放造成加载出来的资源被回收的问题，需要隔一帧再释放
         yield return null;
-        for(int i =0;i<list.Count;i++)
+        yield return null;
+        for (int i =0;i<list.Count;i++)
         {
             list[i].Unload(false);
         }

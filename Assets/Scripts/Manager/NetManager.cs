@@ -438,6 +438,7 @@ public class NetManager:INetManager
                 GameMainManager.instance.model.userData.friendInfo = res.data.friends;
                 GameMainManager.instance.model.userData.friendNotAgreeInfo = res.data.friendsNotAgree;
 
+                
             }
             else
             {
@@ -1096,6 +1097,35 @@ public class NetManager:INetManager
 
         });
     }
+    public bool GetBindingReward(Action<bool, GetBindingRewardMessage> callBack)
+    {
+        Waiting.Enable();
+        string url = MakeUrl(APIDomain, "game/user/bind-fb-reward");
+        Dictionary<string, object> data = new Dictionary<string, object>();
+        data.Add("uid", uid);
+        data.Add("token", token);
+        data.Add("t", time.ToString());
+        data.Add("locale", language);
+        return HttpProxy.SendPostRequest<GetBindingRewardMessage>(url, data, (ret, res) => {
+            Waiting.Disable();
+            callBack(ret, res);
+            if (res.isOK)
+            {
+                if(res.data.rewarded)
+                {
+                    GameMainManager.instance.model.userData.money = res.data.money;
+                    GameMainManager.instance.model.userData.energy = res.data.energy;
+                }
+                
+            }
+            else
+            {
+                AlertError(res, "获取绑定奖励失败");
+            }
+
+        });
+    }
+
     //-------------------------facebook接口------------------------------------
 
     /// <summary>
@@ -1184,6 +1214,7 @@ public class NetManager:INetManager
 
     public bool BindAccount(string uuid, string accessToken, Action<bool, LoginMessage> callBack)
     {
+        Waiting.Enable();
         return Register(accessToken, uuid, "", (ret, res) =>
         {
             if (res.isOK)
@@ -1192,6 +1223,7 @@ public class NetManager:INetManager
                 Login(openID, (rs, rt) =>
                 {
                     callBack(rs, rt);
+                    Waiting.Disable();
                 });
             }
 
@@ -1299,8 +1331,7 @@ public class NetManager:INetManager
                 UserData ud = GameMainManager.instance.model.userData;
                 ud.energy = res.data.energy;
                 ud.money = res.data.money;
-                EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Money, 0));
-                EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Energy, 0));
+
                 EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_REDDOT));
             }
             else

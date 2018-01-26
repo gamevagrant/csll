@@ -100,6 +100,7 @@ public class AccountManager {
                 {
                     if(res.errcode == -1)//未绑定
                     {
+                        Debug.Log("未绑定");
                         SimpleUserData user = LocalDatasManager.loggedGuest;
                         if (user == null)
                         {

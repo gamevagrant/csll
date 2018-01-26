@@ -126,8 +126,20 @@ public class UIEmptyEnergyGuideWindow : UIWindowBase {
         {
             GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UINewUserGuiderWindow);
             GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UISideBarWindow);
+
+            TryGetBindingReward();
         });
 
         OnClickClose();
+    }
+
+    private void TryGetBindingReward()
+    {
+        GameMainManager.instance.netManager.GetBindingReward((ret, res) => {
+            if (res.data.rewarded)
+            {
+                GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIGetBindingRewardWindow);
+            }
+        });
     }
 }

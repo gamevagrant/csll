@@ -36,6 +36,9 @@ public class GameStarter : MonoBehaviour
         if(scene.name == "Login")
         {
             init();
+        }else if(scene.name == "Main")
+        {
+            QY.UI.Interactable.ResetState();
         }
     }
 
@@ -136,6 +139,17 @@ public class GameStarter : MonoBehaviour
         }
 
         yield return null;
+        TryGetBindingReward();
+    }
+
+    private void TryGetBindingReward()
+    {
+        GameMainManager.instance.netManager.GetBindingReward((ret,res)=> {
+            if(res.data.rewarded)
+            {
+                GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIGetBindingRewardWindow);
+            }
+        });
     }
 
 }

@@ -44,10 +44,7 @@ public class UIInvitePanel : MonoBehaviour {
                 inviteEnergyText.text = res.data.is_first ? "50" : "20";
 
             }
-            else
-            {
-                Alert.Show(res.errmsg);
-            }
+
         });
 
         GameMainManager.instance.open.GetInvitableFriends((res) => {
@@ -129,6 +126,8 @@ public class UIInvitePanel : MonoBehaviour {
         }
 
         scrollView.SetData(invitableList);
+        inviteEnergyText.text = "20";
+        inviteAllBtn.interactable = invitableList.Count > 0;
     }
 
     public void OnClickInviteBtn()
@@ -144,13 +143,11 @@ public class UIInvitePanel : MonoBehaviour {
         }
         if(list.Count>0)
         {
-            LocalDatasManager.invitedFriends = invitedFriends;
-           
-
             GameMainManager.instance.open.Invite("快来和我一起玩财神来了", 
                 list.ToArray(), 
                 "您正在邀请的好友",
                 (response) => {
+                    LocalDatasManager.invitedFriends = invitedFriends;
                     RemoveItems(list);
                     GameMainManager.instance.netManager.InviteFriends(response.request, response.to.Split(','), (ret, res) =>
                     {

@@ -9,8 +9,8 @@ using Object = UnityEngine.Object;
 /// </summary>
 public class AssetLoadManager:MonoBehaviour
 {
-
-	private Dictionary<string, object> cache = new Dictionary<string, object>();
+    private const int RECOVERY_TIME = 120;//这个时间后没有被请求就自动销毁
+    private Dictionary<string, CacheObject> cache = new Dictionary<string, CacheObject>();
  	private Queue<Action> queue = new Queue<Action>();
 	private bool isLoading = false;
 
@@ -30,7 +30,6 @@ public class AssetLoadManager:MonoBehaviour
 		_instance = this;
 	}
 
-    int aa = 0;
 	public void Update()
 	{
 		if (queue.Count>0 && !isLoading)
@@ -38,7 +37,6 @@ public class AssetLoadManager:MonoBehaviour
 			Action act = queue.Dequeue();
 			if (act != null)
 			{
-                aa++;
 				act();
 			}
 		}
@@ -53,8 +51,10 @@ public class AssetLoadManager:MonoBehaviour
 		string path = url;
 
 		path = FilePathTools.normalizePath(path);
+        //为了保证后请求的图片就在后面刷新，避免列表复用时下载没结束被新的缓存图片覆盖，加载结束又被之前的图片覆盖掉，这里即使有缓存图片也要加入队列排队
         queue.Enqueue(() =>
         {
+            TryClearCache();
             StartCoroutine(loadAsync<T>(path, callback, isCache));
         });
 
@@ -68,10 +68,11 @@ public class AssetLoadManager:MonoBehaviour
 
         if (isCache)
         {
-            object obj;
+            CacheObject obj;
             if (callback != null && cache.TryGetValue(url, out obj) && obj != null)
             {
-                callback((T)obj);
+                callback((T)obj.obj);
+                obj.time = Time.time;
                 yield break;
             }
 
@@ -117,7 +118,7 @@ public class AssetLoadManager:MonoBehaviour
             {
                 if (!cache.ContainsKey(url))
                 {
-                    cache.Add(url, res);
+                    AddCache(url,res);
                 }
                 CacheManager.instance.AddCache(url, www.bytes);
             }
@@ -134,8 +135,43 @@ public class AssetLoadManager:MonoBehaviour
             www.Dispose();
             isLoading = false;
         }
-		
-	}
 
 
+    }
+
+    private void AddCache(string path, object obj)
+    {
+        if (!cache.ContainsKey(path))
+        {
+            cache.Add(path, new CacheObject(obj, Time.time));
+        }
+    }
+    private void TryClearCache()
+    {
+        List<string> list = new List<string>(cache.Keys);
+
+        foreach (string key in list)
+        {
+            CacheObject co = cache[key];
+            if (Time.time - co.time > RECOVERY_TIME)
+            {
+                cache.Remove(key);
+            }
+
+        }
+
+    }
+    private class CacheObject
+    {
+
+        public object obj;
+        public float time;
+
+        public CacheObject(object obj, float time)
+        {
+            this.obj = obj;
+            this.time = time;
+
+        }
+    }
 }

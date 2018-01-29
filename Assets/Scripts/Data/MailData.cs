@@ -33,7 +33,13 @@ public class MailData {
 public class RewardData
 {
     public string type;//energy,money,vip,props
-    public int num;//物品数量
+    /// <summary>
+    /// //物品数量
+    /// </summary>
+    public int num;
     public string name;
-    public long count;//获取物品后的总物品数量
+    /// <summary>
+    /// //获取物品后的总物品数量
+    /// </summary>
+    public long count;
 }

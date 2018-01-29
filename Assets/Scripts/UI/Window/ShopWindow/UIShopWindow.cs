@@ -71,21 +71,42 @@ public class UIShopWindow : UIWindowBase {
             propsShopPanel.SetData(goodsList.prop);
         });
 
-        energyToggle.isOn = true;
-        //energyToggle.enabled = false;
-        //energyToggle.enabled = true;
+        energyPanel.gameObject.SetActive(false);
+        goldPanel.gameObject.SetActive(false);
+        propsPanel.gameObject.SetActive(false);
+        if (data!=null && data.Length>0 && data[0]!=null && data[0] is ShowShopWindowData)
+        {
+            ShowShopWindowData showData = data[0] as ShowShopWindowData;
+            switch(showData.type)
+            {
+                case ShowShopWindowData.PanelType.Energy:
+                    energyToggle.isOn = true;
+                    currPanel = energyPanel;
+                    energyPanel.gameObject.SetActive(true);
+                    break;
+                case ShowShopWindowData.PanelType.Gold:
+                    goldToggle.isOn = true;
+                    currPanel = goldPanel;
+                    goldPanel.gameObject.SetActive(true);
+                    break;
+                case ShowShopWindowData.PanelType.Props:
+                    propsToggle.isOn = true;
+                    currPanel = propsPanel;
+                    propsPanel.gameObject.SetActive(true);
+                    break;
+            }
+        }else
+        {
+            energyToggle.isOn = true;
+            currPanel = energyPanel;
+            energyPanel.gameObject.SetActive(true);
+        }
 
         TopBar.anchoredPosition = new Vector2(0, 160);
-        //toggleGroup.NotifyToggleOn(energyToggle);
-        energyPanel.gameObject.SetActive(true);
         energyPanel.anchoredPosition = new Vector2(0, 950);
-
-        goldPanel.gameObject.SetActive(false);
         goldPanel.anchoredPosition = new Vector2(0, 950);
-
-        propsPanel.gameObject.SetActive(false);
         propsPanel.anchoredPosition = new Vector2(0, 950);
-        currPanel = energyPanel;
+       
     }
     protected override void EnterAnimation(Action onComplete)
     {

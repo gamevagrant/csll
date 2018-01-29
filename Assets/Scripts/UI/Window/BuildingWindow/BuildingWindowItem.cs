@@ -9,12 +9,11 @@ using TMPro;
 
 public class BuildingWindowItem : QY.UI.Interactable,IPointerClickHandler {
 
-    public TextMeshProUGUI price;
+    public Image icon;
     public Image repair;
     public Image upgraded;
+    public TextMeshProUGUI price;
     public Action<int> onBuild;
-
-    private Image icon;
 
     public int index;//建筑类型索引 从1开始
     public int level;//此格子显示的建筑等级
@@ -34,7 +33,11 @@ public class BuildingWindowItem : QY.UI.Interactable,IPointerClickHandler {
     protected override void Awake()
     {
         base.Awake();
-        icon = GetComponent<Image>();
+
+        icon.gameObject.SetActive(false);
+        repair.gameObject.SetActive(false);
+        upgraded.gameObject.SetActive(false);
+        price.gameObject.SetActive(false);
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -69,7 +72,8 @@ public class BuildingWindowItem : QY.UI.Interactable,IPointerClickHandler {
 
     public void setData(BuildingData[] bds,SpriteAtlas sa,int[][] buildingCost,int[][] repairCost)
     {
-        if(index <= bds.Length)
+        icon.gameObject.SetActive(true);
+        if (index <= bds.Length)
         {
             BuildingData bd = bds[index - 1];
             string name = string.Format("thumb{0}_{1}_{2}@2x", level > bd.level + 1 ? "_gray" : "", index.ToString(), level.ToString());

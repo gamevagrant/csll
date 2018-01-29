@@ -28,12 +28,12 @@ SpriteAtlas:
       enableTightPacking: 0
     packedHash:
       serializedVersion: 2
-      Hash: a6f4c0d8ed0d499de72df85d1061bf2b
+      Hash: aaf2db2b6f7898bf21f9c014cae239db
     variantMultiplier: 1
     bindAsDefault: 0
     finalFormat: 4
-    hashString: a6f4c0d8ed0d499de72df85d1061bf2b
-    totalSpriteSurfaceArea: 724873
+    hashString: aaf2db2b6f7898bf21f9c014cae239db
+    totalSpriteSurfaceArea: 748173
     packables:
     - {fileID: 102900000, guid: 0b888199c5405a743970a785ef62e6dd, type: 3}
     packedSpriteRenderDataKeys:
@@ -41,11 +41,13 @@ SpriteAtlas:
     - 19776aaab8f617d4b983958c81fc1630: 21300000
     - 926b7820247318d4da9d19e70ca33418: 21300000
     - 1e7177b0a035e7448b5e408e2dba728e: 21300000
+    - 318942ce2335747409d7f5a9c2d0ad0b: 21300000
     - 17ce2d65e97f3b1499375b86ef0ef9e2: 21300000
     - f3599aab4cbf35746adfcc60d110b777: 21300000
     - 4ff1eef6a28ecc94098ac174367c4999: 21300000
     - 586b8b36bb35ac74a9219491e0019771: 21300000
     - 66cbb222cca9d1649829b72486461196: 21300000
+    - cc338cc77399b2a4fb758e53bcd3e293: 21300000
     - 7a35469bf00f2e54eb6c7c614ad248d8: 21300000
     - 54d127269a76fb74b81317aeb75a314e: 21300000
     - 92fc999a0a478d04098a1a1447de0fe3: 21300000
@@ -57,11 +59,13 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 19776aaab8f617d4b983958c81fc1630, type: 3}
   - {fileID: 21300000, guid: 926b7820247318d4da9d19e70ca33418, type: 3}
   - {fileID: 21300000, guid: 1e7177b0a035e7448b5e408e2dba728e, type: 3}
+  - {fileID: 21300000, guid: 318942ce2335747409d7f5a9c2d0ad0b, type: 3}
   - {fileID: 21300000, guid: 17ce2d65e97f3b1499375b86ef0ef9e2, type: 3}
   - {fileID: 21300000, guid: f3599aab4cbf35746adfcc60d110b777, type: 3}
   - {fileID: 21300000, guid: 4ff1eef6a28ecc94098ac174367c4999, type: 3}
   - {fileID: 21300000, guid: 586b8b36bb35ac74a9219491e0019771, type: 3}
   - {fileID: 21300000, guid: 66cbb222cca9d1649829b72486461196, type: 3}
+  - {fileID: 21300000, guid: cc338cc77399b2a4fb758e53bcd3e293, type: 3}
   - {fileID: 21300000, guid: 7a35469bf00f2e54eb6c7c614ad248d8, type: 3}
   - {fileID: 21300000, guid: 54d127269a76fb74b81317aeb75a314e, type: 3}
   - {fileID: 21300000, guid: 92fc999a0a478d04098a1a1447de0fe3, type: 3}
@@ -72,11 +76,13 @@ SpriteAtlas:
   - menu_setings_ (9)
   - fb_1
   - fb_3
+  - 012
   - lALPBbCc1TpGnjFEzKY_166_68
   - shezhi_1
   - menu_setings_ (5)
   - menu_setings_ (4)
   - close
+  - icon
   - menu_setings_ (6)
   - menu_setings_ (2)
   - menu_setings_ (3)

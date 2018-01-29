@@ -12,6 +12,7 @@ public class UpdateBaseDataEvent :BaseEvent {
         sheild,//盾牌
         wanted,//通缉令
         vip,//vip
+        island,//岛屿升级
     }
 
     public UpdateType updateType;

@@ -51,6 +51,16 @@ public class UIStealWindow : UIWindowBase {
        
     }
 
+    public override void Init()
+    {
+        base.Init();
+        goldEffect.SetActive(false);
+        victoryTip.gameObject.SetActive(false);
+        effect.gameObject.SetActive(false);
+        stealTips.gameObject.SetActive(false);
+        topBar.gameObject.SetActive(false);
+    }
+
     protected override void StartShowWindow(object[] data)
     {
         StealIslandData[] stealTargets = data[0] as StealIslandData[];
@@ -88,7 +98,7 @@ public class UIStealWindow : UIWindowBase {
                 buttons[i].gameObject.SetActive(false);
         }
 
-        QY.Guide.GuideManager.instance.state = "steal";
+       
     }
 
     protected override void EnterAnimation(Action onComplete)
@@ -117,6 +127,7 @@ public class UIStealWindow : UIWindowBase {
         });
         
         sq.onComplete += () => {
+            QY.Guide.GuideManager.instance.state = "steal";
             onComplete();
         };
     }
@@ -225,11 +236,12 @@ public class UIStealWindow : UIWindowBase {
 
     public void OnClickOkBtn()
     {
-        Dictionary<UISettings.UIWindowID, object> data = new Dictionary<UISettings.UIWindowID, object>();
-        data.Add(UISettings.UIWindowID.UITopBarWindow, null);
-        data.Add(UISettings.UIWindowID.UIWheelWindow, null);
-        data.Add(UISettings.UIWindowID.UISideBarWindow, null);
-        GameMainManager.instance.uiManager.ChangeState(new UIStateChangeBase(data,null,3));
+        //Dictionary<UISettings.UIWindowID, object> data = new Dictionary<UISettings.UIWindowID, object>();
+        //data.Add(UISettings.UIWindowID.UITopBarWindow, null);
+        // data.Add(UISettings.UIWindowID.UIWheelWindow, null);
+        //data.Add(UISettings.UIWindowID.UISideBarWindow, null);
+        goldEffect.SetActive(false);
+        GameMainManager.instance.uiManager.ChangeState(new MainState(3));
     }
 
 }

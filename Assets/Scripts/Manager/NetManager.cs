@@ -46,6 +46,15 @@ public class NetManager:INetManager
         }
     }
 
+    private string language
+    {
+        get
+        {
+            return "zh_CN";
+        }
+
+    }
+
     private string MakeUrl(string domain, string api)
     {
         string str = string.Format("{0}/{1}", domain, api);
@@ -70,8 +79,13 @@ public class NetManager:INetManager
         wsp.onMessage += (str) => 
         {
             Debug.Log("onMessage" + str);
-            MessageResponseData msg = LitJson.JsonMapper.ToObject<MessageResponseData>(str);
-            GameMainManager.instance.websocketMsgManager.SendMsg(msg);
+            if (!GameMainManager.instance.model.userData.isTutorialing)
+            {
+                MessageResponseData msg = LitJson.JsonMapper.ToObject<MessageResponseData>(str);
+                GameMainManager.instance.websocketMsgManager.SendMsg(msg);
+            }
+            
+           
 
             //Debug.Log("假数据");
             //string json = "{\"uid\":101,\"toid\":2,\"action\":1,\"result\":0,\"time\":\"2006-01-0215:04:05\",\"name\":\"Badlwin\",\"headImg\":\"http://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIUKt2UaM9cibOM5RsVDyibbbr1tUHia1jR1eibsjGgmXm2BBAFQbosuBPx4sX4hY50j0Jzhu3y4hx2rQ/0\",\"Crowns\":100,\"extra\":{\"crows\":138,\"building\":{\"isShield\":false,\"level\":1,\"status\":1},\"building_index\":1,\"isShielded\":false},\"read\":false,\"isWanted\":false,\"isVip\":false}";
@@ -88,12 +102,24 @@ public class NetManager:INetManager
         
     }
 
+    private void AlertError(NetMessage res,string title)
+    {
+        if(!res.isOK)
+        {
+            
+            string describe = GameMainManager.instance.configManager.errorDescribeConfig.GetDescribe(res.errcode.ToString(), res.errmsg);
+            Debug.Log(title + ":" + describe);
+            Alert.Show(string.Format("{0}\n{1}:{2}", describe , title, res.errcode ));
+        }
+       
+    }
 
     public bool Login(string openid, Action<bool,LoginMessage> callBack)
     {
         string url = MakeUrl(APIDomain, "game/basic/login");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("userId", openid);
+        data.Add("locale", language);
         return HttpProxy.SendPostRequest<LoginMessage>(url,data, (ret, res) => {
             if (res.isOK)
             {
@@ -120,6 +146,7 @@ public class NetManager:INetManager
         data.Add("uid", uid);
         data.Add("token", token);
         data.Add("t", time.ToString());
+        data.Add("locale", language);
         return HttpProxy.SendPostRequest<TutorialCompleteMessage>(url, data, (ret, res) => {
 
             callBack(ret, res);
@@ -151,6 +178,7 @@ public class NetManager:INetManager
         data.Add("uid", uid);
         data.Add("token", token);
         data.Add("t", time.ToString());
+        data.Add("locale", language);
         return HttpProxy.SendPostRequest<RollMessage>(url, data, (ret, res) => {
             Waiting.Disable();
             //---盾牌---
@@ -189,12 +217,11 @@ public class NetManager:INetManager
                     msg.headImg = user.newbie_attack_target.headImg;
                     GameMainManager.instance.websocketMsgManager.SendMsg(msg);
                 }
-
+                EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_REDDOT));
             }
             else
             {
-                Debug.Log("roll点失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "转盘失败", res.errcode));
+                AlertError(res, "转盘失败");
             }
            
         });
@@ -212,6 +239,7 @@ public class NetManager:INetManager
         data.Add("uid", uid);
         data.Add("token", token);
         data.Add("t", time.ToString());
+        data.Add("locale", language);
         data.Add("island",islandID);
         data.Add("building", buildIndex);
         return HttpProxy.SendPostRequest<BuildMessage>(url, data, (ret, res) => {
@@ -242,13 +270,13 @@ public class NetManager:INetManager
                 {
                     user.money = res.data.upgradeMoneyAfterReward;
                     user.energy = res.data.upgradeEnergyAfterReward;
+                    EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.island,0));
                 }
-
+                EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_REDDOT));
             }
             else
             {
-                Debug.Log("建造失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "建造失败", res.errcode));
+                AlertError(res, "建造失败");
             }
             
         });
@@ -262,6 +290,7 @@ public class NetManager:INetManager
         data.Add("uid", uid);
         data.Add("token", token);
         data.Add("t",time.ToString());
+        data.Add("locale", language);
         data.Add("puid", puid);
         data.Add("building", buildIndex);
         return HttpProxy.SendPostRequest<AttackMessage>(url, data, (ret, res) => {
@@ -280,8 +309,7 @@ public class NetManager:INetManager
             }
             else
             {
-                Debug.Log("攻击失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "攻击失败", res.errcode));
+                AlertError(res, "攻击失败");
             }
             
         });
@@ -295,6 +323,7 @@ public class NetManager:INetManager
         data.Add("uid", uid);
         data.Add("token", token);
         data.Add("t", time.ToString());
+        data.Add("locale", language);
         data.Add("idx", idx);
         return HttpProxy.SendPostRequest<StealMessage>(url, data, (ret, res) => {
             Waiting.Disable();
@@ -315,8 +344,7 @@ public class NetManager:INetManager
             }
             else
             {
-                Debug.Log("偷取失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "偷取失败", res.errcode));
+                AlertError(res, "偷取失败");
             }
             
         });
@@ -329,6 +357,7 @@ public class NetManager:INetManager
         data.Add("uid", uid);
         data.Add("token", token);
         data.Add("t", time.ToString());
+        data.Add("locale", language);
         return HttpProxy.SendPostRequest<BadGuyMessage>(url, data, (ret, res) => {
 
             callBack(ret, res);
@@ -338,8 +367,7 @@ public class NetManager:INetManager
             }
             else
             {
-                Debug.Log("获取恶人失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "获取恶人列表失败", res.errcode));
+                AlertError(res, "获取恶人列表失败");
             }
             
         });
@@ -352,6 +380,7 @@ public class NetManager:INetManager
         data.Add("uid", uid);
         data.Add("token", token);
         data.Add("t", time.ToString());
+        data.Add("locale", language);
         return HttpProxy.SendPostRequest<VengeanceMessage>(url, data, (ret, res) => {
 
             callBack(ret, res);
@@ -377,6 +406,7 @@ public class NetManager:INetManager
         data.Add("uid", uid);
         data.Add("token", token);
         data.Add("t", time.ToString());
+        data.Add("locale", language);
         return HttpProxy.SendPostRequest<ShowMessage>(url, data, (ret, res) => {
 
             callBack(ret, res);
@@ -386,8 +416,7 @@ public class NetManager:INetManager
             }
             else
             {
-                Debug.Log("获取玩家信息失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "获取玩家信息失败", res.errcode));
+                AlertError(res, "获取玩家信息失败");
             }
 
         });
@@ -401,18 +430,19 @@ public class NetManager:INetManager
         data.Add("uid", uid);
         data.Add("token", token);
         data.Add("t", time.ToString());
+        data.Add("locale", language);
         return HttpProxy.SendPostRequest<FriendMessage>(url, data, (ret, res) => {
-
             callBack(ret, res);
             if (res.isOK)
             {
                 GameMainManager.instance.model.userData.friendInfo = res.data.friends;
                 GameMainManager.instance.model.userData.friendNotAgreeInfo = res.data.friendsNotAgree;
+
+                
             }
             else
             {
-                Debug.Log("获取好友列表数据:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "获取好友列表数据", res.errcode));
+                AlertError(res, "获取好友列表失败");
             }
 
         });
@@ -427,6 +457,7 @@ public class NetManager:INetManager
         data.Add("uid", uid);
         data.Add("token", token);
         data.Add("t", time.ToString());
+        data.Add("locale", language);
         return HttpProxy.SendPostRequest<AgreeAddFriendMessage>(url, data, (ret, res) => {
             Waiting.Disable();
             callBack(ret, res);
@@ -437,11 +468,11 @@ public class NetManager:INetManager
                 GameMainManager.instance.model.userData.friendNotAgreeInfo = agreeAddFriendData.friendsNotAgree;
 
                 EventDispatcher.instance.DispatchEvent(new UpdateFriendsEvent(UpdateFriendsEvent.UpdateType.AgreeFriend));
+                EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_REDDOT));
             }
             else
             {
-                Debug.Log("同意好友申请失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "同意好友申请失败", res.errcode));
+                AlertError(res, "同意好友申请失败");
             }
 
         });
@@ -455,6 +486,7 @@ public class NetManager:INetManager
         data.Add("uid", uid);
         data.Add("token", token);
         data.Add("t", time.ToString());
+        data.Add("locale", language);
         return HttpProxy.SendPostRequest<FriendMessage>(url, data, (ret, res) => {
             Waiting.Disable();
             callBack(ret, res);
@@ -464,11 +496,11 @@ public class NetManager:INetManager
                 GameMainManager.instance.model.userData.friendInfo = friendData.friends;
                 GameMainManager.instance.model.userData.friendNotAgreeInfo = friendData.friendsNotAgree;
                 EventDispatcher.instance.DispatchEvent(new UpdateFriendsEvent(UpdateFriendsEvent.UpdateType.AgreeFriend));
+                EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_REDDOT));
             }
             else
             {
-                Debug.Log("同意所有添加好友失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "同意所有添加好友失败", res.errcode));
+                AlertError(res, "同意所有好友请求失败");
             }
 
         });
@@ -483,6 +515,7 @@ public class NetManager:INetManager
         data.Add("uid", uid);
         data.Add("token", token);
         data.Add("t", time.ToString());
+        data.Add("locale", language);
         return HttpProxy.SendPostRequest<FriendMessage>(url, data, (ret, res) => {
             Waiting.Disable();
             callBack(ret, res);
@@ -491,11 +524,11 @@ public class NetManager:INetManager
                 FriendsData friendData = res.data;
                 GameMainManager.instance.model.userData.friendInfo = friendData.friends;
                 GameMainManager.instance.model.userData.friendNotAgreeInfo = friendData.friendsNotAgree;
+                EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_REDDOT));
             }
             else
             {
-                Debug.Log("添加好友失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "添加好友失败", res.errcode));
+                AlertError(res, "添加好友失败");
             }
 
         });
@@ -512,6 +545,7 @@ public class NetManager:INetManager
         data.Add("uid", uid);
         data.Add("token", token);
         data.Add("t", time.ToString());
+        data.Add("locale", language);
         return HttpProxy.SendPostRequest<FriendMessage>(url, data, (ret, res) => {
             Waiting.Disable();
             callBack(ret, res);
@@ -522,11 +556,11 @@ public class NetManager:INetManager
                 GameMainManager.instance.model.userData.friendNotAgreeInfo = friendData.friendsNotAgree;
                 EventDispatcher.instance.DispatchEvent(new UpdateFriendsEvent(UpdateFriendsEvent.UpdateType.IgnoreFriend ));
                 EventDispatcher.instance.DispatchEvent(new UpdateFriendsEvent(UpdateFriendsEvent.UpdateType.RemoveFriend));
+                EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_REDDOT));
             }
             else
             {
-                Debug.Log("忽略好友失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "忽略好友失败", res.errcode));
+                AlertError(res, "忽略好友请求失败");
             }
 
         });
@@ -540,6 +574,7 @@ public class NetManager:INetManager
         data.Add("uid", uid);
         data.Add("token", token);
         data.Add("t", time.ToString());
+        data.Add("locale", language);
         return HttpProxy.SendPostRequest<FriendMessage>(url, data, (ret, res) => {
             Waiting.Disable();
             callBack(ret, res);
@@ -549,11 +584,11 @@ public class NetManager:INetManager
                 GameMainManager.instance.model.userData.friendInfo = friendData.friends;
                 GameMainManager.instance.model.userData.friendNotAgreeInfo = friendData.friendsNotAgree;
                 EventDispatcher.instance.DispatchEvent(new UpdateFriendsEvent(UpdateFriendsEvent.UpdateType.IgnoreFriend));
+                EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_REDDOT));
             }
             else
             {
-                Debug.Log("忽略所有好友失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "忽略所有好友失败", res.errcode));
+                AlertError(res, "忽略所有好友请求失败");
             }
 
         });
@@ -568,27 +603,31 @@ public class NetManager:INetManager
         data.Add("uid", uid);
         data.Add("token", token);
         data.Add("t", time.ToString());
+        data.Add("locale", language);
         return HttpProxy.SendPostRequest<SendEnergyMessage>(url, data, (ret, res) => {
             Waiting.Disable();
             callBack(ret, res);
             if (res.isOK)
             {
-                FriendData[] friends = res.data;
-                for(int i = 0;i<GameMainManager.instance.model.userData.friendInfo.Length;i++)
+                if(GameMainManager.instance.model.userData.friendInfo!=null)
                 {
-                    FriendData fd = GameMainManager.instance.model.userData.friendInfo[i];
-                    if (fd.uid == res.data[0].uid)
+                    FriendData[] friends = res.data;
+                    for (int i = 0; i < GameMainManager.instance.model.userData.friendInfo.Length; i++)
                     {
-                        GameMainManager.instance.model.userData.friendInfo[i] = friends[0];
-                        break;
+                        FriendData fd = GameMainManager.instance.model.userData.friendInfo[i];
+                        if (fd.uid == res.data[0].uid)
+                        {
+                            GameMainManager.instance.model.userData.friendInfo[i] = friends[0];
+                            break;
+                        }
                     }
+                    EventDispatcher.instance.DispatchEvent(new UpdateFriendsEvent(UpdateFriendsEvent.UpdateType.SendEnergy));
+                    EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_REDDOT));
                 }
-                EventDispatcher.instance.DispatchEvent(new UpdateFriendsEvent(UpdateFriendsEvent.UpdateType.SendEnergy));
             }
             else
             {
-                Debug.Log("赠送好友能量失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "赠送好友能量失败", res.errcode));
+                AlertError(res, "赠送好友能量失败");
             }
 
         });
@@ -603,6 +642,7 @@ public class NetManager:INetManager
         data.Add("uid", uid);
         data.Add("token", token);
         data.Add("t", time.ToString());
+        data.Add("locale", language);
         return HttpProxy.SendPostRequest<ReceiveEnergyMessage>(url, data, (ret, res) => {
             Waiting.Disable();
             callBack(ret, res);
@@ -619,22 +659,27 @@ public class NetManager:INetManager
                 ud.dailyLimit = receiveFromData.dailyLimit;
                 ud.friendInfo = receiveFromData.friends;
 
-                for (int i = 0; i < GameMainManager.instance.model.userData.friendInfo.Length; i++)
+                if (GameMainManager.instance.model.userData.friendInfo!=null)
                 {
-                    FriendData fd = GameMainManager.instance.model.userData.friendInfo[i];
-                    if (fd.uid == receiveFromData.friends[0].uid)
+                    for (int i = 0; i < GameMainManager.instance.model.userData.friendInfo.Length; i++)
                     {
-                        GameMainManager.instance.model.userData.friendInfo[i] = receiveFromData.friends[0];
-                        break;
+                        FriendData fd = GameMainManager.instance.model.userData.friendInfo[i];
+                        if (fd.uid == receiveFromData.friends[0].uid)
+                        {
+                            GameMainManager.instance.model.userData.friendInfo[i] = receiveFromData.friends[0];
+                            break;
+                        }
                     }
+                    EventDispatcher.instance.DispatchEvent(new UpdateFriendsEvent(UpdateFriendsEvent.UpdateType.ReceiveEnergy));
+                    EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_REDDOT));
                 }
 
-                EventDispatcher.instance.DispatchEvent(new UpdateFriendsEvent(UpdateFriendsEvent.UpdateType.ReceiveEnergy));
+                EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Energy,0));
+
             }
             else
             {
-                Debug.Log("接受好友能量失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "接受好友能量失败", res.errcode));
+                AlertError(res, "接收好友能量失败");
             }
 
         });
@@ -647,6 +692,7 @@ public class NetManager:INetManager
         data.Add("uid", uid);
         data.Add("token", token);
         data.Add("t", time.ToString());
+        data.Add("locale", language);
         return HttpProxy.SendPostRequest<ShopMessage>(url, data, (ret, res) => {
 
             callBack(ret, res);
@@ -656,8 +702,7 @@ public class NetManager:INetManager
             }
             else
             {
-                Debug.Log("获取商店数据失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "获取商店数据失败", res.errcode));
+                AlertError(res, "获取商店数据失败");
             }
 
         });
@@ -670,6 +715,7 @@ public class NetManager:INetManager
         data.Add("uid", uid);
         data.Add("token", token);
         data.Add("t", time.ToString());
+        data.Add("locale", language);
         return HttpProxy.SendPostRequest<AllRankMessage>(url, data, (ret, res) => {
 
             callBack(ret, res);
@@ -679,8 +725,7 @@ public class NetManager:INetManager
             }
             else
             {
-                Debug.Log("获取世界排行榜失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "获取世界排行榜失败", res.errcode));
+                AlertError(res, "获取世界排行榜列表失败");
             }
 
         });
@@ -693,6 +738,7 @@ public class NetManager:INetManager
         data.Add("uid", uid);
         data.Add("token", token);
         data.Add("t", time.ToString());
+        data.Add("locale", language);
         return HttpProxy.SendPostRequest<SendEnergyMessage>(url, data, (ret, res) => {
 
             callBack(ret, res);
@@ -702,8 +748,7 @@ public class NetManager:INetManager
             }
             else
             {
-                Debug.Log("获取好友排行榜失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "获取好友排行榜失败", res.errcode));
+                AlertError(res, "获取好友排行榜失败");
             }
 
         });
@@ -716,6 +761,7 @@ public class NetManager:INetManager
         data.Add("uid", uid);
         data.Add("token", token);
         data.Add("t", time.ToString());
+        data.Add("locale", language);
         return HttpProxy.SendPostRequest<GetMapMessage>(url, data, (ret, res) => {
             callBack(ret, res);
             if (res.isOK)
@@ -724,8 +770,7 @@ public class NetManager:INetManager
             }
             else
             {
-                Debug.Log("获取地图数据失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "获取地图数据失败", res.errcode));
+                AlertError(res, "获取地图数据失败");
             }
 
         });
@@ -740,6 +785,7 @@ public class NetManager:INetManager
         data.Add("uid", uid);
         data.Add("token", token);
         data.Add("t", time.ToString());
+        data.Add("locale", language);
         return HttpProxy.SendPostRequest<BuyMinerMessage>(url, data, (ret, res) => {
             Waiting.Disable();
             callBack(ret, res);
@@ -753,11 +799,11 @@ public class NetManager:INetManager
 
                 EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_MAPINFO));
                 EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Money,0));
+                EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_REDDOT));
             }
             else
             {
-                Debug.Log("购买矿工失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "购买矿工失败", res.errcode));
+                AlertError(res, "购买矿工失败");
             }
 
         });
@@ -771,6 +817,7 @@ public class NetManager:INetManager
         data.Add("uid", uid);
         data.Add("token", token);
         data.Add("t", time.ToString());
+        data.Add("locale", language);
         return HttpProxy.SendPostRequest<BuyMinerMessage>(url, data, (ret, res) => {
             Waiting.Disable();
             callBack(ret, res);
@@ -782,11 +829,11 @@ public class NetManager:INetManager
                 user.money = buyMinerData.money;
                 user.mapInfo = buyMinerData.mapInfo;
                 EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Money,0));
+                EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_REDDOT));
             }
             else
             {
-                Debug.Log("获取采矿金币失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "获取采矿金币失败", res.errcode));
+                AlertError(res, "获取采矿金币失败");
             }
 
         });
@@ -801,6 +848,7 @@ public class NetManager:INetManager
         data.Add("uid", uid);
         data.Add("token", token);
         data.Add("t", time.ToString());
+        data.Add("locale", language);
         return HttpProxy.SendPostRequest<WantedMessage>(url, data, (ret, res) => {
             Waiting.Disable();
             callBack(ret, res);
@@ -811,8 +859,7 @@ public class NetManager:INetManager
             }
             else
             {
-                Debug.Log("通缉玩家失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "通缉玩家失败", res.errcode));
+                AlertError(res, "通缉玩家失败");
             }
 
         });
@@ -825,6 +872,7 @@ public class NetManager:INetManager
         data.Add("uid", uid);
         data.Add("token", token);
         data.Add("t", time.ToString());
+        data.Add("locale", language);
         return HttpProxy.SendPostRequest<MessageMailMessage>(url, data, (ret, res) => {
 
             callBack(ret, res);
@@ -835,8 +883,7 @@ public class NetManager:INetManager
             }
             else
             {
-                Debug.Log("获取消息和邮件失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "获取消息和邮件失败", res.errcode));
+                AlertError(res, "获取消息和邮件列表失败");
             }
 
         });
@@ -844,14 +891,16 @@ public class NetManager:INetManager
 
     public bool GetReward(int index,Action<bool, GetRewardMessage> callBack)
     {
+        Waiting.Enable();
         string url = MakeUrl(APIDomain, "game/mail/getReward");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("idx", index);
         data.Add("uid", uid);
         data.Add("token", token);
         data.Add("t", time.ToString());
+        data.Add("locale", language);
         return HttpProxy.SendPostRequest<GetRewardMessage>(url, data, (ret, res) => {
-
+            Waiting.Disable();
             //string str = "{\"errcode\":0,\"errmsg\":\"\",\"data\":{\"user_mail\":[{\"type\":2,\"tittle\":\"VIP特权 每日能量10\",\"desc\":\"VIP特权 每日能量10\",\"reward\":[{\"type\":\"energy\",\"num\":10,\"name\":\"\"}],\"is_get\":2,\"time\":\"今天 09:43:48\"},{\"type\":2,\"tittle\":\"VIP特权 每日能量10\",\"desc\":\"VIP特权 每日能量10\",\"reward\":[{\"type\":\"energy\",\"num\":10,\"name\":\"\"}],\"is_get\":1,\"time\":\"昨天 2017-11-16 13:53:45\"},{\"type\":2,\"tittle\":\"VIP特权 每日能量10\",\"desc\":\"VIP特权 每日能量10\",\"reward\":[{\"type\":\"energy\",\"num\":10,\"name\":\"\"}],\"is_get\":1,\"time\":\"前天 2017-11-15 13:34:47\"},{\"type\":2,\"tittle\":\"VIP特权 每日能量10\",\"desc\":\"VIP特权 每日能量10\",\"reward\":[{\"type\":\"energy\",\"num\":10,\"name\":\"\"}],\"is_get\":2,\"time\":\"2017-11-14 15:15:20\"},{\"type\":2,\"tittle\":\"VIP特权 每日能量10\",\"desc\":\"VIP特权 每日能量10\",\"reward\":[{\"type\":\"energy\",\"num\":10,\"name\":\"\"}],\"is_get\":1,\"time\":\"2017-11-13 10:02:43\"}],\"user_rewards\":[{\"type\":\"energy\",\"count\":415,\"num\":10,\"name\":\"\"},{\"type\":\"money\",\"count\":415,\"num\":10,\"name\":\"\"}]}}";
             //res = LitJson.JsonMapper.ToObject<GetRewardMessage>(str);
             //Debug.Log("假数据");
@@ -859,11 +908,219 @@ public class NetManager:INetManager
             if (res.isOK)
             {
                 GameMainManager.instance.model.userData.user_mail = res.data.user_mail;
+                EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_REDDOT));
             }
             else
             {
-                Debug.Log("获取奖励失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "获取奖励失败", res.errcode));
+                AlertError(res, "获取奖励失败");
+            }
+
+        });
+    }
+
+    public bool GetDailyTask(Action<bool, DailyTaskMessage> callBack)
+    {
+        string url = MakeUrl(APIDomain, "game/dailyTask");
+        Dictionary<string, object> data = new Dictionary<string, object>();
+        data.Add("uid", uid);
+        data.Add("token", token);
+        data.Add("t", time.ToString());
+        data.Add("locale", language);
+        return HttpProxy.SendPostRequest<DailyTaskMessage>(url, data, (ret, res) => {
+
+            callBack(ret, res);
+            if (res.isOK)
+            {
+                GameMainManager.instance.model.userData.daily_task = res.data.daily_task;
+            }
+            else
+            {
+                AlertError(res, "获取每日任务数据失败");
+            }
+
+        });
+    }
+
+    public bool GetDailyTaskReward(int type, Action<bool, DailyTaskMessage> callBack)
+    {
+        Waiting.Enable();
+        string url = MakeUrl(APIDomain, "game/dailyTask/reward");
+        Dictionary<string, object> data = new Dictionary<string, object>();
+        data.Add("task_type", type);
+        data.Add("uid", uid);
+        data.Add("token", token);
+        data.Add("t", time.ToString());
+        data.Add("locale", language);
+        return HttpProxy.SendPostRequest<DailyTaskMessage>(url, data, (ret, res) => {
+            Waiting.Disable();
+            callBack(ret, res);
+            if (res.isOK)
+            {
+                GameMainManager.instance.model.userData.daily_task = res.data.daily_task;
+                GameMainManager.instance.model.userData.money = res.data.money;
+                GameMainManager.instance.model.userData.energy = res.data.energy;
+
+                EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_REDDOT));
+            }
+            else
+            {
+                AlertError(res, "获取每日任务奖励失败");
+            }
+
+        });
+    }
+
+    public bool GetDailyLoginReward(Action<bool, DailyLoginMessage> callBack)
+    {
+        Waiting.Enable();
+        string url = MakeUrl(APIDomain, "game/dailyPrize/get-prize");
+        Dictionary<string, object> data = new Dictionary<string, object>();
+        data.Add("type", "daily");
+        data.Add("uid", uid);
+        data.Add("token", token);
+        data.Add("t", time.ToString());
+        data.Add("locale", language);
+        return HttpProxy.SendPostRequest<DailyLoginMessage>(url, data, (ret, res) => {
+            Waiting.Disable();
+            callBack(ret, res);
+            if (res.isOK)
+            {
+                UserData user = GameMainManager.instance.model.userData;
+                user.money = res.data.money;
+                user.energy = res.data.energy;
+                user.wantedCount = res.data.wanted_count;
+                user.dailyPrizeDay = res.data.dailyPrizeDay;
+                user.daily_prize_limit = res.data.daily_prize_limit;
+                user.weekly_prize_confs = res.data.weekly_prize_confs;
+
+                EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_REDDOT));
+            }
+            else
+            {
+                AlertError(res, "获取每日登录奖励失败");
+            }
+
+        });
+    }
+
+    public bool GetWeeklyLoginReward(int day,Action<bool, DailyLoginMessage> callBack)
+    {
+        Waiting.Enable();
+        string url = MakeUrl(APIDomain, "game/dailyPrize/get-prize");
+        Dictionary<string, object> data = new Dictionary<string, object>();
+        data.Add("type", "weekly");
+        data.Add("day", day);
+        data.Add("uid", uid);
+        data.Add("token", token);
+        data.Add("t", time.ToString());
+        data.Add("locale", language);
+        return HttpProxy.SendPostRequest<DailyLoginMessage>(url, data, (ret, res) => {
+            Waiting.Disable();
+            callBack(ret, res);
+            if (res.isOK)
+            {
+                UserData user = GameMainManager.instance.model.userData;
+                user.money = res.data.money;
+                user.energy = res.data.energy;
+                user.wantedCount = res.data.wanted_count;
+                user.dailyPrizeDay = res.data.dailyPrizeDay;
+                user.daily_prize_limit = res.data.daily_prize_limit;
+                user.weekly_prize_confs = res.data.weekly_prize_confs;
+
+                EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_REDDOT));
+            }
+            else
+            {
+                AlertError(res, "获取连续登录奖励失败");
+            }
+
+        });
+    }
+
+    public bool GetDailyEnergyReward(Action<bool, DailyEnergyMessage> callBack)
+    {
+        Waiting.Enable();
+        string url = MakeUrl(APIDomain, "game/user/get-daily-energy-reward");
+        Dictionary<string, object> data = new Dictionary<string, object>();
+        data.Add("uid", uid);
+        data.Add("token", token);
+        data.Add("t", time.ToString());
+        data.Add("locale", language);
+        return HttpProxy.SendPostRequest<DailyEnergyMessage>(url, data, (ret, res) => {
+            Waiting.Disable();
+            callBack(ret, res);
+            if (res.isOK)
+            {
+                UserData user = GameMainManager.instance.model.userData;
+                user.money = res.data.money;
+                user.energy = res.data.energy;
+                user.daily_energy = res.data.daily_energy;
+
+                EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_REDDOT));
+                EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Energy,0));
+                EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Money, 0));
+            }
+            else
+            {
+                AlertError(res, "获取每日能量奖励失败");
+            }
+
+        });
+    }
+
+    public bool UseExchangeCode(string code,Action<bool, ExchangeCodeMessage> callBack)
+    {
+        Waiting.Enable();
+        string url = MakeUrl(APIDomain, "active_redeem_code");
+        Dictionary<string, object> data = new Dictionary<string, object>();
+        data.Add("code", code);
+        data.Add("uid", uid);
+        data.Add("token", token);
+        data.Add("t", time.ToString());
+        data.Add("locale", language);
+        return HttpProxy.SendPostRequest<ExchangeCodeMessage>(url, data, (ret, res) => {
+            Waiting.Disable();
+            callBack(ret, res);
+            if (res.isOK)
+            {
+                UserData user = GameMainManager.instance.model.userData;
+                user.money = res.data.user_state.money;
+                user.energy = res.data.user_state.energy;
+                user.wantedCount = res.data.user_state.wanted;
+                user.vip_days = res.data.user_state.vip;
+
+            }
+            else
+            {
+                AlertError(res, "使用兑换码失败");
+            }
+
+        });
+    }
+    public bool GetBindingReward(Action<bool, GetBindingRewardMessage> callBack)
+    {
+        Waiting.Enable();
+        string url = MakeUrl(APIDomain, "game/user/bind-fb-reward");
+        Dictionary<string, object> data = new Dictionary<string, object>();
+        data.Add("uid", uid);
+        data.Add("token", token);
+        data.Add("t", time.ToString());
+        data.Add("locale", language);
+        return HttpProxy.SendPostRequest<GetBindingRewardMessage>(url, data, (ret, res) => {
+            Waiting.Disable();
+            callBack(ret, res);
+            if (res.isOK)
+            {
+                if(res.data.rewarded)
+                {
+                    GameMainManager.instance.model.userData.money = res.data.money;
+                    GameMainManager.instance.model.userData.energy = res.data.energy;
+                }
+                
+            }
+            else
+            {
+                AlertError(res, "获取绑定奖励失败");
             }
 
         });
@@ -897,7 +1154,7 @@ public class NetManager:INetManager
             else
             {
                 Debug.Log("注册失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", res.errmsg, res.errcode));
+                AlertError(res, "注册失败");
             }
             callBack(ret, res);
         });
@@ -957,6 +1214,7 @@ public class NetManager:INetManager
 
     public bool BindAccount(string uuid, string accessToken, Action<bool, LoginMessage> callBack)
     {
+        Waiting.Enable();
         return Register(accessToken, uuid, "", (ret, res) =>
         {
             if (res.isOK)
@@ -965,6 +1223,7 @@ public class NetManager:INetManager
                 Login(openID, (rs, rt) =>
                 {
                     callBack(rs, rt);
+                    Waiting.Disable();
                 });
             }
 
@@ -979,6 +1238,7 @@ public class NetManager:INetManager
         data.Add("type", "get");
         data.Add("token", token);
         data.Add("t", time.ToString());
+        data.Add("locale", language);
         return HttpProxy.SendPostRequest<InviteProgressMessage>(url, data, (ret, res) => 
         {
             callBack(ret, res);
@@ -988,13 +1248,17 @@ public class NetManager:INetManager
             }
             else
             {
-                Debug.Log("获取好友邀请进度失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "获取好友邀请进度失败", res.errcode));
+                AlertError(res, "获取好友邀请进度失败");
             }
             
         });
     }
-
+    /// <summary>
+    /// 服务器只接受这个玩家第一次给服务器传输的值，之后不管传什么服务器都忽略
+    /// </summary>
+    /// <param name="limit">玩家好友总数</param>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
     public bool SetInviteProgress(int limit, Action<bool, NetMessage> callBack)
     {
         string url = MakeUrl(APIDomain, "game/friend/getinvitetimesfb");
@@ -1004,6 +1268,7 @@ public class NetManager:INetManager
         data.Add("uid", uid);
         data.Add("token", token);
         data.Add("t", time.ToString());
+        data.Add("locale", language);
         return HttpProxy.SendPostRequest<NetMessage>(url, data, (ret, res) =>
         {
             callBack(ret, res);
@@ -1013,8 +1278,7 @@ public class NetManager:INetManager
             }
             else
             {
-                Debug.Log("设置好友邀请进度失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "设置好友邀请进度失败", res.errcode));
+                AlertError(res, "设置好友邀请进度失败");
             }
 
         });
@@ -1029,8 +1293,13 @@ public class NetManager:INetManager
         data.Add("uid", uid);
         data.Add("token", token);
         data.Add("t", time.ToString());
+        data.Add("locale", language);
         return HttpProxy.SendPostRequest<RecallableFriendsMessage>(url, data, (ret, res) =>
         {
+
+            //string str = "{\"errcode\":0,\"errmsg\":\"\",\"data\":{\"energy\":80,\"invite_friend_rewards\":[{\"inviteid\":5,\"status\":2,\"username\":\"Gate\",\"avatar\":\"https://scontent.xx.fbcdn.net/v/t1.0-1/c15.0.50.50/p50x50/10354686_10150004552801856_220367501106153455_n.jpg?oh=baf3745408876788393e9ca2b7e1dc94\\u0026oe=5AEBF02F\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":6,\"status\":1,\"username\":\"丁\",\"avatar\":\"https://fb-s-d-a.akamaihd.net/h-ak-fbx/v/t1.0-1/p50x50/10614282_1505946006356965_6697104434960231799_n.jpg?oh=f41868d6bff943293b26dc768037c7ca\\u0026oe=5AF7335E\\u0026__gda__=1521984518_9dfd0faf60fb015970eec26912c13035\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":8,\"status\":2,\"username\":\"Jean\",\"avatar\":\"https://fb-s-a-a.akamaihd.net/h-ak-fbx/v/t1.0-1/p50x50/22365671_1728681307441350_6216030377069998149_n.jpg?oh=9f75b7fe2f328f35db4b1fc51429ffd9\\u0026oe=5AF33102\\u0026__gda__=1522228570_4f2b07de776c1875e908ee593c778f20\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":9,\"status\":1,\"username\":\"Hang\",\"avatar\":\"https://fb-s-b-a.akamaihd.net/h-ak-fbx/v/t1.0-1/p50x50/19642304_144982612719109_4110249026914219834_n.jpg?oh=f4c0e9fe75701be07e183f2459a23fad\\u0026oe=5AF571BF\\u0026__gda__=1526654856_2eb0df86869c9bbedf9edba8c2a80397\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"card_fish\",\"num\":2,\"name\":\"\"}]},{\"inviteid\":10,\"status\":1,\"username\":\"LA\",\"avatar\":\"https://fb-s-a-a.akamaihd.net/h-ak-fbx/v/t1.0-1/p50x50/18275048_1874003102865060_5753162286318835280_n.jpg?oh=6d7d71064e8f6d0f200b088b11bbf734\\u0026oe=5AEBA356\\u0026__gda__=1525637134_a75ba3a1645cd1857c723bc9c55dad95\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":11,\"status\":2,\"username\":\"Lucas\",\"avatar\":\"https://scontent.xx.fbcdn.net/v/t1.0-1/p50x50/16114617_1857122721190863_9048009966077545334_n.jpg?oh=927a73318a84f46178703d9a176b5c3d\\u0026oe=5AF17A51\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":12,\"status\":1,\"username\":\"岳松\",\"avatar\":\"https://fb-s-c-a.akamaihd.net/h-ak-fbx/v/t1.0-1/p50x50/17799337_1013087895489876_7747316675865790869_n.jpg?oh=1f7e2a1c9b826d7cfdc5f3f51209ea55\\u0026oe=5AC84270\\u0026__gda__=1521541416_9c07b70aa926a7a1ff274119a0a13fbc\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":13,\"status\":1,\"username\":\"Gag\",\"avatar\":\"https://fb-s-b-a.akamaihd.net/h-ak-fbx/v/t1.0-1/c15.0.50.50/p50x50/10354686_10150004552801856_220367501106153455_n.jpg?oh=24b240ba2dc60ad31b4319fbab9bb9e2\\u0026oe=5A9CD62F\\u0026__gda__=1520094980_a601a89ba8df1e143766ac8d4b420fed\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"card_fish\",\"num\":2,\"name\":\"\"}]},{\"inviteid\":14,\"status\":1,\"username\":\"Long\",\"avatar\":\"https://fb-s-a-a.akamaihd.net/h-ak-fbx/v/t1.0-1/p50x50/15390901_380537415621231_1094469819110871313_n.jpg?oh=3c8b15e903f7e9897047a223ecf3e3dd\\u0026oe=5AB9D365\\u0026__gda__=1523948882_a69f01d90447d1629270e1ed57723801\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":15,\"status\":1,\"username\":\"Harsha Rao\",\"avatar\":\"https://www.nutsgamer.com/images/avatars/1.jpg\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"vip\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":16,\"status\":1,\"username\":\"Sara Abhari\",\"avatar\":\"https://www.nutsgamer.com/images/avatars/2.jpg\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":17,\"status\":1,\"username\":\"Wee Lim\",\"avatar\":\"https://www.nutsgamer.com/images/avatars/3.jpg\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"},{\"type\":\"card_fish\",\"num\":2,\"name\":\"\"}]},{\"inviteid\":18,\"status\":1,\"username\":\"Felix Wong\",\"avatar\":\"https://www.nutsgamer.com/images/avatars/4.jpg\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":19,\"status\":1,\"username\":\"Winli The\",\"avatar\":\"https://www.nutsgamer.com/images/avatars/5.jpg\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":20,\"status\":1,\"username\":\"Cheong Sau Chan\",\"avatar\":\"https://www.nutsgamer.com/images/avatars/6.jpg\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":21,\"status\":1,\"username\":\"Johnny Liew\",\"avatar\":\"https://www.nutsgamer.com/images/avatars/7.jpg\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"card_fish\",\"num\":2,\"name\":\"\"}]},{\"inviteid\":22,\"status\":1,\"username\":\"Richard Khoo\",\"avatar\":\"https://www.nutsgamer.com/images/avatars/8.jpg\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":23,\"status\":1,\"username\":\"Roxanne Smit\",\"avatar\":\"https://www.nutsgamer.com/images/avatars/9.jpg\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":24,\"status\":1,\"username\":\"Cici Osman\",\"avatar\":\"https://www.nutsgamer.com/images/avatars/10.jpg\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":25,\"status\":1,\"username\":\"Ivin Tan\",\"avatar\":\"https://www.nutsgamer.com/images/avatars/11.jpg\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"card_fish\",\"num\":2,\"name\":\"\"},{\"type\":\"vip\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":26,\"status\":1,\"username\":\"Jeanny Michelle\",\"avatar\":\"https://www.nutsgamer.com/images/avatars/12.jpg\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":216,\"status\":2,\"username\":\"Gate\",\"avatar\":\"https://scontent.xx.fbcdn.net/v/t1.0-1/c15.0.50.50/p50x50/10354686_10150004552801856_220367501106153455_n.jpg?oh=baf3745408876788393e9ca2b7e1dc94\\u0026oe=5AEBF02F\",\"rewardList\":[{\"type\":\"energy\",\"num\":30,\"name\":\"\"},{\"type\":\"money\",\"num\":200000,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"card_fish\",\"num\":2,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"card_fish\",\"num\":2,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"card_fish\",\"num\":2,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"card_fish\",\"num\":2,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"vip\",\"num\":30,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"card_fish\",\"num\":2,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"card_fish\",\"num\":2,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"card_fish\",\"num\":2,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"card_fish\",\"num\":2,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"vip\",\"num\":30,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"card_fish\",\"num\":2,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"card_fish\",\"num\":2,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"card_fish\",\"num\":2,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"card_fish\",\"num\":2,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"card_fish\",\"num\":2,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"card_fish\",\"num\":2,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"vip\",\"num\":30,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"card_fish\",\"num\":2,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"card_fish\",\"num\":2,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"card_fish\",\"num\":2,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"card_fish\",\"num\":2,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"vip\",\"num\":30,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"card_fish\",\"num\":2,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"card_fish\",\"num\":2,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"card_fish\",\"num\":2,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"card_fish\",\"num\":2,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"card_fish\",\"num\":2,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"card_fish\",\"num\":2,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"vip\",\"num\":30,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"card_fish\",\"num\":2,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"card_fish\",\"num\":2,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"card_fish\",\"num\":2,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"card_fish\",\"num\":2,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"vip\",\"num\":30,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"card_fish\",\"num\":2,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"piece\",\"num\":1,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"}]},{\"inviteid\":0,\"status\":0,\"username\":\"\",\"avatar\":\"\",\"rewardList\":[{\"type\":\"energy\",\"num\":20,\"name\":\"\"},{\"type\":\"card_fish\",\"num\":2,\"name\":\"\"}]}],\"invite_process\":22,\"invite_reward_num_limit\":200,\"money\":270113815}}";
+            //res = LitJson.JsonMapper.ToObject<RecallableFriendsMessage>(str);
+            //Debug.Log("假数据");
             callBack(ret, res);
             if (res.isOK)
             {
@@ -1038,8 +1307,7 @@ public class NetManager:INetManager
             }
             else
             {
-                Debug.Log("获取可召回好友列表失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "获取可召回好友列表失败", res.errcode));
+                AlertError(res, "获取可召回好友列表失败");
             }
 
         });
@@ -1054,6 +1322,7 @@ public class NetManager:INetManager
         data.Add("uid", uid);
         data.Add("token", token);
         data.Add("t", time.ToString());
+        data.Add("locale", language);
         return HttpProxy.SendPostRequest<InviteFriendsMessage>(url, data, (ret, res) =>
         {
             callBack(ret, res);
@@ -1062,13 +1331,12 @@ public class NetManager:INetManager
                 UserData ud = GameMainManager.instance.model.userData;
                 ud.energy = res.data.energy;
                 ud.money = res.data.money;
-                EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Money, 0));
-                EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Energy, 0));
+
+                EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_REDDOT));
             }
             else
             {
-                Debug.Log("邀请好友失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "邀请好友失败", res.errcode));
+                AlertError(res, "邀请好友失败");
             }
 
         });
@@ -1096,7 +1364,7 @@ public class NetManager:INetManager
         data.Add("uid", uid);
         data.Add("token", token);
         data.Add("t", time.ToString());
-
+        data.Add("locale", language);
         return HttpProxy.SendPostRequest<RecallFriendsMessage>(url, data, (ret, res) =>
         {
             Waiting.Disable();
@@ -1109,16 +1377,43 @@ public class NetManager:INetManager
 
                 EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Money,0));
                 EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Energy, 0));
+                EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_REDDOT));
             }
             else
             {
-                Debug.Log("召回好友失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "召回好友失败", res.errcode));
+                AlertError(res, "召回好友失败");
             }
 
         });
     }
 
+    public bool GetInviteReward(int inviteid, Action<bool, GetInviteRewardMessage> callBack)
+    {
+        Waiting.Enable();
+        string url = MakeUrl(APIDomain, "game/friend/get-friend-reward-fb");
+        Dictionary<string, object> data = new Dictionary<string, object>();
+        data.Add("inviteid", inviteid);
+        data.Add("uid", uid);
+        data.Add("token", token);
+        data.Add("t", time.ToString());
+        data.Add("locale", language);
+        return HttpProxy.SendPostRequest<GetInviteRewardMessage>(url, data, (ret, res) =>
+        {
+            Waiting.Disable();
+            callBack(ret, res);
+            if (res.isOK)
+            {
+                UserData user = GameMainManager.instance.model.userData;
+                user.money = res.data.money;
+                user.energy = res.data.energy;
+            }
+            else
+            {
+                AlertError(res, "获取邀请奖励失败");
+            }
+
+        });
+    }
 
     //=======================支付========================
     public bool Purchase(string store, string transactionID, string payload, string orderID, Action<bool, NetMessage> callBack)
@@ -1133,7 +1428,7 @@ public class NetManager:INetManager
         data.Add("uid", uid);
         data.Add("token", token);
         data.Add("t", time.ToString());
-
+        data.Add("locale", language);
         return HttpProxy.SendPostRequest<NetMessage>(url, data, (ret, res) =>
         {
             callBack(ret, res);
@@ -1143,8 +1438,7 @@ public class NetManager:INetManager
             }
             else
             {
-                Debug.Log("支付发放物品失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "支付发放物品失败", res.errcode));
+                AlertError(res, "发放购买物品失败");
             }
 
         });
@@ -1160,7 +1454,7 @@ public class NetManager:INetManager
         data.Add("uid", uid);
         data.Add("token", token);
         data.Add("t", time.ToString());
-
+        data.Add("locale", language);
         return HttpProxy.SendPostRequest<OrderMessage>(url, data, (ret, res) =>
         {
             callBack(ret, res);
@@ -1170,8 +1464,7 @@ public class NetManager:INetManager
             }
             else
             {
-                Debug.Log("获取订单失败:" + res.errmsg);
-                Alert.Show(string.Format("{0}\n ErrorCode:{1}", "获取订单失败", res.errcode));
+                AlertError(res, "获取订单失败");
             }
 
         });

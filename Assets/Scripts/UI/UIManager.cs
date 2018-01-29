@@ -30,7 +30,6 @@ public class UIManager : MonoBehaviour,IUIManager  {
     private UIWindowData curNavWindow;//当前导航窗口
     private UIWindowBase curPopUpWindow;//当前打开的窗口
     private GameObject popupCollider;//模态窗口的遮挡面板
-    //private GameObject windowCollider;//全局遮挡面板
 
     private Queue<Action> queue = new Queue<Action>();
     private bool isOpening = false;
@@ -100,35 +99,12 @@ public class UIManager : MonoBehaviour,IUIManager  {
             return null;
         }
     }
-    /*
-    private bool openCoilder
-    {
-        get
-        {
-            return windowCollider.activeSelf;
-        }
-        set
-        {
-            colliderNum += value ? 1 : -1;
-            windowCollider.SetActive(colliderNum>0);
-        }
-    }
-    */
+
 
 
     private void Awake()
     {
-        //------------------------添加全屏遮挡背板start-----------------------
-      /*  windowCollider = GameUtils.createGameObject(FixedRoot.gameObject, "WindwCollider");
-        RectTransform rt = windowCollider.AddComponent<RectTransform>();
-        rt.anchorMin = Vector2.zero;
-        rt.anchorMax = Vector2.one;
-        rt.offsetMin = Vector2.zero;
-        rt.offsetMax = Vector2.zero;
-        windowCollider.AddComponent<Image>().color = new Color(0,0,0,0);
-        windowCollider.SetActive(false);
-        */
-        //------------------------添加全屏遮挡背板end-----------------------
+
         //-------------------------添加模态窗口的背板start--------------------
         popupCollider = GameUtils.createGameObject(PopUpRoot.gameObject, "popupCollider");
         RectTransform rt = popupCollider.AddComponent<RectTransform>();
@@ -136,7 +112,8 @@ public class UIManager : MonoBehaviour,IUIManager  {
         rt.anchorMax = Vector2.one;
         rt.offsetMin = Vector2.zero;
         rt.offsetMax = Vector2.zero;
-        popupCollider.AddComponent<Image>().color = new Color(0,0,0,0.4f);
+        popupCollider.AddComponent<Image>().color = new Color(0,0,0,0);
+        popupCollider.AddComponent<FadeIn>();
 
         EventTrigger eventTrigger = popupCollider.AddComponent<EventTrigger>();
         EventTrigger.Entry entry = new EventTrigger.Entry();
@@ -151,9 +128,26 @@ public class UIManager : MonoBehaviour,IUIManager  {
         popupCollider.SetActive(false);
         //---------------添加模态窗口的背板end----------------------------
 
-        Init();
+    }
 
+    private void Start()
+    {
+        allWindows = new Dictionary<UISettings.UIWindowID, UIWindowBase>();
+        showingWindows = new Dictionary<UISettings.UIWindowID, UIWindowBase>();
+        windowsState = new Dictionary<UISettings.UIWindowID, bool>();
+        backSequence = new Stack<UIWindowBase>();
 
+        UIWindowBase[] windows = transform.GetComponentsInChildren<UIWindowBase>(true);
+        foreach (UIWindowBase window in windows)
+        {
+            allWindows.Add(window.windowData.id, window);
+            window.HideWindow(null, false);
+        }
+
+        canvasScaler = GetComponent<CanvasScaler>();
+        canvas = GetComponent<Canvas>();
+
+        SpriteAtlasManager.atlasRequested += OnLoadAtlas;
     }
     //GameObject selectedGO;
     private void Update()
@@ -174,42 +168,31 @@ public class UIManager : MonoBehaviour,IUIManager  {
         SpriteAtlasManager.atlasRequested -= OnLoadAtlas;
     }
 
-    private void Init()
-    {
-        allWindows = new Dictionary<UISettings.UIWindowID, UIWindowBase>();
-        showingWindows = new Dictionary<UISettings.UIWindowID, UIWindowBase>();
-        windowsState = new Dictionary<UISettings.UIWindowID, bool>();
-        backSequence = new Stack<UIWindowBase>();
-
-        UIWindowBase[] windows = transform.GetComponentsInChildren<UIWindowBase>(true);
-        foreach(UIWindowBase window in windows)
-        {
-            allWindows.Add(window.windowData.id, window);
-            window.HideWindow(null, false);
-        }
-
-        canvasScaler = GetComponent<CanvasScaler>();
-        canvas = GetComponent<Canvas>();
-
-        SpriteAtlasManager.atlasRequested += OnLoadAtlas;
-    }
 
     private void OnLoadAtlas(string tag,Action<SpriteAtlas> act)
     {
         string path = FilePathTools.getSpriteAtlasPath(tag);
-        Debug.Log("开始加载[" + tag + "]图集");
-        
-        AssetBundleLoadManager.Instance.LoadAsset<SpriteAtlas>(path, (sa) => {
+        if(GameMainManager.instance.preloader.Contains(path))
+        {
+            AssetBundle ab = GameMainManager.instance.preloader.GetPreloaderAssetBundle(path);
+            SpriteAtlas sa = ab.LoadAsset<SpriteAtlas>(System.IO.Path.GetFileNameWithoutExtension(path));
             act(sa);
-
-            canvasScaler.enabled = false;
-            canvas.enabled = false;
-
-            canvasScaler.enabled = true;
-            canvas.enabled = true;
-
+            //同一图集只会请求一次，所以用完就卸载掉
+            GameMainManager.instance.preloader.RemovePreloaderAssetBundle(this,path);
+        }
+        else
+        {
+            Debug.Log("开始加载[" + tag + "]图集");
+            SpriteAtlas sa = AssetBundleLoadManager.Instance.Load<SpriteAtlas>(path);
+            act(sa);
             Debug.Log("图集加载完毕：" + sa);
-        });
+        }
+
+        //canvasScaler.enabled = false;
+        //canvas.enabled = false;
+
+        //canvasScaler.enabled = true;
+        //canvas.enabled = true;
     }
 
     public void OpenWindow(UISettings.UIWindowID id, params object[] data)
@@ -245,7 +228,8 @@ public class UIManager : MonoBehaviour,IUIManager  {
             {
                 showingWindows.Remove(id);
             }
-           
+
+            popupCollider.GetComponent<FadeIn>().to = 0;
             window.HideWindow(() =>
             {
                 UIWindowData windowdata = window.windowData;
@@ -293,9 +277,9 @@ public class UIManager : MonoBehaviour,IUIManager  {
 
 
 
-    public void ChangeState(UIStateChangeBase state)
+    public void ChangeState(UIStateChangeBase state,bool needTransform)
     {
-        state.ChangeState(showingWindows);
+        state.ChangeState(showingWindows, needTransform);
     }
 
 
@@ -326,36 +310,49 @@ public class UIManager : MonoBehaviour,IUIManager  {
         allWindows.TryGetValue(id, out window);
         if (window != null)
         {
+            if(!window.canOpen)
+            {
+                isOpening = false;
+                return;
+            }
             UIWindowData windowdata = window.windowData;
 
             if (windowdata.type == UISettings.UIWindowType.Fixed)
             {
-                window.transform.SetSiblingIndex(FixedRoot.childCount);
+                //window.transform.SetSiblingIndex(FixedRoot.childCount);
+                SetSiblingIndex(window,FixedRoot);
             }
             else if (windowdata.type == UISettings.UIWindowType.PopUp)
             {
                 curPopUpWindow = window;
-                window.transform.SetSiblingIndex(PopUpRoot.childCount);
-                popupCollider.transform.SetSiblingIndex(PopUpRoot.childCount - 2);
                 popupCollider.SetActive(true);
-                if(window.windowData.colliderType == UISettings.UIWindowColliderType.Transparent)
+                popupCollider.transform.SetAsLastSibling();
+                SetSiblingIndex(window, PopUpRoot);
+                //popupCollider.transform.SetSiblingIndex(PopUpRoot.childCount);
+                // window.transform.SetSiblingIndex(PopUpRoot.childCount);
+
+                if (window.windowData.colliderType == UISettings.UIWindowColliderType.Transparent)
                 {
                     popupCollider.GetComponent<Image>().color = new Color(0.8f, 0.8f, 0.8f, 0f);
                 }
                 else
                 {
-                    popupCollider.GetComponent<Image>().color = new Color(0, 0, 0, 0.3f);
+                    popupCollider.GetComponent<Image>().color = new Color(0, 0, 0, 0f);
+                    popupCollider.GetComponent<FadeIn>().to = 0.4f;
                 }
+                
                 //popupCollider.GetComponent<Image>().color = new Color(0.8f,0.8f,0.8f,0.5f);
             }
             else if (windowdata.type == UISettings.UIWindowType.Normal)
             {
-                window.transform.SetSiblingIndex(NormalRoot.childCount);
+                SetSiblingIndex(window, NormalRoot);
+                //window.transform.SetSiblingIndex(NormalRoot.childCount);
                 showNavigationWindow(window);
 
             }else if(windowdata.type == UISettings.UIWindowType.Cover)
             {
-                window.transform.SetSiblingIndex(coverRoot.childCount);
+                SetSiblingIndex(window, coverRoot);
+                //window.transform.SetSiblingIndex(coverRoot.childCount);
             }
 
 
@@ -364,13 +361,13 @@ public class UIManager : MonoBehaviour,IUIManager  {
                 showingWindows.Add(id, window);
             }
             isOpening = false;
-            window.ShowWindow(() =>
+            StartCoroutine(window.ShowWindow(() =>
             {
                 if (onComplate != null)
                 {
                     onComplate();
                 }
-            }, needTransform, data);
+            }, needTransform, data));
         }
         else
         {
@@ -428,7 +425,7 @@ public class UIManager : MonoBehaviour,IUIManager  {
         window.transform.localScale = Vector3.one;
         //(window.transform as RectTransform).anchoredPosition = Vector2.zero;
         window.Init();
-        yield return new WaitForSeconds(0.1f);
+        yield return null;
         if(windowsState[id])
         {
             StartOpenWindow(id, needTransform, onComplate, data);
@@ -469,7 +466,7 @@ public class UIManager : MonoBehaviour,IUIManager  {
             if (backSequence.Count > 0)
             {
                 UIWindowBase backWindow = backSequence.Peek();
-                backWindow.ShowWindow();
+                StartCoroutine(backWindow.ShowWindow());
 
             }
         }
@@ -485,5 +482,22 @@ public class UIManager : MonoBehaviour,IUIManager  {
         {
             windowsState[id] = state;
         }
+    }
+
+    private void SetSiblingIndex(UIWindowBase window,Transform root)
+    {
+        window.transform.SetAsLastSibling();
+        for (int i=0;i<root.childCount;i++)
+        {
+            Transform tf = root.GetChild(i);
+            UIWindowBase tw = tf.GetComponent<UIWindowBase>();
+            if(tw!=null && tw!=window && window.windowData.siblingNum<tw.windowData.siblingNum)
+            {
+                window.transform.SetSiblingIndex(tw.transform.GetSiblingIndex());
+                return;
+            }
+            
+        }
+
     }
 }

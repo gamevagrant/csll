@@ -35,7 +35,21 @@ public class IslandFactory : MonoBehaviour {
         //BuildingData[] data = LitJson.JsonMapper.ToObject<BuildingData[]>(str);
         //UpdateCityData(1,data);
     }
-	
+
+    private void OnEnable()
+    {
+        if(Application.isPlaying)
+        {
+            foreach (GameObject go in effects)
+            {
+                if (go != null)
+                {
+                    go.SetActive(false);
+                }
+            }
+        }
+    }
+
     private void init()
     {
         citySprites = new Image[SpriteCount];
@@ -52,6 +66,7 @@ public class IslandFactory : MonoBehaviour {
             GameObject goTag = GameUtils.createGameObject(go, "tag");
             goTag.AddComponent<RectTransform>().anchoredPosition = new Vector3(positions[index].x, positions[index].y, 0);
 
+           
         }
     }
 
@@ -149,6 +164,18 @@ public class IslandFactory : MonoBehaviour {
                 citySprites[index].enabled = true;
                 citySprites[index].sprite = sprite;
                 citySprites[index].SetNativeSize();
+
+                if (index == 2)//交通工具
+                {
+                    if(GetComponent<BreathingAnimation>() == null)
+                    {
+                        BreathingAnimation breathing = citySprites[index].gameObject.AddComponent<BreathingAnimation>();
+                        breathing.sizeStrength = Vector2.zero;
+                        breathing.posStrengh = new Vector2(0, 8);
+                        breathing.speed = 1f;
+                    }
+                   
+                }
             }
         }
         

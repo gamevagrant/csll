@@ -32,6 +32,7 @@ public class UIWheelPanel : MonoBehaviour {
     public TextMeshProUGUI surplusEnergyLabel;
     public Slider energyProgressSlider;
     public AudioClip[] audioClips;
+    public UGUISpriteAnimation energyWaveAnimation;
     
 
     [SerializeField]
@@ -42,7 +43,7 @@ public class UIWheelPanel : MonoBehaviour {
     private RectTransform panel;
 
     private bool isWorking;
-
+    private bool isHoldOn = false;//是否在自动roll状态
 
     private Vector2 rollBtnOriginalValue;//roll点按钮位置原始值 下同
     private Vector2 switchOriginalValue;
@@ -62,17 +63,22 @@ public class UIWheelPanel : MonoBehaviour {
         }
         set
         {
+            if(_energyValue!=value)
+            {
+                energyWaveAnimation.Play();
+            }
             _energyValue = value;
             energyLabel.text = string.Format("{0}/{1}",Mathf.Min(value,user.maxEnergy), user.maxEnergy);
             surplusEnergyLabel.text = value>user.maxEnergy?(value - user.maxEnergy).ToString():"";
             energyProgressSlider.value = value / (float)user.maxEnergy;
             addEnergyCountLabel.text = value < user.maxEnergy ? "+ " + user.recoverEnergy.ToString() : "";
-
+            
         }
     }
     // Use this for initialization
     void Awake ()
     {
+
         rollBtnOriginalValue = rollBtn.anchoredPosition;
         switchOriginalValue = switchBtn.anchoredPosition;
         panelLocalOriginalValue = panel.anchoredPosition;
@@ -114,93 +120,6 @@ public class UIWheelPanel : MonoBehaviour {
         
     }
 
-    private void OnUpdateBaseData(BaseEvent e)
-    {
-        UpdateBaseDataEvent evt = e as UpdateBaseDataEvent;
-        if(evt.updateType == UpdateBaseDataEvent.UpdateType.vip || evt.updateType == UpdateBaseDataEvent.UpdateType.Energy)
-        {
-            energyValue = user.energy;
-        }
-    }
-
-    public void SetStealerData(TargetData target)
-    {
-        if(stealTarget != null && stealTarget.uid != target.uid)
-        {
-            CanvasGroup canvasGroup = stealHead.transform.parent.GetComponent<CanvasGroup>();
-            Sequence sq = DOTween.Sequence();
-            sq.AppendInterval(2);
-            sq.Append(stealHead.transform.parent.DOScale(new Vector3(1.5f, 1.5f, 1.5f), 1));
-            sq.Insert(2, canvasGroup.DOFade(0, 1));
-            sq.AppendCallback(() =>
-            {
-                stealNameLabel.text = target.name;
-                stealMoneyLabel.text = GameUtils.GetCurrencyString(target.money);
-                AssetLoadManager.Instance.LoadAsset<Texture2D>(target.headImg, (text) =>
-                {
-                    stealHead.texture = text;
-                    stealHead.transform.parent.DOScale(Vector3.one, 1);
-                    canvasGroup.DOFade(1, 1);
-                });
-            });
-
-        }
-        else if(stealTarget == null)
-        {
-            stealNameLabel.text = target.name;
-            stealMoneyLabel.text = GameUtils.GetCurrencyString(target.money);
-            AssetLoadManager.Instance.LoadAsset<Texture2D>(target.headImg, (text) =>
-            {
-                stealHead.texture = text;
-            });
-        }
-        stealTarget = target;
-    }
-    //设置转盘
-    public void SetData(RollerItemData[] datas)
-    {
-        foreach (RollerItemData data in datas)
-        {
-            int index = data.index;
-            TextMeshProUGUI t = names[index];
-            Image pic = images[index];
-            pic.enabled = true;
-            if(data.type == "steal")
-            {
-                t.text = data.name;
-                pic.sprite = sprites[0];
-            }else if(data.type == "energy")
-            {
-                t.text = data.name;
-                pic.sprite = sprites[1];
-            }
-            else if (data.type == "shield")
-            {
-                t.text = data.name;
-                pic.sprite = sprites[2];
-            }
-            else if (data.type == "shoot")
-            {
-                t.text = data.name;
-                pic.sprite = sprites[3];
-            }
-            else if (data.type == "coin")
-            {
-                t.text = data.name;
-                pic.enabled = false;
-            }else if(data.type == "xcrowns")
-            {
-                t.text = string.Format("{0}x{1}","<sprite=0>", data.code) ;
-                pic.enabled = false;
-            }
-            else
-            {
-                t.text = data.name;
-                pic.enabled = false;
-            }
-        }
-    }
-
     public void EnterToBuildPanelState()
     {
         GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_view_switch_in);
@@ -232,8 +151,12 @@ public class UIWheelPanel : MonoBehaviour {
         DOTween.To(() => switchBtn.anchoredPosition, p => switchBtn.anchoredPosition = p, switchOriginalValue, 1);
         DOTween.To(() => panel.anchoredPosition, x => panel.anchoredPosition = x, panelLocalOriginalValue, 1);
         DOTween.To(() => panel.localScale, x => panel.localScale = x, Vector3.one, 1).onComplete = () => {
-
+            QY.Guide.GuideManager.instance.state = "wheel";
             GameMainManager.instance.uiManager.EnableOperation();
+            if(isHoldOn)
+            {
+                Roll();
+            }
         };
     }
 
@@ -249,31 +172,172 @@ public class UIWheelPanel : MonoBehaviour {
         });
     }
 
-
-    public void onClickRollBtn()
+    public void ShowBuildState()
     {
-        //startRotate();
-        if(!isWorking)
-        {
-            if(GameMainManager.instance.model.userData.energy>0)
-            {
-                StartCoroutine(StartRoll());
+        rollBtn.anchoredPosition = new Vector2(rollBtn.anchoredPosition.x, -300);
+        rollBtn.localScale = new Vector3(1.5f, 1.5f, 1);
+        switchBtn.anchoredPosition = new Vector2(200, switchBtn.anchoredPosition.y);
+        panel.anchoredPosition = new Vector2(-800, 1000);
+        panel.localScale = new Vector3(2f, 2f, 1);
 
-            }
-            else if(!AccountManager.instance.isLoginAccount)
+        rollBtn.gameObject.SetActive(false);
+        switchBtn.gameObject.SetActive(false);
+        panel.gameObject.SetActive(false);
+    }
+
+    public void ShowWheelState()
+    {
+
+        rollBtn.gameObject.SetActive(true);
+        switchBtn.gameObject.SetActive(true);
+        panel.gameObject.SetActive(true);
+
+        rollBtn.anchoredPosition = rollBtnOriginalValue;
+        rollBtn.localScale = Vector3.one;
+        switchBtn.anchoredPosition = switchOriginalValue;
+        panel.anchoredPosition = panelLocalOriginalValue;
+        panel.localScale = Vector3.one;
+    }
+
+    public void SetStealerData(TargetData target)
+    {
+        if (stealTarget != null && stealTarget.uid != target.uid)
+        {
+            CanvasGroup canvasGroup = stealHead.transform.parent.GetComponent<CanvasGroup>();
+            Sequence sq = DOTween.Sequence();
+            sq.AppendInterval(2);
+            sq.Append(stealHead.transform.parent.DOScale(new Vector3(1.5f, 1.5f, 1.5f), 1));
+            sq.Insert(2, canvasGroup.DOFade(0, 1));
+            sq.AppendCallback(() =>
             {
-                GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIFacebookTipsWindow);
+                stealNameLabel.text = target.name;
+                stealMoneyLabel.text = GameUtils.GetCurrencyString(target.money);
+                stealHead.transform.parent.DOScale(Vector3.one, 1);
+                canvasGroup.DOFade(1, 1);
+                AssetLoadManager.Instance.LoadAsset<Texture2D>(target.headImg, (text) =>
+                {
+                    stealHead.texture = text;
+                    
+                });
+            });
+
+        }
+        else if (stealTarget == null)
+        {
+            stealNameLabel.text = target.name;
+            stealMoneyLabel.text = GameUtils.GetCurrencyString(target.money);
+            AssetLoadManager.Instance.LoadAsset<Texture2D>(target.headImg, (text) =>
+            {
+                stealHead.texture = text;
+            });
+        }
+        stealTarget = target;
+    }
+    //设置转盘
+    public void SetData(RollerItemData[] datas)
+    {
+        foreach (RollerItemData data in datas)
+        {
+            int index = data.index;
+            TextMeshProUGUI t = names[index];
+            Image pic = images[index];
+            pic.enabled = true;
+            if (data.type == "steal")
+            {
+                t.text = data.name;
+                pic.sprite = sprites[0];
+            }
+            else if (data.type == "energy")
+            {
+                t.text = data.name;
+                pic.sprite = sprites[1];
+            }
+            else if (data.type == "shield")
+            {
+                t.text = data.name;
+                pic.sprite = sprites[2];
+            }
+            else if (data.type == "shoot")
+            {
+                t.text = data.name;
+                pic.sprite = sprites[3];
+            }
+            else if (data.type == "coin")
+            {
+                t.text = data.name;
+                pic.enabled = false;
+            }
+            else if (data.type == "xcrowns")
+            {
+                t.text = string.Format("{0}x{1}", "<sprite=0>", data.code);
+                pic.enabled = false;
             }
             else
             {
-
-                Alert.Show("能量不足!");
+                t.text = data.name;
+                pic.enabled = false;
             }
-            
+        }
+    }
+
+
+    private void OnUpdateBaseData(BaseEvent e)
+    {
+        UpdateBaseDataEvent evt = e as UpdateBaseDataEvent;
+        if (evt.updateType == UpdateBaseDataEvent.UpdateType.vip || evt.updateType == UpdateBaseDataEvent.UpdateType.Energy)
+        {
+            energyValue = user.energy;
+        }
+    }
+
+    public void onClickRollBtn()
+    {
+
+
+        if (!isWorking)
+        {
+
+            Roll();
         }
        
     }
 
+    public void OnHoldOnRollBtn(bool isHold)
+    {
+        if(isHold )
+        {
+            isHoldOn = true;
+            if (!isWorking && !QY.UI.Interactable.isLock)
+            {
+                Roll();
+
+            }
+        }
+        else
+        {
+            isHoldOn = false;
+        }
+       
+    }
+
+    private void Roll()
+    {
+        AudioManager.instance.PlaySound("wheel_roll_btn");
+        if (GameMainManager.instance.model.userData.energy > 0)
+        {
+            StartCoroutine(StartRoll());
+        }
+        else if (!AccountManager.instance.isLoginAccount)
+        {
+            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIFacebookTipsWindow);
+            isHoldOn = false;
+        }
+        else
+        {
+            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIEmptyEnergyGuideWindow, new ShowEmptyGuideWindowData(ShowEmptyGuideWindowData.PanelType.EmptyEnergy));
+            isHoldOn = false;
+        }
+    }
 
     private IEnumerator StartRoll()
     {
@@ -294,7 +358,6 @@ public class UIWheelPanel : MonoBehaviour {
 
                 energyValue = user.energy - 1;
 
-               
             }
             else
             {
@@ -309,6 +372,7 @@ public class UIWheelPanel : MonoBehaviour {
         AudioSource audio = GetComponent<AudioSource>();
         audio.clip = audioClips[0];
         audio.loop = true;
+        audio.volume = AudioManager.instance.soundVolume;
         audio.Play();
         reflective.DOFade(1, 0.5f);
         while (!getRes || (Time.time - timeTag)<2 )
@@ -326,12 +390,21 @@ public class UIWheelPanel : MonoBehaviour {
         }
         audio.clip = audioClips[1];
         audio.loop = false;
+        audio.volume = AudioManager.instance.soundVolume;
         audio.Play();
         wheel.DOLocalRotate(new Vector3(0, 0, -(360 * 1 + 36 * rollItem.index)), 2f, RotateMode.FastBeyond360).SetEase(Ease.OutCirc).OnComplete(() => {
            
             showResault(rollData);
             audio.Stop();
             isWorking = false;
+
+            if(isHoldOn && (rollData.rollerItem.type == "coin" || 
+            rollData.rollerItem.type == "shield" || 
+            rollData.rollerItem.type == "xcrowns" || 
+            rollData.rollerItem.type == "energy"))
+            {
+                Roll();
+            }
         });
     }
 
@@ -446,8 +519,8 @@ public class UIWheelPanel : MonoBehaviour {
             GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_energy_transform);
         });
         sq.Insert(1.5f,backLight.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutQuart));
-        sq.Insert(1.5f,icon.transform.DOLocalMove(moveTarget, 1).SetEase(Ease.OutQuart));
-        sq.Insert(1.5f, icon.transform.DOScale(new Vector3(0.2f,0.2f,1), 0.5f).SetEase(Ease.OutQuart));
+        sq.Insert(1.5f,icon.transform.DOLocalMove(moveTarget, 0.5f).SetEase(Ease.InQuad));
+        sq.Insert(1.5f, icon.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InQuad));
         //sq.AppendInterval(0.5f);
         sq.onComplete += () => {
             GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_energy_change);
@@ -502,7 +575,6 @@ public class UIWheelPanel : MonoBehaviour {
             {
                 sq.Append(icon.transform.DOLocalMove(Vector3.zero, 1f));
             }
-            sq.AppendInterval(0.5f);
             sq.onComplete += () => {
                 
                 GameMainManager.instance.uiManager.EnableOperation();

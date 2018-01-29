@@ -22,13 +22,37 @@ public class UIInviteWindow : UIWindowBase {
         }
     }
 
+    public override bool canOpen
+    {
+        get
+        {
+            if (!AccountManager.instance.isLoginAccount)
+            {
+                GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIFacebookTipsWindow);
+                return false;
+            }
+            return true;
+        }
+    }
+
     public UIInvitePanel invitePanel;
     public UIRecallPanel recallPanel;
+
+    public QY.UI.Toggle inviteToggle;
+    public QY.UI.Toggle recallToggle;
 
     protected override void StartShowWindow(object[] data)
     {
         invitePanel.Refresh();
         recallPanel.Refresh();
 
+        if(data!=null && data.Length>0 && (int)data[0] == 1)
+        {
+            recallToggle.isOn = true;
+        }
+        else
+        {
+            inviteToggle.isOn = true;
+        }
     }
 }

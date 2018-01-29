@@ -167,6 +167,46 @@ public interface INetManager
     /// <returns></returns>
     bool GetReward(int index,Action<bool, GetRewardMessage> callBack);
 
+    /// <summary>
+    /// 获取每日任务数据
+    /// </summary>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool GetDailyTask(Action<bool, DailyTaskMessage> callBack);
+    /// <summary>
+    /// 获取每日任务奖励
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool GetDailyTaskReward(int type, Action<bool, DailyTaskMessage> callBack);
+    /// <summary>
+    /// 领取每日登录奖励
+    /// </summary>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool GetDailyLoginReward(Action<bool, DailyLoginMessage> callBack);
+    /// <summary>
+    /// 领取连续登录奖励
+    /// </summary>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool GetWeeklyLoginReward(int day,Action<bool, DailyLoginMessage> callBack);
+    /// <summary>
+    /// 获取每日能量
+    /// </summary>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool GetDailyEnergyReward(Action<bool, DailyEnergyMessage> callBack);
+    /// <summary>
+    /// 使用兑换码
+    /// </summary>
+    /// <param name="code"></param>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool UseExchangeCode(string code, Action<bool, ExchangeCodeMessage> callBack);
+
+    bool GetBindingReward(Action<bool, GetBindingRewardMessage> callBack);
     //------------------------平台区分---------------------------------------
 
     /// <summary>
@@ -212,7 +252,7 @@ public interface INetManager
     /// <returns></returns>
     bool SetInviteProgress(int limit, Action<bool, NetMessage> callBack);
     /// <summary>
-    /// 获取可召回好友列表
+    /// 获取可召回好友和奖励列表
     /// </summary>
     /// <param name="isShared">（0：没有进行分享,1：分享过）</param>
     /// <returns></returns>
@@ -235,7 +275,13 @@ public interface INetManager
     /// <returns></returns>
     /// {"errcode":0,"errmsg":"send success","data":{"energy":646,"money":315947502,"recall_limit_reward":false,"recall_reward_num_limit_daily":2,"recall_times_daily":1,"reward_list":[{"type":"energy","num":5,"name":""}]}}
     bool RecallFriends(int limit, string[] to, Action<bool, RecallFriendsMessage> callBack);
-
+    /// <summary>
+    /// 获取邀请奖励
+    /// </summary>
+    /// <param name="inviteid"></param>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool GetInviteReward(int inviteid, Action<bool, GetInviteRewardMessage> callBack);
     //------------支付-------------------
     bool Purchase(string store, string transactionID, string payload, string orderID, Action<bool, NetMessage> callBack);
     bool GetOrder(string itemId, int itemNum, Action<bool, OrderMessage> callBack);

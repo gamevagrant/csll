@@ -22,7 +22,10 @@ namespace QY.UI
             }
         }
         private static Dictionary<string, string> ignoreList = new Dictionary<string, string>();
-
+        public static void ResetState()
+        {
+            lockNum = 0;
+        }
         public string id = "";
 
         /// <summary>
@@ -83,6 +86,7 @@ namespace QY.UI
 
         protected override void OnEnable()
         {
+            base.OnEnable();
             if(Application.isPlaying)
             {
                 GuideManager.instance.TryProcess();

@@ -31,7 +31,7 @@ public class UIGuideRewardWindow : UIWindowBase {
     {
         GameMainManager.instance.netManager.TutorialComplete((ret, res) =>
         {
-            
+            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UINewUserGuiderWindow);
         });
 
         OnClickClose();

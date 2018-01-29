@@ -134,6 +134,7 @@ public class AudioManager : MonoBehaviour ,IAudioManager{
 
 public class AudioNameEnum
 {
+    public static string wheel_roll_btn = "wheel_Roll_btn";//点击转盘按钮
     public static string wheel_rot_start = "wheel_rot_start";//转盘转动
     public static string wheel_rot_end = "wheel_rot_end";//转盘减速
     public static string wheel_gold_small = "wheel_gold_small";//少量金币

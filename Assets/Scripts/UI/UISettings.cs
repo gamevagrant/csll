@@ -35,6 +35,15 @@ public class UISettings  {
         UIGuideTipsWindow,
         UIGuideWindow,
         UIGuideRewardWindow,
+        UIEveryDayTaskWindow,
+        UIEveryDayRewardWindow,
+        UIEveryDayEnergyWindow,
+        UIFreeRewardWindow,
+        UIEmptyEnergyGuideWindow,
+        UINewUserGuiderWindow,
+        UIExchangeCodeWindow,
+        UIExchangeRewardWindow,
+        UIGetBindingRewardWindow,
     }
 
     public enum UIWindowType
@@ -103,6 +112,15 @@ public class UISettings  {
         {UIWindowID.UIGuideTipsWindow,"UIGuideTipsWindow"},
         {UIWindowID.UIGuideWindow,"UIGuideWindow"},
         {UIWindowID.UIGuideRewardWindow,"UIGuideRewardWindow"},
+        {UIWindowID.UIEveryDayTaskWindow,"UIEveryDayTaskWindow"},
+        {UIWindowID.UIEveryDayRewardWindow,"UIEveryDayRewardWindow"},
+        {UIWindowID.UIEveryDayEnergyWindow,"UIEveryDayEnergyWindow"},
+        {UIWindowID.UIFreeRewardWindow,"UIFreeRewardWindow"},
+        {UIWindowID.UIEmptyEnergyGuideWindow,"UIEmptyEnergyGuideWindow"},
+        {UIWindowID.UINewUserGuiderWindow,"UINewUserGuiderWindow"},
+        {UIWindowID.UIExchangeCodeWindow,"UIExchangeCodeWindow"},
+        {UIWindowID.UIExchangeRewardWindow,"UIExchangeRewardWindow"},
+        {UIWindowID.UIGetBindingRewardWindow,"UIGetBindingRewardWindow"},
     };
 
 

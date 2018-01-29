@@ -12,7 +12,7 @@ public class GameMainManager {
     {
         get
         {
-            if(_instance == null)
+            if(Application.isPlaying && _instance == null)
             {
                 _instance = new GameMainManager();
             }
@@ -58,8 +58,7 @@ public class GameMainManager {
 
         GuideManager.instance.Init(model.userData.tutorial, configManager.guideDataConfig, OnProcessGuide, OnExecutedComplate);
 
-        
-        if(model.userData.last_action == 1 && model.userData.attackTargetUser != null)
+        if (model.userData.last_action == 1 && model.userData.attackTargetUser != null)
         {
             Dictionary<UISettings.UIWindowID, object> stateData = new Dictionary<UISettings.UIWindowID, object>();
             stateData.Add(UISettings.UIWindowID.UIAttackWindow, model.userData.attackTargetUser);
@@ -81,16 +80,54 @@ public class GameMainManager {
         {
             if (model.userData.tutorial == 1)
             {
-                GameMainManager.instance.uiManager.ChangeState(new MainState(0, 1));
+                GameMainManager.instance.uiManager.ChangeState(new MainState(0, 1), false);
             }
             else
             {
-                GameMainManager.instance.uiManager.ChangeState(new MainState(0));
+                GameMainManager.instance.uiManager.ChangeState(new MainState(0, 0), false);
             }
         }
-
+        UpdateInviteData();
     }
 
+
+    private void UpdateInviteData()
+    {
+        open.GetInvitableFriends((res) =>
+        {
+            Dictionary<string, string> invitedFriends = LocalDatasManager.invitedFriends;
+            if (invitedFriends == null)
+            {
+                invitedFriends = new Dictionary<string, string>();
+            }
+
+            model.userData.invitableList = new List<InvitableFriendsData>();
+
+            for (int i = 0; i < res.Length; i++)
+            {
+                InvitableFriendsData data = res[i];
+                if (!invitedFriends.ContainsKey(data.name))
+                {
+                    model.userData.invitableList.Add(data);
+                }
+
+            }
+        });
+
+        GameMainManager.instance.netManager.GetRecallableFriends((ret, res) =>
+        {
+            if (res.isOK)
+            {
+                if (res.data.recall_friend_rewards != null)
+                {
+
+                    model.userData.recallableList = new List<ShareData.RecallableFriendData>(res.data.recall_friend_rewards);
+
+                }
+
+            }
+        });
+    }
 
 
 
@@ -98,29 +135,45 @@ public class GameMainManager {
     private void OnRequestErrorHandle(BaseEvent e)
     {
         RequestErrorEvent evt = e as RequestErrorEvent;
-        if(evt.request.State != BestHTTP.HTTPRequestStates.TimedOut && evt.request.State != BestHTTP.HTTPRequestStates.ConnectionTimedOut)
+        if(evt.type == RequestErrorEvent.Type.AnalysisError)
         {
-            Debug.Log(string.Format("请求失败：{0} ", evt.request.State.ToString()));
-            return;
-        }
-        Debug.Log(string.Format("请求失败：{0} 正在尝试重新请求", evt.request.State.ToString()));
-        if (GameMainManager.instance.uiManager != null)
+            if (GameMainManager.instance.uiManager != null)
+            {
+                Alert.Show("数据解析错误");
+                Waiting.Disable();
+            }
+                
+        }else if(evt.type == RequestErrorEvent.Type.TimeOut)
         {
-            GameMainManager.instance.uiManager.isWaiting = false;
-            Alert.Show("连接失败：" + evt.request.State.ToString(), Alert.OK|Alert.CANCEL, (isOK) => {
-                if(isOK == Alert.OK)
-                {
-                    HttpProxy.SendRequest(evt.request);
-                }
-               
-            }, "重试");
+            Debug.Log(string.Format("请求失败：{0} 正在尝试重新请求", evt.request.State.ToString()));
+            if (GameMainManager.instance.uiManager != null)
+            {
+                GameMainManager.instance.uiManager.isWaiting = false;
+                Alert.Show("连接失败：" + evt.request.State.ToString(), Alert.OK | Alert.CANCEL, (isOK) => {
+                    if (isOK == Alert.OK)
+                    {
+                        HttpProxy.SendRequest(evt.request);
+                    }
 
-            Waiting.Disable();
+                }, "重试");
+
+                Waiting.Disable();
+            }
+            else
+            {
+                HttpProxy.SendRequest(evt.request);
+            }
         }
         else
         {
-            HttpProxy.SendRequest(evt.request);
+            if (GameMainManager.instance.uiManager != null)
+            {
+                Debug.Log(string.Format("请求失败：{0} |{1}", evt.type.ToString(), evt.request.Uri));
+                Waiting.Disable();
+            }
+               
         }
+
     }
 
 
@@ -142,7 +195,7 @@ public class GameMainManager {
                 break;
             case GuideData.ActionType.open:
                 UISettings.UIWindowID id = (UISettings.UIWindowID)System.Enum.Parse(typeof(UISettings.UIWindowID), guideData.content);
-                uiManager.OpenWindow(id, guideData.content);
+                uiManager.OpenWindow(id);
                 break;
         }
     }

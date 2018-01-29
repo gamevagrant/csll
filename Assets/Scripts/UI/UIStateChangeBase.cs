@@ -29,7 +29,7 @@ public class UIStateChangeBase {
     }
 
 
-    public virtual void ChangeState(Dictionary<UISettings.UIWindowID,UIWindowBase> showingWindows)
+    public virtual void ChangeState(Dictionary<UISettings.UIWindowID,UIWindowBase> showingWindows,bool needTransForm = true)
     {
         Dictionary<UISettings.UIWindowID,string> needHide = new Dictionary<UISettings.UIWindowID, string>();
         foreach(UISettings.UIWindowID showingID in showingWindows.Keys)
@@ -58,15 +58,15 @@ public class UIStateChangeBase {
         }
 
 
-        GameMainManager.instance.mono.StartCoroutine(openWindow(delay));
+        GameMainManager.instance.mono.StartCoroutine(openWindow(delay, needTransForm));
     }
 
-    IEnumerator openWindow(float delay)
+    IEnumerator openWindow(float delay,bool needTransForm)
     {
         yield return new WaitForSeconds(delay);
         foreach (UISettings.UIWindowID id in needShowWindows.Keys)
         {
-            GameMainManager.instance.uiManager.OpenWindow(id, needShowWindows[id]);
+            GameMainManager.instance.uiManager.OpenWindow(id, needTransForm, needShowWindows[id]);
         }
     }
 }

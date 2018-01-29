@@ -16,6 +16,11 @@ public class PreloaderManager {
             "/fonts&materials/fzlantyk_cu_sdf_shadow",
             "/fonts&materials/fzlantyk_cu_sdf_shadow&redoutline",
             "/fonts&materials/fzlantyk_cu_sdf_whiteoutline",
+
+            "/spriteatlas/uipublicwindow",
+            "/spriteatlas/uiwheelwindow",
+            "/spriteatlas/uisidebarwindow",
+            "/spriteatlas/uitopbarwindow",
         };
 
     private Dictionary<string, AssetBundle> preloadAssetBundles;
@@ -29,6 +34,7 @@ public class PreloaderManager {
     public void StartPreloader(MonoBehaviour mono, System.Action onComplate)
     {
         mono.StartCoroutine(Preloader(onComplate));
+
     }
 
     public bool Contains(string path)
@@ -45,6 +51,20 @@ public class PreloaderManager {
         return null;
     }
 
+    public void RemovePreloaderAssetBundle(MonoBehaviour mono,string path)
+    {
+        mono.StartCoroutine(RemoveAssetBundle(path));
+    }
+
+    private IEnumerator RemoveAssetBundle(string path)
+    {
+        yield return new WaitForSeconds(1);
+        if (preloadAssetBundles.ContainsKey(path))
+        {
+            preloadAssetBundles[path].Unload(false);
+            preloadAssetBundles.Remove(path);
+        }
+    }
 
 
     private IEnumerator Preloader(System.Action onComplate)

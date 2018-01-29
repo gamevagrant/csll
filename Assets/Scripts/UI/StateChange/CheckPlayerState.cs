@@ -13,7 +13,7 @@ public class CheckPlayerState : UIStateChangeBase {
         needShowWindows.Add(UISettings.UIWindowID.UICheckPlayerIslandWindow, otherData);
     }
 
-    public override void ChangeState(Dictionary<UISettings.UIWindowID, UIWindowBase> showingWindows)
+    public override void ChangeState(Dictionary<UISettings.UIWindowID, UIWindowBase> showingWindows,bool needTransform = true)
     {
         if(showingWindows != null)
         {
@@ -27,15 +27,15 @@ public class CheckPlayerState : UIStateChangeBase {
                 GameMainManager.instance.uiManager.CloseWindow(id);
             }
         }
-        GameMainManager.instance.mono.StartCoroutine(openWindow(1));
+        GameMainManager.instance.mono.StartCoroutine(openWindow(1, needTransform));
     }
 
-    IEnumerator openWindow(float delay)
+    IEnumerator openWindow(float delay,bool needTransform)
     {
         yield return new WaitForSeconds(delay);
         foreach (UISettings.UIWindowID id in needShowWindows.Keys)
         {
-            GameMainManager.instance.uiManager.OpenWindow(id, needShowWindows[id]);
+            GameMainManager.instance.uiManager.OpenWindow(id, needTransform, needShowWindows[id]);
         }
     }
 }

@@ -38,6 +38,7 @@ public class UIWheelWindow : UIWindowBase {
                 _windowData.type = UISettings.UIWindowType.Fixed;
                 _windowData.showMode = UISettings.UIWindowShowMode.DoNothing;
                 _windowData.navMode = UISettings.UIWindowNavigationMode.NormalNavigation;
+                _windowData.siblingNum = 0;
             }
            
             return _windowData;
@@ -88,19 +89,37 @@ public class UIWheelWindow : UIWindowBase {
     {
        if(openState== OpenState.Wheel)
         {
-            ShowWheelState();
+            ShowWheelStateAnimation();
         }else if(openState == OpenState.Building)
         {
-            ShowBuildState();
+            ShowBuildStateAnimation();
         }
         ShowLeftBtn(true);
         onComplete();
     }
     protected override void ExitAnimation(Action onComplete)
     {
-        ShowHideState(onComplete);
+        ShowHideStateAnimation(onComplete);
         ShowLeftBtn(false);
 
+    }
+
+    protected override void EndShowWindow()
+    {
+        base.EndShowWindow();
+        if (openState == OpenState.Wheel)
+        {
+            ShowWheelState();
+        }
+        else if (openState == OpenState.Building)
+        {
+            ShowBuildState();
+        }
+        ShowLeftBtn(true);
+    }
+    protected override void EndHideWindow()
+    {
+        base.EndHideWindow();
     }
 
     private void OnUpgrading(bool isUpgrading)
@@ -120,29 +139,58 @@ public class UIWheelWindow : UIWindowBase {
         }
     }
 
-    private void ShowWheelState()
+   
+
+    public void ShowWheelState()
+    {
+        if (currState != OpenState.Wheel)
+        {
+            wheelPanel.ShowWheelState();
+            buildPanel.ShowWheelState();
+            currState = OpenState.Wheel;
+            QY.Guide.GuideManager.instance.state = "wheel";
+            if (!GameMainManager.instance.model.userData.isTutorialing)
+                GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UISideBarWindow, false);
+        }
+    }
+    private void ShowBuildState()
+    {
+        if (currState != OpenState.Building)
+        {
+            wheelPanel.ShowBuildState();
+            buildPanel.ShowBuildState();
+            currState = OpenState.Building;
+            QY.Guide.GuideManager.instance.state = "building";
+            if (!GameMainManager.instance.model.userData.isTutorialing)
+                GameMainManager.instance.uiManager.CloseWindow(UISettings.UIWindowID.UISideBarWindow, false);
+        }
+    }
+    private void ShowWheelStateAnimation()
     {
         if (currState != OpenState.Wheel)
         {
             wheelPanel.EnterToWheelPanelState();
             buildPanel.EnterToWheelPanelState();
             currState = OpenState.Wheel;
-            QY.Guide.GuideManager.instance.state = "wheel";
+            if (!GameMainManager.instance.model.userData.isTutorialing)
+                GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UISideBarWindow, true);
         }
     }
 
-    private void ShowBuildState()
+    private void ShowBuildStateAnimation()
     {
         if (currState != OpenState.Building)
         {
             wheelPanel.EnterToBuildPanelState();
             buildPanel.EnterToBuildPanelState();
             currState = OpenState.Building;
-            QY.Guide.GuideManager.instance.state = "building";
+
+            if (!GameMainManager.instance.model.userData.isTutorialing)
+                GameMainManager.instance.uiManager.CloseWindow(UISettings.UIWindowID.UISideBarWindow, true);
         }
     }
 
-    private void ShowHideState(Action onComplate)
+    private void ShowHideStateAnimation(Action onComplate)
     {
         wheelPanel.EnterToHideState(()=> {
 
@@ -155,13 +203,13 @@ public class UIWheelWindow : UIWindowBase {
 
     public void onClickShowBuildBtn()
     {
-        ShowBuildState();
+        ShowBuildStateAnimation();
         
     }
 
     public void onClickShowWheelBtn()
     {
-        ShowWheelState();       
+        ShowWheelStateAnimation();       
     }
 
     public void OnClickLeftDatailBtn()

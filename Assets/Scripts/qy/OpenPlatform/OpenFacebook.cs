@@ -10,7 +10,7 @@ namespace QY.Open
     public class OpenFacebook : IOpenPlatform
     {
         private const string DEBUG_TOKEN = "EAACOsVAkLvoBAJy0VbZCpljkRrmPEimQ3fG45AHkWmI388UpZBd2J5ZCzR5tZBS1qCnSBYQHKiDgeo0iQS5UyzGbZAU6cOvynJ1yx1ypeAxITS5TnOIcNqBG1ehjTvmiWcYjI967FQtBgHhvyHdd2VFFaunbp452IyoCIrQlwM2c9bHXlZBZCpQ";//测试用facebook访问token
-
+       
         AccessToken _token;
         public AccessToken token
         {
@@ -136,15 +136,17 @@ namespace QY.Open
             });
         }
 
+        public void ShareLink(string url)
+        {
+            FB.ShareLink(new Uri(url), callback: this.HandleResult);
+        }
+
         private void AppInvite()
         {
             FB.Mobile.AppInvite(new Uri("https://csll.app.link/invite"), callback: this.HandleResult);//桌面
         }
 
-        private void ShareLink()
-        {
-            FB.ShareLink(new Uri("https://csll.app.link/invite"), callback: this.HandleResult);
-        }
+        
 
         protected void HandleResult(IResult result)
         {

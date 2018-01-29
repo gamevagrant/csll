@@ -14,7 +14,7 @@ public class GridBaseScrollView : MonoBehaviour {
 
     public RectTransform itemTemplate;
     public Direction direction = Direction.Vertical;
-    public float spacing = 10;//间距
+    public Vector2 spacing = new Vector2(10,10);//间距
 
     private ScrollRect scrollRect;
     private RectTransform content;
@@ -57,10 +57,10 @@ public class GridBaseScrollView : MonoBehaviour {
 
     public void SetData(IList datas)
     {
+        itemPool.resetAllTarget();
+
         if (datas == null)
             return;
-
-        itemPool.resetAllTarget();
 
         displayRect.x = 0;
         displayRect.y = 0;
@@ -79,7 +79,7 @@ public class GridBaseScrollView : MonoBehaviour {
            
 
             ItemRect item = new ItemRect();
-            item.rect = new Rect(offset.x * (itemTemplate.rect.width + spacing) + spacing, -offset.y * (itemTemplate.rect.height + spacing) - spacing, itemTemplate.rect.width, itemTemplate.rect.height);
+            item.rect = new Rect(offset.x * (itemTemplate.rect.width + spacing.x) + spacing.x, -offset.y * (itemTemplate.rect.height + spacing.y) - spacing.y, itemTemplate.rect.width, itemTemplate.rect.height);
             item.data = datas[i];
             item.isVisable = false;
             itemDatas.Add(item);
@@ -87,7 +87,7 @@ public class GridBaseScrollView : MonoBehaviour {
         }
 
 
-        content.sizeDelta = new Vector2((offset.x + 1) * (itemTemplate.rect.width + spacing), (offset.y + 1) * (itemTemplate.rect.height + spacing));
+        content.sizeDelta = new Vector2((offset.x + 1) * (itemTemplate.rect.width + spacing.x), (offset.y + 1) * (itemTemplate.rect.height + spacing.y));
         if (direction == Direction.Vertical)
         {
             scrollRect.verticalNormalizedPosition = 1;

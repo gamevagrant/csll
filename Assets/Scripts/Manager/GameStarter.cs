@@ -36,6 +36,9 @@ public class GameStarter : MonoBehaviour
         if(scene.name == "Login")
         {
             init();
+        }else if(scene.name == "Main")
+        {
+            QY.UI.Interactable.ResetState();
         }
     }
 
@@ -43,9 +46,12 @@ public class GameStarter : MonoBehaviour
     {
         gameObject.AddComponent<AssetBundleLoadManager>();
         gameObject.AddComponent<AssetLoadManager>();
-        if (!GameSetting.isRelease)
-            gameObject.AddComponent<QY.Debug.DebugTools>();
 
+#if DEVELOPMENT_BUILD
+        gameObject.AddComponent<QY.Debug.DebugTools>();
+#elif !UNITY_EDITOR
+        Debug.unityLogger.logEnabled = false;
+#endif
         GameMainManager.instance.mono = this;
 
         UpdateVersion updateVersion = new UpdateVersion();
@@ -93,23 +99,57 @@ public class GameStarter : MonoBehaviour
 
     }
 
-   
+
     private IEnumerator LoadMainScene()
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Main");
-        float progress = 0;
-        while (!asyncLoad.isDone)
+        Scene currentScene = SceneManager.GetActiveScene();
+        if(currentScene.name == "Main")
         {
-            if (asyncLoad.progress != progress)
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Main");
+            yield return asyncLoad;
+            GameMainManager.instance.Init();
+        }
+        else
+        {
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Main", LoadSceneMode.Additive);
+            float progress = 0;
+            while (!asyncLoad.isDone)
             {
-                progress = asyncLoad.progress;
-                EventDispatcher.instance.DispatchEvent(new LoadingEvent("LoadScene", progress));
+                if (asyncLoad.progress != progress)
+                {
+                    progress = asyncLoad.progress / 2;
+                    EventDispatcher.instance.DispatchEvent(new LoadingEvent("LoadScene", progress));
+                }
+                yield return null;
             }
-            yield return null;
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName("Main"));
+            GameMainManager.instance.Init();
+
+            yield return new WaitForSeconds(2);
+            asyncLoad = SceneManager.UnloadSceneAsync("Login");
+            while (!asyncLoad.isDone)
+            {
+                if (asyncLoad.progress != progress)
+                {
+                    progress = 0.5f + asyncLoad.progress / 2;
+                    EventDispatcher.instance.DispatchEvent(new LoadingEvent("LoadScene", progress));
+                }
+                yield return null;
+            }
         }
 
-        GameMainManager.instance.Init();
-       
-
+        yield return null;
+        TryGetBindingReward();
     }
+
+    private void TryGetBindingReward()
+    {
+        GameMainManager.instance.netManager.GetBindingReward((ret,res)=> {
+            if(res.data.rewarded)
+            {
+                GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIGetBindingRewardWindow);
+            }
+        });
+    }
+
 }

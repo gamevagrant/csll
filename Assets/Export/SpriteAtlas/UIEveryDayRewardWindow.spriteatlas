@@ -1,0 +1,137 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: UIEveryDayRewardWindow
+  m_EditorData:
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 0
+    platformSettings: []
+    packingParameters:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    packedHash:
+      serializedVersion: 2
+      Hash: 32eeb9723bdb59a91b3abaa5daf03002
+    variantMultiplier: 1
+    bindAsDefault: 0
+    finalFormat: 4
+    hashString: 32eeb9723bdb59a91b3abaa5daf03002
+    totalSpriteSurfaceArea: 841999
+    packables:
+    - {fileID: 102900000, guid: b3f376f47c8778649b9d86e20d386ac0, type: 3}
+    packedSpriteRenderDataKeys:
+    - b770c2ec8154ce74199da61279a7ff38: 21300000
+    - 5ef9d65a79bba24438be3d5533ff681a: 21300000
+    - 7a6fefa5fa4122f42838373b6de397a0: 21300000
+    - 3076c5790da744941b951ceb9ad61612: 21300000
+    - 0768903915b56d44ba9838f54e6a3c3f: 21300000
+    - 6661545e1ad23c64c92caef88e7da80d: 21300000
+    - 023311eac223c414fa4087a92e5a9f08: 21300000
+    - 6fd89d9b482beae4aab1a109d26a667f: 21300000
+    - 5ea11e978794ccb46874fa73345c73ed: 21300000
+    - 721551da4a4fe8048854851cc58ee2ac: 21300000
+    - 19ef07c959c3cf941bd7b1643a0519d4: 21300000
+    - 8a60fb72509689d4186a472f7b879a47: 21300000
+    - 5c26ee5e8e0a880468ea9941ef829db5: 21300000
+    - 57d76a542eaef0a4493a6489157c21e9: 21300000
+    - 442150a54d2642946ab3f5345ed051fc: 21300000
+    - 0d224f22d625b6b4f949f7b749573a21: 21300000
+    - a83185363619e13468b2d1543cf290b8: 21300000
+    - cbeaf3b7e6582fd4d953fc5bb7cc8f71: 21300000
+    - c7d7f5fd02ca12742968437c3c4c79a0: 21300000
+    - 33f2657fbd66a6146b73d12c67d41cad: 21300000
+    - d52eecf9d56c1dd45b40b188304cf823: 21300000
+    - e9b6f1fc7dad09e4db4625cb8160efb0: 21300000
+    - 20c287a7209c5f340a1092be4402524f: 21300000
+    - 071f4ac47705a4b458572c69cabf0150: 21300000
+    - ec9e710f4c537064a937b2db346a59bd: 21300000
+    - f213dd5eedbb2c541bf694f9f03234b6: 21300000
+    - 09272a2e28cbf7f408be369daafd5386: 21300000
+    - 9aeec9ce65f95f14991d395ae187ef05: 21300000
+    - 039445b8a0184fb44bc096891d13d04f: 21300000
+    - 8c268aa13dc32f647a5be4cb5bedacf3: 21300000
+    - c81f64492d0ae054c8e90f1ca2891d58: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: b770c2ec8154ce74199da61279a7ff38, type: 3}
+  - {fileID: 21300000, guid: 5ef9d65a79bba24438be3d5533ff681a, type: 3}
+  - {fileID: 21300000, guid: 7a6fefa5fa4122f42838373b6de397a0, type: 3}
+  - {fileID: 21300000, guid: 3076c5790da744941b951ceb9ad61612, type: 3}
+  - {fileID: 21300000, guid: 0768903915b56d44ba9838f54e6a3c3f, type: 3}
+  - {fileID: 21300000, guid: 6661545e1ad23c64c92caef88e7da80d, type: 3}
+  - {fileID: 21300000, guid: 023311eac223c414fa4087a92e5a9f08, type: 3}
+  - {fileID: 21300000, guid: 6fd89d9b482beae4aab1a109d26a667f, type: 3}
+  - {fileID: 21300000, guid: 5ea11e978794ccb46874fa73345c73ed, type: 3}
+  - {fileID: 21300000, guid: 721551da4a4fe8048854851cc58ee2ac, type: 3}
+  - {fileID: 21300000, guid: 19ef07c959c3cf941bd7b1643a0519d4, type: 3}
+  - {fileID: 21300000, guid: 8a60fb72509689d4186a472f7b879a47, type: 3}
+  - {fileID: 21300000, guid: 5c26ee5e8e0a880468ea9941ef829db5, type: 3}
+  - {fileID: 21300000, guid: 57d76a542eaef0a4493a6489157c21e9, type: 3}
+  - {fileID: 21300000, guid: 442150a54d2642946ab3f5345ed051fc, type: 3}
+  - {fileID: 21300000, guid: 0d224f22d625b6b4f949f7b749573a21, type: 3}
+  - {fileID: 21300000, guid: a83185363619e13468b2d1543cf290b8, type: 3}
+  - {fileID: 21300000, guid: cbeaf3b7e6582fd4d953fc5bb7cc8f71, type: 3}
+  - {fileID: 21300000, guid: c7d7f5fd02ca12742968437c3c4c79a0, type: 3}
+  - {fileID: 21300000, guid: 33f2657fbd66a6146b73d12c67d41cad, type: 3}
+  - {fileID: 21300000, guid: d52eecf9d56c1dd45b40b188304cf823, type: 3}
+  - {fileID: 21300000, guid: e9b6f1fc7dad09e4db4625cb8160efb0, type: 3}
+  - {fileID: 21300000, guid: 20c287a7209c5f340a1092be4402524f, type: 3}
+  - {fileID: 21300000, guid: 071f4ac47705a4b458572c69cabf0150, type: 3}
+  - {fileID: 21300000, guid: ec9e710f4c537064a937b2db346a59bd, type: 3}
+  - {fileID: 21300000, guid: f213dd5eedbb2c541bf694f9f03234b6, type: 3}
+  - {fileID: 21300000, guid: 09272a2e28cbf7f408be369daafd5386, type: 3}
+  - {fileID: 21300000, guid: 9aeec9ce65f95f14991d395ae187ef05, type: 3}
+  - {fileID: 21300000, guid: 039445b8a0184fb44bc096891d13d04f, type: 3}
+  - {fileID: 21300000, guid: 8c268aa13dc32f647a5be4cb5bedacf3, type: 3}
+  - {fileID: 21300000, guid: c81f64492d0ae054c8e90f1ca2891d58, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - wheel_denglu_01_00
+  - wheel_denglu_01_16
+  - menu_shop_18
+  - wheel_denglu_01_29
+  - wheel_denglu_01_28
+  - wheel_denglu_02_03
+  - wheel_denglu_01_25
+  - wheel_denglu_01_18
+  - wheel_denglu_01_06
+  - wheel_denglu_01_23
+  - wheel_denglu_01_27
+  - wheel_denglu_01_15
+  - wheel_denglu_01_21
+  - wheel_denglu_01_24
+  - wheel_denglu_02_04
+  - wheel_denglu_01_19
+  - wheel_denglu_01_26
+  - wheel_denglu_01_17
+  - wheel_denglu_01_01_6
+  - wheel_denglu_01_01_5
+  - wheel_denglu_01_01_4
+  - wheel_denglu_01_01_3
+  - wheel_denglu_01_01_2
+  - wheel_denglu_01_01_1
+  - wheel_denglu_01_01_7
+  - wheel_denglu_01_22
+  - Login-bonus_22
+  - Login-bonus_8
+  - Login-bonus_15
+  - Login-bonus_30
+  - wheel_denglu_01_20
+  m_Tag: UIEveryDayRewardWindow
+  m_IsVariant: 0

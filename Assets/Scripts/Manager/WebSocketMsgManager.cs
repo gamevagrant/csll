@@ -30,12 +30,13 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
                 NoticeAction(msg);
                 break;
             case 11://完成每日任务
-                DailyTaskAction(msg);
+                //DailyTaskAction(msg);
                 break;
             case 12://获得邮件通知
                 MailAction(msg);
                 break;
             default:
+                Debug.LogAssertion(msg.action.ToString()+" websocket的返回没实现");
                 break;
         }
 
@@ -47,14 +48,25 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
 
     private void AttackAction(MessageResponseData msg)
     {
+        PopupMessageData data = new PopupMessageData();
+        data.headImg = msg.headImg;
+
         string str = "";
         if((bool)msg.extra["isShielded"])
         {
             str = string.Format("你成功防御了<#1995BCFF>{0}</color>的攻击", msg.name);
-        }else
+            GameMainManager.instance.model.userData.shields = Mathf.Max(0, GameMainManager.instance.model.userData.shields - 1);
+            data.confirmHandle = () => {
+
+                EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.sheild, 0));
+            };
+           
+        }
+        else
         {
-            int buildingIndex = (int)msg.extra["building_index"];
-            int buildingStatus = (int)msg.extra["building"]["status"];
+            int buildingIndex = int.Parse(msg.extra["building_index"].ToString());
+            int buildingStatus = int.Parse(msg.extra["building"]["status"].ToString());
+            int level = int.Parse(msg.extra["building"]["level"].ToString());
             if (buildingStatus == 2)
             {
                 str = string.Format("<#1995BCFF>{0}</color>损坏了你的{1}", msg.name, GameMainManager.instance.configManager.islandConfig.GetBuildingName(buildingIndex));
@@ -64,14 +76,15 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
                 str = string.Format("<#1995BCFF>{0}</color>摧毁了你的{1}", msg.name, GameMainManager.instance.configManager.islandConfig.GetBuildingName(buildingIndex));
             }
             GameMainManager.instance.model.userData.buildings[buildingIndex].status = buildingStatus;
-        }
-        PopupMessageData data = new PopupMessageData();
-        data.headImg = msg.headImg;
-        data.content = str;
-        data.confirmHandle = () => {
+            GameMainManager.instance.model.userData.buildings[buildingIndex].level = level;
+            data.confirmHandle = () => {
 
-            EventDispatcher.instance.DispatchEvent(new UpdateBuildingEvent());
-        };
+                EventDispatcher.instance.DispatchEvent(new UpdateBuildingEvent());
+            };
+        }
+
+        data.content = str;
+       
 
         GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIPopupMessageWindow, data);
     }
@@ -99,21 +112,95 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
  */
     private void StealAction(MessageResponseData msg)
     {
-        long reward = (long)msg.extra["reward"];
-        long money = (long)msg.extra["money"];
+        long reward = long.Parse(msg.extra["reward"].ToString());
+        long money = long.Parse(msg.extra["money"].ToString());
 
-        string str = string.Format("{0}偷走了{1}金币", msg.name,GameUtils.GetCurrencyString(reward));
+        string str = string.Format("<#1995BCFF>{0}</color>偷走了你<#1995BCFF>{1}</color>金币", msg.name,GameUtils.GetCurrencyString(reward));
         PopupMessageData data = new PopupMessageData();
         data.headImg = msg.headImg;
         data.content = str;
-        GameMainManager.instance.model.userData.money = money;
-
         GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIPopupMessageWindow, data);
-    }
 
+        GameMainManager.instance.model.userData.money = money;
+        EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Money, 1));
+    }
+    /*
+     * {
+    "uid": 10411,
+    "toid": 1125,
+    "action": 3,
+    "result": 0,
+    "time": "今天 18:15:14",
+    "name": "Linda",
+    "headImg": "https://scontent.xx.fbcdn.net/v/t1.0-1/c15.0.50.50/p50x50/1379841_10150004552801901_469209496895221757_n.jpg?oh=ef2ea8eb8c792b56ff67f460f47f79dd&oe=5ADEBA33",
+    "crowns": 6,
+    "extra": {
+        "friend": {
+            "uid": 10411,
+            "crowns": 6,
+            "crownsUpdateTime": 0,
+            "friendName": "Linda",
+            "gender": 2,
+            "headImg": "https://scontent.xx.fbcdn.net/v/t1.0-1/c15.0.50.50/p50x50/1379841_10150004552801901_469209496895221757_n.jpg?oh=ef2ea8eb8c792b56ff67f460f47f79dd&oe=5ADEBA33",
+            "isEmpty": false,
+            "isVip": false,
+            "name": "Linda",
+            "openId": "",
+            "rank": 0,
+            "recallCount": 0,
+            "signature": "",
+            "updateTime": "",
+            "guild": null,
+            "status": 0,
+            "sendStatus": 0,
+            "receiveStatus": 0,
+            "buildings": [
+                {
+                    "level": 2,
+                    "status": 0,
+                    "isShield": true
+                },
+                {
+                    "level": 1,
+                    "status": 0,
+                    "isShield": true
+                },
+                {
+                    "level": 0,
+                    "status": 0,
+                    "isShield": true
+                },
+                {
+                    "level": 0,
+                    "status": 0,
+                    "isShield": true
+                },
+                {
+                    "level": 3,
+                    "status": 0,
+                    "isShield": true
+                }
+            ],
+            "islandId": 1,
+            "head_frame": 0
+        }
+    },
+    "read": false,
+    "isWanted": false,
+    "isVip": false,
+    "head_frame": 0
+}
+     * */
     private void AddFriendAction(MessageResponseData msg)
     {
+        GameMainManager.instance.netManager.Friend(0, (ret,res) => {
 
+            GameMainManager.instance.model.userData.friendInfo = res.data.friends;
+            GameMainManager.instance.model.userData.friendNotAgreeInfo = res.data.friendsNotAgree;
+            EventDispatcher.instance.DispatchEvent(new UpdateFriendsEvent(UpdateFriendsEvent.UpdateType.AgreeFriend));
+
+        });
+        
     }
 
     private void PayAction(MessageResponseData msg)
@@ -168,17 +255,55 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
 
     private void NoticeAction(MessageResponseData msg)
     {
-
+        Debug.LogAssertion("公告wetsocket的返回没实现/n" + LitJson.JsonMapper.ToJson(msg));
     }
-
+    /*
+ {
+  "uid": 0, 
+  "toid": 1125, 
+  "action": 11, 
+  "result": 0, 
+  "time": "", 
+  "name": "", 
+  "headImg": "", 
+  "crowns": 0, 
+  "extra": {
+    "task": {
+      "type": 10, 
+      "status": 1, 
+      "totalProgress": 800000, 
+      "progress": 1011874, 
+      "reward": {
+        "type": "gold", 
+        "num": 50000, 
+        "name": ""
+      }, 
+      "name": "一个小目标", 
+      "desc": "累计获得800K金币"
+    }
+  }, 
+  "read": false, 
+  "isWanted": false, 
+  "isVip": false, 
+  "head_frame": 0
+} 
+     */
     private void DailyTaskAction(MessageResponseData msg)
     {
+       
+        string str = string.Format("您已经完成了每日任务【{0}】快去领奖吧！",msg.extra["task"]["name"].ToString());
+        PopupMessageData data = new PopupMessageData();
+        data.headImg = msg.headImg;
+        data.content = str;
 
+        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIPopupMessageWindow, data);
+
+        
     }
 
     private void MailAction(MessageResponseData msg)
     {
-
+        Debug.LogAssertion("邮件的wetsocket的返回没实现/n" + LitJson.JsonMapper.ToJson(msg));
     }
 
 

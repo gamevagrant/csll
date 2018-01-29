@@ -24,9 +24,6 @@ public class UIFriendsWindow : UIWindowBase {
         }
     }
 
-    //public Toggle myFriendsToggle;
-    //public Toggle addFriendToggle;
-    //public Toggle applyFriendsToggle;
 
     public GameObject myFriendsPanel;
     public GameObject addFriendPanel;
@@ -45,9 +42,6 @@ public class UIFriendsWindow : UIWindowBase {
 
     private void Awake()
     {
-        //myFriendsToggle.onValueChanged.AddListener(OnChangeMyFriendsToggle);
-        //addFriendToggle.onValueChanged.AddListener(OnChangeAddFriendsToggle);
-        //applyFriendsToggle.onValueChanged.AddListener(OnChangeApplyFriendsToggle);
 
         EventDispatcher.instance.AddEventListener(EventEnum.UPDATE_FRIENDS, OnUpdateFriendsHandle);
         EventDispatcher.instance.AddEventListener(EventEnum.SELECTED_FRIEND, OnSelectedFriendHandle);
@@ -55,9 +49,6 @@ public class UIFriendsWindow : UIWindowBase {
 
     private void OnDestroy()
     {
-        //myFriendsToggle.onValueChanged.RemoveAllListeners();
-        //addFriendToggle.onValueChanged.RemoveAllListeners();
-        //applyFriendsToggle.onValueChanged.RemoveAllListeners();
 
         EventDispatcher.instance.RemoveEventListener(EventEnum.UPDATE_FRIENDS, OnUpdateFriendsHandle);
         EventDispatcher.instance.RemoveEventListener(EventEnum.SELECTED_FRIEND, OnSelectedFriendHandle);
@@ -74,30 +65,12 @@ public class UIFriendsWindow : UIWindowBase {
         });
        
         UpdateAddFriendData();
-        //myFriendsToggle.isOn = true;
-        //myFriendsToggle.enabled = false;
-        //myFriendsToggle.enabled = true;
-        addFriendPanel.SetActive(false);
-        applyFriendsPanel.SetActive(false);
+
+        //addFriendPanel.SetActive(false);
+        //applyFriendsPanel.SetActive(false);
         menuePanel.parent.gameObject.SetActive(false);
     }
-    /*
-    private void OnChangeMyFriendsToggle(bool value)
-    {
-        myFriendsPanel.SetActive(value);
 
-    }
-
-    private void OnChangeAddFriendsToggle(bool value)
-    {
-        addFriendPanel.SetActive(value);
-    }
-
-    private void OnChangeApplyFriendsToggle(bool value)
-    {
-        applyFriendsPanel.SetActive(value);
-    }
-    */
     private void OnUpdateFriendsHandle(BaseEvent e)
     {
         UpdateFriendsEvent evt = e as UpdateFriendsEvent;
@@ -126,7 +99,7 @@ public class UIFriendsWindow : UIWindowBase {
 
         List<FriendItemData> friendItems = new List<FriendItemData>();
         friendItems.Add(new FriendItemData(0,null));
-       // FriendData[] friendDatas = GameMainManager.instance.model.userData.friendInfo;
+
         if(friendDatas!= null)
         {
             foreach (FriendData fd in friendDatas)
@@ -150,12 +123,12 @@ public class UIFriendsWindow : UIWindowBase {
 
     private void UpdateAddFriendData()
     {
-        friendCodeText.text = "我的邀请码：" + GameMainManager.instance.model.userData.friendshipCode;
+        friendCodeText.text = "我的ID：" + GameMainManager.instance.model.userData.friendshipCode;
     }
 
     private void UpdateNotAgreeFriendsData(FriendData[] friendDatas)
     {
-       // FriendData[] friendDatas = GameMainManager.instance.model.userData.friendNotAgreeInfo;
+
         notAgreeScrollView.SetData(friendDatas);
     }
 
@@ -169,12 +142,7 @@ public class UIFriendsWindow : UIWindowBase {
                 {
                     UpdateNotAgreeFriendsData(res.data.friends);
                 });
-                /*
-                GameMainManager.instance.uiManager.OpenPopupModalBox("添加成功", "", ()=> {
 
-                    UpdateNotAgreeFriendsData(res.data.friends);
-                });
-                */
             }
         });
     }
@@ -189,11 +157,7 @@ public class UIFriendsWindow : UIWindowBase {
                 {
                     UpdateNotAgreeFriendsData(res.data.friendsNotAgree);
                 });
-                /*
-                GameMainManager.instance.uiManager.OpenPopupModalBox("忽略成功", "", ()=>
-                {
-                    UpdateNotAgreeFriendsData(res.data.friendsNotAgree);
-                });*/
+
             }
         });
     }
@@ -202,17 +166,14 @@ public class UIFriendsWindow : UIWindowBase {
     {
         if(GameMainManager.instance.model.userData.energy>= GameMainManager.instance.model.userData.maxEnergy)
         {
-            Alert.Show("您的体力太多，消耗些再来领吧！");
+            Alert.Show("能量已满，用掉些再来吧");
             return;
         }
         GameMainManager.instance.netManager.ReceiveEnergy(0,(ret, res) =>
         {
             if (res.isOK)
             {
-                Alert.Show("一键领取成功", Alert.OK, (flag) =>
-                {
-                    UpdateMyFriendsData(res.data.friends);
-                });
+                UpdateMyFriendsData(res.data.friends);
 
             }
         });

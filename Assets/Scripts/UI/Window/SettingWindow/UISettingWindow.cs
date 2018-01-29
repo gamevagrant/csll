@@ -54,11 +54,22 @@ public class UISettingWindow : UIWindowBase {
 
     public void OnClickFacebookBtn()
     {
-        AccountManager.instance.LoinPlatform((issuccess)=> {
+        AccountManager.instance.BindAccount((issuccess)=> {
             if (issuccess)
             {
                 OnClickClose();
             }
         });
+    }
+
+    public void OnClickLikeBtn()
+    {
+        Application.OpenURL(GameSetting.homePage);
+    }
+
+    public void OnClickExchangeBtn()
+    {
+        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIExchangeCodeWindow);
+        OnClickClose();
     }
 }

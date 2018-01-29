@@ -1,0 +1,110 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: UIInviteWindow
+  m_EditorData:
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 0
+    platformSettings: []
+    packingParameters:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    packedHash:
+      serializedVersion: 2
+      Hash: 0a2bdb066ac1c487e1c487b89547edb1
+    variantMultiplier: 1
+    bindAsDefault: 0
+    finalFormat: 4
+    hashString: 0a2bdb066ac1c487e1c487b89547edb1
+    totalSpriteSurfaceArea: 353314
+    packables:
+    - {fileID: 102900000, guid: 951279a26fafcbc45bede9174130416a, type: 3}
+    packedSpriteRenderDataKeys:
+    - 73093dbb7f1ef72488eb4334bb22f5d5: 21300000
+    - 4527160480424c04594837e9dddd17eb: 21300000
+    - 4fb1957fd74c1a0469b10fcccb051af6: 21300000
+    - d03ca5634a859044ba76a6ae7c88214e: 21300000
+    - cc84f5a046827ea44b795343923c638e: 21300000
+    - e40f6b8a99b60d447acc06ae9100e1b9: 21300000
+    - 719f61188144e4c4bbc4508a25ab57e2: 21300000
+    - 7788ffaf4715ad14eb46e100bf7f5478: 21300000
+    - 776e80632910d314b97ca7a156973ecb: 21300000
+    - fd988af481acbe94cb0505d86377794d: 21300000
+    - 3dfd5069da914844c9e853589d9cbaa5: 21300000
+    - e3ddb657ed04ef14aa00a1d06a7c24bf: 21300000
+    - e3a55f7d0a0168140b5e5e04f8fbadd3: 21300000
+    - 574e0e9a98532e04b82183108216244f: 21300000
+    - 4cc2625488166a243bf8fa94bd49f5d0: 21300000
+    - 4e5d54bdadb1a794f9178d5d2d0892a9: 21300000
+    - 8ab86c334c625b64fad49eac85fc8ca7: 21300000
+    - f5e0b7c710fc3364485548ea2b032275: 21300000
+    - 3ac8839735f52a8468e964970ad51ae1: 21300000
+    - 72e6e8b05da8ed44584fde657d2be698: 21300000
+    - 986483b8b553e2c40adf55f69323eb4b: 21300000
+    - ff794a41e3905004faff22b260ef0ebc: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 73093dbb7f1ef72488eb4334bb22f5d5, type: 3}
+  - {fileID: 21300000, guid: 4527160480424c04594837e9dddd17eb, type: 3}
+  - {fileID: 21300000, guid: 4fb1957fd74c1a0469b10fcccb051af6, type: 3}
+  - {fileID: 21300000, guid: d03ca5634a859044ba76a6ae7c88214e, type: 3}
+  - {fileID: 21300000, guid: cc84f5a046827ea44b795343923c638e, type: 3}
+  - {fileID: 21300000, guid: e40f6b8a99b60d447acc06ae9100e1b9, type: 3}
+  - {fileID: 21300000, guid: 719f61188144e4c4bbc4508a25ab57e2, type: 3}
+  - {fileID: 21300000, guid: 7788ffaf4715ad14eb46e100bf7f5478, type: 3}
+  - {fileID: 21300000, guid: 776e80632910d314b97ca7a156973ecb, type: 3}
+  - {fileID: 21300000, guid: fd988af481acbe94cb0505d86377794d, type: 3}
+  - {fileID: 21300000, guid: 3dfd5069da914844c9e853589d9cbaa5, type: 3}
+  - {fileID: 21300000, guid: e3ddb657ed04ef14aa00a1d06a7c24bf, type: 3}
+  - {fileID: 21300000, guid: e3a55f7d0a0168140b5e5e04f8fbadd3, type: 3}
+  - {fileID: 21300000, guid: 574e0e9a98532e04b82183108216244f, type: 3}
+  - {fileID: 21300000, guid: 4cc2625488166a243bf8fa94bd49f5d0, type: 3}
+  - {fileID: 21300000, guid: 4e5d54bdadb1a794f9178d5d2d0892a9, type: 3}
+  - {fileID: 21300000, guid: 8ab86c334c625b64fad49eac85fc8ca7, type: 3}
+  - {fileID: 21300000, guid: f5e0b7c710fc3364485548ea2b032275, type: 3}
+  - {fileID: 21300000, guid: 3ac8839735f52a8468e964970ad51ae1, type: 3}
+  - {fileID: 21300000, guid: 72e6e8b05da8ed44584fde657d2be698, type: 3}
+  - {fileID: 21300000, guid: 986483b8b553e2c40adf55f69323eb4b, type: 3}
+  - {fileID: 21300000, guid: ff794a41e3905004faff22b260ef0ebc, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - ruleWrap
+  - menu_yaoqing2_ (5)
+  - menu_yaoqing3_ (4)
+  - menu_yaoqing3_ (7)
+  - menu_yaoqing3_(14)
+  - menu_yaoqing3_ (11)
+  - menu_yaoqing3_ (12)
+  - menu_yaoqing3_ (3)
+  - menu_yaoqing2_ (12)
+  - menu_yaoqing3_(13)
+  - menu_yaoqing3_ (2)
+  - menu_yaoqing3_ (6)
+  - menu_yaoqing3_ (1)
+  - menu_yaoqing3_ (9)
+  - menu_yaoqing3_ (5)
+  - menu_yaoqing4_ (3)
+  - menu_yaoqing3_(15)
+  - "menu_yaoqing2_ \uFF0810\uFF09"
+  - menu_yaoqing3_(17)
+  - menu_yaoqing3_(16)
+  - menu_yaoqing2_ (11)
+  - menu_yaoqing3_ (10)
+  m_Tag: UIInviteWindow
+  m_IsVariant: 0

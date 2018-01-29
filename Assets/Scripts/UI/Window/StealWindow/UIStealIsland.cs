@@ -10,18 +10,21 @@ public class UIStealIsland : MonoBehaviour {
     public IslandFactory island;
     public HeadIcon head;
     public TextMeshProUGUI labelMoney;
+    public GameObject richIcon;
 
     public void setData(StealIslandData islandData)
     {
         island.UpdateCityData(islandData.islandId, islandData.buildings);
         head.gameObject.SetActive(false);
         labelMoney.gameObject.SetActive(false);
+        richIcon.SetActive(false);
     }
 
     public void setData(TargetData targetData)
     {
         head.setData(targetData.name, targetData.headImg, targetData.crowns, targetData.isVip);
         head.gameObject.SetActive(true);
+        richIcon.SetActive(targetData.isRichMan);
 
         labelMoney.text = GameUtils.GetCurrencyString(targetData.money);
         labelMoney.gameObject.SetActive(true);

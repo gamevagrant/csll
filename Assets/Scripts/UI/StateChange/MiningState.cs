@@ -10,7 +10,7 @@ public class MiningState : UIStateChangeBase {
 
     }
 
-    public override void ChangeState(Dictionary<UISettings.UIWindowID, UIWindowBase> showingWindows)
+    public override void ChangeState(Dictionary<UISettings.UIWindowID, UIWindowBase> showingWindows,bool needTransform = true)
     {
         GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UICloudCover, true, () => {
 
@@ -31,13 +31,13 @@ public class MiningState : UIStateChangeBase {
             GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIMiningWindow, false);
             GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UITopBarWindow, false);
 
-            GameMainManager.instance.mono.StartCoroutine(DelayOpenCloud());
+            GameMainManager.instance.mono.StartCoroutine(DelayOpenCloud(0.5f, needTransform));
         });
     }
 
-    private IEnumerator DelayOpenCloud()
+    private IEnumerator DelayOpenCloud(float delay, bool needTransform)
     {
-        yield return new WaitForSeconds(0.5f);
-        GameMainManager.instance.uiManager.CloseWindow(UISettings.UIWindowID.UICloudCover);
+        yield return new WaitForSeconds(delay);
+        GameMainManager.instance.uiManager.CloseWindow(UISettings.UIWindowID.UICloudCover, needTransform);
     }
 }

@@ -22,6 +22,8 @@ public class UIBuildPanel : MonoBehaviour {
     private RectTransform switchBtn;
     [SerializeField]
     private RectTransform panel;
+    [SerializeField]
+    private RectTransform[] repairBtns;
 
     private SpriteAtlas spriteAtlas;
 
@@ -78,6 +80,8 @@ public class UIBuildPanel : MonoBehaviour {
         cityName.text = GameMainManager.instance.configManager.islandConfig.GetIslandName(user.islandId);
 
         this.onUpgrading = onUpgrading;
+
+        UpdateRepairBtns(data);
     }
 
 
@@ -110,6 +114,7 @@ public class UIBuildPanel : MonoBehaviour {
         DOTween.To(() => panel.anchoredPosition, x => panel.anchoredPosition = x,panelLocalOriginalValue, 1).SetEase(Ease.InQuint);
         DOTween.To(() => panel.localScale, x => panel.localScale = x, Vector3.one, 1).onComplete = () => {
 
+            QY.Guide.GuideManager.instance.state = "building";
             GameMainManager.instance.uiManager.EnableOperation();
         };
     }
@@ -127,7 +132,27 @@ public class UIBuildPanel : MonoBehaviour {
 
     }
 
+    public void ShowBuildState()
+    {
+        buildBtn.gameObject.SetActive(true);
+        switchBtn.gameObject.SetActive(true);
 
+        buildBtn.anchoredPosition = buildBtnOriginalValue;
+        switchBtn.anchoredPosition = switchOriginalValue;
+        panel.anchoredPosition = panelLocalOriginalValue;
+        panel.localScale = Vector3.one;
+    }
+
+    public void ShowWheelState()
+    {
+        buildBtn.anchoredPosition = new Vector2(buildBtn.anchoredPosition.x, -300);
+        switchBtn.anchoredPosition = new Vector2(-200, switchBtn.anchoredPosition.y);
+        panel.anchoredPosition = new Vector2(200, -150);
+        panel.localScale = new Vector3(0.5f, 0.5f, 1);
+
+        buildBtn.gameObject.SetActive(false);
+        switchBtn.gameObject.SetActive(false);
+    }
 
     public void onClickBuildBtn()
     {
@@ -140,21 +165,59 @@ public class UIBuildPanel : MonoBehaviour {
        
     }
 
+    public void OnClickRepairBtn(int index)
+    {
+        GameMainManager.instance.netManager.Build(GameMainManager.instance.model.userData.islandId, index - 1, (ret, data) => {
+            if (ret && data.isOK)
+            {
+
+                BuildComplateEvent evt = new BuildComplateEvent();
+                evt.buildIndex = index;
+                evt.level = data.data.buildings[index - 1].level;
+                evt.status = data.data.buildings[index - 1].status;
+                evt.isRepair = true;
+                evt.islandID = data.data.islandId;
+                evt.isUpgrade = data.data.playUpgradeAnimation;
+                evt.upgradeEnergyReward = data.data.upgradeEnergyAfterReward - data.data.energy;
+                evt.upgradeMoneyReward = data.data.upgradeMoneyAfterReward - data.data.money;
+                EventDispatcher.instance.DispatchEvent(evt);
+
+               
+            }
+
+        });
+    }
+
+    private void UpdateRepairBtns(BuildingData[] data)
+    {
+        for (int i = 0; i < repairBtns.Length; i++)
+        {
+            if (i < data.Length && data[i].status == 1)
+            {
+                repairBtns[i].gameObject.SetActive(true);
+            }
+            else
+            {
+                repairBtns[i].gameObject.SetActive(false);
+            }
+        }
+    }
 
     private void OnBuildComplateHandle(BaseEvent e)
     {
         BuildComplateEvent evt = e as BuildComplateEvent;
         buildComplateData = evt;
+
+        repairBtns[buildComplateData.buildIndex-1].gameObject.SetActive(buildComplateData.status==1);
         if (!evt.isUpgrade)
         {
-            StartCoroutine(showBuildAnimation(evt.buildIndex, evt.level));
+            StartCoroutine(showBuildAnimation(evt.buildIndex, evt.level, buildComplateData.isRepair));
         }else
         {
             GameMainManager.instance.uiManager.DisableOperation();
-            StartCoroutine(showBuildAnimation(evt.buildIndex, GameMainManager.instance.model.userData.buildings[evt.buildIndex-1].level+1,()=> 
+            StartCoroutine(showBuildAnimation(evt.buildIndex, GameMainManager.instance.model.userData.buildings[evt.buildIndex-1].level+1,buildComplateData.isRepair,()=> 
             {
                 GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.building_level_up);
-                GameMainManager.instance.uiManager.CloseWindow(UISettings.UIWindowID.UISideBarWindow);
                 GameMainManager.instance.uiManager.CloseWindow(UISettings.UIWindowID.UITopBarWindow);
                 
                 upgradePanel.SetActive(true);
@@ -170,6 +233,7 @@ public class UIBuildPanel : MonoBehaviour {
     private void OnUpdateBuilding(BaseEvent e)
     {
         islandFactory.UpdateCityData(user.islandId, user.buildings);
+        UpdateRepairBtns(user.buildings);
     }
 
     private void UpgradeIsland()
@@ -208,7 +272,6 @@ public class UIBuildPanel : MonoBehaviour {
                 buildBtn.gameObject.SetActive(true);
 
                 GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIWheelWindow, 0);
-                GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UISideBarWindow);
                 GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UITopBarWindow);
                
                 switchBtn.gameObject.SetActive(true);
@@ -220,9 +283,9 @@ public class UIBuildPanel : MonoBehaviour {
         });
     }
 
-    private IEnumerator showBuildAnimation(int index,int level,System.Action onComplate = null)
+    private IEnumerator showBuildAnimation(int index,int level,bool isRepair,System.Action onComplate = null)
     {
-        yield return new WaitForSeconds(0.5f);
+        //yield return new WaitForSeconds(0.5f);
         GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.building_upgrade);
         buildingAnimation.transform.position = islandFactory.GetBuildTransform(index).position;
         islandFactory.HideBuild(index);
@@ -235,22 +298,26 @@ public class UIBuildPanel : MonoBehaviour {
         islandFactory.UpdateBuildingData(index, bd);
         islandFactory.ShowBuild(index);
         EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Money,0));
-        EventDispatcher.instance.DispatchEvent(new GetStarPosEvent((pos) => {
-            star.transform.position = islandFactory.GetBuildTransform(index).position;
-            star.SetActive(true);
-            Sequence sq = DOTween.Sequence();
-            sq.Append((star.transform as RectTransform).DOAnchorPos(new Vector2(0,30), 0.3f).SetRelative().SetEase(Ease.OutCubic));
-            sq.Append((star.transform as RectTransform).DOAnchorPos(new Vector2(0,-30), 0.7f).SetRelative().SetEase(Ease.OutBounce));
-            sq.Append(star.transform.DOMove(pos,1).SetEase(Ease.InCubic));
-            sq.OnComplete(()=> {
-                star.SetActive(false);
-                EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.star, 0));
-            });
+        if(!isRepair)
+        {
+            EventDispatcher.instance.DispatchEvent(new GetStarPosEvent((pos) => {
+                star.transform.position = islandFactory.GetBuildTransform(index).position;
+                star.SetActive(true);
+                Sequence sq = DOTween.Sequence();
+                sq.Append((star.transform as RectTransform).DOAnchorPos(new Vector2(0, 30), 0.3f).SetRelative().SetEase(Ease.OutCubic));
+                sq.Append((star.transform as RectTransform).DOAnchorPos(new Vector2(0, -30), 0.7f).SetRelative().SetEase(Ease.OutBounce));
+                sq.Append(star.transform.DOMove(pos, 1).SetEase(Ease.InCubic));
+                sq.OnComplete(() => {
+                    star.SetActive(false);
+                    EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.star, 0));
+                });
 
-        }));
-       
+            }));
 
-        if(onComplate != null)
+        }
+
+
+        if (onComplate != null)
         {
             yield return new WaitForSeconds(2);
             onComplate();

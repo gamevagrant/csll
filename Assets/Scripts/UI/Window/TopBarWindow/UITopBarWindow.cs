@@ -18,6 +18,7 @@ public class UITopBarWindow : UIWindowBase {
                 _windowData.type = UISettings.UIWindowType.Fixed;
                 _windowData.showMode = UISettings.UIWindowShowMode.DoNothing;
                 _windowData.navMode = UISettings.UIWindowNavigationMode.IgnoreNavigation;
+                _windowData.siblingNum = 0.2f;
             }
             return _windowData;
         }
@@ -29,6 +30,20 @@ public class UITopBarWindow : UIWindowBase {
     public TextMeshProUGUI moneyLabel;
 
     private UserData user;
+
+    private void Awake()
+    {
+        EventDispatcher.instance.AddEventListener(EventEnum.UPDATE_BASE_DATA, OnUpdateData);
+        EventDispatcher.instance.AddEventListener(EventEnum.GET_SHIELD, OnGetShield);
+        EventDispatcher.instance.AddEventListener(EventEnum.GET_STAR, OnGetStar);
+    }
+
+    private void OnDestroy()
+    {
+        EventDispatcher.instance.RemoveEventListener(EventEnum.UPDATE_BASE_DATA, OnUpdateData);
+        EventDispatcher.instance.RemoveEventListener(EventEnum.GET_SHIELD, OnGetShield);
+        EventDispatcher.instance.RemoveEventListener(EventEnum.GET_STAR, OnGetStar);
+    }
 
     public override void Init()
     {
@@ -47,17 +62,13 @@ public class UITopBarWindow : UIWindowBase {
         UpdateStar(user.crowns, 0);
         UpdateShield(user.shields, 0);
 
-        EventDispatcher.instance.AddEventListener(EventEnum.UPDATE_BASE_DATA, OnUpdateData);
-        EventDispatcher.instance.AddEventListener(EventEnum.GET_SHIELD, OnGetShield);
-        EventDispatcher.instance.AddEventListener(EventEnum.GET_STAR, OnGetStar);
+        
     }
 
     protected override void StartHideWindow()
     {
 
-        EventDispatcher.instance.RemoveEventListener(EventEnum.UPDATE_BASE_DATA, OnUpdateData);
-        EventDispatcher.instance.RemoveEventListener(EventEnum.GET_SHIELD, OnGetShield);
-        EventDispatcher.instance.RemoveEventListener(EventEnum.GET_STAR, OnGetStar);
+       
     }
 
 
@@ -110,14 +121,10 @@ public class UITopBarWindow : UIWindowBase {
             if(!shieldImages[i].gameObject.activeSelf)
             {
                 evt.emptyShieldPos(shieldImages[i].transform.position);
-                break;
-            }
-            if(i == shieldImages.Length - 1)
-            {
-                evt.emptyShieldPos(shieldImages[i].transform.position);
+                return;
             }
         }
-
+        evt.emptyShieldPos(shieldImages[shieldImages.Length-1].transform.position);
     }
 
     private void OnGetStar(BaseEvent e)
@@ -167,15 +174,7 @@ public class UITopBarWindow : UIWindowBase {
         {
             for (int i = 0; i < shieldImages.Length; i++)
             {
-                if (i < user.shields)
-                {
-                    shieldImages[i].gameObject.SetActive(true);
-                }
-                else
-                {
-                    shieldImages[i].gameObject.SetActive(false);
-                }
-
+                shieldImages[i].gameObject.SetActive(i < value);
             }
         });
     }

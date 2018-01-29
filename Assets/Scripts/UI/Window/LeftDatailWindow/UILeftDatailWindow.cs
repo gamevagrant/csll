@@ -54,7 +54,7 @@ public class UILeftDatailWindow : UIWindowBase {
     {
         UserData ud = GameMainManager.instance.model.userData;
         head.setData(ud.name, ud.headImg, ud.crowns, ud.isVip);
-        friendCode.text = "友情码：" + ud.friendshipCode;
+        friendCode.text = "ID：" + ud.friendshipCode;
         facebookBtn.SetActive(!AccountManager.instance.isLoginAccount);
 
         for (int i = 0;i<buttonTips.Length;i++)
@@ -107,15 +107,7 @@ public class UILeftDatailWindow : UIWindowBase {
 
     public void OnClickMapBtn()
     {
-        if(GameMainManager.instance.model.userData.islandId>=3)
-        {
-            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIMiningMapWindow);
-        }else
-        {
-            string name = GameMainManager.instance.configManager.islandConfig.GetIslandName(3);
-            Alert.Show(string.Format("到达3号岛屿（{0}）后开启地图功能", name));
-            //GameMainManager.instance.uiManager.OpenPopupModalBox(string.Format("到达{0}后开启地图功能",name),"",null);
-        }
+        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIMiningMapWindow);
         OnClickClose();
     }
 
@@ -160,14 +152,8 @@ public class UILeftDatailWindow : UIWindowBase {
     public void OnClickInviteBtn()
     {
         OnClickClose();
-        if(AccountManager.instance.isLoginAccount)
-        {
-            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIInviteWindow);
-        }else
-        {
-            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIFacebookTipsWindow);
-        }
-        
+        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIInviteWindow);
+
     }
 
     public void OnClickFacebookBtn()

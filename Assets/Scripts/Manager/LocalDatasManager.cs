@@ -86,7 +86,14 @@ public class LocalDatasManager {
 
     private static void SaveData(string name,System.Object obj)
     {
-        string json = LitJson.JsonMapper.ToJson(obj);
-        PlayerPrefs.SetString(name, json);
+        if(obj!=null)
+        {
+            string json = LitJson.JsonMapper.ToJson(obj);
+            PlayerPrefs.SetString(name, json);
+        }else
+        {
+            PlayerPrefs.DeleteKey(name);
+        }
+        
     }
 }

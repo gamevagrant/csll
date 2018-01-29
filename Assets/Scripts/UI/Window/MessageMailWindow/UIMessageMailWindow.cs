@@ -53,7 +53,7 @@ public class UIMessageMailWindow : UIWindowBase {
         {
             if(res.isOK)
             {
-                messages = res.data.messages;
+                
                 if(res.data.user_mail != null)
                 {
                     mails = res.data.user_mail;
@@ -62,7 +62,20 @@ public class UIMessageMailWindow : UIWindowBase {
                         mails[i].index = i;
                     }
                 }
-               
+                
+                if (res.data.messages!=null)
+                {
+                    List<MessageResponseData> list = new List<MessageResponseData>();
+                    messages = res.data.messages;
+                    for (int i = 0; i < messages.Length; i++)
+                    {
+                        if (messages[i].action == 1 || messages[i].action == 2 || messages[i].action == 5 || messages[i].action == 6)
+                        {
+                            list.Add(messages[i]);
+                        }
+                    }
+                    messages = list.ToArray();
+                }
                 messageScrollView.SetData(messages);
             }
            

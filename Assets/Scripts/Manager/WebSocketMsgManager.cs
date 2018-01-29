@@ -30,13 +30,13 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
                 NoticeAction(msg);
                 break;
             case 11://完成每日任务
-                DailyTaskAction(msg);
+                //DailyTaskAction(msg);
                 break;
             case 12://获得邮件通知
                 MailAction(msg);
                 break;
             default:
-                Debug.LogAssertion(msg.action.ToString()+" wetsocket的返回没实现/n" + LitJson.JsonMapper.ToJson(msg));
+                Debug.LogAssertion(msg.action.ToString()+" websocket的返回没实现");
                 break;
         }
 
@@ -48,14 +48,25 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
 
     private void AttackAction(MessageResponseData msg)
     {
+        PopupMessageData data = new PopupMessageData();
+        data.headImg = msg.headImg;
+
         string str = "";
         if((bool)msg.extra["isShielded"])
         {
             str = string.Format("你成功防御了<#1995BCFF>{0}</color>的攻击", msg.name);
-        }else
+            GameMainManager.instance.model.userData.shields = Mathf.Max(0, GameMainManager.instance.model.userData.shields - 1);
+            data.confirmHandle = () => {
+
+                EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.sheild, 0));
+            };
+           
+        }
+        else
         {
             int buildingIndex = int.Parse(msg.extra["building_index"].ToString());
             int buildingStatus = int.Parse(msg.extra["building"]["status"].ToString());
+            int level = int.Parse(msg.extra["building"]["level"].ToString());
             if (buildingStatus == 2)
             {
                 str = string.Format("<#1995BCFF>{0}</color>损坏了你的{1}", msg.name, GameMainManager.instance.configManager.islandConfig.GetBuildingName(buildingIndex));
@@ -65,14 +76,15 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
                 str = string.Format("<#1995BCFF>{0}</color>摧毁了你的{1}", msg.name, GameMainManager.instance.configManager.islandConfig.GetBuildingName(buildingIndex));
             }
             GameMainManager.instance.model.userData.buildings[buildingIndex].status = buildingStatus;
-        }
-        PopupMessageData data = new PopupMessageData();
-        data.headImg = msg.headImg;
-        data.content = str;
-        data.confirmHandle = () => {
+            GameMainManager.instance.model.userData.buildings[buildingIndex].level = level;
+            data.confirmHandle = () => {
 
-            EventDispatcher.instance.DispatchEvent(new UpdateBuildingEvent());
-        };
+                EventDispatcher.instance.DispatchEvent(new UpdateBuildingEvent());
+            };
+        }
+
+        data.content = str;
+       
 
         GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIPopupMessageWindow, data);
     }
@@ -107,14 +119,88 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
         PopupMessageData data = new PopupMessageData();
         data.headImg = msg.headImg;
         data.content = str;
-        GameMainManager.instance.model.userData.money = money;
-
         GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIPopupMessageWindow, data);
-    }
 
+        GameMainManager.instance.model.userData.money = money;
+        EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Money, 1));
+    }
+    /*
+     * {
+    "uid": 10411,
+    "toid": 1125,
+    "action": 3,
+    "result": 0,
+    "time": "今天 18:15:14",
+    "name": "Linda",
+    "headImg": "https://scontent.xx.fbcdn.net/v/t1.0-1/c15.0.50.50/p50x50/1379841_10150004552801901_469209496895221757_n.jpg?oh=ef2ea8eb8c792b56ff67f460f47f79dd&oe=5ADEBA33",
+    "crowns": 6,
+    "extra": {
+        "friend": {
+            "uid": 10411,
+            "crowns": 6,
+            "crownsUpdateTime": 0,
+            "friendName": "Linda",
+            "gender": 2,
+            "headImg": "https://scontent.xx.fbcdn.net/v/t1.0-1/c15.0.50.50/p50x50/1379841_10150004552801901_469209496895221757_n.jpg?oh=ef2ea8eb8c792b56ff67f460f47f79dd&oe=5ADEBA33",
+            "isEmpty": false,
+            "isVip": false,
+            "name": "Linda",
+            "openId": "",
+            "rank": 0,
+            "recallCount": 0,
+            "signature": "",
+            "updateTime": "",
+            "guild": null,
+            "status": 0,
+            "sendStatus": 0,
+            "receiveStatus": 0,
+            "buildings": [
+                {
+                    "level": 2,
+                    "status": 0,
+                    "isShield": true
+                },
+                {
+                    "level": 1,
+                    "status": 0,
+                    "isShield": true
+                },
+                {
+                    "level": 0,
+                    "status": 0,
+                    "isShield": true
+                },
+                {
+                    "level": 0,
+                    "status": 0,
+                    "isShield": true
+                },
+                {
+                    "level": 3,
+                    "status": 0,
+                    "isShield": true
+                }
+            ],
+            "islandId": 1,
+            "head_frame": 0
+        }
+    },
+    "read": false,
+    "isWanted": false,
+    "isVip": false,
+    "head_frame": 0
+}
+     * */
     private void AddFriendAction(MessageResponseData msg)
     {
-        Debug.LogAssertion("添加好友wetsocket的返回没实现/n" + LitJson.JsonMapper.ToJson(msg));
+        GameMainManager.instance.netManager.Friend(0, (ret,res) => {
+
+            GameMainManager.instance.model.userData.friendInfo = res.data.friends;
+            GameMainManager.instance.model.userData.friendNotAgreeInfo = res.data.friendsNotAgree;
+            EventDispatcher.instance.DispatchEvent(new UpdateFriendsEvent(UpdateFriendsEvent.UpdateType.AgreeFriend));
+
+        });
+        
     }
 
     private void PayAction(MessageResponseData msg)

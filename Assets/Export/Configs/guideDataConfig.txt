@@ -74,8 +74,9 @@
             "interact_id": "GuideTipsWindow_CloseBtn",
             "progress": 6,
             "type": "tips",
+			"state": "attack",
             "content": "炮击可以阻止别人前进的步伐，让你一马当先",
-            "delay": 7
+            "delay": 0
         },
         {
             "interact_id": "AttackWindow_SelectBtn1",
@@ -193,16 +194,17 @@
             "interact_id": "GuideTipsWindow_CloseBtn",
             "progress": 16,
             "type": "tips",
+			"state": "steal",
             "content": "猜中富豪偷光他所有金币，最有钱的人只能是你！",
-            "delay": 10
+            "delay": 0
         },
         {
-            "interact_id": "GuideRewardWindow_GetRewardBtn",
+            "interact_id": "EmptyEnergyGuideWindow_GetRewardBtn",
             "progress": 17,
             "type": "open",
 			"state": "wheel",
-            "content": "UIGuideRewardWindow",
-            "delay": 1
+            "content": "UIEmptyEnergyGuideWindow",
+            "delay": 0
         }
     ]
 }

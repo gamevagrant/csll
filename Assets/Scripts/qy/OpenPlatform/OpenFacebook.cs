@@ -10,7 +10,7 @@ namespace QY.Open
     public class OpenFacebook : IOpenPlatform
     {
         private const string DEBUG_TOKEN = "EAACOsVAkLvoBAJy0VbZCpljkRrmPEimQ3fG45AHkWmI388UpZBd2J5ZCzR5tZBS1qCnSBYQHKiDgeo0iQS5UyzGbZAU6cOvynJ1yx1ypeAxITS5TnOIcNqBG1ehjTvmiWcYjI967FQtBgHhvyHdd2VFFaunbp452IyoCIrQlwM2c9bHXlZBZCpQ";//测试用facebook访问token
-
+       
         AccessToken _token;
         public AccessToken token
         {

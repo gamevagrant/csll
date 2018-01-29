@@ -28,12 +28,12 @@ SpriteAtlas:
       enableTightPacking: 0
     packedHash:
       serializedVersion: 2
-      Hash: 512e32f562ff76ebd708bc34fb02339e
+      Hash: 887f6309b5867eaa2bd38f709460c388
     variantMultiplier: 1
     bindAsDefault: 0
     finalFormat: 4
-    hashString: 512e32f562ff76ebd708bc34fb02339e
-    totalSpriteSurfaceArea: 500723
+    hashString: 887f6309b5867eaa2bd38f709460c388
+    totalSpriteSurfaceArea: 495210
     packables:
     - {fileID: 102900000, guid: 8b75ce511bcd1564cb58c09924c006ee, type: 3}
     packedSpriteRenderDataKeys:
@@ -44,7 +44,6 @@ SpriteAtlas:
     - 28c591e0d61df82418474a2b5e948b9f: 21300000
     - 307e460501a979742a2dc2ad01fb7f12: 21300000
     - 299af8aea1134cf4a8284a6c88b4dbcc: 21300000
-    - 326ad21b161927a4193cea9cdc491d91: 21300000
     - 2b98215efec896f4aa08d9a80b0187cf: 21300000
     - 499c8262e5978b84c848a8dc4b177c1e: 21300000
     - d6f33de7181d1464ca998fd171ea9ebb: 21300000
@@ -53,6 +52,7 @@ SpriteAtlas:
     - 69c3ae9703c460742879671f445b3d6b: 21300000
     - 754693c1d7644a14f821615ed647a76d: 21300000
     - cb1104f9fa828cb4c95815dcff274d1c: 21300000
+    - 326ad21b161927a4193cea9cdc491d91: 21300000
     - 7ad71c666ec9794458a931515c9ea153: 21300000
     - 386c51113ac5ffb429d44a29fbc700c4: 21300000
     - d5a40599796636941926b7e13c63d4f7: 21300000
@@ -74,7 +74,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 28c591e0d61df82418474a2b5e948b9f, type: 3}
   - {fileID: 21300000, guid: 307e460501a979742a2dc2ad01fb7f12, type: 3}
   - {fileID: 21300000, guid: 299af8aea1134cf4a8284a6c88b4dbcc, type: 3}
-  - {fileID: 21300000, guid: 326ad21b161927a4193cea9cdc491d91, type: 3}
   - {fileID: 21300000, guid: 2b98215efec896f4aa08d9a80b0187cf, type: 3}
   - {fileID: 21300000, guid: 499c8262e5978b84c848a8dc4b177c1e, type: 3}
   - {fileID: 21300000, guid: d6f33de7181d1464ca998fd171ea9ebb, type: 3}
@@ -83,6 +82,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 69c3ae9703c460742879671f445b3d6b, type: 3}
   - {fileID: 21300000, guid: 754693c1d7644a14f821615ed647a76d, type: 3}
   - {fileID: 21300000, guid: cb1104f9fa828cb4c95815dcff274d1c, type: 3}
+  - {fileID: 21300000, guid: 326ad21b161927a4193cea9cdc491d91, type: 3}
   - {fileID: 21300000, guid: 7ad71c666ec9794458a931515c9ea153, type: 3}
   - {fileID: 21300000, guid: 386c51113ac5ffb429d44a29fbc700c4, type: 3}
   - {fileID: 21300000, guid: d5a40599796636941926b7e13c63d4f7, type: 3}
@@ -103,7 +103,6 @@ SpriteAtlas:
   - menu_bomb
   - menu_wheel
   - menu_shop
-  - menu_map
   - menu_notice
   - menu_friends
   - menu_hammer
@@ -112,6 +111,7 @@ SpriteAtlas:
   - lALPBbCc1TjSeJ0-zKI_162_62
   - menu_btn_sel
   - menu_invite
+  - menu_map
   - menu_friends_word
   - menu_shop_word
   - menu_wheel_word

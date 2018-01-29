@@ -21,6 +21,21 @@ public class UIEveryDayTaskWindow : UIWindowBase {
             return _windowData;
         }
     }
+
+    public override bool canOpen
+    {
+        get
+        {
+            if (GameMainManager.instance.model.userData.islandId < 2)
+            {
+                Alert.Show(string.Format("2号岛屿（{0}）解锁该功能，快去升级岛屿吧！", GameMainManager.instance.configManager.islandConfig.GetIslandName(2)));
+                return false;
+            }
+
+            return true;
+        }
+    }
+
     [SerializeField]
     private QY.UI.Button getRewardBtn;
     [SerializeField]

@@ -5,11 +5,67 @@ using UnityEditor;
 using UnityEngine.UI;
 using System.IO;
 using LitJson;
+using System;
+using System.Text.RegularExpressions;
+
 
 public class EditorTools  {
 
+    [MenuItem("Tools/通过json数据裁切图集")]
+    static void SetTextureMultipleSpriteEditor()
+    {
+        if (Selection.activeObject && Selection.activeObject is Texture)
+        {
+            string path = AssetDatabase.GetAssetPath(Selection.activeObject);
+            int height = (Selection.activeObject as Texture).height;
 
-    [MenuItem("Tools/设置面板raycastTarget = false")]
+            string jsonPath = path.Replace(Path.GetExtension(path), ".json");
+            object jsonObj = AssetDatabase.LoadMainAssetAtPath(jsonPath);
+            if (jsonObj != null)
+            {
+                string json = jsonObj.ToString();
+                JsonData jsonData = JsonMapper.ToObject(json);
+                List<SpriteMetaData> list = new List<SpriteMetaData>();
+                foreach (string key in jsonData["res"].Keys)
+                {
+                    JsonData jd = jsonData["res"][key];
+                    int x = int.Parse(jd["x"].ToString());
+                    int y = int.Parse(jd["y"].ToString());
+                    int w = int.Parse(jd["w"].ToString());
+                    int h = int.Parse(jd["h"].ToString());
+                    SpriteMetaData md = new SpriteMetaData()
+                    {
+                        name = key + "Q",
+                        rect = new Rect(x, height - y - h, w, h),
+                    };
+
+                    list.Add(md);
+                }
+
+                TextureImporter importer = AssetImporter.GetAtPath(path) as TextureImporter;
+                importer.spritesheet = list.ToArray();
+                importer.mipmapEnabled = !importer.mipmapEnabled;
+                importer.SaveAndReimport();
+                importer.mipmapEnabled = !importer.mipmapEnabled;
+                importer.SaveAndReimport();
+
+
+            }
+            else
+            {
+                Debug.LogAssertion("没有找到与图片命名一致的json数据" + jsonPath);
+            }
+
+        }
+        else
+        {
+            Debug.LogAssertion("只能对图片进行操作");
+        }
+    }
+
+
+
+   // [MenuItem("Tools/设置面板raycastTarget = false")]
     public static void SetRayTask()
     {
         Graphic[] graphics = Selection.activeTransform.GetComponentsInChildren<Graphic>();
@@ -31,7 +87,12 @@ public class EditorTools  {
     {
         PlayerPrefs.DeleteAll();
     }
- 
+
+    [MenuItem("Tools/保存资源")]
+    public static void SaveAssets()
+    {
+        AssetDatabase.SaveAssets();
+    }
 
     [MenuItem("GameObject/UI/Image")]
     static void CreatImage()
@@ -70,54 +131,6 @@ public class EditorTools  {
             }
         }
     }
-    [MenuItem("Tools/通过json数据裁切图集")]
-    static void SetTextureMultipleSpriteEditor()
-    {
-        if (Selection.activeObject && Selection.activeObject is Texture)
-        {
-            string path = AssetDatabase.GetAssetPath(Selection.activeObject);
-            int height = (Selection.activeObject as Texture).height;
-
-            string jsonPath = path.Replace(Path.GetExtension(path), ".json");
-            object jsonObj = AssetDatabase.LoadMainAssetAtPath(jsonPath);
-            if(jsonObj!=null)
-            {
-                string json = jsonObj.ToString();
-                JsonData jsonData = JsonMapper.ToObject(json);
-                List<SpriteMetaData> list = new List<SpriteMetaData>();
-                foreach (string key in jsonData["res"].Keys)
-                {
-                    JsonData jd = jsonData["res"][key];
-                    int x = int.Parse(jd["x"].ToString());
-                    int y = int.Parse(jd["y"].ToString());
-                    int w = int.Parse(jd["w"].ToString());
-                    int h = int.Parse(jd["h"].ToString());
-                    SpriteMetaData md = new SpriteMetaData()
-                    {
-                        name = key + "Q",
-                        rect = new Rect(x, height - y - h, w, h),
-                    };
-
-                    list.Add(md);
-                }
-
-                TextureImporter importer = AssetImporter.GetAtPath(path) as TextureImporter;
-                importer.spritesheet = list.ToArray();
-                importer.mipmapEnabled = !importer.mipmapEnabled;
-                importer.SaveAndReimport();
-                importer.mipmapEnabled = !importer.mipmapEnabled;
-                importer.SaveAndReimport();
 
 
-            }else
-            {
-                Debug.LogAssertion("没有找到与图片命名一致的json数据"+ jsonPath);
-            }
-
-        }
-        else
-        {
-            Debug.LogAssertion("只能对图片进行操作");
-        }
-    }
 }

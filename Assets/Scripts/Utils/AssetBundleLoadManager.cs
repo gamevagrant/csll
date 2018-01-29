@@ -68,7 +68,7 @@ public class AssetBundleLoadManager : MonoBehaviour {
         {
             queue.Enqueue(() =>
             {
-                tryClearCache();
+                TryClearCache();
                 StartCoroutine(loadAsync<T>(path, callback));
             });
         }
@@ -166,17 +166,18 @@ public class AssetBundleLoadManager : MonoBehaviour {
             Debug.Log("---开始加载目标资源:" + path);
             createRequest = AssetBundle.LoadFromFileAsync(path);
             yield return createRequest;
+            List<AssetBundle> abList = new List<AssetBundle>();
             if (createRequest.isDone)
             {
                 AssetBundle assetBundle = createRequest.assetBundle;
                 yield return assetRequest = assetBundle.LoadAssetAsync(Path.GetFileNameWithoutExtension(path), typeof(T));
                 obj = assetRequest.asset;
 
-                addCache(path,obj);
+                AddCache(path,obj);
                 //5释放目标资源
                 //Debug.Log("---释放目标资源:" + path);
-                assetBundle.Unload(false);
-                assetBundle = null;
+                abList.Add(assetBundle);
+
             }
             else
             {
@@ -192,12 +193,13 @@ public class AssetBundleLoadManager : MonoBehaviour {
                 {
                     //Debug.Log("---释放依赖资源:" + key);
                     AssetBundle dependencyAB = dependencyAssetBundles[key];
-                    dependencyAB.Unload(false);
+                    abList.Add(dependencyAB);
                 }
             }
 
             
             callback((T)obj);
+            StartCoroutine(UnloadAssetbundle(abList));
         }
         //Debug.Log("---end loadAsync:AssetBundleLoader.loadAsync" + path);
         yield return null;
@@ -274,11 +276,11 @@ public class AssetBundleLoadManager : MonoBehaviour {
             AssetBundle assetBundle = AssetBundle.LoadFromFile(path);
             obj = assetBundle.LoadAsset<T>(Path.GetFileNameWithoutExtension(path)); ;
 
-            addCache(path, obj);
+            AddCache(path, obj);
             //5释放目标资源
             //Debug.Log("---释放目标资源:" + path);
-            assetBundle.Unload(false);
-            assetBundle = null;
+            List<AssetBundle> abList = new List<AssetBundle>();
+            abList.Add(assetBundle);
 
 
 
@@ -289,24 +291,36 @@ public class AssetBundleLoadManager : MonoBehaviour {
                 {
                     //Debug.Log("---释放依赖资源:" + key);
                     AssetBundle dependencyAB = dependencyAssetBundles[key];
-                    dependencyAB.Unload(false);
+                    abList.Add(dependencyAB);
                 }
             }
+            StartCoroutine(UnloadAssetbundle(abList));
 
             return (T)obj;
         }
-
         return null;
     }
 
-    private void addCache(string path ,Object obj)
+    private IEnumerator UnloadAssetbundle(List<AssetBundle> list)
+    {
+        //为了解决在ios上同步加载后直接释放造成加载出来的资源被回收的问题，需要隔一帧再释放
+        yield return null;
+        yield return null;
+        for (int i =0;i<list.Count;i++)
+        {
+            list[i].Unload(false);
+        }
+        
+    }
+
+    private void AddCache(string path ,Object obj)
     {
         if (!dicCacheObject.ContainsKey(path))
         {
             dicCacheObject.Add(path, new CacheObject(obj, Time.time));
         }
     }
-    private void tryClearCache()
+    private void TryClearCache()
     {
         List<string> list = new List<string>(dicCacheObject.Keys);
 

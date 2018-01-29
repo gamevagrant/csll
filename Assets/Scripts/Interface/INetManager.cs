@@ -205,6 +205,8 @@ public interface INetManager
     /// <param name="callBack"></param>
     /// <returns></returns>
     bool UseExchangeCode(string code, Action<bool, ExchangeCodeMessage> callBack);
+
+    bool GetBindingReward(Action<bool, GetBindingRewardMessage> callBack);
     //------------------------平台区分---------------------------------------
 
     /// <summary>

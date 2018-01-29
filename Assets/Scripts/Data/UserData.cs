@@ -171,6 +171,10 @@ public class UserData {
     {
         get
         {
+            if(islandId<3)
+            {
+                return 0;
+            }
             if(mapInfo!=null)
             {
                 for(int i =0;i< mapInfo.mines.Length;i++)
@@ -258,7 +262,11 @@ public class UserData {
     {
         get
         {
-            if(daily_task!=null)
+            if (islandId < 2)
+            {
+                return 0;
+            }
+            if (daily_task!=null)
             {
                 if(daily_task.extra_reward.status!=2)
                 {
@@ -304,6 +312,14 @@ public class UserData {
         get
         {
             return daily_energy;
+        }
+    }
+
+    public bool isTutorialing
+    {
+        get
+        {
+            return tutorial > 0 && tutorial < GameSetting.TUTORIAL_MAX;
         }
     }
 }

@@ -39,6 +39,13 @@ public class UIGuideWindow : UIWindowBase {
         Interactable interact = data[0] as Interactable;
         point = interact.transform;
         pointer.transform.position = point.position;
+        pointer.gameObject.SetActive(true);
+    }
+
+    protected override void StartHideWindow()
+    {
+        point = null;
+        pointer.gameObject.SetActive(false);
     }
 
     protected override void EnterAnimation(Action onComplete)

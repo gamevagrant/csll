@@ -49,7 +49,7 @@ public class UIMessageListItem : BaseItemView {
         {
             string str = "";
             str = string.Format("<color=#BA7F00FF><size=110%>{0}</size></color>偷走了{1}金币", data.name, data.extra["reward"]);
-            button.gameObject.SetActive(true);
+            button.gameObject.SetActive(false);
             contentText.text = str;
         }
         else if (data.action == 5)//通缉

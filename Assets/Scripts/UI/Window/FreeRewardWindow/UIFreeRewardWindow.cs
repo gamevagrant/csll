@@ -46,6 +46,7 @@ public class UIFreeRewardWindow : UIWindowBase {
     public void OnClickInviteBtn()
     {
         OnClickClose();
+
         GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIInviteWindow);
     }
 }

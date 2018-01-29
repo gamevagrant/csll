@@ -114,6 +114,7 @@ public class UIBuildPanel : MonoBehaviour {
         DOTween.To(() => panel.anchoredPosition, x => panel.anchoredPosition = x,panelLocalOriginalValue, 1).SetEase(Ease.InQuint);
         DOTween.To(() => panel.localScale, x => panel.localScale = x, Vector3.one, 1).onComplete = () => {
 
+            QY.Guide.GuideManager.instance.state = "building";
             GameMainManager.instance.uiManager.EnableOperation();
         };
     }
@@ -217,7 +218,6 @@ public class UIBuildPanel : MonoBehaviour {
             StartCoroutine(showBuildAnimation(evt.buildIndex, GameMainManager.instance.model.userData.buildings[evt.buildIndex-1].level+1,buildComplateData.isRepair,()=> 
             {
                 GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.building_level_up);
-                GameMainManager.instance.uiManager.CloseWindow(UISettings.UIWindowID.UISideBarWindow);
                 GameMainManager.instance.uiManager.CloseWindow(UISettings.UIWindowID.UITopBarWindow);
                 
                 upgradePanel.SetActive(true);
@@ -233,6 +233,7 @@ public class UIBuildPanel : MonoBehaviour {
     private void OnUpdateBuilding(BaseEvent e)
     {
         islandFactory.UpdateCityData(user.islandId, user.buildings);
+        UpdateRepairBtns(user.buildings);
     }
 
     private void UpgradeIsland()
@@ -271,7 +272,6 @@ public class UIBuildPanel : MonoBehaviour {
                 buildBtn.gameObject.SetActive(true);
 
                 GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIWheelWindow, 0);
-                GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UISideBarWindow);
                 GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UITopBarWindow);
                
                 switchBtn.gameObject.SetActive(true);

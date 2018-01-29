@@ -57,10 +57,10 @@ public class GridBaseScrollView : MonoBehaviour {
 
     public void SetData(IList datas)
     {
+        itemPool.resetAllTarget();
+
         if (datas == null)
             return;
-
-        itemPool.resetAllTarget();
 
         displayRect.x = 0;
         displayRect.y = 0;
@@ -87,7 +87,7 @@ public class GridBaseScrollView : MonoBehaviour {
         }
 
 
-        content.sizeDelta = new Vector2((row + 1) * (itemTemplate.rect.width + spacing.x), (col + 1) * (itemTemplate.rect.height + spacing.y));
+        content.sizeDelta = new Vector2((offset.x + 1) * (itemTemplate.rect.width + spacing.x), (offset.y + 1) * (itemTemplate.rect.height + spacing.y));
         if (direction == Direction.Vertical)
         {
             scrollRect.verticalNormalizedPosition = 1;

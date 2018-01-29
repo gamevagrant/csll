@@ -63,12 +63,16 @@ public class UIWheelPanel : MonoBehaviour {
         }
         set
         {
+            if(_energyValue!=value)
+            {
+                energyWaveAnimation.Play();
+            }
             _energyValue = value;
             energyLabel.text = string.Format("{0}/{1}",Mathf.Min(value,user.maxEnergy), user.maxEnergy);
             surplusEnergyLabel.text = value>user.maxEnergy?(value - user.maxEnergy).ToString():"";
             energyProgressSlider.value = value / (float)user.maxEnergy;
             addEnergyCountLabel.text = value < user.maxEnergy ? "+ " + user.recoverEnergy.ToString() : "";
-
+            
         }
     }
     // Use this for initialization
@@ -147,7 +151,7 @@ public class UIWheelPanel : MonoBehaviour {
         DOTween.To(() => switchBtn.anchoredPosition, p => switchBtn.anchoredPosition = p, switchOriginalValue, 1);
         DOTween.To(() => panel.anchoredPosition, x => panel.anchoredPosition = x, panelLocalOriginalValue, 1);
         DOTween.To(() => panel.localScale, x => panel.localScale = x, Vector3.one, 1).onComplete = () => {
-
+            QY.Guide.GuideManager.instance.state = "wheel";
             GameMainManager.instance.uiManager.EnableOperation();
             if(isHoldOn)
             {
@@ -303,7 +307,7 @@ public class UIWheelPanel : MonoBehaviour {
         if(isHold )
         {
             isHoldOn = true;
-            if (!isWorking)
+            if (!isWorking && !QY.UI.Interactable.isLock)
             {
                 Roll();
 
@@ -322,16 +326,16 @@ public class UIWheelPanel : MonoBehaviour {
         if (GameMainManager.instance.model.userData.energy > 0)
         {
             StartCoroutine(StartRoll());
-
         }
         else if (!AccountManager.instance.isLoginAccount)
         {
             GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIFacebookTipsWindow);
+            isHoldOn = false;
         }
         else
         {
-
-            Alert.Show("能量不足!");
+            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIEmptyEnergyGuideWindow, new ShowEmptyGuideWindowData(ShowEmptyGuideWindowData.PanelType.EmptyEnergy));
+            isHoldOn = false;
         }
     }
 
@@ -353,8 +357,6 @@ public class UIWheelPanel : MonoBehaviour {
                 rollItem = data.data.rollerItem;
 
                 energyValue = user.energy - 1;
-                energyWaveAnimation.Play();
-
 
             }
             else
@@ -370,6 +372,7 @@ public class UIWheelPanel : MonoBehaviour {
         AudioSource audio = GetComponent<AudioSource>();
         audio.clip = audioClips[0];
         audio.loop = true;
+        audio.volume = AudioManager.instance.soundVolume;
         audio.Play();
         reflective.DOFade(1, 0.5f);
         while (!getRes || (Time.time - timeTag)<2 )
@@ -387,6 +390,7 @@ public class UIWheelPanel : MonoBehaviour {
         }
         audio.clip = audioClips[1];
         audio.loop = false;
+        audio.volume = AudioManager.instance.soundVolume;
         audio.Play();
         wheel.DOLocalRotate(new Vector3(0, 0, -(360 * 1 + 36 * rollItem.index)), 2f, RotateMode.FastBeyond360).SetEase(Ease.OutCirc).OnComplete(() => {
            
@@ -399,7 +403,7 @@ public class UIWheelPanel : MonoBehaviour {
             rollData.rollerItem.type == "xcrowns" || 
             rollData.rollerItem.type == "energy"))
             {
-                StartCoroutine(StartRoll());
+                Roll();
             }
         });
     }
@@ -515,8 +519,8 @@ public class UIWheelPanel : MonoBehaviour {
             GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_energy_transform);
         });
         sq.Insert(1.5f,backLight.transform.DOScale(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.OutQuart));
-        sq.Insert(1.5f,icon.transform.DOLocalMove(moveTarget, 1).SetEase(Ease.OutCubic));
-        sq.Insert(1.5f, icon.transform.DOScale(new Vector3(0.2f,0.2f,1), 0.5f).SetEase(Ease.OutQuart));
+        sq.Insert(1.5f,icon.transform.DOLocalMove(moveTarget, 0.5f).SetEase(Ease.InQuad));
+        sq.Insert(1.5f, icon.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InQuad));
         //sq.AppendInterval(0.5f);
         sq.onComplete += () => {
             GameMainManager.instance.audioManager.PlaySound(AudioNameEnum.wheel_energy_change);

@@ -36,6 +36,7 @@ public class UIFreeRewardItem : BaseItemView {
             head.setData(this.data.username, this.data.avatar, 0, false);
         }
 
+        getBtn.gameObject.SetActive(this.data.status!=0);
         getBtn.image.sprite = btnStateSprites[this.data.status];
         getBtn.interactable = this.data.status == 1 ? true : false;
 
@@ -96,6 +97,7 @@ public class UIFreeRewardItem : BaseItemView {
     public void OnClickInviteBtn()
     {
         GameMainManager.instance.uiManager.CloseWindow(UISettings.UIWindowID.UIFreeRewardWindow);
+
         GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIInviteWindow);
     }
 }

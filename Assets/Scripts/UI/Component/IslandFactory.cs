@@ -35,7 +35,21 @@ public class IslandFactory : MonoBehaviour {
         //BuildingData[] data = LitJson.JsonMapper.ToObject<BuildingData[]>(str);
         //UpdateCityData(1,data);
     }
-	
+
+    private void OnEnable()
+    {
+        if(Application.isPlaying)
+        {
+            foreach (GameObject go in effects)
+            {
+                if (go != null)
+                {
+                    go.SetActive(false);
+                }
+            }
+        }
+    }
+
     private void init()
     {
         citySprites = new Image[SpriteCount];

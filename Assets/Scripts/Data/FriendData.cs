@@ -18,7 +18,13 @@ public class FriendData {
     public string updateTime;           // 上次活跃时间
                                         //     *BasicGuild guild                   // 暂时未用到
     public int status;           // 状态值
+    /// <summary>
+    /// 0=我未给对方赠送体力 1=我已给对方赠送体力
+    /// </summary>
     public int sendStatus;       // 0=我未给对方赠送体力 1=我已给对方赠送体力
+    /// <summary>
+    /// 0=对方没有送 1=对方送了，我没领 2=对方送了我领了
+    /// </summary>
     public int receiveStatus;       // 0=对方没有送 1=对方送了，我没领 2=对方送了我领了
     public BuildingData[] buildings;              // 好友建筑信息    // Building 数据结构在上面
     public int islandId;              // 好友岛屿ID

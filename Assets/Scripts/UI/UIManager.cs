@@ -178,7 +178,7 @@ public class UIManager : MonoBehaviour,IUIManager  {
             SpriteAtlas sa = ab.LoadAsset<SpriteAtlas>(System.IO.Path.GetFileNameWithoutExtension(path));
             act(sa);
             //同一图集只会请求一次，所以用完就卸载掉
-            GameMainManager.instance.preloader.RemovePreloaderAssetBundle(path);
+            GameMainManager.instance.preloader.RemovePreloaderAssetBundle(this,path);
         }
         else
         {
@@ -310,20 +310,28 @@ public class UIManager : MonoBehaviour,IUIManager  {
         allWindows.TryGetValue(id, out window);
         if (window != null)
         {
+            if(!window.canOpen)
+            {
+                isOpening = false;
+                return;
+            }
             UIWindowData windowdata = window.windowData;
 
             if (windowdata.type == UISettings.UIWindowType.Fixed)
             {
-                window.transform.SetSiblingIndex(FixedRoot.childCount);
+                //window.transform.SetSiblingIndex(FixedRoot.childCount);
+                SetSiblingIndex(window,FixedRoot);
             }
             else if (windowdata.type == UISettings.UIWindowType.PopUp)
             {
                 curPopUpWindow = window;
                 popupCollider.SetActive(true);
-                popupCollider.transform.SetSiblingIndex(PopUpRoot.childCount);
-                window.transform.SetSiblingIndex(PopUpRoot.childCount);
+                popupCollider.transform.SetAsLastSibling();
+                SetSiblingIndex(window, PopUpRoot);
+                //popupCollider.transform.SetSiblingIndex(PopUpRoot.childCount);
+                // window.transform.SetSiblingIndex(PopUpRoot.childCount);
 
-                if(window.windowData.colliderType == UISettings.UIWindowColliderType.Transparent)
+                if (window.windowData.colliderType == UISettings.UIWindowColliderType.Transparent)
                 {
                     popupCollider.GetComponent<Image>().color = new Color(0.8f, 0.8f, 0.8f, 0f);
                 }
@@ -337,12 +345,14 @@ public class UIManager : MonoBehaviour,IUIManager  {
             }
             else if (windowdata.type == UISettings.UIWindowType.Normal)
             {
-                window.transform.SetSiblingIndex(NormalRoot.childCount);
+                SetSiblingIndex(window, NormalRoot);
+                //window.transform.SetSiblingIndex(NormalRoot.childCount);
                 showNavigationWindow(window);
 
             }else if(windowdata.type == UISettings.UIWindowType.Cover)
             {
-                window.transform.SetSiblingIndex(coverRoot.childCount);
+                SetSiblingIndex(window, coverRoot);
+                //window.transform.SetSiblingIndex(coverRoot.childCount);
             }
 
 
@@ -472,5 +482,22 @@ public class UIManager : MonoBehaviour,IUIManager  {
         {
             windowsState[id] = state;
         }
+    }
+
+    private void SetSiblingIndex(UIWindowBase window,Transform root)
+    {
+        window.transform.SetAsLastSibling();
+        for (int i=0;i<root.childCount;i++)
+        {
+            Transform tf = root.GetChild(i);
+            UIWindowBase tw = tf.GetComponent<UIWindowBase>();
+            if(tw!=null && tw!=window && window.windowData.siblingNum<tw.windowData.siblingNum)
+            {
+                window.transform.SetSiblingIndex(tw.transform.GetSiblingIndex());
+                return;
+            }
+            
+        }
+
     }
 }

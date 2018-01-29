@@ -20,6 +20,7 @@ public class UISideBarWindow :UIWindowBase {
                 _windowData.colliderMode = UISettings.UIWindowColliderMode.Normal;
                 _windowData.showMode = UISettings.UIWindowShowMode.DoNothing;
                 _windowData.navMode = UISettings.UIWindowNavigationMode.IgnoreNavigation;
+                _windowData.siblingNum = 0.1f;
             }
             return _windowData;
         }
@@ -27,6 +28,7 @@ public class UISideBarWindow :UIWindowBase {
 
     public RectTransform leftPanel;
     public RectTransform rightPanel;
+    public RectTransform mapIcon;
 
     public RectTransform[] icons;//排行，免费奖励，活动，每日任务，每日登录，每日能量
     public GameObject raycastPanel;
@@ -52,20 +54,25 @@ public class UISideBarWindow :UIWindowBase {
 
     protected override void EnterAnimation(Action onComplete)
     {
+       
         leftPanel.DOAnchorPos(new Vector2(0, -60), 1f).SetEase(Ease.OutCubic);
         rightPanel.DOAnchorPos(new Vector2(0, -60), 1f).SetEase(Ease.OutCubic).OnComplete(()=> {
+            mapIcon.gameObject.SetActive(true);
             onComplete();
         });
     }
     protected override void EndShowWindow()
     {
+        
         leftPanel.anchoredPosition = new Vector2(0, -60);
         rightPanel.anchoredPosition = new Vector2(0, -60);
     }
     protected override void ExitAnimation(Action onComplete)
     {
+        mapIcon.gameObject.SetActive(false);
         leftPanel.DOAnchorPos(new Vector2(0, 800), 1f).SetEase(Ease.OutCubic);
         rightPanel.DOAnchorPos(new Vector2(0, 800), 1f).SetEase(Ease.OutCubic).OnComplete(() => {
+            
             onComplete();
         }); 
     }
@@ -85,14 +92,8 @@ public class UISideBarWindow :UIWindowBase {
 
     public void OnClickDailyTaskBtn()
     {
-        if(GameMainManager.instance.model.userData.tutorial<GameSetting.TUTORIAL_MAX)
-        {
-            Alert.Show(string.Format("2号岛屿（{0}）解锁该功能，快去升级岛屿吧！",GameMainManager.instance.configManager.islandConfig.GetIslandName(2)));
-        }else
-        {
-            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIEveryDayTaskWindow);
-        }
-        
+        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIEveryDayTaskWindow);
+
     }
 
     public void OnClickDailyRewardBtn()
@@ -108,8 +109,12 @@ public class UISideBarWindow :UIWindowBase {
     public void OnClickFreeRewardBtn()
     {
         GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIFreeRewardWindow);
+       
     }
 
-
+    public void OnClickMapBtn()
+    {
+        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIMiningMapWindow);
+    }
 }
 

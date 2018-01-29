@@ -71,7 +71,7 @@ public class UIEveryDayTaskItem : BaseItemView {
                     break;
                 case 3:
                     //跳转到好友界面，没有好友的跳转到邀请好友界面
-                    if (GameMainManager.instance.model.userData.friendInfo.Length>0)
+                    if (GameMainManager.instance.model.userData.friendInfo!=null && GameMainManager.instance.model.userData.friendInfo.Length>0)
                     {
                         GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIFriendsWindow);
                     }

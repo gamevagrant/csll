@@ -25,6 +25,21 @@ public class UIMiningMapWindow : UIWindowBase
         }
     }
 
+    public override bool canOpen
+    {
+        get
+        {
+            if (GameMainManager.instance.model.userData.islandId < 3)
+            {
+                string name = GameMainManager.instance.configManager.islandConfig.GetIslandName(3);
+                Alert.Show(string.Format("到达3号岛屿（{0}）后开启地图功能", name));
+                return false;
+            }
+           
+            return true;
+        }
+    }
+
     public RectTransform content;
     public RectTransform panel;
     public UIMiningMapItem[] items;

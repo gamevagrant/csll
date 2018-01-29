@@ -43,6 +43,7 @@ public class UISettings  {
         UINewUserGuiderWindow,
         UIExchangeCodeWindow,
         UIExchangeRewardWindow,
+        UIGetBindingRewardWindow,
     }
 
     public enum UIWindowType
@@ -119,6 +120,7 @@ public class UISettings  {
         {UIWindowID.UINewUserGuiderWindow,"UINewUserGuiderWindow"},
         {UIWindowID.UIExchangeCodeWindow,"UIExchangeCodeWindow"},
         {UIWindowID.UIExchangeRewardWindow,"UIExchangeRewardWindow"},
+        {UIWindowID.UIGetBindingRewardWindow,"UIGetBindingRewardWindow"},
     };
 
 

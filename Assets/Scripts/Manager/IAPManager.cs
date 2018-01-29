@@ -119,6 +119,10 @@ public class IAPManager : IStoreListener {
 
     public Product GetProductWithID(string id)
     {
-       return controller.products.WithStoreSpecificID(id);
+        if(controller!=null && controller.products!=null)
+        {
+            return controller.products.WithStoreSpecificID(id);
+        }
+        return null;
     }
 }

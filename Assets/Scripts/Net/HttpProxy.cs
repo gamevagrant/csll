@@ -42,7 +42,7 @@ public class HttpProxy {
             bool ret = request.State == HTTPRequestStates.Finished;
             if (!ret)
             {
-                Debug.LogAssertionFormat("请求失败失败 request.State = {0} [{1}]\n[{2}]", request.State.ToString(), url,request.Exception.ToString());
+                Debug.LogAssertionFormat("请求失败失败 request.State = {0},[{1}]\n", request.State.ToString(),request.Uri);
 
                 RequestErrorEvent.Type errorType;
                switch(request.State)
@@ -171,8 +171,10 @@ public class HttpProxy {
         }
 
         HTTPRequest req = MakePostRequest<T>(url, data, callback);
-        req.Timeout = new TimeSpan(0,0,30);
-        Debug.Log("正在请求："+ url);
+        req.Timeout = new TimeSpan(0,0,15);
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
+        Debug.Log("正在请求："+ url+"\n"+JsonMapper.ToJson(data));
+#endif
         MarkCheck(url);
         return HTTPManager.SendRequest(req) != null;
     }

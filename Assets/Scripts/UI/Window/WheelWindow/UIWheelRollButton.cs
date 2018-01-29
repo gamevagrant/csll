@@ -12,26 +12,41 @@ public class UIWheelRollButton : QY.UI.Button
     public class LongPressSelectEvent : UnityEvent<bool> { };
     public LongPressSelectEvent onHoldOn;
     [SerializeField]
-    private Sprite[] sprites;
+    private Sprite[] sprites;//0:弹起状态 1：长按状态 2按下状态
 
-    private const float HOLD_ON_TIME = 2;
+    private const float HOLD_ON_TIME = 1f;
     private float downTag = 0;
-    private bool isHoldOn = false;//前一次点击是否时长按
+    private bool _isHoldOn = false;//前一次点击是否时长按
+    private bool isHoldOn
+    {
+        get
+        {
+            return _isHoldOn;
+        }
+        set
+        {
+            _isHoldOn = value;
+            image.sprite = sprites[_isHoldOn ? 1:0];
+            SpriteState ss = new SpriteState()
+            {
+                pressedSprite = sprites[_isHoldOn ? 1:2]
+            };
+            this.spriteState = ss;
+        }
+    }
 
     private void Update()
     {
-        if (GameMainManager.instance.model.userData.tutorial >= GameSetting.TUTORIAL_MAX && downTag > 0 && Time.time - downTag > HOLD_ON_TIME)
+        if (Application.isPlaying && !GameMainManager.instance.model.userData.isTutorialing && downTag > 0 && Time.time - downTag > HOLD_ON_TIME)
         {
             downTag = 0;
-            if (isInteractive)
-            {
-                isHoldOn = true;
-                onHoldOn.Invoke(true);
-                image.sprite = sprites[1];
-            }
+            isHoldOn = true;
+            onHoldOn.Invoke(true);
            
+
         }
     }
+
 
     public override void OnPointerClick(PointerEventData eventData)
     {
@@ -45,10 +60,6 @@ public class UIWheelRollButton : QY.UI.Button
             return;
         }
         base.OnPointerDown(eventData);
-        if (!IsInteractable())
-        {
-            return;
-        }
 
         downTag = Time.time;
         
@@ -67,7 +78,6 @@ public class UIWheelRollButton : QY.UI.Button
             {
                 onHoldOn.Invoke(false);
                 isHoldOn = false;
-                image.sprite = sprites[0];
             }
             else
             {

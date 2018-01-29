@@ -24,20 +24,78 @@ SpriteAtlas:
       padding: 4
       blockOffset: 1
       allowAlphaSplitting: 0
-      enableRotation: 1
-      enableTightPacking: 1
+      enableRotation: 0
+      enableTightPacking: 0
     packedHash:
       serializedVersion: 2
-      Hash: 129cea85003f5595727bcafeee52aeba
+      Hash: a298ee963c70c2ddee09aec14907c67a
     variantMultiplier: 1
-    bindAsDefault: 1
+    bindAsDefault: 0
     finalFormat: 4
-    hashString: 129cea85003f5595727bcafeee52aeba
-    totalSpriteSurfaceArea: 0
-    packables: []
-    packedSpriteRenderDataKeys: []
+    hashString: a298ee963c70c2ddee09aec14907c67a
+    totalSpriteSurfaceArea: 894206
+    packables:
+    - {fileID: 102900000, guid: 5211d8af98ff5f84a8502f6dc8add4cb, type: 3}
+    packedSpriteRenderDataKeys:
+    - 453e0beaa1422704ea2ab72e5731e22c: 21300000
+    - 57f1b70c38e0f294880e9bf177406b53: 21300000
+    - 787504c86f7268f4cb51092bb55ab925: 21300000
+    - 229136b3d29a5e54f95d8a1cb570f441: 21300000
+    - c5faa2c54d6174f4997e1f671a8d3dfc: 21300000
+    - 10e3ee736d1a05d43aefa8005cfad3cf: 21300000
+    - a67f994f02a07c24fb4ed50ff38ab22d: 21300000
+    - 10abdfd612e0a5c41977798d9c026096: 21300000
+    - 1f34beebb74868d4dbd3cdda7f149c78: 21300000
+    - 0a72c80402f5d8a4796ab30252a988a4: 21300000
+    - 2070f837d9d9cd844b4e6cf3b1c92415: 21300000
+    - 8e8d23a449323bc41a18639719a0541a: 21300000
+    - b6286a849da8c354587a4345bfa7ddbb: 21300000
+    - 0cc02cb37f7a8864fb8c4994e3a734bf: 21300000
+    - abc00218458287145ac1e6fc61d4b1b8: 21300000
+    - 7667f43216fff6c478087f234ad680c6: 21300000
+    - 42a7cf0818463e64aa70e5fc9c6f48e6: 21300000
+    - 8288fa7ada6e1e249a9795ca69135d60: 21300000
+    - 8a021773e01df024ebf7e94df706c619: 21300000
   m_MasterAtlas: {fileID: 0}
-  m_PackedSprites: []
-  m_PackedSpriteNamesToIndex: []
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 453e0beaa1422704ea2ab72e5731e22c, type: 3}
+  - {fileID: 21300000, guid: 57f1b70c38e0f294880e9bf177406b53, type: 3}
+  - {fileID: 21300000, guid: 787504c86f7268f4cb51092bb55ab925, type: 3}
+  - {fileID: 21300000, guid: 229136b3d29a5e54f95d8a1cb570f441, type: 3}
+  - {fileID: 21300000, guid: c5faa2c54d6174f4997e1f671a8d3dfc, type: 3}
+  - {fileID: 21300000, guid: 10e3ee736d1a05d43aefa8005cfad3cf, type: 3}
+  - {fileID: 21300000, guid: a67f994f02a07c24fb4ed50ff38ab22d, type: 3}
+  - {fileID: 21300000, guid: 10abdfd612e0a5c41977798d9c026096, type: 3}
+  - {fileID: 21300000, guid: 1f34beebb74868d4dbd3cdda7f149c78, type: 3}
+  - {fileID: 21300000, guid: 0a72c80402f5d8a4796ab30252a988a4, type: 3}
+  - {fileID: 21300000, guid: 2070f837d9d9cd844b4e6cf3b1c92415, type: 3}
+  - {fileID: 21300000, guid: 8e8d23a449323bc41a18639719a0541a, type: 3}
+  - {fileID: 21300000, guid: b6286a849da8c354587a4345bfa7ddbb, type: 3}
+  - {fileID: 21300000, guid: 0cc02cb37f7a8864fb8c4994e3a734bf, type: 3}
+  - {fileID: 21300000, guid: abc00218458287145ac1e6fc61d4b1b8, type: 3}
+  - {fileID: 21300000, guid: 7667f43216fff6c478087f234ad680c6, type: 3}
+  - {fileID: 21300000, guid: 42a7cf0818463e64aa70e5fc9c6f48e6, type: 3}
+  - {fileID: 21300000, guid: 8288fa7ada6e1e249a9795ca69135d60, type: 3}
+  - {fileID: 21300000, guid: 8a021773e01df024ebf7e94df706c619, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - 011
+  - energy_8 (2)
+  - 014
+  - 015
+  - 018
+  - 013
+  - 017
+  - 008
+  - 005
+  - 004
+  - 007
+  - 006
+  - 019
+  - 021
+  - 020
+  - 016
+  - 012
+  - 009
+  - 010
   m_Tag: UIEmptyEnergyGuideWindow
   m_IsVariant: 0

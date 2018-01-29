@@ -23,6 +23,14 @@ public abstract class UIWindowBase : MonoBehaviour {
         }
     }
 
+    public virtual bool canOpen
+    {
+        get
+        {
+            return true;
+        }
+    }
+
     /// <summary>
     /// 第一次创建的时候会被调用
     /// </summary>
@@ -35,6 +43,7 @@ public abstract class UIWindowBase : MonoBehaviour {
     {
         //transform.SetSiblingIndex(100);
         gameObject.SetActive(true);
+        //避免和awake start冲突，延后到帧末执行
         yield return new WaitForEndOfFrame();
         transform.localScale = Vector3.one;
         StartShowWindow(data);

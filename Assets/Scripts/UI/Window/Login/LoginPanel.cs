@@ -172,7 +172,7 @@ public class LoginPanel : MonoBehaviour {
         }
         else
         {
-            AccountManager.instance.LoginGuest();
+            AccountManager.instance.LoginGuest(guestName);
         }
        
     }

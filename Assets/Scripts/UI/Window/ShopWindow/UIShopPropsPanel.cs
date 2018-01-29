@@ -26,7 +26,10 @@ public class UIShopPropsPanel : MonoBehaviour {
             {
                 goodsVip = goods;
                 productVip = GameMainManager.instance.iap.GetProductWithID(goodsVip.GetPurchaseID());
-                vipPriceText.text = "购买\n" + productVip.metadata.localizedPriceString;
+
+                vipPriceText.text = "";
+                if (productVip!=null)
+                    vipPriceText.text = "购买\n" + productVip.metadata.localizedPriceString;
 
                 timeText.text = GameMainManager.instance.model.userData.vip_days.ToString() + "天";
                 energyText.text = goods.extra["energy"].ToString();
@@ -54,6 +57,7 @@ public class UIShopPropsPanel : MonoBehaviour {
 
 	public void OnClickBuyVIPBtn()
 	{
-        GameMainManager.instance.iap.Purchase(productVip.definition.id);
+        if(productVip!=null)
+            GameMainManager.instance.iap.Purchase(productVip.definition.id);
     }
 }

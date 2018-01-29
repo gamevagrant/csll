@@ -28,12 +28,12 @@ SpriteAtlas:
       enableTightPacking: 0
     packedHash:
       serializedVersion: 2
-      Hash: 5e7ab8ccae3ec8c931ff8a7c478265ed
+      Hash: 08a78fdbe3f720a793b0eba3e60b3d08
     variantMultiplier: 1
     bindAsDefault: 0
     finalFormat: 4
-    hashString: 5e7ab8ccae3ec8c931ff8a7c478265ed
-    totalSpriteSurfaceArea: 3149138
+    hashString: 08a78fdbe3f720a793b0eba3e60b3d08
+    totalSpriteSurfaceArea: 3172997
     packables:
     - {fileID: 102900000, guid: 9e3d56e820801f94496b9739c24ecab7, type: 3}
     packedSpriteRenderDataKeys:
@@ -49,13 +49,14 @@ SpriteAtlas:
     - 778e4f4882681eb49afe2feef97e8dd3: 21300000
     - d7aa98ffad1b4f04e980fed834f5e992: 21300000
     - 9b51f99eabe8908438a522814b1ec1cf: 21300000
-    - 9c3edd7f673ba2d4d93fbb4f5917753c: 21300000
+    - 7f25598861564b44797b9e22393026f5: 21300000
     - ce4f0992306d74e4cbff61a9770a823b: 21300000
     - 38e045f370ecbb34fa8872a81fc5bc9b: 21300000
     - 3a6a40e33503d36479b3c44163f97266: 21300000
     - b4109e484fcd40f438ab8b68ead3b6f9: 21300000
     - 6f21c542cf173b74488f526353a1ba0f: 21300000
     - 9933e768166ff4748b0cbeff0528e438: 21300000
+    - 636221b238560da4e8d8b34c2bca0732: 21300000
     - dde7c478b75bf8f4485131868d2b5c28: 21300000
     - 467e2e03ea4bddd4a8ecaf0f25e047e2: 21300000
     - 82aea9ade3528a34082c6880a5fadecb: 21300000
@@ -90,13 +91,14 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 778e4f4882681eb49afe2feef97e8dd3, type: 3}
   - {fileID: 21300000, guid: d7aa98ffad1b4f04e980fed834f5e992, type: 3}
   - {fileID: 21300000, guid: 9b51f99eabe8908438a522814b1ec1cf, type: 3}
-  - {fileID: 21300000, guid: 9c3edd7f673ba2d4d93fbb4f5917753c, type: 3}
+  - {fileID: 21300000, guid: 7f25598861564b44797b9e22393026f5, type: 3}
   - {fileID: 21300000, guid: ce4f0992306d74e4cbff61a9770a823b, type: 3}
   - {fileID: 21300000, guid: 38e045f370ecbb34fa8872a81fc5bc9b, type: 3}
   - {fileID: 21300000, guid: 3a6a40e33503d36479b3c44163f97266, type: 3}
   - {fileID: 21300000, guid: b4109e484fcd40f438ab8b68ead3b6f9, type: 3}
   - {fileID: 21300000, guid: 6f21c542cf173b74488f526353a1ba0f, type: 3}
   - {fileID: 21300000, guid: 9933e768166ff4748b0cbeff0528e438, type: 3}
+  - {fileID: 21300000, guid: 636221b238560da4e8d8b34c2bca0732, type: 3}
   - {fileID: 21300000, guid: dde7c478b75bf8f4485131868d2b5c28, type: 3}
   - {fileID: 21300000, guid: 467e2e03ea4bddd4a8ecaf0f25e047e2, type: 3}
   - {fileID: 21300000, guid: 82aea9ade3528a34082c6880a5fadecb, type: 3}
@@ -130,13 +132,14 @@ SpriteAtlas:
   - steal
   - shield
   - main_btn1_stop
-  - main_btn1_sel
+  - main_btn1_stop2
   - main_btn1_nor
   - build_btn
   - main_btn1
   - baoxiang_2
   - baoxiang_1
   - build_hammer
+  - word
   - shop_money_2
   - shop_energy_4
   - menu_btn_nor

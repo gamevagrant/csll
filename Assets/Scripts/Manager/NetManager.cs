@@ -125,7 +125,6 @@ public class NetManager:INetManager
             {
                 res.data.timeTag = Time.time;
                 GameMainManager.instance.model.userData = res.data;
-
                 ConnectWebSocket(res.data.uid);
 
             }
@@ -261,6 +260,7 @@ public class NetManager:INetManager
                 user.buildingRepairCost = res.data.buildingRepairCost;
                 user.rollerItems = res.data.rollerItems==null? user.rollerItems: res.data.rollerItems;
                 user.tutorial = res.data.tutorial;
+                user.one_yuan_buying = res.data.one_yuan_buying;
                 if (res.data.mapInfo!= null)
                 {
                     user.mapInfo = res.data.mapInfo;

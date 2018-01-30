@@ -110,7 +110,7 @@ public class UserData {
     public List<InvitableFriendsData> invitableList;//可邀请好友列表
     public List<ShareData.RecallableFriendData> recallableList;//可召回好友列表
     public int daily_energy;//每日能量
-
+    public FirstBuyingReward one_yuan_buying;//一元购
     /// <summary>
     /// 建造提示红点数值
     /// </summary>

@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 02b887af5d6ccee48b1cf094d88e09cc
+timeCreated: 1517222601
+licenseType: Free
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: FZShuSong-Z01
+  fontNames:
+  - FZShuSong-Z01
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

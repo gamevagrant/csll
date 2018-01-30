@@ -18,7 +18,7 @@ MonoBehaviour:
   m_enableParseEscapeCharacters: 1
   m_missingGlyphCharacter: 0
   m_warningsDisabled: 0
-  m_defaultFontAsset: {fileID: 11400000, guid: 82803bebb028a8040a4c62754cbd4b06, type: 2}
+  m_defaultFontAsset: {fileID: 11400000, guid: 7bc87c11aedf8a54bb05302a98096821, type: 2}
   m_defaultFontAssetPath: Fonts & Materials/
   m_defaultFontSize: 30
   m_defaultAutoSizeMinRatio: 0.5
@@ -28,8 +28,7 @@ MonoBehaviour:
   m_autoSizeTextContainer: 0
   m_fallbackFontAssets: []
   m_matchMaterialPreset: 1
-  m_defaultSpriteAsset: {fileID: 11400000, guid: afd17b7117547d243a6f62ec815522f7,
-    type: 2}
+  m_defaultSpriteAsset: {fileID: 0}
   m_defaultSpriteAssetPath: Sprite Assets/
   m_enableEmojiSupport: 1
   m_defaultStyleSheet: {fileID: 11400000, guid: 54d1085f9a2fdea4587fcfc7dddcd4bc,

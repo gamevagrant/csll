@@ -131,6 +131,61 @@ public class EditorTools  {
             }
         }
     }
+    [MenuItem("Tools/替换文本组件")]
+    static void ChangeTextComponent()
+    {
+        if (Selection.objects == null || Selection.objects.Length == 0)
+            return;
 
+        TMPro.TextMeshProUGUI[] objs = Selection.GetFiltered<TMPro.TextMeshProUGUI>(SelectionMode.Deep);
+        foreach(TMPro.TextMeshProUGUI tmpText in objs)
+        {
+            GameObject go = tmpText.gameObject;
+            GameObject.DestroyImmediate(tmpText);
+            Text newText = go.AddComponent<Text>();
+            newText.text = tmpText.text;
+            newText.color = tmpText.color;
+            newText.fontStyle = FontStyle.Bold;
+            newText.raycastTarget = false;
+            newText.fontSize = (int)tmpText.fontSize;
+            newText.resizeTextMinSize = (int)tmpText.fontSizeMin;
+            newText.resizeTextMaxSize = (int)tmpText.fontSizeMax;
+            newText.horizontalOverflow = tmpText.enableWordWrapping ? HorizontalWrapMode.Wrap : HorizontalWrapMode.Overflow;
+            newText.verticalOverflow = tmpText.overflowMode == TMPro.TextOverflowModes.Overflow ? VerticalWrapMode.Overflow : VerticalWrapMode.Truncate;
+            switch (tmpText.alignment)
+            {
+                case TMPro.TextAlignmentOptions.TopLeft:
+                    newText.alignment = TextAnchor.UpperLeft;
+                    break;
+                case TMPro.TextAlignmentOptions.Top:
+                    newText.alignment = TextAnchor.UpperCenter;
+                    break;
+                case TMPro.TextAlignmentOptions.TopRight:
+                    newText.alignment = TextAnchor.UpperRight;
+                    break;
+
+                case TMPro.TextAlignmentOptions.Left:
+                    newText.alignment = TextAnchor.MiddleLeft;
+                    break;
+                case TMPro.TextAlignmentOptions.Center:
+                    newText.alignment = TextAnchor.MiddleCenter;
+                    break;
+                case TMPro.TextAlignmentOptions.Right:
+                    newText.alignment = TextAnchor.MiddleRight;
+                    break;
+
+                case TMPro.TextAlignmentOptions.BottomLeft:
+                    newText.alignment = TextAnchor.LowerLeft;
+                    break;
+                case TMPro.TextAlignmentOptions.Bottom:
+                    newText.alignment = TextAnchor.LowerCenter;
+                    break;
+                case TMPro.TextAlignmentOptions.BottomRight:
+                    newText.alignment = TextAnchor.LowerRight;
+                    break;
+            }
+            
+        }
+    }
 
 }

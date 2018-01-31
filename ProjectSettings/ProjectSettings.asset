@@ -148,9 +148,9 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: com.nutsplay.csll
+    Android: com.nutsplay.ncsll
     Standalone: com.qingye.csll
-    iOS: com.nutsplay.csll
+    iOS: com.nutsplay.ncsll
   buildNumber:
     iOS: 1
   AndroidBundleVersionCode: 1
@@ -221,7 +221,7 @@ PlayerSettings:
   metalEditorSupport: 1
   metalAPIValidation: 1
   iOSRenderExtraFrameOnPause: 0
-  appleDeveloperTeamID: WLV47F9FJ7
+  appleDeveloperTeamID: H82GW58EP9
   iOSManualSigningProvisioningProfileID: 
   tvOSManualSigningProvisioningProfileID: 
   appleEnableAutomaticSigning: 0

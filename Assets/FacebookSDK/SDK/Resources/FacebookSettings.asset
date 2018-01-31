@@ -23,8 +23,8 @@ MonoBehaviour:
   status: 1
   xfbml: 0
   frictionlessRequests: 1
-  iosURLSuffix: csllnutsplay
+  iosURLSuffix: ncsllnutsplay
   appLinkSchemes:
   - list:
-    - csllnutsplay
+    - ncsllnutsplay
   uploadAccessToken: 

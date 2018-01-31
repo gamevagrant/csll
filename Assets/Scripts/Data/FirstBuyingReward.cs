@@ -33,8 +33,8 @@ public class FirstBuyingReward {
     /// <summary>
     /// 倒计时
     /// </summary>
-    private int _countdown;
-    public int countdown
+    private long _countdown;
+    public long countdown
     {
         get
         {

@@ -44,7 +44,7 @@ public class UISettings  {
         UIExchangeCodeWindow,
         UIExchangeRewardWindow,
         UIGetBindingRewardWindow,
-        UIFirstBuyingReward,
+        UIFirstBuyingRewardWindow,
     }
 
     public enum UIWindowType
@@ -122,7 +122,7 @@ public class UISettings  {
         {UIWindowID.UIExchangeCodeWindow,"UIExchangeCodeWindow"},
         {UIWindowID.UIExchangeRewardWindow,"UIExchangeRewardWindow"},
         {UIWindowID.UIGetBindingRewardWindow,"UIGetBindingRewardWindow"},
-        {UIWindowID.UIFirstBuyingReward,"UIFirstBuyingReward"},
+        {UIWindowID.UIFirstBuyingRewardWindow,"UIFirstBuyingRewardWindow"},
     };
 
 

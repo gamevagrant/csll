@@ -5,7 +5,7 @@ using UnityEngine.Purchasing;
 using TMPro;
 using System;
 
-public class UIFirstBuyingReward : UIWindowBase {
+public class UIFirstBuyingRewardWindow : UIWindowBase {
 
     public override UIWindowData windowData
     {
@@ -14,7 +14,7 @@ public class UIFirstBuyingReward : UIWindowBase {
             if (_windowData == null)
             {
                 _windowData = new UIWindowData();
-                _windowData.id = UISettings.UIWindowID.UIFirstBuyingReward;
+                _windowData.id = UISettings.UIWindowID.UIFirstBuyingRewardWindow;
                 _windowData.type = UISettings.UIWindowType.PopUp;
                 _windowData.colliderMode = UISettings.UIWindowColliderMode.Normal;
                 _windowData.colliderType = UISettings.UIWindowColliderType.SemiTransparent;
@@ -32,12 +32,13 @@ public class UIFirstBuyingReward : UIWindowBase {
     public TextMeshProUGUI countDown;
 
     private FirstBuyingReward data;
+    private Product product;
     private long lastTime;
     private long countDownTime
     {
         get
         {
-            long t = (long)Mathf.Max(0, data.countdown - (Time.time - data.timeTag));
+            long t = (long)Mathf.Max(0, data.countdown - (Time.unscaledTime - data.timeTag));
             return t;
         }
     }
@@ -52,12 +53,27 @@ public class UIFirstBuyingReward : UIWindowBase {
         this.data = GameMainManager.instance.model.userData.one_yuan_buying;
         GoodsData goods = new GoodsData(this.data.itemId.ToString());
         Product product = GameMainManager.instance.iap.GetProductWithID(goods.GetPurchaseID());
+        if(product!=null)
+        {
+            price.text = product.metadata.localizedPriceString;
+            originalPrice.text = product.metadata.localizedPriceString.Substring(0, 1) + (product.metadata.localizedPrice * 3m).ToString("F2");
 
-        price.text = product.metadata.localizedPriceString;
-        originalPrice.text = product.metadata.localizedPriceString.Substring(0,1)+(product.metadata.localizedPrice * 3m).ToString("F2");
+            string[] priceSplite = product.metadata.localizedPriceString.Split('.');
+            salePrice.text = string.Format("{0}.<size=22>{1}</size>", priceSplite[0], priceSplite[1]);
+            product = GameMainManager.instance.iap.GetProductWithID(new GoodsData(this.data.itemId.ToString()).GetPurchaseID());
+        }
+        
 
-        string[] priceSplite = product.metadata.localizedPriceString.Split('.');
-        salePrice.text = string.Format("{0}.<size=22>{1}</size>", priceSplite[0], priceSplite[1]);
+        for (int i =0;i< rewardItems.Length;i++)
+        {
+            if(this.data.gift_bag!=null && i < this.data.gift_bag.Length)
+            {
+                rewardItems[i].SetData(this.data.gift_bag[i]);
+            }else
+            {
+                rewardItems[i].SetData(null);
+            }
+        }
     }
 
     private void UpdateCountDown()
@@ -77,8 +93,21 @@ public class UIFirstBuyingReward : UIWindowBase {
             }
             countDown.text = str;
             lastTime = t;
+            if(t == 0)
+            {
+                OnClickClose();
+            }
         }
         
 
+    }
+
+    public void OnClickBuyBtn()
+    {
+        
+        if (product != null)
+        {
+            GameMainManager.instance.iap.Purchase(product.definition.id);
+        }
     }
 }

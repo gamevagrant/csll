@@ -43,7 +43,17 @@ public class FirstBuyingReward {
         set
         {
             _countdown = value;
-            timeTag = Time.time;
+            timeTag = Time.unscaledTime;
+        }
+    }
+    /// <summary>
+    /// 是否显示礼包
+    /// </summary>
+    public bool isShow
+    {
+        get
+        {
+            return buy_status == 0 && _countdown > 0 && (Time.unscaledTime-timeTag)>0;
         }
     }
     /// <summary>
@@ -51,7 +61,7 @@ public class FirstBuyingReward {
     /// </summary>
     public int itemId;
     /// <summary>
-    ///  0，不展示；1，展示
+    ///  0，展示；1，不展示
     /// </summary>
     public int buy_status;
     public int original_price;//真实价格的3.33倍

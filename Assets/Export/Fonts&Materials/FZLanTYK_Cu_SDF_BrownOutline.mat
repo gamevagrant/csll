@@ -8,7 +8,7 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: FZLanTYK_Cu_SDF_BrownOutline
   m_Shader: {fileID: 4800000, guid: cafd18099dfc0114896e0a8b277b81b6, type: 3}
-  m_ShaderKeywords: OUTLINE_ON
+  m_ShaderKeywords: UNDERLAY_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -92,9 +92,9 @@ Material:
     - _TextureHeight: 2048
     - _TextureWidth: 2048
     - _UVSec: 0
-    - _UnderlayDilate: 0
-    - _UnderlayOffsetX: 0.3
-    - _UnderlayOffsetY: -0.266
+    - _UnderlayDilate: 0.163
+    - _UnderlayOffsetX: 0
+    - _UnderlayOffsetY: 0
     - _UnderlaySoftness: 0
     - _VertexOffsetX: 0
     - _VertexOffsetY: 0
@@ -107,4 +107,4 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FaceColor: {r: 1, g: 1, b: 1, a: 1}
     - _OutlineColor: {r: 0.5647059, g: 0.31764707, b: 0, a: 1}
-    - _UnderlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+    - _UnderlayColor: {r: 0.5647059, g: 0.31764707, b: 0, a: 1}

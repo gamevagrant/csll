@@ -209,7 +209,7 @@ GameObject:
   - component: {fileID: 114379613505230662}
   - component: {fileID: 114567350795092990}
   m_Layer: 0
-  m_Name: UIFirstBuyingReward
+  m_Name: UIFirstBuyingRewardWindow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

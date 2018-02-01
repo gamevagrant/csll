@@ -34,15 +34,15 @@ public class GoodsData  {
         string subType = goodsId.Substring(goodsId.Length - 2, 2);
         if (type == "1")
         {
-            purchaseID += "energy_item";
+            purchaseID += "csll_energy_";
         }
         else if (type == "2")
         {
-            purchaseID += "gold_item";
+            purchaseID += "csll_gold_";
         }
         else if (type == "3")
         {
-            purchaseID += "props_item";
+            purchaseID += "csll_props_";
         }
         int subNum = int.Parse(subType);
         purchaseID += subNum.ToString();
@@ -54,20 +54,19 @@ public class GoodsData  {
     {
         string id = "";
         string[] list = purchaseID.Split('_');
-        if(list[0]== "energy")
+        if(list[1]== "energy")
         {
             id += "1";
         }
-        else if (list[0] == "gold")
+        else if (list[1] == "gold")
         {
             id += "2";
         }
-        else if (list[0] == "props")
+        else if (list[1] == "props")
         {
             id += "3";
         }
-        int index = purchaseID.LastIndexOf("item");
-        string s = purchaseID.Substring(index + 4);
+        string s = list[2];
         int num = int.Parse(s);
         id += num.ToString("D2");
         return id;

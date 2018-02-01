@@ -148,9 +148,9 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: com.nutsplay.ncsll
+    Android: com.leoyin.csll
     Standalone: com.qingye.csll
-    iOS: com.nutsplay.ncsll
+    iOS: com.leoyin.csll
   buildNumber:
     iOS: 1
   AndroidBundleVersionCode: 1
@@ -215,7 +215,7 @@ PlayerSettings:
   iOSLaunchScreeniPadCustomXibPath: 
   iOSDeviceRequirements: []
   iOSURLSchemes:
-  - ncsllnutsplay
+  - csllleoyin
   iOSBackgroundModes: 0
   iOSMetalForceHardShadows: 0
   metalEditorSupport: 1

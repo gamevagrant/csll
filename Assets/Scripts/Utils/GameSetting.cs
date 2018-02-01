@@ -17,13 +17,13 @@ public class GameSetting {
 
     //-------------------平台区分的配置-------------------------
 #if UNITY_EDITOR
-    public static string appID = "1342483820";
+    public static string appID = "1342990120";
     public static string updateLookupUrl = "https://itunes.apple.com/lookup";
 #elif UNITY_ANDROID
-    public static string appID = "1342483820";
+    public static string appID = "1342990120";
     public static string updateLookupUrl = "https://itunes.apple.com/lookup";
 #elif UNITY_IPHONE
-    public static string appID = "1342483820";
+    public static string appID = "1342990120";
     public static string updateLookupUrl = "https://itunes.apple.com/lookup";
 #endif
 

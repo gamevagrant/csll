@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: UIFirstBuyingRewardWindow
+  m_EditorData:
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 0
+    platformSettings: []
+    packingParameters:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    packedHash:
+      serializedVersion: 2
+      Hash: 2fdf0f3f4d935925b706c2599ad62cfd
+    variantMultiplier: 1
+    bindAsDefault: 0
+    finalFormat: 4
+    hashString: 2fdf0f3f4d935925b706c2599ad62cfd
+    totalSpriteSurfaceArea: 633680
+    packables:
+    - {fileID: 102900000, guid: ecd17994ec2743642be0527f98cdf998, type: 3}
+    packedSpriteRenderDataKeys:
+    - dfc6c3457170d2744a9bdea91d56a069: 21300000
+    - 4862d29d3d844a4498daaf8e565dd668: 21300000
+    - eb906d5a22a0dbc468b9bc6f637321bb: 21300000
+    - 3b9befbb8f4a7ba4388d13ccbe512614: 21300000
+    - 316a7e6c3fac6da41b7f9f505a298080: 21300000
+    - a996c524d734b3944a8359ea88f59a34: 21300000
+    - 1b4338f7dfc2b5b449fd071a45af0620: 21300000
+    - 053a231e46eea1b49a6abb20d57434fc: 21300000
+    - a3f16098008d0f748bcd3d487ec9a86d: 21300000
+    - cb4f724b38253544e93032a26aa9f9dc: 21300000
+    - 4e158b07fd2ba7c4bb539fa6fe8687cd: 21300000
+    - 26ff5b05662d24b45a589eb03894ebab: 21300000
+    - 854a90b2e254392449332837cdce6ffa: 21300000
+    - a7c7a9d3030b35342acdcfadf2c4ef87: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: dfc6c3457170d2744a9bdea91d56a069, type: 3}
+  - {fileID: 21300000, guid: 4862d29d3d844a4498daaf8e565dd668, type: 3}
+  - {fileID: 21300000, guid: eb906d5a22a0dbc468b9bc6f637321bb, type: 3}
+  - {fileID: 21300000, guid: 3b9befbb8f4a7ba4388d13ccbe512614, type: 3}
+  - {fileID: 21300000, guid: 316a7e6c3fac6da41b7f9f505a298080, type: 3}
+  - {fileID: 21300000, guid: a996c524d734b3944a8359ea88f59a34, type: 3}
+  - {fileID: 21300000, guid: 1b4338f7dfc2b5b449fd071a45af0620, type: 3}
+  - {fileID: 21300000, guid: 053a231e46eea1b49a6abb20d57434fc, type: 3}
+  - {fileID: 21300000, guid: a3f16098008d0f748bcd3d487ec9a86d, type: 3}
+  - {fileID: 21300000, guid: cb4f724b38253544e93032a26aa9f9dc, type: 3}
+  - {fileID: 21300000, guid: 4e158b07fd2ba7c4bb539fa6fe8687cd, type: 3}
+  - {fileID: 21300000, guid: 26ff5b05662d24b45a589eb03894ebab, type: 3}
+  - {fileID: 21300000, guid: 854a90b2e254392449332837cdce6ffa, type: 3}
+  - {fileID: 21300000, guid: a7c7a9d3030b35342acdcfadf2c4ef87, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - menu_li bao_ (8)
+  - menu_li bao_ (14)
+  - menu_li bao_ (5)
+  - menu_li bao_ (2)
+  - menu_li bao_ (6)
+  - menu_li bao_ (11)
+  - menu_li bao_ (10)
+  - menu_li bao_ (7)
+  - menu_li bao_ (1)
+  - menu_li bao_ (3)
+  - menu_li bao_ (13)
+  - menu_li bao_ (9)
+  - menu_li bao_ (4)
+  - menu_li bao_ (12)
+  m_Tag: UIFirstBuyingRewardWindow
+  m_IsVariant: 0

@@ -116,5 +116,10 @@ public class UISideBarWindow :UIWindowBase {
     {
         GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIMiningMapWindow);
     }
+
+    public void OnClickFirstBuyRewardBtn()
+    {
+        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIFirstBuyingRewardWindow);
+    }
 }
 

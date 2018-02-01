@@ -71,20 +71,20 @@ public class GameUtils
     /// <summary>  
     /// 将c# DateTime时间格式转换为Unix时间戳格式  
     /// </summary>  
-    /// <param name="time">时间</param>  
-    /// <returns>long</returns>  
+    /// <param name="time">时间 当地时间</param>  
+    /// <returns>unix时间戳</returns>  
     public static long DateTimeToTimestamp(System.DateTime time)
     {
         System.DateTime startTime = System.TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1, 0, 0, 0, 0));
-        long t = (long)(time - startTime).TotalSeconds;   //除10000调整为13位      
+        long t = (long)(time - startTime).TotalSeconds;
         return t;
     }
 
     /// <summary>
     /// unix时间戳转DateTime
     /// </summary>
-    /// <param name="timestamp"></param>
-    /// <returns></returns>
+    /// <param name="timestamp">unix时间戳</param>
+    /// <returns>当地时间</returns>
     public static System.DateTime TimestampToDateTime(long timestamp)
     {
 

@@ -10,7 +10,10 @@ public class UIWheelRollButton : QY.UI.Button
 
     [System.Serializable]
     public class LongPressSelectEvent : UnityEvent<bool> { };
+    [System.Serializable]
+    public class ButtonDown : UnityEvent { };
     public LongPressSelectEvent onHoldOn;
+    public ButtonDown onButtonDown;
     [SerializeField]
     private Sprite[] sprites;//0:弹起状态 1：长按状态 2按下状态
 
@@ -62,7 +65,9 @@ public class UIWheelRollButton : QY.UI.Button
         base.OnPointerDown(eventData);
 
         downTag = Time.time;
-        
+
+        if (onButtonDown != null)
+            onButtonDown.Invoke();
     }
 
     public override void OnPointerUp(PointerEventData eventData)

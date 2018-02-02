@@ -43,7 +43,10 @@ public class EditorTools  {
                 }
 
                 TextureImporter importer = AssetImporter.GetAtPath(path) as TextureImporter;
+                importer.spriteImportMode = SpriteImportMode.Multiple;
                 importer.spritesheet = list.ToArray();
+                //这里有个unity的bug，不改变importer本身的参数，只改变spritesheet的时候unity认为这个资源没有变化没办法正常保存
+                //这里先改下别的参数再改回来让其能正常保存
                 importer.mipmapEnabled = !importer.mipmapEnabled;
                 importer.SaveAndReimport();
                 importer.mipmapEnabled = !importer.mipmapEnabled;

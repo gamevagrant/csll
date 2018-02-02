@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class UGUISpriteAnimation : MonoBehaviour {
 
     private Image ImageSource;
+    private RectTransform rectTransform;
     private int mCurFrame = 0;
     private float mDelta = 0;
 
@@ -28,6 +29,7 @@ public class UGUISpriteAnimation : MonoBehaviour {
     void Awake()
     {
         ImageSource = GetComponent<Image>();
+        rectTransform = transform as RectTransform;
     }
 
     void OnEnable()
@@ -45,7 +47,11 @@ public class UGUISpriteAnimation : MonoBehaviour {
     private void SetSprite(int idx)
     {
         ImageSource.sprite = SpriteFrames[idx];
-        ImageSource.SetNativeSize();
+        if(rectTransform.anchorMin == rectTransform.anchorMax)
+        {
+            ImageSource.SetNativeSize();
+        }
+        
     }
 
     public void Play()

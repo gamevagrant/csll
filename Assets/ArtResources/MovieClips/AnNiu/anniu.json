@@ -1,0 +1,83 @@
+{
+	"file": "anniu.png",
+	"res": {
+		"attack_4": {
+			"x": 1,
+			"y": 209,
+			"w": 351,
+			"h": 200
+		},
+		"attack_3": {
+			"x": 357,
+			"y": 1,
+			"w": 351,
+			"h": 206
+		},
+		"attack_1": {
+			"x": 354,
+			"y": 404,
+			"w": 334,
+			"h": 190
+		},
+		"attack_0": {
+			"x": 690,
+			"y": 404,
+			"w": 304,
+			"h": 175
+		},
+		"attack_2": {
+			"x": 354,
+			"y": 209,
+			"w": 349,
+			"h": 193
+		},
+		"attack_5": {
+			"x": 1,
+			"y": 1,
+			"w": 354,
+			"h": 206
+		}
+	},
+	"mc": {
+		"anniu": {
+			"frameRate": 24,
+			"frames": [{
+				"duration": 1,
+				"y": -78,
+				"res": "attack_0",
+				"x": -150
+			}, {
+				"duration": 1,
+				"y": -87,
+				"res": "attack_1",
+				"x": -165
+			}, {
+				"duration": 1,
+				"y": -90,
+				"res": "attack_2",
+				"x": -172
+			}, {
+				"duration": 1,
+				"y": -103,
+				"res": "attack_3",
+				"x": -176
+			}, {
+				"duration": 1,
+				"y": -99,
+				"res": "attack_4",
+				"x": -177
+			}, {
+				"duration": 1,
+				"y": -103,
+				"res": "attack_5",
+				"x": -177
+			}],
+			"events": [],
+			"labels": [{
+				"end": 6,
+				"name": "attack",
+				"frame": 1
+			}]
+		}
+	}
+}

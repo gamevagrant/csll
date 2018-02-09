@@ -65,7 +65,35 @@ public class UIMessageListItem : BaseItemView {
             str = string.Format("<color=#BA7F00FF><size=110%>{0}</size></color>正在通缉你，战斗号角已经吹响！", data.name);
             button.gameObject.SetActive(false);
             contentText.text = str;
-        }else
+        }
+        else if(data.action == 18)
+        {
+
+        }
+        else if(data.action == 19)
+        {
+/*
+       {
+        "uid": 422,
+        "toid": 0,
+        "action": 19,
+        "result": 0,
+        "time": "今天 11:34:55",
+        "name": "Tom",
+        "headImg": "https://scontent.xx.fbcdn.net/v/t1.0-1/c15.0.50.50/p50x50/10354686_10150004552801856_220367501106153455_n.jpg?oh=58094ae96718bcfcbd53cfea5151eaf5\u0026oe=5B137D2F",
+        "crowns": 2,
+        "extra": {
+          "card_type": 1,
+          "createTime": 1517884853
+        },
+        "read": true,
+        "isWanted": false,
+        "isVip": false,
+        "head_frame": 0
+      }
+*/
+        }
+        else
         {
             string str = "";
             button.gameObject.SetActive(false);

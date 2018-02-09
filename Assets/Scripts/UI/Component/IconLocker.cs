@@ -10,7 +10,8 @@ public class IconLocker : MonoBehaviour {
         DailyTask,
         Map,
         Piece,
-        Achievement
+        Achievement,
+        Dungeon
     }
     [SerializeField]
     private Image lockImg;
@@ -70,6 +71,9 @@ public class IconLocker : MonoBehaviour {
                 break;
             case LockIcon.Achievement:
                 isLock = GameMainManager.instance.model.userData.islandId < 5;
+                break;
+            case LockIcon.Dungeon:
+                isLock = GameMainManager.instance.model.userData.dungeon_keys<=0;
                 break;
         }
         this.isLock = isLock;

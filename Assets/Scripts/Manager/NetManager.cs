@@ -1125,7 +1125,312 @@ public class NetManager:INetManager
 
         });
     }
+    //获取副本信息
+    public bool DungeonGetInfo(Action<bool, DungeonInfoMessage> callBack)
+    {
+        Waiting.Enable();
+        string url = MakeUrl(APIDomain, "game/dungeon/active-dungeon");
+        Dictionary<string, object> data = new Dictionary<string, object>
+        {
+            { "uid", uid },
+            { "token", token },
+            { "t", time.ToString() },
+            { "locale", language }
+        };
+        return HttpProxy.SendPostRequest<DungeonInfoMessage>(url, data, (ret, res) => {
+            Waiting.Disable();
+            callBack(ret, res);
+            if (res.isOK)
+            {
+                GameMainManager.instance.model.userData.dungeon_info = res.data.dungeon_info;
+                GameMainManager.instance.model.userData.dungeon_keys = res.data.dungeon_keys;
+            }
+            else
+            {
+                AlertError(res, "获取副本信息失败");
+            }
 
+        });
+    }
+    //获取副本可邀请列表
+    public bool DungeonGetInviteList(int createTime,Action<bool, DungeonInvitableListMessage> callBack)
+    {
+        Waiting.Enable();
+        string url = MakeUrl(APIDomain, "game/dungeon/get-invite-list");
+        Dictionary<string, object> data = new Dictionary<string, object>
+        {
+            {"create_time",createTime },
+            { "uid", uid },
+            { "token", token },
+            { "t", time.ToString() },
+            { "locale", language }
+        };
+        return HttpProxy.SendPostRequest<DungeonInvitableListMessage>(url, data, (ret, res) => {
+            Waiting.Disable();
+            callBack(ret, res);
+            if (res.isOK)
+            {
+
+            }
+            else
+            {
+                AlertError(res, "获取副本可邀请好友列表失败");
+            }
+
+        });
+    }
+    //邀请好友参加副本
+    public bool DungeonInvite(int createTime,string[] users,Action<bool, NetMessage> callBack)
+    {
+        Waiting.Enable();
+        string url = MakeUrl(APIDomain, "game/dungeon/invite-for-help");
+        Dictionary<string, object> data = new Dictionary<string, object>
+        {
+            {"create_time",createTime },
+            {"users",GetToUidsWithArray(users) },
+            { "uid", uid },
+            { "token", token },
+            { "t", time.ToString() },
+            { "locale", language }
+        };
+        return HttpProxy.SendPostRequest<NetMessage>(url, data, (ret, res) => {
+            Waiting.Disable();
+            callBack(ret, res);
+            if (res.isOK)
+            {
+
+            }
+            else
+            {
+                AlertError(res, "邀请好友参加副本失败");
+            }
+
+        });
+    }
+    //选择卡牌放入卡牌槽中
+    public bool DungeonSelectCard(int createTime, int card, Action<bool, DungeonInfoMessage> callBack)
+    {
+        Waiting.Enable();
+        string url = MakeUrl(APIDomain, "game/dungeon/select-card");
+        Dictionary<string, object> data = new Dictionary<string, object>
+        {
+            { "create_time",createTime },
+            { "card",card },
+            { "uid", uid },
+            { "token", token },
+            { "t", time.ToString() },
+            { "locale", language }
+        };
+        return HttpProxy.SendPostRequest<DungeonInfoMessage>(url, data, (ret, res) => {
+            Waiting.Disable();
+            callBack(ret, res);
+            if (res.isOK)
+            {
+                GameMainManager.instance.model.userData.dungeon_info = res.data.dungeon_info;
+            }
+            else
+            {
+                AlertError(res, "副本选牌失败");
+            }
+
+        });
+    }
+    //抽取卡牌
+    public bool DungeonLottoCard(int createTime,Action<bool, DungeonLottoCardMessage> callBack)
+    {
+        Waiting.Enable();
+        string url = MakeUrl(APIDomain, "game/dungeon/lotto");
+        Dictionary<string, object> data = new Dictionary<string, object>
+        {
+            { "create_time",createTime },
+            { "uid", uid },
+            { "token", token },
+            { "t", time.ToString() },
+            { "locale", language }
+        };
+        return HttpProxy.SendPostRequest<DungeonLottoCardMessage>(url, data, (ret, res) => {
+            Waiting.Disable();
+            callBack(ret, res);
+            if (res.isOK)
+            {
+            }
+            else
+            {
+                AlertError(res, "抽取卡牌失败");
+            }
+
+        });
+    }
+    //副本领奖
+    public bool DungeonReapReward(int createTime, Action<bool, DungeonInfoMessage> callBack)
+    {
+        Waiting.Enable();
+        string url = MakeUrl(APIDomain, "game/dungeon/lotto");
+        Dictionary<string, object> data = new Dictionary<string, object>
+        {
+            { "create_time",createTime },
+            { "uid", uid },
+            { "token", token },
+            { "t", time.ToString() },
+            { "locale", language }
+        };
+        return HttpProxy.SendPostRequest<DungeonInfoMessage>(url, data, (ret, res) => {
+            Waiting.Disable();
+            callBack(ret, res);
+            if (res.isOK)
+            {
+               GameMainManager.instance.model.userData.dungeon_info = res.data.dungeon_info;
+               GameMainManager.instance.model.userData.dungeon_keys = res.data.dungeon_keys;
+            }
+            else
+            {
+                AlertError(res, "领取副本奖励失败");
+            }
+
+        });
+    }
+
+    //副本攻击
+    public bool DungeonAttack(int createTime, Action<bool, DungeonInfoMessage> callBack)
+    {
+        Waiting.Enable();
+        string url = MakeUrl(APIDomain, "game/dungeon/attack");
+        Dictionary<string, object> data = new Dictionary<string, object>
+        {
+            { "create_time",createTime },
+            { "uid", uid },
+            { "token", token },
+            { "t", time.ToString() },
+            { "locale", language }
+        };
+        return HttpProxy.SendPostRequest<DungeonInfoMessage>(url, data, (ret, res) => {
+            Waiting.Disable();
+            callBack(ret, res);
+            if (res.isOK)
+            {
+                GameMainManager.instance.model.userData.dungeon_info = res.data.dungeon_info;
+            }
+            else
+            {
+                AlertError(res, "副本攻击失败");
+            }
+
+        });
+    }
+
+    //使用食卡鱼
+    public bool DungeonUseCardFish(int createTime,int num, Action<bool, DungeonInfoMessage> callBack)
+    {
+        Waiting.Enable();
+        string url = MakeUrl(APIDomain, "game/dungeon/UseCardFish");
+        Dictionary<string, object> data = new Dictionary<string, object>
+        {
+            { "create_time",createTime },
+            { "num", num },
+            { "uid", uid },
+            { "token", token },
+            { "t", time.ToString() },
+            { "locale", language }
+        };
+        return HttpProxy.SendPostRequest<DungeonInfoMessage>(url, data, (ret, res) => {
+            Waiting.Disable();
+            callBack(ret, res);
+            if (res.isOK)
+            {
+                GameMainManager.instance.model.userData.dungeon_info = res.data.dungeon_info;
+                GameMainManager.instance.model.userData.card_fish = res.data.card_fish;
+            }
+            else
+            {
+                AlertError(res, "使用食卡鱼失败");
+            }
+
+        });
+    }
+    //使用万能卡
+    public bool DungeonUseMasterCard(int createTime, int num, Action<bool, DungeonInfoMessage> callBack)
+    {
+        Waiting.Enable();
+        string url = MakeUrl(APIDomain, "game/dungeon/UseMasterCard");
+        Dictionary<string, object> data = new Dictionary<string, object>
+        {
+            { "create_time",createTime },
+            { "num", num },
+            { "uid", uid },
+            { "token", token },
+            { "t", time.ToString() },
+            { "locale", language }
+        };
+        return HttpProxy.SendPostRequest<DungeonInfoMessage>(url, data, (ret, res) => {
+            Waiting.Disable();
+            callBack(ret, res);
+            if (res.isOK)
+            {
+                GameMainManager.instance.model.userData.dungeon_info = res.data.dungeon_info;
+                GameMainManager.instance.model.userData.master_card = res.data.master_card;
+            }
+            else
+            {
+                AlertError(res, "使用万能牌失败");
+            }
+
+        });
+    }
+    //判断副本是否过期(点击消息列表中的 好友抽卡消息进行检测)
+    public bool DungeonCheckLottoMsg(int createTime,int from,Action<bool, NetMessage> callBack)
+    {
+        Waiting.Enable();
+        string url = MakeUrl(APIDomain, "game/dungeon/CheckLottoMsg");
+        Dictionary<string, object> data = new Dictionary<string, object>
+        {
+            { "create_time",createTime },
+            { "from", from },
+            { "uid", uid },
+            { "token", token },
+            { "t", time.ToString() },
+            { "locale", language }
+        };
+        return HttpProxy.SendPostRequest<NetMessage>(url, data, (ret, res) => {
+            Waiting.Disable();
+            callBack(ret, res);
+            if (res.isOK)
+            {
+
+            }
+            else
+            {
+                AlertError(res, "副本过期");
+            }
+
+        });
+    }
+    //完成新手引导
+    public bool DungeonCompleteTutorial(Action<bool, DungeonCompleteTutorialMessage> callBack)
+    {
+        Waiting.Enable();
+        string url = MakeUrl(APIDomain, "game/dungeon/CompleteDungeonTutorial");
+        Dictionary<string, object> data = new Dictionary<string, object>
+        {
+            { "uid", uid },
+            { "token", token },
+            { "t", time.ToString() },
+            { "locale", language }
+        };
+        return HttpProxy.SendPostRequest<DungeonCompleteTutorialMessage>(url, data, (ret, res) => {
+            Waiting.Disable();
+            callBack(ret, res);
+            if (res.isOK)
+            {
+                GameMainManager.instance.model.userData.dungeon_keys = res.data.dungeon_keys;
+                GameMainManager.instance.model.userData.dungeon_tutorial = res.data.dungeon_tutorial;
+            }
+            else
+            {
+                AlertError(res, "使用万能牌失败");
+            }
+
+        });
+    }
     //-------------------------facebook接口------------------------------------
 
     /// <summary>
@@ -1348,19 +1653,7 @@ public class NetManager:INetManager
         string url = MakeUrl(APIDomain, "game/user/recall");
         Dictionary<string, object> data = new Dictionary<string, object>();
         data.Add("limit", limit);
-        string touids = "";
-        for(int i = 0;i<to.Length;i++)
-        {
-            if(i==to.Length-1)
-            {
-                touids += to[i];
-            }else
-            {
-                touids += to[i] + ",";
-            }
-        }
-        Debug.Log(touids);
-        data.Add("touids", touids);
+        data.Add("touids", GetToUidsWithArray(to));
         data.Add("uid", uid);
         data.Add("token", token);
         data.Add("t", time.ToString());
@@ -1470,4 +1763,30 @@ public class NetManager:INetManager
         });
     }
 
+
+
+
+
+
+
+
+
+
+
+    private string GetToUidsWithArray(string[] to)
+    {
+        string touids = "";
+        for (int i = 0; i < to.Length; i++)
+        {
+            if (i == to.Length - 1)
+            {
+                touids += to[i];
+            }
+            else
+            {
+                touids += to[i] + ",";
+            }
+        }
+        return touids;
+    }
 }

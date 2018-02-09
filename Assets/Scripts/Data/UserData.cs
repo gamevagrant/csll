@@ -111,6 +111,14 @@ public class UserData {
     public List<ShareData.RecallableFriendData> recallableList;//可召回好友列表
     public int daily_energy;//每日能量
     public FirstBuyingReward one_yuan_buying;//一元购
+    public int max_island;//最大岛屿数
+
+    public DungeonInfoData dungeon_info;
+    public int dungeon_keys;
+    public int dungeon_tutorial;
+    public int dungeon_reward;
+    public int card_fish;
+    public int master_card;
     /// <summary>
     /// 建造提示红点数值
     /// </summary>

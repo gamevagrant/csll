@@ -207,6 +207,86 @@ public interface INetManager
     bool UseExchangeCode(string code, Action<bool, ExchangeCodeMessage> callBack);
 
     bool GetBindingReward(Action<bool, GetBindingRewardMessage> callBack);
+    /// <summary>
+    /// 获取副本信息
+    /// </summary>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool DungeonGetInfo(Action<bool, DungeonInfoMessage> callBack);
+    /// <summary>
+    /// 获取副本可邀请列表
+    /// </summary>
+    /// <param name="createTime"></param>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool DungeonGetInviteList(int createTime, Action<bool, DungeonInvitableListMessage> callBack);
+    /// <summary>
+    /// 邀请好友参加副本
+    /// </summary>
+    /// <param name="createTime"></param>
+    /// <param name="users"></param>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool DungeonInvite(int createTime, string[] users, Action<bool, NetMessage> callBack);
+    /// <summary>
+    /// 选择卡牌放入卡牌槽中
+    /// </summary>
+    /// <param name="createTime"></param>
+    /// <param name="card"></param>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool DungeonSelectCard(int createTime, int card, Action<bool, DungeonInfoMessage> callBack);
+    /// <summary>
+    /// 抽取卡牌
+    /// </summary>
+    /// <param name="createTime"></param>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool DungeonLottoCard(int createTime, Action<bool, DungeonLottoCardMessage> callBack);
+    /// <summary>
+    /// 副本领奖
+    /// </summary>
+    /// <param name="createTime"></param>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool DungeonReapReward(int createTime, Action<bool, DungeonInfoMessage> callBack);
+    /// <summary>
+    /// 副本攻击
+    /// </summary>
+    /// <param name="createTime"></param>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool DungeonAttack(int createTime, Action<bool, DungeonInfoMessage> callBack);
+    /// <summary>
+    /// 使用食卡鱼
+    /// </summary>
+    /// <param name="createTime"></param>
+    /// <param name="num"></param>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool DungeonUseCardFish(int createTime, int num, Action<bool, DungeonInfoMessage> callBack);
+    /// <summary>
+    /// 使用万能卡
+    /// </summary>
+    /// <param name="createTime"></param>
+    /// <param name="num"></param>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool DungeonUseMasterCard(int createTime, int num, Action<bool, DungeonInfoMessage> callBack);
+    /// <summary>
+    /// 判断副本是否过期(点击消息列表中的 好友抽卡消息进行检测)
+    /// </summary>
+    /// <param name="createTime"></param>
+    /// <param name="from"></param>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool DungeonCheckLottoMsg(int createTime, int from, Action<bool, NetMessage> callBack);
+    /// <summary>
+    /// 完成新手引导
+    /// </summary>
+    /// <param name="callBack"></param>
+    /// <returns></returns>
+    bool DungeonCompleteTutorial(Action<bool, DungeonCompleteTutorialMessage> callBack);
     //------------------------平台区分---------------------------------------
 
     /// <summary>

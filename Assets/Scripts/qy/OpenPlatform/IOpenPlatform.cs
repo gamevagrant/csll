@@ -34,6 +34,7 @@ namespace QY.Open
         /// <param name="title"></param>
         /// <param name="callback"></param>
         void Invite(string message, string[] to, string title, System.Action<AppRequestResponse> callback);
+        void Invite(string message, string title, System.Action<AppRequestResponse> callback);
         /// <summary>
         /// 获取可邀请好友列表
         /// </summary>

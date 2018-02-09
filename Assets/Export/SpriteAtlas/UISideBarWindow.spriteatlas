@@ -28,15 +28,17 @@ SpriteAtlas:
       enableTightPacking: 0
     packedHash:
       serializedVersion: 2
-      Hash: 8508994e6fad4c35b0837d202eca702d
+      Hash: 40b2073eb9a9045eb125d88fcf794aba
     variantMultiplier: 1
     bindAsDefault: 0
     finalFormat: 4
-    hashString: 8508994e6fad4c35b0837d202eca702d
-    totalSpriteSurfaceArea: 83906
+    hashString: 40b2073eb9a9045eb125d88fcf794aba
+    totalSpriteSurfaceArea: 108346
     packables:
     - {fileID: 102900000, guid: b8a0d9f1c6c4e904ebd621c8c9a163be, type: 3}
     packedSpriteRenderDataKeys:
+    - 289a99b677cb6694392ada988f0b67f4: 21300000
+    - 7d139ad911c55f045aef0d4d803e0a5b: 21300000
     - f1cd3dffb65874241ba55de9e6bb5420: 21300000
     - 3b48eff242a6dbb478f5758a18c1b47c: 21300000
     - 483f4e6deb1e06c46b49773ebe685030: 21300000
@@ -57,6 +59,8 @@ SpriteAtlas:
     - cb5c7f9fc863b5343abbcaa82a59a6ea: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
+  - {fileID: 21300000, guid: 289a99b677cb6694392ada988f0b67f4, type: 3}
+  - {fileID: 21300000, guid: 7d139ad911c55f045aef0d4d803e0a5b, type: 3}
   - {fileID: 21300000, guid: f1cd3dffb65874241ba55de9e6bb5420, type: 3}
   - {fileID: 21300000, guid: 3b48eff242a6dbb478f5758a18c1b47c, type: 3}
   - {fileID: 21300000, guid: 483f4e6deb1e06c46b49773ebe685030, type: 3}
@@ -76,6 +80,8 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 13aacbd5be26dc14cbbdb719921b4de8, type: 3}
   - {fileID: 21300000, guid: cb5c7f9fc863b5343abbcaa82a59a6ea, type: 3}
   m_PackedSpriteNamesToIndex:
+  - dungeon_02
+  - dungeon_01
   - main_map
   - 11
   - roundWrap

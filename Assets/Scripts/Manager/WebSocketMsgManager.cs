@@ -35,6 +35,10 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
             case 12://获得邮件通知
                 MailAction(msg);
                 break;
+            case 18://收到副本邀请
+                break;
+            case 19://好友帮助抽到牌
+                break;
             default:
                 Debug.LogAssertion(msg.action.ToString()+" websocket的返回没实现");
                 break;

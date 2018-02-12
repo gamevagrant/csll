@@ -38,6 +38,31 @@ public class UIDungeonInvitePanel : MonoBehaviour {
 
     public void OnClickInviteBtn()
     {
-
+        if(GameMainManager.instance.model.userData.dungeon_info!=null)
+        {
+            int createTime = GameMainManager.instance.model.userData.dungeon_info.create_time;
+            List<string> ids = new List<string>();
+            foreach(UIDungeonInviteItem.InviteItemData item in data)
+            {
+                if(item.isSelected)
+                {
+                    ids.Add(item.friend.uid.ToString());
+                }
+            }
+            if(ids.Count>0)
+            {
+                GameMainManager.instance.netManager.DungeonInvite(createTime, ids.ToArray(), (ret, res) =>
+                {
+                    UIDungeonPopupPanels.instance.ClosePanel(transform as RectTransform);
+                });
+            }else
+            {
+                UIDungeonPopupPanels.instance.OpenAlert("请先选择需要邀请的好友",()=> {
+                    UIDungeonPopupPanels.instance.ClosePanel(UIDungeonPopupPanels.instance.alertPanel.transform as RectTransform);
+                });
+            }
+           
+        }
+        
     }
 }

@@ -756,7 +756,7 @@ PlayerSettings:
   cloudServicesEnabled:
     Build: 0
     UNet: 1
-  facebookSdkVersion: 7.9.4
+  facebookSdkVersion: pluginIncompatible
   apiCompatibilityLevel: 2
   cloudProjectId: 096b31af-9430-420a-9411-207ce5f8bc92
   projectName: csll_unity

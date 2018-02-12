@@ -174,11 +174,13 @@ public class UIManager : MonoBehaviour,IUIManager  {
         string path = FilePathTools.getSpriteAtlasPath(tag);
         if(GameMainManager.instance.preloader.Contains(path))
         {
+            Debug.Log("开始加载预加载图集[" + tag + "]");
             AssetBundle ab = GameMainManager.instance.preloader.GetPreloaderAssetBundle(path);
             SpriteAtlas sa = ab.LoadAsset<SpriteAtlas>(System.IO.Path.GetFileNameWithoutExtension(path));
             act(sa);
             //同一图集只会请求一次，所以用完就卸载掉
             GameMainManager.instance.preloader.RemovePreloaderAssetBundle(this,path);
+            Debug.Log("图集加载完毕：" + sa);
         }
         else
         {

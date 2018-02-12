@@ -56,7 +56,7 @@ public class UserData {
     public int guildMedal;                 // 暂时未用到
                                            //      *DailyEventInfo dailyEventInfo                // 暂时未用到
     public MapInfoData mapInfo;                                       //     *MapInfo mapInfo                         // 暂时未用到
-                                           //      *Guild guild                           // 暂时未用到
+                                                                      //      *Guild guild                           // 暂时未用到
     public JigsawInfoData jigsawInfo;                      // 拼图    // JigsawInfo 数据结构在上面
     public string cashInfo;                // 暂时未用到
     public FriendData[] friendInfo;                   // 好友信息  // Friend 数据结构在上面
@@ -127,7 +127,7 @@ public class UserData {
         get
         {
             int num = 0;
-            if(buildingCost != null)
+            if (buildingCost != null)
             {
                 for (int i = 0; i < buildingCost.Length; i++)
                 {
@@ -142,7 +142,7 @@ public class UserData {
 
                 }
             }
-           
+
             return num;
         }
     }
@@ -153,19 +153,19 @@ public class UserData {
     {
         get
         {
-            if(friendNotAgreeInfo!=null && friendNotAgreeInfo.Length>0)
+            if (friendNotAgreeInfo != null && friendNotAgreeInfo.Length > 0)
             {
                 return friendNotAgreeInfo.Length;
-            }else if(friendInfo != null)
+            } else if (friendInfo != null)
             {
-                foreach(FriendData fd in friendInfo)
+                foreach (FriendData fd in friendInfo)
                 {
-                    if(fd.sendStatus ==0|| fd.receiveStatus == 1)
+                    if (fd.sendStatus == 0 || fd.receiveStatus == 1)
                     {
                         return 1;
                     }
                 }
-               
+
             }
             return 0;
         }
@@ -179,25 +179,25 @@ public class UserData {
     {
         get
         {
-            if(islandId<3)
+            if (islandId < 3)
             {
                 return 0;
             }
-            if(mapInfo!=null)
+            if (mapInfo != null)
             {
-                for(int i =0;i< mapInfo.mines.Length;i++)
+                for (int i = 0; i < mapInfo.mines.Length; i++)
                 {
                     MinesData mines = mapInfo.mines[i];
-                    if(mines.miner<mines.costs.Length)
+                    if (mines.miner < mines.costs.Length)
                     {
-                        if(money>mines.costs[mines.miner])
+                        if (money > mines.costs[mines.miner])
                         {
                             return 1;
                         }
                         break;
                     }
                 }
-                if(mapInfo.moneyBox>=mapInfo.limit)
+                if (mapInfo.moneyBox >= mapInfo.limit)
                 {
                     return 1;
                 }
@@ -213,7 +213,7 @@ public class UserData {
     {
         get
         {
-           
+
             if (user_mail != null)
             {
                 int num = 0;
@@ -226,19 +226,19 @@ public class UserData {
                 }
                 return num;
             }
-           
-            if(messages !=null)
+
+            if (messages != null)
             {
-                foreach(MessageResponseData m in messages)
+                foreach (MessageResponseData m in messages)
                 {
-                    if(!m.read)
+                    if (!m.read)
                     {
                         return 1;
                     }
                 }
             }
             return 0;
-           
+
         }
     }
 
@@ -246,7 +246,7 @@ public class UserData {
     {
         get
         {
-            if(invitableList!=null)
+            if (invitableList != null)
             {
                 return invitableList.Count;
             }
@@ -258,7 +258,7 @@ public class UserData {
     {
         get
         {
-            if(recallableList!=null)
+            if (recallableList != null)
             {
                 return recallableList.Count;
             }
@@ -274,15 +274,15 @@ public class UserData {
             {
                 return 0;
             }
-            if (daily_task!=null)
+            if (daily_task != null)
             {
-                if(daily_task.extra_reward.status!=2)
+                if (daily_task.extra_reward.status != 2)
                 {
                     return 1;
                 }
-                foreach(TaskItemData data in daily_task.tasks)
+                foreach (TaskItemData data in daily_task.tasks)
                 {
-                    if(data.status!=2)
+                    if (data.status != 2)
                     {
                         return 1;
                     }
@@ -300,17 +300,17 @@ public class UserData {
             {
                 return 1;
             }
-            if(weekly_prize_confs!=null)
+            if (weekly_prize_confs != null)
             {
                 foreach (DailyPrizeConfData item in weekly_prize_confs)
                 {
-                    if(item.status == 1)
+                    if (item.status == 1)
                     {
                         return 1;
                     }
                 }
             }
-           
+
             return 0;
         }
     }
@@ -328,6 +328,29 @@ public class UserData {
         get
         {
             return tutorial > 0 && tutorial < GameSetting.TUTORIAL_MAX;
+        }
+    }
+
+    /// <summary>
+    /// 0:可开启 未开启 1：已开启 2：可领取奖励 3:不可开启
+    /// </summary>
+    public int dungeonState
+    {
+        get
+        {
+            if(dungeon_info==null && dungeon_keys>0)
+            {
+                return 0;
+            }else if(dungeon_info!=null && dungeon_info.is_reward==0)
+            {
+                return 1;
+            }else if(dungeon_info != null && dungeon_info.is_reward == 1)
+            {
+                return 2;
+            }else
+            {
+                return 3;
+            }
         }
     }
 }

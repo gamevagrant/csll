@@ -6,50 +6,24 @@ using System;
 using UnityEngine.UI;
 public class UIDungeonIcon : MonoBehaviour {
 
-    private enum DungeonState
-    {
-        Open,
-        Reward,
-        Close,
-    }
-
     public TextMeshProUGUI countDownText;
     public Image image;
     public Sprite[] sprites; 
 
-
     private DungeonInfoData data;
-    private int lastTime;
+    private int lastTime = -1;
     private int countDownTime
     {
         get
         {
             if(data!=null)
             {
-                int t = data.countDown;
-                return t;
+                return data.countDown;
             }
             return 0;
         }
     }
 
-    private DungeonState state
-    {
-        get
-        {
-            if(data!=null && data.is_reward == 1)
-            {
-                return DungeonState.Reward;
-            }else if(data != null && GameMainManager.instance.model.userData.dungeon_keys>0)
-            {
-                return DungeonState.Open;
-            }else
-            {
-                return DungeonState.Close;
-            }
-            
-        }
-    }
     // Use this for initialization
     void Start () {
 		
@@ -73,17 +47,19 @@ public class UIDungeonIcon : MonoBehaviour {
     private void Refresh()
     {
         data = GameMainManager.instance.model.userData.dungeon_info;
+        int state = GameMainManager.instance.model.userData.dungeonState;
         switch(state)
         {
-            case DungeonState.Open:
+            case 0:
+            case 1:
                 image.sprite = sprites[0];
                 countDownText.gameObject.SetActive(true);
                 break;
-            case DungeonState.Reward:
+            case 2:
                 image.sprite = sprites[1];
                 countDownText.gameObject.SetActive(false);
                 break;
-            case DungeonState.Close:
+            case 3:
                 image.sprite = sprites[0];
                 countDownText.gameObject.SetActive(false);
                 break;
@@ -110,7 +86,7 @@ public class UIDungeonIcon : MonoBehaviour {
 
     public void OnClickBtn()
     {
-        if(state == DungeonState.Reward)
+        if(GameMainManager.instance.model.userData.dungeonState==2)
         {
             //打开奖品领取
         }else

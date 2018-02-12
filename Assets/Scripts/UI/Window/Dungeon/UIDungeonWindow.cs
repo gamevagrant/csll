@@ -26,7 +26,7 @@ public class UIDungeonWindow : UIWindowBase {
     {
         get
         {
-            if (GameMainManager.instance.model.userData.dungeon_keys<=0)
+            if (GameMainManager.instance.model.userData.dungeonState == 3)
             {
                 Alert.Show("在转盘中获得副本钥匙后开启！");
                 return false;
@@ -42,12 +42,15 @@ public class UIDungeonWindow : UIWindowBase {
     public TextMeshProUGUI hurtText;
     public TextMeshProUGUI hurtRateText;
     public UIDungeonPopupPanels popupPanels;
+    public UIDungeonMasterCardMovieClip useMasterCardMovieClip;
 
 
     private DungeonInfoData dungeonInfo;
+    private UserData userData;
 
     protected override void StartShowWindow(object[] data)
     {
+        userData = GameMainManager.instance.model.userData;
         GameMainManager.instance.netManager.DungeonGetInfo((ret,res)=> {
 
             if (res.isOK)
@@ -55,23 +58,14 @@ public class UIDungeonWindow : UIWindowBase {
                 dungeonInfo = res.data.dungeon_info;
             }else
             {
-                dungeonInfo = GameMainManager.instance.model.userData.dungeon_info;
+                dungeonInfo = userData.dungeon_info;
             }
 
             Refresh();
         });
     }
 
-    private void Refresh()
-    {
 
-        progress.SetData((float)dungeonInfo.cards / dungeonInfo.boss_hp, dungeonInfo.rewards, dungeonInfo.rewardIndex);
-        boss.SetData(dungeonInfo);
-        cardBoard.SetData(dungeonInfo.selected_cards);
-
-        hurtText.text = dungeonInfo.cards.ToString();
-        hurtRateText.text = ((float)dungeonInfo.cards / dungeonInfo.boss_hp).ToString("p");
-    }
 
     public void OnSelectedCard(UIDungeonCard card)
     {
@@ -99,21 +93,72 @@ public class UIDungeonWindow : UIWindowBase {
 
     public void OnClickCardsPoolBtn()
     {
-
+        UIDungeonPopupPanels.instance.OpenCardsPoolPanel();
     }
 
     public void OnClickInviteBtn()
     {
-
+        UIDungeonPopupPanels.instance.OpenInvitePanel();
     }
 
     public void OnClickMasterCardBtn()
     {
+        if(userData.master_card>0)
+        {
+            UIDungeonPopupPanels.instance.OpenAlertUseMasterCard("确定现在使用万能牌吗？", userData.master_card, () =>
+            {
+                GameMainManager.instance.netManager.DungeonUseMasterCard(dungeonInfo.create_time, 1, (ret, res) =>
+                {
+                    if(res.isOK)
+                    {
+                        dungeonInfo = res.data.dungeon_info;
+                        StartCoroutine(PlayMasterCardMovieClip());
+                    }
+                    
+                });
 
+                popupPanels.ClosePanel(popupPanels.alertPanel.transform as RectTransform);
+            });
+        }else
+        {
+            
+        }
     }
 
     public void OnClickCardFishBtn()
     {
+        if(userData.card_fish>0)
+        {
+            UIDungeonPopupPanels.instance.OpenAlertUseCardFish("每使用一个食卡鱼，卡面值-1，确定使用？", userData.card_fish,(count)=> {
 
+                GameMainManager.instance.netManager.DungeonUseCardFish(dungeonInfo.create_time, count, (ret, res) =>
+                {
+
+                });
+
+            });
+        }
+        else
+        {
+            UIDungeonPopupPanels.instance.OpenAlertCardFishNotEnough("您还没有食卡鱼哦！", "您可以通过拼图奖励、成就奖励获得食卡鱼。");
+        }
     }
+
+    private void Refresh()
+    {
+        progress.SetData((float)dungeonInfo.cards / dungeonInfo.boss_hp, dungeonInfo.rewards, dungeonInfo.rewardIndex);
+        boss.SetData(dungeonInfo);
+        cardBoard.SetData(dungeonInfo.selected_cards,dungeonInfo.selected_cards.Length==5 || dungeonInfo.is_used_master_card_by_buy==1);
+
+        hurtText.text = dungeonInfo.cards.ToString();
+        hurtRateText.text = ((float)dungeonInfo.cards / dungeonInfo.boss_hp).ToString("p");
+    }
+
+    private IEnumerator PlayMasterCardMovieClip()
+    {
+        useMasterCardMovieClip.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2);
+        Refresh();
+    }
+
 }

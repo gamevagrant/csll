@@ -30,10 +30,10 @@ SpriteAtlas:
       serializedVersion: 2
       Hash: 76327a29c83b5c23bc5d6764d61ab77f
     variantMultiplier: 1
-    bindAsDefault: 0
+    bindAsDefault: 1
     finalFormat: 4
     hashString: 76327a29c83b5c23bc5d6764d61ab77f
-    totalSpriteSurfaceArea: 1174900
+    totalSpriteSurfaceArea: 1483831
     packables:
     - {fileID: 102900000, guid: 6e0850c964c594b40ade1d1e6c863d66, type: 3}
     packedSpriteRenderDataKeys:

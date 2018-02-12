@@ -12,7 +12,7 @@ public class UIDungeonCardBoard : MonoBehaviour {
 		
 	}
 	
-	public void SetData(DungeonCardData[] data)
+	public void SetData(DungeonCardData[] data,bool canAttack)
     {
         for(int i = 0;i<cards.Length;i++)
         {
@@ -26,7 +26,8 @@ public class UIDungeonCardBoard : MonoBehaviour {
             }
         }
 
-        btn.interactable = data.Length == cards.Length;
+        btn.interactable = canAttack;
+        
     }
 
 }

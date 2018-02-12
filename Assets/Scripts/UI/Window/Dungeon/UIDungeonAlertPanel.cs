@@ -68,6 +68,7 @@ public class UIDungeonAlertPanel : MonoBehaviour {
        
         counter.min = 1;
         counter.max = maxCount;
+        mainText.text = title;
         subText.text = "剩余：" + maxCount.ToString();
 
         this.onClickOkWithInt = onClickOk;
@@ -89,7 +90,7 @@ public class UIDungeonAlertPanel : MonoBehaviour {
     {
         icon.enabled = true;
         icon.sprite = iconSprites[0];
-        
+        mainText.text = title;
         subText.text = "剩余：" + maxCount.ToString();
 
         this.onClickOk = onClickOk;

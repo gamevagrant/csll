@@ -10,7 +10,7 @@ namespace QY.Open
     public class OpenFacebook : IOpenPlatform
     {
        // private const string DEBUG_TOKEN = "EAACOsVAkLvoBAJy0VbZCpljkRrmPEimQ3fG45AHkWmI388UpZBd2J5ZCzR5tZBS1qCnSBYQHKiDgeo0iQS5UyzGbZAU6cOvynJ1yx1ypeAxITS5TnOIcNqBG1ehjTvmiWcYjI967FQtBgHhvyHdd2VFFaunbp452IyoCIrQlwM2c9bHXlZBZCpQ";//测试用facebook访问token
-        private const string DEBUG_TOKEN = "EAABwimCXS7sBAOnEekFZBOxSR6d4hxstoRQVRsHkZCI3m6NgXrHUc6MK0m7tUBqej0HAMKsLdXvZAIIiPDFhHm1ZA9o0wUWbZBv5nMA7AwOOvsQOL9SwEePNIV7FlMALtyimxyk52klKsAeMrZCfg8eDvA7nJ4vUY71Kv0bXzfkGVUTlTPdDebM0jWjRoD1i9kQzdRJhDxKJZBrF7VZCv1jtb9N4uouVmxp3VWfxboMUvR5bsCD3TBKP";
+        private const string DEBUG_TOKEN = "EAABwimCXS7sBAIiIIswx7Map8jhGM8OR8qhp5ZCBmJLI8RsCmXE3NycmgLWncObqY3q1mFwvDoQwBhnWZAZAPZBf4NCDhbzHNq6gHxGKNQDqAKTQFQADL9aLgOqbdYtaRBr5CEkN9boVhEYYtOvVDZBDjVkBv3JMf1ZCjI4vFkADMkjEwM3Oqe";
         AccessToken _token;
         public AccessToken token
         {

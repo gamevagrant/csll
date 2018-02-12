@@ -73,7 +73,7 @@ public class IconLocker : MonoBehaviour {
                 isLock = GameMainManager.instance.model.userData.islandId < 5;
                 break;
             case LockIcon.Dungeon:
-                isLock = GameMainManager.instance.model.userData.dungeon_keys<=0;
+                isLock = GameMainManager.instance.model.userData.dungeonState==3;
                 break;
         }
         this.isLock = isLock;

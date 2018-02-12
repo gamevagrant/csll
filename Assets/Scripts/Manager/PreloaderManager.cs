@@ -17,10 +17,10 @@ public class PreloaderManager {
             "/fonts&materials/fzlantyk_cu_sdf_shadow&redoutline",
             "/fonts&materials/fzlantyk_cu_sdf_whiteoutline",
 
-            "/spriteatlas/uipublicwindow",
-            "/spriteatlas/uiwheelwindow",
-            "/spriteatlas/uisidebarwindow",
-            "/spriteatlas/uitopbarwindow",
+            //"/spriteatlas/uipublicwindow",
+            //"/spriteatlas/uiwheelwindow",
+            //"/spriteatlas/uisidebarwindow",
+            //"/spriteatlas/uitopbarwindow",
         };
 
     private Dictionary<string, AssetBundle> preloadAssetBundles;

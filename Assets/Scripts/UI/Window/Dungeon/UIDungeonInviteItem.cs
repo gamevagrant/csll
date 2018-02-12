@@ -32,6 +32,11 @@ public class UIDungeonInviteItem : BaseItemView {
         }
     }
 
+    public void OnToggleChange(bool isSelect)
+    {
+        data.isSelected = isSelect;
+    }
+
     public void OnClickInviteBtn()
     {
         GameMainManager.instance.open.Invite("选择邀请的好友", "快来和我一起攻击蚌精吧",(res)=> {

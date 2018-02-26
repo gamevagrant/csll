@@ -26,9 +26,10 @@ public class UIDungeonCardFishMovieClip : MonoBehaviour {
         sq.Append(fishAnimation.DOMove(targetFrom.position, 0.5f).From());
         sq.AppendCallback(() =>
         {
+            AudioManager.instance.PlaySound(AudioNameEnum.dungeon_cardFish);
             lightImage.gameObject.SetActive(true);
         });
-        sq.Append(lightImage.DORotate(new Vector3(0,0,360), 2f, RotateMode.FastBeyond360));
+        sq.Append(lightImage.DORotate(new Vector3(0,0,360), 1.5f, RotateMode.FastBeyond360));
         sq.AppendCallback(() =>
         {
             gameObject.SetActive(false);

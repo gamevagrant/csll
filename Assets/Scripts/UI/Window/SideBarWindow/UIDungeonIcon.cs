@@ -26,11 +26,15 @@ public class UIDungeonIcon : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		
+        EventDispatcher.instance.AddEventListener(EventEnum.UPDATE_DUNGEON, OnUpdateDungeonDataHandle);
 	}
-	
-	// Update is called once per frame
-	void Update ()
+
+    private void OnDestroy()
+    {
+        EventDispatcher.instance.RemoveEventListener(EventEnum.UPDATE_DUNGEON, OnUpdateDungeonDataHandle);
+    }
+    // Update is called once per frame
+    void Update ()
     {
         UpdateCountDown();
     }
@@ -44,6 +48,10 @@ public class UIDungeonIcon : MonoBehaviour {
         }
     }
 
+    private void OnUpdateDungeonDataHandle(BaseEvent evt)
+    {
+        Refresh();
+    }
     private void Refresh()
     {
         data = GameMainManager.instance.model.userData.dungeon_info;
@@ -94,4 +102,6 @@ public class UIDungeonIcon : MonoBehaviour {
             GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIDungeonWindow);
         }
     }
+
+    
 }

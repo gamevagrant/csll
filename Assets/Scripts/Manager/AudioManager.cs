@@ -181,4 +181,11 @@ public class AudioNameEnum
     public static string building_island_change = "passland_con_text";//升级更换岛屿外观的时候
     public static string building_box_down = "passland_box_down";//包厢掉落的时候
 
+    public static string dungeon_bossWild = "dungeon_bossWild";//boss狂暴音效
+    public static string dungeon_bossHurt = "dungeon_bossHurt";//boss受伤音效
+    public static string dungeon_bossToBox = "dungeon_bossToBox";//boss变宝箱音效
+    public static string dungeon_cardFish = "dungeon_cardFish";//食卡鱼音效
+    public static string dungeon_cardToCannon = "dungeon_cardToCannon";//卡片变炮音效
+    public static string dungeon_great = "dungeon_great";//使用万能卡音效
+    public static string dungeon_useMasterCard = "dungeon_useMasterCard";//使用万能卡
 }

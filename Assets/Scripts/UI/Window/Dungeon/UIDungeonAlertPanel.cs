@@ -68,6 +68,7 @@ public class UIDungeonAlertPanel : MonoBehaviour {
        
         counter.min = 1;
         counter.max = maxCount;
+        counter.num = 1;
         mainText.text = title;
         subText.text = "剩余：" + maxCount.ToString();
 

@@ -43,6 +43,7 @@ public class UIDungeonWindow : UIWindowBase {
     public TextMeshProUGUI hurtRateText;
     public UIDungeonPopupPanels popupPanels;
     public UIDungeonMasterCardMovieClip useMasterCardMovieClip;
+    public UIDungeonCardFishMovieClip useCardFishMovieClip;
 
 
     private DungeonInfoData dungeonInfo;
@@ -51,6 +52,8 @@ public class UIDungeonWindow : UIWindowBase {
     protected override void StartShowWindow(object[] data)
     {
         userData = GameMainManager.instance.model.userData;
+        cardBoard.gameObject.SetActive(true);
+        hurtText.transform.parent.gameObject.SetActive(true);
         GameMainManager.instance.netManager.DungeonGetInfo((ret,res)=> {
 
             if (res.isOK)
@@ -121,7 +124,7 @@ public class UIDungeonWindow : UIWindowBase {
             });
         }else
         {
-            
+            popupPanels.OpenBuyMasterCardPanel();
         }
     }
 
@@ -133,15 +136,62 @@ public class UIDungeonWindow : UIWindowBase {
 
                 GameMainManager.instance.netManager.DungeonUseCardFish(dungeonInfo.create_time, count, (ret, res) =>
                 {
-
+                    if (res.isOK)
+                    {
+                        dungeonInfo = res.data.dungeon_info;
+                        StartCoroutine(PlayCardFishMovieClip());
+                    }
                 });
 
+                popupPanels.ClosePanel(popupPanels.alertPanel.transform as RectTransform);
             });
         }
         else
         {
             UIDungeonPopupPanels.instance.OpenAlertCardFishNotEnough("您还没有食卡鱼哦！", "您可以通过拼图奖励、成就奖励获得食卡鱼。");
         }
+    }
+
+    public void OnClickHelpBtn()
+    {
+        UIDungeonPopupPanels.instance.OpenHelpPanel();
+    }
+
+    public void OnClickAttackBtn()
+    {
+        if (dungeonInfo.selected_cards.Length == 5 || dungeonInfo.is_used_master_card_by_buy == 1)
+        {
+            GameMainManager.instance.netManager.DungeonAttack(dungeonInfo.create_time, (ret, res) =>
+            {
+                if (res.isOK)
+                {
+                    dungeonInfo = res.data.dungeon_info;
+                    StartCoroutine(StartAttack());
+                }
+            });
+
+        }
+        
+    }
+
+    public void OnClickGetRewardBtn()
+    {
+        GameMainManager.instance.netManager.DungeonReapReward(dungeonInfo.create_time, (ret, res) =>
+        {
+            popupPanels.ClosePanel(popupPanels.getRewardPanel.transform as RectTransform);
+            OnClickClose();
+        });
+       
+    }
+
+    private IEnumerator StartAttack()
+    {
+        boss.Attack();
+        yield return new WaitForSeconds(0.5f);
+        cardBoard.gameObject.SetActive(false);
+        hurtText.transform.parent.gameObject.SetActive(false);
+        yield return new WaitForSeconds(5);
+        popupPanels.OpenGetRewardPanel();
     }
 
     private void Refresh()
@@ -161,4 +211,10 @@ public class UIDungeonWindow : UIWindowBase {
         Refresh();
     }
 
+    private IEnumerator PlayCardFishMovieClip()
+    {
+        useCardFishMovieClip.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2);
+        Refresh();
+    }
 }

@@ -18,4 +18,5 @@ public class EventEnum {
     public const string UPDATE_MAPINFO = "UPDATE_MAPINFO";//更新地图信息
     public const string UPDATE_BUILDING = "UPDATE_BUILDING";//更新自己建筑的信息
     public const string UPDATE_REDDOT = "UPDATE_REDDOT";//更新红点逻辑
+    public const string UPDATE_DUNGEON = "UPDATE_DUNGEON";//更新副本数据
 }

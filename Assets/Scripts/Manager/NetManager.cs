@@ -1265,7 +1265,7 @@ public class NetManager:INetManager
     public bool DungeonReapReward(int createTime, Action<bool, DungeonInfoMessage> callBack)
     {
         Waiting.Enable();
-        string url = MakeUrl(APIDomain, "game/dungeon/lotto");
+        string url = MakeUrl(APIDomain, "game/dungeon/reap");
         Dictionary<string, object> data = new Dictionary<string, object>
         {
             { "create_time",createTime },
@@ -1281,6 +1281,7 @@ public class NetManager:INetManager
             {
                GameMainManager.instance.model.userData.dungeon_info = res.data.dungeon_info;
                GameMainManager.instance.model.userData.dungeon_keys = res.data.dungeon_keys;
+               EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_DUNGEON));
             }
             else
             {
@@ -1309,6 +1310,7 @@ public class NetManager:INetManager
             if (res.isOK)
             {
                 GameMainManager.instance.model.userData.dungeon_info = res.data.dungeon_info;
+                EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_DUNGEON));
             }
             else
             {

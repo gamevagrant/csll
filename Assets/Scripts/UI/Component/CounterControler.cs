@@ -18,7 +18,7 @@ public class CounterControler : MonoBehaviour {
     {
         get
         {
-            return num;
+            return _num;
         }
         set
         {

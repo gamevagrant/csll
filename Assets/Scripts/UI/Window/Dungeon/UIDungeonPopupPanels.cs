@@ -18,6 +18,9 @@ public class UIDungeonPopupPanels : MonoBehaviour {
     public UIDungeonCardsPoolPanel cardsPoolPanel;
     public UIDungeonAlertPanel alertPanel;
     public UIDungeonInvitePanel invitePanel;
+    public UIDungeonBuyMasterCardPanel buyMasterCardPanel;
+    public RectTransform helpPanel;
+    public UIDungeonContent getRewardPanel;
 
     private DungeonInfoData data;
 	// Use this for initialization
@@ -73,6 +76,28 @@ public class UIDungeonPopupPanels : MonoBehaviour {
         alertPanel.UseMasterCard(title, maxCount, onClickOk);
     }
 
+    public void OpenBuyMasterCardPanel()
+    {
+        data = GameMainManager.instance.model.userData.dungeon_info;
+        OpenPanel(buyMasterCardPanel.transform as RectTransform);
+        buyMasterCardPanel.SetData(data.buy_master_card);
+    }
+
+    public void OpenHelpPanel()
+    {
+        OpenPanel(helpPanel);
+    }
+
+    public void OpenGetRewardPanel()
+    {
+        data = GameMainManager.instance.model.userData.dungeon_info;
+        if(data.self_rewards!=null && data.self_rewards.Length>0)
+        {
+            OpenPanel(getRewardPanel.transform as RectTransform);
+            getRewardPanel.SetData(data.self_rewards);
+        }
+        
+    }
 
     private void OpenPanel(RectTransform panel)
     {
@@ -99,4 +124,6 @@ public class UIDungeonPopupPanels : MonoBehaviour {
             }
         }
     }
+
+
 }

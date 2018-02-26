@@ -24,7 +24,7 @@ public class UIDungeonMasterCardMovieClip : MonoBehaviour {
         cardImage.localScale = Vector3.zero;
         cardImage.localPosition = Vector3.zero;
         textImage.localScale = Vector3.zero;
-
+        AudioManager.instance.PlaySound(AudioNameEnum.dungeon_useMasterCard);
         Sequence sq = DOTween.Sequence();
         sq.Append(lightImage.DOLocalRotate(new Vector3(0, 0, 360), 1, RotateMode.FastBeyond360));
         sq.Insert(0, cardImage.DOScale(1, 0.5f).SetEase(Ease.OutBack));
@@ -32,6 +32,9 @@ public class UIDungeonMasterCardMovieClip : MonoBehaviour {
             lightImage.gameObject.SetActive(false);
         });
         sq.Append(cardImage.DOMove(target.position, 0.5f));
+        sq.AppendCallback(() => {
+            AudioManager.instance.PlaySound(AudioNameEnum.dungeon_great);
+        });
         sq.Append(textImage.DOScale(1, 0.5f).SetEase(Ease.OutBack));
         sq.AppendInterval(0.5f);
         sq.OnComplete(() => {

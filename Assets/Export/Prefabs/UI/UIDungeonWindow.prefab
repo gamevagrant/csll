@@ -316,7 +316,7 @@ GameObject:
   - component: {fileID: 224835929713797388}
   - component: {fileID: 222588997640942290}
   - component: {fileID: 114642637684440370}
-  - component: {fileID: 114252823680354030}
+  - component: {fileID: 114233633855163274}
   m_Layer: 0
   m_Name: Boom
   m_TagString: Untagged
@@ -665,7 +665,6 @@ GameObject:
   - component: {fileID: 224588609383516008}
   - component: {fileID: 222544903455258984}
   - component: {fileID: 114997645774950114}
-  - component: {fileID: 114756599710423704}
   m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
@@ -752,7 +751,7 @@ GameObject:
   - component: {fileID: 224958774365082052}
   - component: {fileID: 222492448781247808}
   - component: {fileID: 114384883303567870}
-  - component: {fileID: 114080756131414544}
+  - component: {fileID: 114326003117550112}
   m_Layer: 0
   m_Name: SmokeBoss
   m_TagString: Untagged
@@ -2122,7 +2121,7 @@ GameObject:
   - component: {fileID: 224296799430660762}
   - component: {fileID: 222890667078759006}
   - component: {fileID: 114151872683266558}
-  - component: {fileID: 114176648770518296}
+  - component: {fileID: 114996313148284286}
   m_Layer: 0
   m_Name: Smoke
   m_TagString: Untagged
@@ -2544,7 +2543,7 @@ GameObject:
   - component: {fileID: 224729973172824496}
   - component: {fileID: 222008200329235868}
   - component: {fileID: 114685580448620848}
-  - component: {fileID: 114968017190754412}
+  - component: {fileID: 114886053409630340}
   m_Layer: 0
   m_Name: Shell
   m_TagString: Untagged
@@ -4572,41 +4571,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114080756131414544
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1183214130057918}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 323873691b8f0164e9a007fc3e4d4f69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FPS: 25
-  SpriteFrames:
-  - {fileID: 21300034, guid: facddb4fa8075754a8fb853d6851ee9e, type: 3}
-  - {fileID: 21300036, guid: facddb4fa8075754a8fb853d6851ee9e, type: 3}
-  - {fileID: 21300038, guid: facddb4fa8075754a8fb853d6851ee9e, type: 3}
-  - {fileID: 21300040, guid: facddb4fa8075754a8fb853d6851ee9e, type: 3}
-  - {fileID: 21300042, guid: facddb4fa8075754a8fb853d6851ee9e, type: 3}
-  - {fileID: 21300044, guid: facddb4fa8075754a8fb853d6851ee9e, type: 3}
-  - {fileID: 21300046, guid: facddb4fa8075754a8fb853d6851ee9e, type: 3}
-  - {fileID: 21300048, guid: facddb4fa8075754a8fb853d6851ee9e, type: 3}
-  - {fileID: 21300050, guid: facddb4fa8075754a8fb853d6851ee9e, type: 3}
-  - {fileID: 21300052, guid: facddb4fa8075754a8fb853d6851ee9e, type: 3}
-  - {fileID: 21300054, guid: facddb4fa8075754a8fb853d6851ee9e, type: 3}
-  - {fileID: 21300056, guid: facddb4fa8075754a8fb853d6851ee9e, type: 3}
-  - {fileID: 21300058, guid: facddb4fa8075754a8fb853d6851ee9e, type: 3}
-  - {fileID: 21300060, guid: facddb4fa8075754a8fb853d6851ee9e, type: 3}
-  - {fileID: 21300062, guid: facddb4fa8075754a8fb853d6851ee9e, type: 3}
-  - {fileID: 21300064, guid: facddb4fa8075754a8fb853d6851ee9e, type: 3}
-  - {fileID: 21300066, guid: facddb4fa8075754a8fb853d6851ee9e, type: 3}
-  - {fileID: 21300068, guid: facddb4fa8075754a8fb853d6851ee9e, type: 3}
-  IsPlaying: 0
-  Foward: 1
-  AutoPlay: 1
-  Loop: 0
 --- !u!114 &114080982253460850
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5040,6 +5004,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: e70260fc6713c814fb3f81c3266bb1e9, type: 3}
   - {fileID: 21300000, guid: eeb8ecaa5b54d6a4aa33b43a53662b12, type: 3}
   - {fileID: 21300000, guid: b711a409a8ccf88468bd0815b5d02368, type: 3}
+  - {fileID: 21300000, guid: 7a94ec12858fe4549b2aa3ab3c9d3697, type: 3}
+  - {fileID: 21300000, guid: 23589eb366aebac44b01a53b26726b75, type: 3}
 --- !u!114 &114104965042636658
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5545,45 +5511,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114176648770518296
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1582150207597608}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 323873691b8f0164e9a007fc3e4d4f69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FPS: 25
-  SpriteFrames:
-  - {fileID: 21300056, guid: f26c7ff77084de64ebfc1a3b57ee12d8, type: 3}
-  - {fileID: 21300058, guid: f26c7ff77084de64ebfc1a3b57ee12d8, type: 3}
-  - {fileID: 21300060, guid: f26c7ff77084de64ebfc1a3b57ee12d8, type: 3}
-  - {fileID: 21300062, guid: f26c7ff77084de64ebfc1a3b57ee12d8, type: 3}
-  - {fileID: 21300064, guid: f26c7ff77084de64ebfc1a3b57ee12d8, type: 3}
-  - {fileID: 21300066, guid: f26c7ff77084de64ebfc1a3b57ee12d8, type: 3}
-  - {fileID: 21300068, guid: f26c7ff77084de64ebfc1a3b57ee12d8, type: 3}
-  - {fileID: 21300070, guid: f26c7ff77084de64ebfc1a3b57ee12d8, type: 3}
-  - {fileID: 21300072, guid: f26c7ff77084de64ebfc1a3b57ee12d8, type: 3}
-  - {fileID: 21300074, guid: f26c7ff77084de64ebfc1a3b57ee12d8, type: 3}
-  - {fileID: 21300044, guid: f26c7ff77084de64ebfc1a3b57ee12d8, type: 3}
-  - {fileID: 21300046, guid: f26c7ff77084de64ebfc1a3b57ee12d8, type: 3}
-  - {fileID: 21300048, guid: f26c7ff77084de64ebfc1a3b57ee12d8, type: 3}
-  - {fileID: 21300050, guid: f26c7ff77084de64ebfc1a3b57ee12d8, type: 3}
-  - {fileID: 21300052, guid: f26c7ff77084de64ebfc1a3b57ee12d8, type: 3}
-  - {fileID: 21300054, guid: f26c7ff77084de64ebfc1a3b57ee12d8, type: 3}
-  - {fileID: 21300076, guid: f26c7ff77084de64ebfc1a3b57ee12d8, type: 3}
-  - {fileID: 21300078, guid: f26c7ff77084de64ebfc1a3b57ee12d8, type: 3}
-  - {fileID: 21300080, guid: f26c7ff77084de64ebfc1a3b57ee12d8, type: 3}
-  - {fileID: 21300082, guid: f26c7ff77084de64ebfc1a3b57ee12d8, type: 3}
-  - {fileID: 21300084, guid: f26c7ff77084de64ebfc1a3b57ee12d8, type: 3}
-  - {fileID: 21300086, guid: f26c7ff77084de64ebfc1a3b57ee12d8, type: 3}
-  IsPlaying: 0
-  Foward: 1
-  AutoPlay: 1
-  Loop: 0
 --- !u!114 &114177429147878452
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5848,6 +5775,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: e70260fc6713c814fb3f81c3266bb1e9, type: 3}
   - {fileID: 21300000, guid: eeb8ecaa5b54d6a4aa33b43a53662b12, type: 3}
   - {fileID: 21300000, guid: b711a409a8ccf88468bd0815b5d02368, type: 3}
+  - {fileID: 21300000, guid: 7a94ec12858fe4549b2aa3ab3c9d3697, type: 3}
+  - {fileID: 21300000, guid: 23589eb366aebac44b01a53b26726b75, type: 3}
 --- !u!114 &114203679018950722
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6210,6 +6139,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: e70260fc6713c814fb3f81c3266bb1e9, type: 3}
   - {fileID: 21300000, guid: eeb8ecaa5b54d6a4aa33b43a53662b12, type: 3}
   - {fileID: 21300000, guid: b711a409a8ccf88468bd0815b5d02368, type: 3}
+  - {fileID: 21300000, guid: 7a94ec12858fe4549b2aa3ab3c9d3697, type: 3}
+  - {fileID: 21300000, guid: 23589eb366aebac44b01a53b26726b75, type: 3}
 --- !u!114 &114230053254166702
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6247,6 +6178,36 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 114215717507211696}
   index: 5
+--- !u!114 &114233633855163274
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1076533165393924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 323873691b8f0164e9a007fc3e4d4f69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FPS: 25
+  SpriteFrames:
+  - {fileID: 21300000, guid: f9c71c0855d5d894e8ce8d9ea50d859c, type: 3}
+  - {fileID: 21300000, guid: fd56b573d138d374fa37f9837bd90aef, type: 3}
+  - {fileID: 21300000, guid: d368b6de2fb8d4243a8d251486516f38, type: 3}
+  - {fileID: 21300000, guid: 21040d45f3ad78a4cbe6ed0a382de9a5, type: 3}
+  - {fileID: 21300000, guid: 246cabc8bfd0f8c41a2256b5d2809f9d, type: 3}
+  - {fileID: 21300000, guid: a7e34c1ddf5bf2047aff9fa1a444883a, type: 3}
+  - {fileID: 21300000, guid: dfffa279ffa9df549829345e4ecd83f9, type: 3}
+  - {fileID: 21300000, guid: 04a4c3cb782276e489e345ff0eb86885, type: 3}
+  - {fileID: 21300000, guid: 52c9b8bb7b99c8047ba13187d139739c, type: 3}
+  - {fileID: 21300000, guid: a1e7be7976611c3428c9e53a299c9c0b, type: 3}
+  - {fileID: 21300000, guid: c47879b74abfc354480c109a6327a089, type: 3}
+  - {fileID: 21300000, guid: 3464d91733aa42c4b9c9ebda988e213f, type: 3}
+  - {fileID: 21300000, guid: a4d20e06e5ba40341992d8dbff4d5f4b, type: 3}
+  IsPlaying: 0
+  Foward: 1
+  AutoPlay: 1
+  Loop: 0
 --- !u!114 &114238754983702748
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6289,36 +6250,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114252823680354030
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1076533165393924}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 323873691b8f0164e9a007fc3e4d4f69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FPS: 20
-  SpriteFrames:
-  - {fileID: 21300000, guid: f9c71c0855d5d894e8ce8d9ea50d859c, type: 3}
-  - {fileID: 21300000, guid: fd56b573d138d374fa37f9837bd90aef, type: 3}
-  - {fileID: 21300000, guid: d368b6de2fb8d4243a8d251486516f38, type: 3}
-  - {fileID: 21300000, guid: 21040d45f3ad78a4cbe6ed0a382de9a5, type: 3}
-  - {fileID: 21300000, guid: 246cabc8bfd0f8c41a2256b5d2809f9d, type: 3}
-  - {fileID: 21300000, guid: a7e34c1ddf5bf2047aff9fa1a444883a, type: 3}
-  - {fileID: 21300000, guid: dfffa279ffa9df549829345e4ecd83f9, type: 3}
-  - {fileID: 21300000, guid: 04a4c3cb782276e489e345ff0eb86885, type: 3}
-  - {fileID: 21300000, guid: 52c9b8bb7b99c8047ba13187d139739c, type: 3}
-  - {fileID: 21300000, guid: a1e7be7976611c3428c9e53a299c9c0b, type: 3}
-  - {fileID: 21300000, guid: c47879b74abfc354480c109a6327a089, type: 3}
-  - {fileID: 21300000, guid: 3464d91733aa42c4b9c9ebda988e213f, type: 3}
-  - {fileID: 21300000, guid: a4d20e06e5ba40341992d8dbff4d5f4b, type: 3}
-  IsPlaying: 0
-  Foward: 1
-  AutoPlay: 1
-  Loop: 0
 --- !u!114 &114258058818754232
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7072,6 +7003,41 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114326003117550112
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1183214130057918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 323873691b8f0164e9a007fc3e4d4f69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FPS: 25
+  SpriteFrames:
+  - {fileID: 21300000, guid: fe6bd88ca6ea5eb4bafb9aa0c4938af4, type: 3}
+  - {fileID: 21300000, guid: f676b937d1b747e4fa361da352deb2ab, type: 3}
+  - {fileID: 21300000, guid: 611c7f11c5f35c347b4255a0fcc255c9, type: 3}
+  - {fileID: 21300000, guid: b75a57fda00efcc4592ba494ee70f863, type: 3}
+  - {fileID: 21300000, guid: abffa20bc2c842349bc5577f83cbc985, type: 3}
+  - {fileID: 21300000, guid: b4ebc0776e7fb1747990281bf7451681, type: 3}
+  - {fileID: 21300000, guid: 8ae9a708640ed924c94ddc64b239e088, type: 3}
+  - {fileID: 21300000, guid: e3e57efe31dcacf40bc45684212b9d1b, type: 3}
+  - {fileID: 21300000, guid: ce3877e07a42fb349aa0814b72170b92, type: 3}
+  - {fileID: 21300000, guid: e790e028af8877f4b96f6b44a70f4af6, type: 3}
+  - {fileID: 21300000, guid: 23a9d235dab6ce34a8f192828fec2a47, type: 3}
+  - {fileID: 21300000, guid: 3b9a9793fd71e7c4ba178cbcd249e5dd, type: 3}
+  - {fileID: 21300000, guid: 7bdfc9dfbba26134b9b881721981dd76, type: 3}
+  - {fileID: 21300000, guid: 2387cfa22110d9f42a1b98138270034c, type: 3}
+  - {fileID: 21300000, guid: 97b6e48cfd535c24db9546d1bb1462c6, type: 3}
+  - {fileID: 21300000, guid: 326d78d9641a9aa4abbda4fdcdc5f844, type: 3}
+  - {fileID: 21300000, guid: 7d627dca7e5822d44a3de0e941d205dc, type: 3}
+  - {fileID: 21300000, guid: 27630c1ab9024784e8ccbeadad5821de, type: 3}
+  IsPlaying: 0
+  Foward: 1
+  AutoPlay: 1
+  Loop: 0
 --- !u!114 &114332248177844770
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8862,6 +8828,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: e70260fc6713c814fb3f81c3266bb1e9, type: 3}
   - {fileID: 21300000, guid: eeb8ecaa5b54d6a4aa33b43a53662b12, type: 3}
   - {fileID: 21300000, guid: b711a409a8ccf88468bd0815b5d02368, type: 3}
+  - {fileID: 21300000, guid: 7a94ec12858fe4549b2aa3ab3c9d3697, type: 3}
+  - {fileID: 21300000, guid: 23589eb366aebac44b01a53b26726b75, type: 3}
 --- !u!114 &114542862119803608
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10709,26 +10677,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 0
---- !u!114 &114756599710423704
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1174980436194608}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 323873691b8f0164e9a007fc3e4d4f69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FPS: 10
-  SpriteFrames:
-  - {fileID: 21300000, guid: 2ef0deac024d44840a82380322debe55, type: 3}
-  - {fileID: 21300002, guid: 2ef0deac024d44840a82380322debe55, type: 3}
-  - {fileID: 21300004, guid: 2ef0deac024d44840a82380322debe55, type: 3}
-  IsPlaying: 0
-  Foward: 1
-  AutoPlay: 1
-  Loop: 1
 --- !u!114 &114758312283159454
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -11266,6 +11214,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: e70260fc6713c814fb3f81c3266bb1e9, type: 3}
   - {fileID: 21300000, guid: eeb8ecaa5b54d6a4aa33b43a53662b12, type: 3}
   - {fileID: 21300000, guid: b711a409a8ccf88468bd0815b5d02368, type: 3}
+  - {fileID: 21300000, guid: 7a94ec12858fe4549b2aa3ab3c9d3697, type: 3}
+  - {fileID: 21300000, guid: 23589eb366aebac44b01a53b26726b75, type: 3}
 --- !u!114 &114808024997895268
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -12166,6 +12116,26 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 7d43b895d7bf40140abcd8d0c6963647, type: 3}
   - {fileID: 21300000, guid: 42514bb144ef44c46951528667af72f0, type: 3}
   - {fileID: 21300000, guid: 0dd7a3e405555a248b44d4b55bfe6c26, type: 3}
+--- !u!114 &114886053409630340
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1687473092299424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 323873691b8f0164e9a007fc3e4d4f69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FPS: 25
+  SpriteFrames:
+  - {fileID: 21300000, guid: b58f46f73b13d0546a56b7c859341378, type: 3}
+  - {fileID: 21300002, guid: b58f46f73b13d0546a56b7c859341378, type: 3}
+  - {fileID: 21300004, guid: b58f46f73b13d0546a56b7c859341378, type: 3}
+  IsPlaying: 0
+  Foward: 1
+  AutoPlay: 1
+  Loop: 1
 --- !u!114 &114888089607082452
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -12293,6 +12263,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: e70260fc6713c814fb3f81c3266bb1e9, type: 3}
   - {fileID: 21300000, guid: eeb8ecaa5b54d6a4aa33b43a53662b12, type: 3}
   - {fileID: 21300000, guid: b711a409a8ccf88468bd0815b5d02368, type: 3}
+  - {fileID: 21300000, guid: 7a94ec12858fe4549b2aa3ab3c9d3697, type: 3}
+  - {fileID: 21300000, guid: 23589eb366aebac44b01a53b26726b75, type: 3}
 --- !u!114 &114892641446095878
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -13350,26 +13322,6 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: QY.UI.Button+ButtonClickEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
---- !u!114 &114968017190754412
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1687473092299424}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 323873691b8f0164e9a007fc3e4d4f69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FPS: 20
-  SpriteFrames:
-  - {fileID: 21300000, guid: b58f46f73b13d0546a56b7c859341378, type: 3}
-  - {fileID: 21300002, guid: b58f46f73b13d0546a56b7c859341378, type: 3}
-  - {fileID: 21300004, guid: b58f46f73b13d0546a56b7c859341378, type: 3}
-  IsPlaying: 0
-  Foward: 1
-  AutoPlay: 1
-  Loop: 1
 --- !u!114 &114975434595408458
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -13638,6 +13590,45 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114996313148284286
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1582150207597608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 323873691b8f0164e9a007fc3e4d4f69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FPS: 25
+  SpriteFrames:
+  - {fileID: 21300000, guid: aa3b821188f7b9743a071c7f1faaa821, type: 3}
+  - {fileID: 21300000, guid: e745ced12720bd74aad9d1d662d90551, type: 3}
+  - {fileID: 21300000, guid: 63ee9ed87430dae4fb045bbf9af2f311, type: 3}
+  - {fileID: 21300000, guid: bfb8ee8642d93be4aa33393266ff884c, type: 3}
+  - {fileID: 21300000, guid: 7515efa2b182ae8479d2a28199efdd82, type: 3}
+  - {fileID: 21300000, guid: dd8b497628d1fb64cbcf38958e3fafd3, type: 3}
+  - {fileID: 21300000, guid: 15e4b8f7474bcf741a34364e15d2ecf7, type: 3}
+  - {fileID: 21300000, guid: 600fb065a05831d4e970b9d9733699f3, type: 3}
+  - {fileID: 21300000, guid: b6f59d5ff03cc0a46a23f1b52e17adfc, type: 3}
+  - {fileID: 21300000, guid: de852114b294de54cbea5367ec1f788a, type: 3}
+  - {fileID: 21300000, guid: 599684596bb51464f8a45c35b7d82022, type: 3}
+  - {fileID: 21300000, guid: ada7c6c481c518d48bf0622cb384a2fb, type: 3}
+  - {fileID: 21300000, guid: a06d72ac6373a884d8f68f6d36fa86e0, type: 3}
+  - {fileID: 21300000, guid: e8782df6f9b88aa418cf091371f8711d, type: 3}
+  - {fileID: 21300000, guid: 19e34169b8f8d4b4394655d1f89f8b21, type: 3}
+  - {fileID: 21300000, guid: 82133bbea17b28a49906b276559cef66, type: 3}
+  - {fileID: 21300000, guid: f08cfd7ef3c687d47b17442364a23b1e, type: 3}
+  - {fileID: 21300000, guid: 4e2fc05de5bab0640a7639b88d1cc22d, type: 3}
+  - {fileID: 21300000, guid: 2c1d15139142a574bb19b9c68961c683, type: 3}
+  - {fileID: 21300000, guid: e29feacca296bc448a7c81cde3800fbb, type: 3}
+  - {fileID: 21300000, guid: ce9412c619e085a4b9b4e03ad7eb04d5, type: 3}
+  - {fileID: 21300000, guid: f3415555ad313134eb0be00200469531, type: 3}
+  IsPlaying: 0
+  Foward: 1
+  AutoPlay: 1
+  Loop: 0
 --- !u!114 &114996594240127876
 MonoBehaviour:
   m_ObjectHideFlags: 1

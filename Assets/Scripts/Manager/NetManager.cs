@@ -10,7 +10,7 @@ public class NetManager:INetManager
     {
         get
         {
-            if (GameSetting.isRelease)
+            if (!GameMainManager.instance.open.IsDevelopment)
             {
                 return GameSetting.serverPath;
             }
@@ -18,7 +18,7 @@ public class NetManager:INetManager
             {
                 return GameSetting.serverPathDevelop;
             }
-
+            
         }
     }
     private string _token;
@@ -64,7 +64,7 @@ public class NetManager:INetManager
     private void ConnectWebSocket(long uid)
     {
         string websocketPath;
-        if (GameSetting.isRelease)
+        if (!GameMainManager.instance.open.IsDevelopment)
             websocketPath = GameSetting.websocketPath;
         else
             websocketPath = GameSetting.websocketPathDevelop;
@@ -217,6 +217,7 @@ public class NetManager:INetManager
                     GameMainManager.instance.websocketMsgManager.SendMsg(msg);
                 }
                 EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_REDDOT));
+                
             }
             else
             {
@@ -1236,12 +1237,13 @@ public class NetManager:INetManager
         });
     }
     //抽取卡牌
-    public bool DungeonLottoCard(int createTime,Action<bool, DungeonLottoCardMessage> callBack)
+    public bool DungeonLottoCard(long owner, int createTime,Action<bool, DungeonLottoCardMessage> callBack)
     {
         Waiting.Enable();
         string url = MakeUrl(APIDomain, "game/dungeon/lotto");
         Dictionary<string, object> data = new Dictionary<string, object>
         {
+            { "owner",owner },
             { "create_time",createTime },
             { "uid", uid },
             { "token", token },
@@ -1281,6 +1283,31 @@ public class NetManager:INetManager
             {
                GameMainManager.instance.model.userData.dungeon_info = res.data.dungeon_info;
                GameMainManager.instance.model.userData.dungeon_keys = res.data.dungeon_keys;
+               foreach(RewardData rd in res.data.dungeon_reward)
+                {
+                    switch(rd.type)
+                    {
+                        case "money":
+                        case "gold":
+                            GameMainManager.instance.model.userData.money = rd.count;
+                            EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Money, 0));
+                            break;
+                        case "energy":
+                            GameMainManager.instance.model.userData.energy = (int)rd.count;
+                            EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Energy, 0));
+                            break;
+                        case "vip":
+                            GameMainManager.instance.model.userData.vip_days = (int)rd.count;
+                            EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.vip, 0));
+                            break;
+                        case "wanted":
+                            GameMainManager.instance.model.userData.wantedCount = (int)rd.count;
+                            EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.wanted, 0));
+                            break;
+                        case "master_tile":
+                            break;
+                    }
+                }
                EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_DUNGEON));
             }
             else
@@ -1379,7 +1406,7 @@ public class NetManager:INetManager
         });
     }
     //判断副本是否过期(点击消息列表中的 好友抽卡消息进行检测)
-    public bool DungeonCheckLottoMsg(int createTime,int from,Action<bool, NetMessage> callBack)
+    public bool DungeonCheckLottoMsg(int createTime,long from,Action<bool, NetMessage> callBack)
     {
         Waiting.Enable();
         string url = MakeUrl(APIDomain, "game/dungeon/CheckLottoMsg");

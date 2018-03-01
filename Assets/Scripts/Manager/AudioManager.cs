@@ -188,4 +188,7 @@ public class AudioNameEnum
     public static string dungeon_cardToCannon = "dungeon_cardToCannon";//卡片变炮音效
     public static string dungeon_great = "dungeon_great";//使用万能卡音效
     public static string dungeon_useMasterCard = "dungeon_useMasterCard";//使用万能卡
+    public static string dungeon_useCard = "dungeon_cardUse";//卡牌池中使用卡牌
+    public static string dungeon_extractCard = "dungeon_extractCard";//抽卡中选中卡牌
+    public static string dungeon_extractShow = "dungeon_extractShow";//抽卡中展示抽中的卡牌
 }

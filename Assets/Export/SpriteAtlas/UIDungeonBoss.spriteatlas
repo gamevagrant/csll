@@ -12,7 +12,7 @@ SpriteAtlas:
       anisoLevel: 1
       compressionQuality: 50
       maxTextureSize: 2048
-      textureCompression: 0
+      textureCompression: 1
       filterMode: 1
       generateMipMaps: 0
       readable: 0
@@ -28,12 +28,12 @@ SpriteAtlas:
       enableTightPacking: 0
     packedHash:
       serializedVersion: 2
-      Hash: 76327a29c83b5c23bc5d6764d61ab77f
+      Hash: ed2a2c3ab7abf59af5b669deffa08e25
     variantMultiplier: 1
-    bindAsDefault: 1
-    finalFormat: 4
-    hashString: 76327a29c83b5c23bc5d6764d61ab77f
-    totalSpriteSurfaceArea: 1483831
+    bindAsDefault: 0
+    finalFormat: 47
+    hashString: ed2a2c3ab7abf59af5b669deffa08e25
+    totalSpriteSurfaceArea: 1220290
     packables:
     - {fileID: 102900000, guid: 6e0850c964c594b40ade1d1e6c863d66, type: 3}
     packedSpriteRenderDataKeys:
@@ -47,6 +47,7 @@ SpriteAtlas:
     - 42514bb144ef44c46951528667af72f0: 21300000
     - 7d43b895d7bf40140abcd8d0c6963647: 21300000
     - 0dd7a3e405555a248b44d4b55bfe6c26: 21300000
+    - bf2b8cd7d49e00c4daa73494449224e4: 21300000
     - 7678fb8baae439f4097b31151ed5e3c8: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
@@ -60,6 +61,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 42514bb144ef44c46951528667af72f0, type: 3}
   - {fileID: 21300000, guid: 7d43b895d7bf40140abcd8d0c6963647, type: 3}
   - {fileID: 21300000, guid: 0dd7a3e405555a248b44d4b55bfe6c26, type: 3}
+  - {fileID: 21300000, guid: bf2b8cd7d49e00c4daa73494449224e4, type: 3}
   - {fileID: 21300000, guid: 7678fb8baae439f4097b31151ed5e3c8, type: 3}
   m_PackedSpriteNamesToIndex:
   - 055
@@ -72,6 +74,7 @@ SpriteAtlas:
   - 040
   - 038
   - 039
+  - fuben_4_(16)
   - 08
   m_Tag: UIDungeonBoss
   m_IsVariant: 0

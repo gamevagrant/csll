@@ -32,8 +32,11 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
             case 11://完成每日任务
                 //DailyTaskAction(msg);
                 break;
-            case 12://获得邮件通知
+            case 14://获得邮件通知
                 MailAction(msg);
+                break;
+            case 17://获得副本钥匙
+                GetDungeonKey(msg);
                 break;
             case 18://收到副本邀请
                 break;
@@ -310,25 +313,11 @@ public class WebSocketMsgManager :IWebSocketMsgManager{
         Debug.LogAssertion("邮件的wetsocket的返回没实现/n" + LitJson.JsonMapper.ToJson(msg));
     }
 
-
-
-}
-/*
-public class WebSocketMessage
-{
-    public long uid;
-    public long toid;
-    public int action;
-    public int result;
-    public string time;
-    public string name;
-    public string headImg;
-    public int crowns;
-    public LitJson.JsonData extra;
-    public bool read;
-    public bool isWanted;
-    public bool isVip;
+    private void GetDungeonKey(MessageResponseData msg)
+    {
+        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIDungeonGetKeyWindow);
+    }
 
 }
-*/
+
 

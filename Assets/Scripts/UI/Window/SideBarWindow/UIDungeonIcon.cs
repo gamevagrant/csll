@@ -27,11 +27,13 @@ public class UIDungeonIcon : MonoBehaviour {
     // Use this for initialization
     void Start () {
         EventDispatcher.instance.AddEventListener(EventEnum.UPDATE_DUNGEON, OnUpdateDungeonDataHandle);
+        EventDispatcher.instance.AddEventListener(EventEnum.GET_DUNGEON_KEY, OnGetDungeonKeyHandle);
 	}
 
     private void OnDestroy()
     {
         EventDispatcher.instance.RemoveEventListener(EventEnum.UPDATE_DUNGEON, OnUpdateDungeonDataHandle);
+        EventDispatcher.instance.RemoveEventListener(EventEnum.GET_DUNGEON_KEY, OnGetDungeonKeyHandle);
     }
     // Update is called once per frame
     void Update ()
@@ -51,6 +53,12 @@ public class UIDungeonIcon : MonoBehaviour {
     private void OnUpdateDungeonDataHandle(BaseEvent evt)
     {
         Refresh();
+    }
+
+    private void OnGetDungeonKeyHandle(BaseEvent evt)
+    {
+        GetDungeonKeyEvent e = evt as GetDungeonKeyEvent;
+        e.iconPos(transform.position);
     }
     private void Refresh()
     {
@@ -97,6 +105,7 @@ public class UIDungeonIcon : MonoBehaviour {
         if(GameMainManager.instance.model.userData.dungeonState==2)
         {
             //打开奖品领取
+            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIDungeonGetRewardWindow, data);
         }else
         {
             GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIDungeonWindow);

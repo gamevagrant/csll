@@ -9,8 +9,24 @@ namespace QY.Open
     
     public class OpenFacebook : IOpenPlatform
     {
-       // private const string DEBUG_TOKEN = "EAACOsVAkLvoBAJy0VbZCpljkRrmPEimQ3fG45AHkWmI388UpZBd2J5ZCzR5tZBS1qCnSBYQHKiDgeo0iQS5UyzGbZAU6cOvynJ1yx1ypeAxITS5TnOIcNqBG1ehjTvmiWcYjI967FQtBgHhvyHdd2VFFaunbp452IyoCIrQlwM2c9bHXlZBZCpQ";//测试用facebook访问token
-        private const string DEBUG_TOKEN = "EAABwimCXS7sBAIiIIswx7Map8jhGM8OR8qhp5ZCBmJLI8RsCmXE3NycmgLWncObqY3q1mFwvDoQwBhnWZAZAPZBf4NCDhbzHNq6gHxGKNQDqAKTQFQADL9aLgOqbdYtaRBr5CEkN9boVhEYYtOvVDZBDjVkBv3JMf1ZCjI4vFkADMkjEwM3Oqe";
+        //正式服
+        private const string DEBUG_TOKEN = "EAACOsVAkLvoBAJy0VbZCpljkRrmPEimQ3fG45AHkWmI388UpZBd2J5ZCzR5tZBS1qCnSBYQHKiDgeo0iQS5UyzGbZAU6cOvynJ1yx1ypeAxITS5TnOIcNqBG1ehjTvmiWcYjI967FQtBgHhvyHdd2VFFaunbp452IyoCIrQlwM2c9bHXlZBZCpQ";//测试用facebook访问token
+        //测试服
+        private const string DEBUG_TOKEN_DEVELOPMENT = "EAABwimCXS7sBAOCKWfYwOz4rSK1plfIZCAx9WVdQG99wn40bMo8Eve0XlEcOszBJN5qGFjwihwZCyb1KZBcVBexNnuRvNKxMxfwR1r4Njg8ZCS4H143ISonECYfZCWmjsqXd3ou0Fh0Jn3o2A5VBJ860nLFFe3sRSSyL1hwInpQZDZD";
+        private string debugToken
+        {
+            get
+            {
+                if(IsDevelopment)
+                {
+                    return DEBUG_TOKEN_DEVELOPMENT;
+                }else
+                {
+                    return DEBUG_TOKEN;
+                }
+            }
+        }
+
         AccessToken _token;
         public AccessToken token
         {
@@ -24,19 +40,26 @@ namespace QY.Open
             }
         }
 
+        public bool IsDevelopment
+        {
+            get
+            {
+                return FB.AppId != "156892204904186";
+            }
+        }
 
         public bool IsLoggedIn
         {
             get
             {
                 return FB.IsLoggedIn;
+
             }
         }
 
         public void ActivateApp()
         {
             FB.ActivateApp();
-
         }
 
         public void Init(System.Action onComplate)
@@ -70,7 +93,7 @@ namespace QY.Open
             {
 #if UNITY_EDITOR
                 Facebook.Unity.AccessToken.CurrentAccessToken = new Facebook.Unity.AccessToken(
-                    DEBUG_TOKEN,
+                    debugToken,
                     "2085135021772785",
                     DateTime.Now,
                     new string[] { "user_friends", "email", "public_profile" },

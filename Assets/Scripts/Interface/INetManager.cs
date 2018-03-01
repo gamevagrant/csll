@@ -242,7 +242,7 @@ public interface INetManager
     /// <param name="createTime"></param>
     /// <param name="callBack"></param>
     /// <returns></returns>
-    bool DungeonLottoCard(int createTime, Action<bool, DungeonLottoCardMessage> callBack);
+    bool DungeonLottoCard(long owner, int createTime, Action<bool, DungeonLottoCardMessage> callBack);
     /// <summary>
     /// 副本领奖
     /// </summary>
@@ -280,7 +280,7 @@ public interface INetManager
     /// <param name="from"></param>
     /// <param name="callBack"></param>
     /// <returns></returns>
-    bool DungeonCheckLottoMsg(int createTime, int from, Action<bool, NetMessage> callBack);
+    bool DungeonCheckLottoMsg(int createTime, long from, Action<bool, NetMessage> callBack);
     /// <summary>
     /// 完成新手引导
     /// </summary>

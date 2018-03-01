@@ -171,6 +171,12 @@ public class UIManager : MonoBehaviour,IUIManager  {
 
     private void OnLoadAtlas(string tag,Action<SpriteAtlas> act)
     {
+        Debug.Log("开始加载[" + tag + "]图集");
+        if (string.IsNullOrEmpty(tag))
+        {
+           
+            return;
+        }
         string path = FilePathTools.getSpriteAtlasPath(tag);
         if(GameMainManager.instance.preloader.Contains(path))
         {

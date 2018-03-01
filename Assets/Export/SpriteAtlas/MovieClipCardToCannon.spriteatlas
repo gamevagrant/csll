@@ -1,0 +1,110 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: MovieClipCardToCannon
+  m_EditorData:
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 1
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 0
+    platformSettings: []
+    packingParameters:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    packedHash:
+      serializedVersion: 2
+      Hash: aef69daee8636c0a42f53b2ee0a663f0
+    variantMultiplier: 1
+    bindAsDefault: 0
+    finalFormat: 47
+    hashString: aef69daee8636c0a42f53b2ee0a663f0
+    totalSpriteSurfaceArea: 7603200
+    packables:
+    - {fileID: 102900000, guid: 27e2ac6e654388049a80290816b39260, type: 3}
+    packedSpriteRenderDataKeys:
+    - b6f59d5ff03cc0a46a23f1b52e17adfc: 21300000
+    - f3415555ad313134eb0be00200469531: 21300000
+    - ce9412c619e085a4b9b4e03ad7eb04d5: 21300000
+    - f08cfd7ef3c687d47b17442364a23b1e: 21300000
+    - 4e2fc05de5bab0640a7639b88d1cc22d: 21300000
+    - 19e34169b8f8d4b4394655d1f89f8b21: 21300000
+    - 82133bbea17b28a49906b276559cef66: 21300000
+    - a06d72ac6373a884d8f68f6d36fa86e0: 21300000
+    - e8782df6f9b88aa418cf091371f8711d: 21300000
+    - 599684596bb51464f8a45c35b7d82022: 21300000
+    - ada7c6c481c518d48bf0622cb384a2fb: 21300000
+    - 2c1d15139142a574bb19b9c68961c683: 21300000
+    - e29feacca296bc448a7c81cde3800fbb: 21300000
+    - bfb8ee8642d93be4aa33393266ff884c: 21300000
+    - 63ee9ed87430dae4fb045bbf9af2f311: 21300000
+    - e745ced12720bd74aad9d1d662d90551: 21300000
+    - aa3b821188f7b9743a071c7f1faaa821: 21300000
+    - 600fb065a05831d4e970b9d9733699f3: 21300000
+    - 15e4b8f7474bcf741a34364e15d2ecf7: 21300000
+    - dd8b497628d1fb64cbcf38958e3fafd3: 21300000
+    - 7515efa2b182ae8479d2a28199efdd82: 21300000
+    - de852114b294de54cbea5367ec1f788a: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: b6f59d5ff03cc0a46a23f1b52e17adfc, type: 3}
+  - {fileID: 21300000, guid: f3415555ad313134eb0be00200469531, type: 3}
+  - {fileID: 21300000, guid: ce9412c619e085a4b9b4e03ad7eb04d5, type: 3}
+  - {fileID: 21300000, guid: f08cfd7ef3c687d47b17442364a23b1e, type: 3}
+  - {fileID: 21300000, guid: 4e2fc05de5bab0640a7639b88d1cc22d, type: 3}
+  - {fileID: 21300000, guid: 19e34169b8f8d4b4394655d1f89f8b21, type: 3}
+  - {fileID: 21300000, guid: 82133bbea17b28a49906b276559cef66, type: 3}
+  - {fileID: 21300000, guid: a06d72ac6373a884d8f68f6d36fa86e0, type: 3}
+  - {fileID: 21300000, guid: e8782df6f9b88aa418cf091371f8711d, type: 3}
+  - {fileID: 21300000, guid: 599684596bb51464f8a45c35b7d82022, type: 3}
+  - {fileID: 21300000, guid: ada7c6c481c518d48bf0622cb384a2fb, type: 3}
+  - {fileID: 21300000, guid: 2c1d15139142a574bb19b9c68961c683, type: 3}
+  - {fileID: 21300000, guid: e29feacca296bc448a7c81cde3800fbb, type: 3}
+  - {fileID: 21300000, guid: bfb8ee8642d93be4aa33393266ff884c, type: 3}
+  - {fileID: 21300000, guid: 63ee9ed87430dae4fb045bbf9af2f311, type: 3}
+  - {fileID: 21300000, guid: e745ced12720bd74aad9d1d662d90551, type: 3}
+  - {fileID: 21300000, guid: aa3b821188f7b9743a071c7f1faaa821, type: 3}
+  - {fileID: 21300000, guid: 600fb065a05831d4e970b9d9733699f3, type: 3}
+  - {fileID: 21300000, guid: 15e4b8f7474bcf741a34364e15d2ecf7, type: 3}
+  - {fileID: 21300000, guid: dd8b497628d1fb64cbcf38958e3fafd3, type: 3}
+  - {fileID: 21300000, guid: 7515efa2b182ae8479d2a28199efdd82, type: 3}
+  - {fileID: 21300000, guid: de852114b294de54cbea5367ec1f788a, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - CardToCannon8
+  - CardToCannon21
+  - CardToCannon20
+  - CardToCannon16
+  - CardToCannon17
+  - CardToCannon14
+  - CardToCannon15
+  - CardToCannon12
+  - CardToCannon13
+  - CardToCannon10
+  - CardToCannon11
+  - CardToCannon18
+  - CardToCannon19
+  - CardToCannon3
+  - CardToCannon2
+  - CardToCannon1
+  - CardToCannon0
+  - CardToCannon7
+  - CardToCannon6
+  - CardToCannon5
+  - CardToCannon4
+  - CardToCannon9
+  m_Tag: MovieClipCardToCannon
+  m_IsVariant: 0

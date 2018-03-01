@@ -82,6 +82,7 @@ public class UIDungeonWindow : UIWindowBase {
                     {
                         dungeonInfo = res.data.dungeon_info;
                         Refresh();
+                        AudioManager.instance.PlaySound(AudioNameEnum.dungeon_useCard);
                     }
                    
                 });
@@ -132,7 +133,7 @@ public class UIDungeonWindow : UIWindowBase {
     {
         if(userData.card_fish>0)
         {
-            UIDungeonPopupPanels.instance.OpenAlertUseCardFish("每使用一个食卡鱼，卡面值-1，确定使用？", userData.card_fish,(count)=> {
+            UIDungeonPopupPanels.instance.OpenAlertUseCardFish("每使用一个食卡鱼，卡面值-1\n确定使用？", userData.card_fish,(count)=> {
 
                 GameMainManager.instance.netManager.DungeonUseCardFish(dungeonInfo.create_time, count, (ret, res) =>
                 {

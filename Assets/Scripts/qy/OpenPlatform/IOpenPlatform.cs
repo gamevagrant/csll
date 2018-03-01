@@ -5,6 +5,10 @@ namespace QY.Open
     {
         AccessToken token { get; }
         /// <summary>
+        /// 是否连接的是测试应用
+        /// </summary>
+        bool IsDevelopment { get; }
+        /// <summary>
         /// 判断是否已经登录
         /// </summary>
         bool IsLoggedIn { get; }

@@ -1,0 +1,143 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: MoveClipFireworks
+  m_EditorData:
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 1
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 0
+    platformSettings: []
+    packingParameters:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    packedHash:
+      serializedVersion: 2
+      Hash: b0cda691a2c15dda642c3b199f792cd8
+    variantMultiplier: 1
+    bindAsDefault: 0
+    finalFormat: 47
+    hashString: b0cda691a2c15dda642c3b199f792cd8
+    totalSpriteSurfaceArea: 7122456
+    packables:
+    - {fileID: 102900000, guid: 3cfe4b28e11019441af1e100951b46ab, type: 3}
+    packedSpriteRenderDataKeys:
+    - 22a909b9ec301214491b454c54e52e7c: 21300000
+    - 5f10d6f51bbd9d348a39a34de1878aa8: 21300000
+    - e34c2f4364bf5ff42bfb54820ec3d542: 21300000
+    - 37d33222257755c4fa0c34ebad98f2c9: 21300000
+    - 938c1dc2fe6767144b0d70835b245f37: 21300000
+    - 4a948600741000c4f863eb5ef18ed947: 21300000
+    - a243997145a72424db085a647f95776b: 21300000
+    - 3a0a8fc5256f072428f892764866e4f7: 21300000
+    - 2d9899a8d59e5e84e8773f98dd16972a: 21300000
+    - b1af3fc2a63d9144089e4761d178a0bd: 21300000
+    - fb27906a231823448a1e67ae265c0840: 21300000
+    - ba1d6e3ccaafef041b80ce915b98b4a1: 21300000
+    - cf0cc684acc382240a82de17167cdb95: 21300000
+    - cf11213dfd87d7f4590ebfdaad13003e: 21300000
+    - c9fa0946f4dc8b946996c4d866bfaf61: 21300000
+    - ca3b7a76918b3124bbce8bd7bab5f690: 21300000
+    - df816c0aee7e4144c91674e79bc0cffc: 21300000
+    - 15b728361e33fb7489b820672a99af59: 21300000
+    - b9be6a7832e671a4ebf68d6319c15996: 21300000
+    - aedec0843b788114bab8fc0d81906463: 21300000
+    - 1d8f2029865855b40adb7f2c66923d88: 21300000
+    - 16a75974d3c80e74fbc8c874372fceb0: 21300000
+    - f054d3d82d3ba9d4daff0debc7a0181d: 21300000
+    - a0c22478a40978a438b6b8451d5d03a3: 21300000
+    - 2c719cf44019457419e6d14df8b7803d: 21300000
+    - 6a8bbbf0a0c42a748aad23f0ce85eb5a: 21300000
+    - b2f18ecd3f20864489599dfb011982b2: 21300000
+    - 0b772a6d9db68964cabb78efaef987c5: 21300000
+    - dd559afb556c6bb418d961fd508e3c3d: 21300000
+    - 889ec4966bd64c641a4e9f73cc9062af: 21300000
+    - 95978f78a63da374089e9ca2bc62b459: 21300000
+    - 5f441dacec2acdf4aace92dbb307be37: 21300000
+    - d79f4612d0fbb2041ab61e39919c3598: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 22a909b9ec301214491b454c54e52e7c, type: 3}
+  - {fileID: 21300000, guid: 5f10d6f51bbd9d348a39a34de1878aa8, type: 3}
+  - {fileID: 21300000, guid: e34c2f4364bf5ff42bfb54820ec3d542, type: 3}
+  - {fileID: 21300000, guid: 37d33222257755c4fa0c34ebad98f2c9, type: 3}
+  - {fileID: 21300000, guid: 938c1dc2fe6767144b0d70835b245f37, type: 3}
+  - {fileID: 21300000, guid: 4a948600741000c4f863eb5ef18ed947, type: 3}
+  - {fileID: 21300000, guid: a243997145a72424db085a647f95776b, type: 3}
+  - {fileID: 21300000, guid: 3a0a8fc5256f072428f892764866e4f7, type: 3}
+  - {fileID: 21300000, guid: 2d9899a8d59e5e84e8773f98dd16972a, type: 3}
+  - {fileID: 21300000, guid: b1af3fc2a63d9144089e4761d178a0bd, type: 3}
+  - {fileID: 21300000, guid: fb27906a231823448a1e67ae265c0840, type: 3}
+  - {fileID: 21300000, guid: ba1d6e3ccaafef041b80ce915b98b4a1, type: 3}
+  - {fileID: 21300000, guid: cf0cc684acc382240a82de17167cdb95, type: 3}
+  - {fileID: 21300000, guid: cf11213dfd87d7f4590ebfdaad13003e, type: 3}
+  - {fileID: 21300000, guid: c9fa0946f4dc8b946996c4d866bfaf61, type: 3}
+  - {fileID: 21300000, guid: ca3b7a76918b3124bbce8bd7bab5f690, type: 3}
+  - {fileID: 21300000, guid: df816c0aee7e4144c91674e79bc0cffc, type: 3}
+  - {fileID: 21300000, guid: 15b728361e33fb7489b820672a99af59, type: 3}
+  - {fileID: 21300000, guid: b9be6a7832e671a4ebf68d6319c15996, type: 3}
+  - {fileID: 21300000, guid: aedec0843b788114bab8fc0d81906463, type: 3}
+  - {fileID: 21300000, guid: 1d8f2029865855b40adb7f2c66923d88, type: 3}
+  - {fileID: 21300000, guid: 16a75974d3c80e74fbc8c874372fceb0, type: 3}
+  - {fileID: 21300000, guid: f054d3d82d3ba9d4daff0debc7a0181d, type: 3}
+  - {fileID: 21300000, guid: a0c22478a40978a438b6b8451d5d03a3, type: 3}
+  - {fileID: 21300000, guid: 2c719cf44019457419e6d14df8b7803d, type: 3}
+  - {fileID: 21300000, guid: 6a8bbbf0a0c42a748aad23f0ce85eb5a, type: 3}
+  - {fileID: 21300000, guid: b2f18ecd3f20864489599dfb011982b2, type: 3}
+  - {fileID: 21300000, guid: 0b772a6d9db68964cabb78efaef987c5, type: 3}
+  - {fileID: 21300000, guid: dd559afb556c6bb418d961fd508e3c3d, type: 3}
+  - {fileID: 21300000, guid: 889ec4966bd64c641a4e9f73cc9062af, type: 3}
+  - {fileID: 21300000, guid: 95978f78a63da374089e9ca2bc62b459, type: 3}
+  - {fileID: 21300000, guid: 5f441dacec2acdf4aace92dbb307be37, type: 3}
+  - {fileID: 21300000, guid: d79f4612d0fbb2041ab61e39919c3598, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Fireworks_00028
+  - Fireworks_00029
+  - Fireworks_00020
+  - Fireworks_00021
+  - Fireworks_00022
+  - Fireworks_00023
+  - Fireworks_00024
+  - Fireworks_00032
+  - Fireworks_00008
+  - Fireworks_00025
+  - Fireworks_00031
+  - Fireworks_00009
+  - Fireworks_00026
+  - Fireworks_00030
+  - Fireworks_00006
+  - Fireworks_00027
+  - Fireworks_00007
+  - Fireworks_00004
+  - Fireworks_00005
+  - Fireworks_00002
+  - Fireworks_00003
+  - Fireworks_00000
+  - Fireworks_00001
+  - Fireworks_00011
+  - Fireworks_00010
+  - Fireworks_00013
+  - Fireworks_00012
+  - Fireworks_00015
+  - Fireworks_00014
+  - Fireworks_00017
+  - Fireworks_00016
+  - Fireworks_00019
+  - Fireworks_00018
+  m_Tag: MoveClipFireworks
+  m_IsVariant: 0

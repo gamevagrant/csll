@@ -12,7 +12,7 @@ SpriteAtlas:
       anisoLevel: 1
       compressionQuality: 50
       maxTextureSize: 2048
-      textureCompression: 0
+      textureCompression: 1
       filterMode: 1
       generateMipMaps: 0
       readable: 0
@@ -28,12 +28,12 @@ SpriteAtlas:
       enableTightPacking: 0
     packedHash:
       serializedVersion: 2
-      Hash: 67d6ee25ff84c5d49c7b67fa563e88b6
+      Hash: b98362d36da940c774d63de9bc13880e
     variantMultiplier: 1
-    bindAsDefault: 1
-    finalFormat: 4
-    hashString: 67d6ee25ff84c5d49c7b67fa563e88b6
-    totalSpriteSurfaceArea: 746391
+    bindAsDefault: 0
+    finalFormat: 47
+    hashString: b98362d36da940c774d63de9bc13880e
+    totalSpriteSurfaceArea: 759191
     packables:
     - {fileID: 102900000, guid: f960c2e2dc76a3f4bb390600c52046ec, type: 3}
     packedSpriteRenderDataKeys:
@@ -76,7 +76,9 @@ SpriteAtlas:
     - a6ba8a8d94894f6469c6d1a3deab59f5: 21300000
     - eed3baa01b01cf048b37336e25ddbbf9: 21300000
     - 1b98326988e31934fb7076f3220d89b4: 21300000
+    - 23589eb366aebac44b01a53b26726b75: 21300000
     - cfb5e2684e2a76d43b4aec57f20153a5: 21300000
+    - 7a94ec12858fe4549b2aa3ab3c9d3697: 21300000
     - 3e0c87b02ca01c34db1b4749d5cf4582: 21300000
     - 09a900130ebb8d443909b2a56ab8bfac: 21300000
     - 2a155a895131cef4db9404351fbd173b: 21300000
@@ -152,7 +154,9 @@ SpriteAtlas:
   - {fileID: 21300000, guid: a6ba8a8d94894f6469c6d1a3deab59f5, type: 3}
   - {fileID: 21300000, guid: eed3baa01b01cf048b37336e25ddbbf9, type: 3}
   - {fileID: 21300000, guid: 1b98326988e31934fb7076f3220d89b4, type: 3}
+  - {fileID: 21300000, guid: 23589eb366aebac44b01a53b26726b75, type: 3}
   - {fileID: 21300000, guid: cfb5e2684e2a76d43b4aec57f20153a5, type: 3}
+  - {fileID: 21300000, guid: 7a94ec12858fe4549b2aa3ab3c9d3697, type: 3}
   - {fileID: 21300000, guid: 3e0c87b02ca01c34db1b4749d5cf4582, type: 3}
   - {fileID: 21300000, guid: 09a900130ebb8d443909b2a56ab8bfac, type: 3}
   - {fileID: 21300000, guid: 2a155a895131cef4db9404351fbd173b, type: 3}
@@ -227,7 +231,9 @@ SpriteAtlas:
   - 044
   - 020
   - 037
+  - reward_dungeonKey
   - reward_jigsaw
+  - reward_mj
   - reward_money
   - reward_energy
   - 027

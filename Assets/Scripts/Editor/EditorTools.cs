@@ -9,7 +9,7 @@ using System;
 using System.Text.RegularExpressions;
 
 
-public class EditorTools  {
+public class EditorTools {
 
     [MenuItem("Tools/通过json数据裁切图集")]
     static void SetTextureMultipleSpriteEditor()
@@ -33,11 +33,11 @@ public class EditorTools  {
                 IEnumerator<string> enumrator = jsonData["mc"].Keys.GetEnumerator();
                 enumrator.MoveNext();
                 string keyName = enumrator.Current;
-                JsonData[] frames = JsonMapper.ToObject<JsonData[]>(jsonData["mc"][keyName]["frames"].ToJson()) ;
-                
+                JsonData[] frames = JsonMapper.ToObject<JsonData[]>(jsonData["mc"][keyName]["frames"].ToJson());
+
 
                 List<SpriteMetaData> list = new List<SpriteMetaData>();
-                for (int i =0;i<frames.Length;i++)
+                for (int i = 0; i < frames.Length; i++)
                 {
                     JsonData jd = jsonData["res"][frames[i]["res"].ToString()];
                     int x = int.Parse(jd["x"].ToString());
@@ -46,14 +46,14 @@ public class EditorTools  {
                     int h = int.Parse(jd["h"].ToString());
                     SpriteMetaData md = new SpriteMetaData()
                     {
-                        name = "Q"+i.ToString(),
+                        name = "Q" + i.ToString(),
                         rect = new Rect(x, height - y - h, w, h),
                     };
 
                     list.Add(md);
                 }
 
-               
+
                 importer.maxTextureSize = 2048;
                 importer.spriteImportMode = SpriteImportMode.Multiple;
                 importer.spritesheet = list.ToArray();
@@ -80,19 +80,19 @@ public class EditorTools  {
 
 
 
-   // [MenuItem("Tools/设置面板raycastTarget = false")]
+    // [MenuItem("Tools/设置面板raycastTarget = false")]
     public static void SetRayTask()
     {
         Graphic[] graphics = Selection.activeTransform.GetComponentsInChildren<Graphic>();
         foreach (Graphic g in graphics)
         {
             Selectable selectable = g.transform.GetComponent<Selectable>();
-            if(selectable == null)
+            if (selectable == null)
             {
                 g.raycastTarget = false;
                 Debug.Log(g.gameObject.transform);
             }
-            
+
         }
         Debug.Log(Selection.activeGameObject.name);
     }
@@ -134,7 +134,7 @@ public class EditorTools  {
         {
             if (Selection.activeTransform.GetComponentInParent<Canvas>())
             {
-                GameObject go = new GameObject("Button", typeof(Image),typeof(QY.UI.Button));
+                GameObject go = new GameObject("Button", typeof(Image), typeof(QY.UI.Button));
                 go.transform.SetParent(Selection.activeTransform);
                 go.transform.localScale = Vector3.one;
                 go.transform.localPosition = Vector3.zero;
@@ -146,6 +146,5 @@ public class EditorTools  {
             }
         }
     }
-
 
 }

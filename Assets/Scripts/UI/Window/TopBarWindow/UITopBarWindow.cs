@@ -28,6 +28,7 @@ public class UITopBarWindow : UIWindowBase {
     public Image[] shieldImages;
     public TextMeshProUGUI starLabel;
     public TextMeshProUGUI moneyLabel;
+    public TextMeshProUGUI testTag;
 
     private UserData user;
 
@@ -62,6 +63,13 @@ public class UITopBarWindow : UIWindowBase {
         UpdateStar(user.crowns, 0);
         UpdateShield(user.shields, 0);
 
+        if(GameMainManager.instance.open.IsDevelopment)
+        {
+            testTag.text = "内网";
+        }else
+        {
+            testTag.text = "";
+        }
         
     }
 

@@ -28,12 +28,12 @@ SpriteAtlas:
       enableTightPacking: 0
     packedHash:
       serializedVersion: 2
-      Hash: f4768074177eca310098eb0c07123341
+      Hash: d0c8dfcbe4a1afcbc3820f3ed8c056aa
     variantMultiplier: 1
     bindAsDefault: 0
     finalFormat: 4
-    hashString: f4768074177eca310098eb0c07123341
-    totalSpriteSurfaceArea: 794435
+    hashString: d0c8dfcbe4a1afcbc3820f3ed8c056aa
+    totalSpriteSurfaceArea: 804435
     packables:
     - {fileID: 102900000, guid: 7d814b8e9eba2594a946cc18381966fa, type: 3}
     packedSpriteRenderDataKeys:
@@ -46,6 +46,7 @@ SpriteAtlas:
     - ef44b58ded23f0d40aad84f2fac68172: 21300000
     - 81094c652a804624ca4550dc824bcae2: 21300000
     - d54ab7da50c218543814d6dfaf1fa551: 21300000
+    - 9434c93b4285148428a29956c43d6c26: 21300000
     - 9535b6349a6c69141a07144eb5e10ab8: 21300000
     - e9538314194bde44f983fd3def433192: 21300000
     - 8157842120859a146be71889d70b8fd0: 21300000
@@ -65,6 +66,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: ef44b58ded23f0d40aad84f2fac68172, type: 3}
   - {fileID: 21300000, guid: 81094c652a804624ca4550dc824bcae2, type: 3}
   - {fileID: 21300000, guid: d54ab7da50c218543814d6dfaf1fa551, type: 3}
+  - {fileID: 21300000, guid: 9434c93b4285148428a29956c43d6c26, type: 3}
   - {fileID: 21300000, guid: 9535b6349a6c69141a07144eb5e10ab8, type: 3}
   - {fileID: 21300000, guid: e9538314194bde44f983fd3def433192, type: 3}
   - {fileID: 21300000, guid: 8157842120859a146be71889d70b8fd0, type: 3}
@@ -83,6 +85,7 @@ SpriteAtlas:
   - duihuan_1_01 (5)
   - duihuan_2_01 (10)
   - duihuan_2_01 (9)
+  - 007
   - duihuan_2_01 (4)
   - duihuan_2_01 (11)
   - duihuan_2_01 (6)

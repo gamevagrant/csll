@@ -35,14 +35,18 @@ public class Alert
     /// <param name="cancelBtnName"></param>
     public static void Show(string content, uint flags = Alert.OK, Action<uint> onClickBtn = null, string okBtnName = "", string cancelBtnName = "", TextAlignmentOptions alignment = TextAlignmentOptions.Center)
     {
-        ModalBoxData data = new ModalBoxData();
-        data.content = content;
-        data.flags = flags;
-        data.okName = okBtnName;
-        data.cancelName = cancelBtnName;
-        data.onClick = onClickBtn;
-        data.alignment = alignment;
-        GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIModalBox, data);
+        if(GameMainManager.instance.uiManager!=null)
+        {
+            ModalBoxData data = new ModalBoxData();
+            data.content = content;
+            data.flags = flags;
+            data.okName = okBtnName;
+            data.cancelName = cancelBtnName;
+            data.onClick = onClickBtn;
+            data.alignment = alignment;
+            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIModalBox, data);
+        }
+       
     }
 }
 

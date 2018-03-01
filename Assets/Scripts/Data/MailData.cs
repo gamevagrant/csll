@@ -26,6 +26,7 @@ public class MailData {
     public string time;
     public RewardData[] reward;
     public int index;//邮件列表中的位置
+    public LitJson.JsonData extra;
 }
 /// <summary>
 /// 邮件中的奖励物品数据

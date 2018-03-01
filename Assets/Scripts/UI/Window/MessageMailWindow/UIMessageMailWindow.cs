@@ -36,6 +36,7 @@ public class UIMessageMailWindow : UIWindowBase {
     private MessageResponseData[] messages;
     private MailData[] mails;
     private RectTransform currentPanel;
+    private List<int> showDataAction = new List<int>(){ 1,2,5,6,18,19};
 
     private void Awake()
     {
@@ -69,7 +70,7 @@ public class UIMessageMailWindow : UIWindowBase {
                     messages = res.data.messages;
                     for (int i = 0; i < messages.Length; i++)
                     {
-                        if (messages[i].action == 1 || messages[i].action == 2 || messages[i].action == 5 || messages[i].action == 6)
+                        if (showDataAction.Contains(messages[i].action))
                         {
                             list.Add(messages[i]);
                         }

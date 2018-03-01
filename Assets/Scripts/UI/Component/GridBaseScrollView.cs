@@ -44,8 +44,8 @@ public class GridBaseScrollView : MonoBehaviour {
         content.anchorMin = new Vector2(0, 1);
         content.anchorMax = new Vector2(0, 1);
         content.pivot = new Vector2(0, 1);
-        row = (int)(displayRect.height / itemTemplate.sizeDelta.y);
-        col = (int)(displayRect.width / itemTemplate.sizeDelta.x); 
+        row = (int)(displayRect.height / (itemTemplate.sizeDelta.y + spacing.y));
+        col = (int)(displayRect.width / (itemTemplate.sizeDelta.x + spacing.x)); 
         scrollRect.onValueChanged.AddListener(ListenerMethod);
     }
 
@@ -86,8 +86,8 @@ public class GridBaseScrollView : MonoBehaviour {
 
         }
 
-
-        content.sizeDelta = new Vector2((offset.x + 1) * (itemTemplate.rect.width + spacing.x), (offset.y + 1) * (itemTemplate.rect.height + spacing.y));
+        //
+        content.sizeDelta = direction == Direction.Vertical? new Vector2(displayRect.width, (offset.y + 1) * (itemTemplate.rect.height + spacing.y)): new Vector2((offset.x + 1) * (itemTemplate.rect.width + spacing.x), displayRect.height);
         if (direction == Direction.Vertical)
         {
             scrollRect.verticalNormalizedPosition = 1;

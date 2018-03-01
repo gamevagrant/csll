@@ -13,9 +13,12 @@ public class EventEnum {
     public const string BUILD_COMPLATE = "BUILD_COMPLATE";//建造成功
     public const string GET_SHIELD = "GET_SHIELD";//获得盾牌
     public const string GET_STAR = "GET_STAR";//获得星星
+    public const string GET_DUNGEON_KEY = "GET_DUNGEON_KEY";//获得副本钥匙
     public const string UPDATE_FRIENDS = "UPDATE_FRIENDS";//好友信息更新
     public const string SELECTED_FRIEND = "SELECTED_FRIEND";//选中好友事件
     public const string UPDATE_MAPINFO = "UPDATE_MAPINFO";//更新地图信息
     public const string UPDATE_BUILDING = "UPDATE_BUILDING";//更新自己建筑的信息
     public const string UPDATE_REDDOT = "UPDATE_REDDOT";//更新红点逻辑
+    public const string UPDATE_DUNGEON = "UPDATE_DUNGEON";//更新副本数据
+    public const string UPDATE_MAIL_DATA = "UPDATE_MAIL_DATA";//刷新邮件显示
 }

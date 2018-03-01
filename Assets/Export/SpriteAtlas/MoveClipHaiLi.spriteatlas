@@ -1,0 +1,119 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: MoveClipHaiLi
+  m_EditorData:
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 1
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 0
+    platformSettings: []
+    packingParameters:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    packedHash:
+      serializedVersion: 2
+      Hash: 6257fd47a72716e19e51eaceee57458c
+    variantMultiplier: 1
+    bindAsDefault: 0
+    finalFormat: 47
+    hashString: 6257fd47a72716e19e51eaceee57458c
+    totalSpriteSurfaceArea: 1755625
+    packables:
+    - {fileID: 102900000, guid: a3ac25a965ca3734bb6a11d338b355e9, type: 3}
+    packedSpriteRenderDataKeys:
+    - b3b7b3d197be1454a8555ace1d0b3e2e: 21300000
+    - de7be170b2f812b4895bd9cfc0218c71: 21300000
+    - cd0211a31ff5d2948815a9de97287164: 21300000
+    - aeb331c17be227f43946763ddf8e6dc9: 21300000
+    - 10c2bbc69ffaedb409271418605663a0: 21300000
+    - 048555f1e63b8ad4eb69e2f489112ee5: 21300000
+    - 31aefcfa96138554f8c32a36872a5eef: 21300000
+    - 4d656d314da9eae4697c36d570078672: 21300000
+    - 7988829f8f95f294686c8fb1f10a780b: 21300000
+    - 517c27c7774a7ac468b36bfe86700b58: 21300000
+    - 0e01dad22d72a3b41bf776a1de8fc905: 21300000
+    - 0cd21285406e07c4f83e98740398bba2: 21300000
+    - 5bce961f5d7eda645b089528560d2081: 21300000
+    - 927be04a83ae66e4b89b05a28e7dfb8e: 21300000
+    - bdcbf07f92663ac4395950c41ee53147: 21300000
+    - da73e6dcd37b98740a7f8d54ea3e6827: 21300000
+    - 330176c2e301ae74e8ebe0dad608ea71: 21300000
+    - bea267e9f41c86f4e85e9940a76f2817: 21300000
+    - d924ebebfc1767b4e96f535ff2e4619e: 21300000
+    - 266da3f6f6426844e8c69b3771bc39a7: 21300000
+    - 33ed4ecadf3d3394cb683954f1d02684: 21300000
+    - d08fd6edd56595b4e8b6eb0ade7d91ba: 21300000
+    - fdf2bba249ebc7e4aa99732c9243c1f6: 21300000
+    - 88c53e932353fe34f9e5ec0519d46138: 21300000
+    - 4f04f9760a03d1b4eb6221326cdc7a46: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: b3b7b3d197be1454a8555ace1d0b3e2e, type: 3}
+  - {fileID: 21300000, guid: de7be170b2f812b4895bd9cfc0218c71, type: 3}
+  - {fileID: 21300000, guid: cd0211a31ff5d2948815a9de97287164, type: 3}
+  - {fileID: 21300000, guid: aeb331c17be227f43946763ddf8e6dc9, type: 3}
+  - {fileID: 21300000, guid: 10c2bbc69ffaedb409271418605663a0, type: 3}
+  - {fileID: 21300000, guid: 048555f1e63b8ad4eb69e2f489112ee5, type: 3}
+  - {fileID: 21300000, guid: 31aefcfa96138554f8c32a36872a5eef, type: 3}
+  - {fileID: 21300000, guid: 4d656d314da9eae4697c36d570078672, type: 3}
+  - {fileID: 21300000, guid: 7988829f8f95f294686c8fb1f10a780b, type: 3}
+  - {fileID: 21300000, guid: 517c27c7774a7ac468b36bfe86700b58, type: 3}
+  - {fileID: 21300000, guid: 0e01dad22d72a3b41bf776a1de8fc905, type: 3}
+  - {fileID: 21300000, guid: 0cd21285406e07c4f83e98740398bba2, type: 3}
+  - {fileID: 21300000, guid: 5bce961f5d7eda645b089528560d2081, type: 3}
+  - {fileID: 21300000, guid: 927be04a83ae66e4b89b05a28e7dfb8e, type: 3}
+  - {fileID: 21300000, guid: bdcbf07f92663ac4395950c41ee53147, type: 3}
+  - {fileID: 21300000, guid: da73e6dcd37b98740a7f8d54ea3e6827, type: 3}
+  - {fileID: 21300000, guid: 330176c2e301ae74e8ebe0dad608ea71, type: 3}
+  - {fileID: 21300000, guid: bea267e9f41c86f4e85e9940a76f2817, type: 3}
+  - {fileID: 21300000, guid: d924ebebfc1767b4e96f535ff2e4619e, type: 3}
+  - {fileID: 21300000, guid: 266da3f6f6426844e8c69b3771bc39a7, type: 3}
+  - {fileID: 21300000, guid: 33ed4ecadf3d3394cb683954f1d02684, type: 3}
+  - {fileID: 21300000, guid: d08fd6edd56595b4e8b6eb0ade7d91ba, type: 3}
+  - {fileID: 21300000, guid: fdf2bba249ebc7e4aa99732c9243c1f6, type: 3}
+  - {fileID: 21300000, guid: 88c53e932353fe34f9e5ec0519d46138, type: 3}
+  - {fileID: 21300000, guid: 4f04f9760a03d1b4eb6221326cdc7a46, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Beaver_00001
+  - Beaver_00000
+  - Beaver_00003
+  - Beaver_00002
+  - Beaver_00005
+  - Beaver_00004
+  - Beaver_00007
+  - Beaver_00006
+  - Beaver_00009
+  - Beaver_00008
+  - Beaver_00023
+  - Beaver_00022
+  - Beaver_00018
+  - Beaver_00021
+  - Beaver_00019
+  - Beaver_00020
+  - Beaver_00016
+  - Beaver_00017
+  - Beaver_00014
+  - Beaver_00015
+  - Beaver_00024
+  - Beaver_00012
+  - Beaver_00013
+  - Beaver_00010
+  - Beaver_00011
+  m_Tag: MoveClipHaiLi
+  m_IsVariant: 0

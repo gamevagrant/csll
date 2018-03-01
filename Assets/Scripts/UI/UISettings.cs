@@ -45,6 +45,13 @@ public class UISettings  {
         UIExchangeRewardWindow,
         UIGetBindingRewardWindow,
         UIFirstBuyingRewardWindow,
+        UIDungeonWindow,
+        UIDungeonLottoWindow,
+        UIDungeonGetCardWindow,
+        UIDungeonGetRewardWindow,
+        UIDungeonGetMailRewardWindow,
+        UIDungeonLottoHelpWindow,
+        UIDungeonGetKeyWindow,
     }
 
     public enum UIWindowType
@@ -123,6 +130,13 @@ public class UISettings  {
         {UIWindowID.UIExchangeRewardWindow,"UIExchangeRewardWindow"},
         {UIWindowID.UIGetBindingRewardWindow,"UIGetBindingRewardWindow"},
         {UIWindowID.UIFirstBuyingRewardWindow,"UIFirstBuyingRewardWindow"},
+        {UIWindowID.UIDungeonWindow,"UIDungeonWindow"},
+        {UIWindowID.UIDungeonLottoWindow,"UIDungeonLottoWindow"},
+        {UIWindowID.UIDungeonGetCardWindow,"UIDungeonGetCardWindow"},
+        {UIWindowID.UIDungeonGetRewardWindow,"UIDungeonGetRewardWindow"},
+        {UIWindowID.UIDungeonGetMailRewardWindow,"UIDungeonGetMailRewardWindow"},
+        {UIWindowID.UIDungeonLottoHelpWindow,"UIDungeonLottoHelpWindow"},
+        {UIWindowID.UIDungeonGetKeyWindow,"UIDungeonGetKeyWindow"},
     };
 
 

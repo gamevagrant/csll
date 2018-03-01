@@ -14,12 +14,15 @@ public class UIMailListItem : BaseItemView
     private void Awake()
     {
         getBtn.onClick.AddListener(OnClickGetRewardBtn);
+        EventDispatcher.instance.AddEventListener(EventEnum.UPDATE_MAIL_DATA, OnUpdateMailDataHandle);
     }
 
     private void OnDestroy()
     {
         getBtn.onClick.RemoveAllListeners();
+        EventDispatcher.instance.RemoveEventListener(EventEnum.UPDATE_MAIL_DATA, OnUpdateMailDataHandle);
     }
+
 
     public override void SetData(object data)
     {
@@ -42,16 +45,29 @@ public class UIMailListItem : BaseItemView
         }
     }
 
+    private void OnUpdateMailDataHandle(BaseEvent evt)
+    {
+        GetRewardData getRewardData = evt.datas[0] as GetRewardData;
+        SetData(getRewardData.user_mail[mailData.index]);
+    }
+
     private void OnClickGetRewardBtn()
     {
-        GameMainManager.instance.netManager.GetReward(mailData.index, (ret, res) =>
+        if(mailData.type == 4)
         {
-            if(res.isOK)
+            GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIDungeonGetMailRewardWindow, mailData);
+        }else
+        {
+            GameMainManager.instance.netManager.GetReward(mailData.index, (ret, res) =>
             {
-                SetData(res.data.user_mail[mailData.index]);
-                ShowReward(res.data.user_rewards);
-            }
-        });
+                if (res.isOK)
+                {
+                    SetData(res.data.user_mail[mailData.index]);
+                    ShowReward(res.data.user_rewards);
+                }
+            });
+        }
+        
         
     }
 
@@ -70,4 +86,5 @@ public class UIMailListItem : BaseItemView
         };
         GameMainManager.instance.uiManager.OpenWindow(UISettings.UIWindowID.UIGetRewardWindow, data);
     }
+
 }

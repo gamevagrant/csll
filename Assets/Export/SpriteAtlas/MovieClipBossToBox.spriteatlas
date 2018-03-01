@@ -1,0 +1,98 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: MovieClipBossToBox
+  m_EditorData:
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 1
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 0
+    platformSettings: []
+    packingParameters:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    packedHash:
+      serializedVersion: 2
+      Hash: 87ac7cfa6f9f5be468eeee1bd4f28a54
+    variantMultiplier: 1
+    bindAsDefault: 0
+    finalFormat: 47
+    hashString: 87ac7cfa6f9f5be468eeee1bd4f28a54
+    totalSpriteSurfaceArea: 5767200
+    packables:
+    - {fileID: 102900000, guid: e850dd4a161bf0a4fafee8a68975ba3f, type: 3}
+    packedSpriteRenderDataKeys:
+    - f676b937d1b747e4fa361da352deb2ab: 21300000
+    - 611c7f11c5f35c347b4255a0fcc255c9: 21300000
+    - fe6bd88ca6ea5eb4bafb9aa0c4938af4: 21300000
+    - b4ebc0776e7fb1747990281bf7451681: 21300000
+    - 8ae9a708640ed924c94ddc64b239e088: 21300000
+    - b75a57fda00efcc4592ba494ee70f863: 21300000
+    - abffa20bc2c842349bc5577f83cbc985: 21300000
+    - e3e57efe31dcacf40bc45684212b9d1b: 21300000
+    - ce3877e07a42fb349aa0814b72170b92: 21300000
+    - 27630c1ab9024784e8ccbeadad5821de: 21300000
+    - 23a9d235dab6ce34a8f192828fec2a47: 21300000
+    - e790e028af8877f4b96f6b44a70f4af6: 21300000
+    - 7bdfc9dfbba26134b9b881721981dd76: 21300000
+    - 3b9a9793fd71e7c4ba178cbcd249e5dd: 21300000
+    - 97b6e48cfd535c24db9546d1bb1462c6: 21300000
+    - 2387cfa22110d9f42a1b98138270034c: 21300000
+    - 7d627dca7e5822d44a3de0e941d205dc: 21300000
+    - 326d78d9641a9aa4abbda4fdcdc5f844: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: f676b937d1b747e4fa361da352deb2ab, type: 3}
+  - {fileID: 21300000, guid: 611c7f11c5f35c347b4255a0fcc255c9, type: 3}
+  - {fileID: 21300000, guid: fe6bd88ca6ea5eb4bafb9aa0c4938af4, type: 3}
+  - {fileID: 21300000, guid: b4ebc0776e7fb1747990281bf7451681, type: 3}
+  - {fileID: 21300000, guid: 8ae9a708640ed924c94ddc64b239e088, type: 3}
+  - {fileID: 21300000, guid: b75a57fda00efcc4592ba494ee70f863, type: 3}
+  - {fileID: 21300000, guid: abffa20bc2c842349bc5577f83cbc985, type: 3}
+  - {fileID: 21300000, guid: e3e57efe31dcacf40bc45684212b9d1b, type: 3}
+  - {fileID: 21300000, guid: ce3877e07a42fb349aa0814b72170b92, type: 3}
+  - {fileID: 21300000, guid: 27630c1ab9024784e8ccbeadad5821de, type: 3}
+  - {fileID: 21300000, guid: 23a9d235dab6ce34a8f192828fec2a47, type: 3}
+  - {fileID: 21300000, guid: e790e028af8877f4b96f6b44a70f4af6, type: 3}
+  - {fileID: 21300000, guid: 7bdfc9dfbba26134b9b881721981dd76, type: 3}
+  - {fileID: 21300000, guid: 3b9a9793fd71e7c4ba178cbcd249e5dd, type: 3}
+  - {fileID: 21300000, guid: 97b6e48cfd535c24db9546d1bb1462c6, type: 3}
+  - {fileID: 21300000, guid: 2387cfa22110d9f42a1b98138270034c, type: 3}
+  - {fileID: 21300000, guid: 7d627dca7e5822d44a3de0e941d205dc, type: 3}
+  - {fileID: 21300000, guid: 326d78d9641a9aa4abbda4fdcdc5f844, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - BossToBox2
+  - BossToBox3
+  - BossToBox1
+  - BossToBox6
+  - BossToBox7
+  - BossToBox4
+  - BossToBox5
+  - BossToBox8
+  - BossToBox9
+  - BossToBox18
+  - BossToBox11
+  - BossToBox10
+  - BossToBox13
+  - BossToBox12
+  - BossToBox15
+  - BossToBox14
+  - BossToBox17
+  - BossToBox16
+  m_Tag: MovieClipBossToBox
+  m_IsVariant: 0

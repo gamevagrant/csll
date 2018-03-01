@@ -5,6 +5,10 @@ namespace QY.Open
     {
         AccessToken token { get; }
         /// <summary>
+        /// 是否连接的是测试应用
+        /// </summary>
+        bool IsDevelopment { get; }
+        /// <summary>
         /// 判断是否已经登录
         /// </summary>
         bool IsLoggedIn { get; }
@@ -34,6 +38,7 @@ namespace QY.Open
         /// <param name="title"></param>
         /// <param name="callback"></param>
         void Invite(string message, string[] to, string title, System.Action<AppRequestResponse> callback);
+        void Invite(string message, string title, System.Action<AppRequestResponse> callback);
         /// <summary>
         /// 获取可邀请好友列表
         /// </summary>

@@ -18,7 +18,16 @@ SpriteAtlas:
       readable: 0
       crunchedCompression: 0
       sRGB: 0
-    platformSettings: []
+    platformSettings:
+    - m_BuildTarget: WebGL
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: 3
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 1
     packingParameters:
       serializedVersion: 2
       padding: 4
@@ -28,11 +37,11 @@ SpriteAtlas:
       enableTightPacking: 0
     packedHash:
       serializedVersion: 2
-      Hash: d90d85056738fd1fc88780ce4fbcdcc8
+      Hash: 3b1c44960a6b0f12757c23484516b8e7
     variantMultiplier: 1
     bindAsDefault: 1
     finalFormat: 4
-    hashString: d90d85056738fd1fc88780ce4fbcdcc8
+    hashString: 3b1c44960a6b0f12757c23484516b8e7
     totalSpriteSurfaceArea: 644490
     packables:
     - {fileID: 2800000, guid: 2dc81d73a951d7b448976d7ab597957d, type: 3}

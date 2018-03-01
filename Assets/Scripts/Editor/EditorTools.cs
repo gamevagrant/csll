@@ -9,7 +9,7 @@ using System;
 using System.Text.RegularExpressions;
 
 
-public class EditorTools  {
+public class EditorTools {
 
     [MenuItem("Tools/通过json数据裁切图集")]
     static void SetTextureMultipleSpriteEditor()
@@ -17,6 +17,10 @@ public class EditorTools  {
         if (Selection.activeObject && Selection.activeObject is Texture)
         {
             string path = AssetDatabase.GetAssetPath(Selection.activeObject);
+            TextureImporter importer = AssetImporter.GetAtPath(path) as TextureImporter;
+            importer.maxTextureSize = 4096;
+            importer.SaveAndReimport();
+
             int height = (Selection.activeObject as Texture).height;
 
             string jsonPath = path.Replace(Path.GetExtension(path), ".json");
@@ -25,24 +29,32 @@ public class EditorTools  {
             {
                 string json = jsonObj.ToString();
                 JsonData jsonData = JsonMapper.ToObject(json);
+
+                IEnumerator<string> enumrator = jsonData["mc"].Keys.GetEnumerator();
+                enumrator.MoveNext();
+                string keyName = enumrator.Current;
+                JsonData[] frames = JsonMapper.ToObject<JsonData[]>(jsonData["mc"][keyName]["frames"].ToJson());
+
+
                 List<SpriteMetaData> list = new List<SpriteMetaData>();
-                foreach (string key in jsonData["res"].Keys)
+                for (int i = 0; i < frames.Length; i++)
                 {
-                    JsonData jd = jsonData["res"][key];
+                    JsonData jd = jsonData["res"][frames[i]["res"].ToString()];
                     int x = int.Parse(jd["x"].ToString());
                     int y = int.Parse(jd["y"].ToString());
                     int w = int.Parse(jd["w"].ToString());
                     int h = int.Parse(jd["h"].ToString());
                     SpriteMetaData md = new SpriteMetaData()
                     {
-                        name = key + "Q",
+                        name = "Q" + i.ToString(),
                         rect = new Rect(x, height - y - h, w, h),
                     };
 
                     list.Add(md);
                 }
 
-                TextureImporter importer = AssetImporter.GetAtPath(path) as TextureImporter;
+
+                importer.maxTextureSize = 2048;
                 importer.spriteImportMode = SpriteImportMode.Multiple;
                 importer.spritesheet = list.ToArray();
                 //这里有个unity的bug，不改变importer本身的参数，只改变spritesheet的时候unity认为这个资源没有变化没办法正常保存
@@ -68,19 +80,19 @@ public class EditorTools  {
 
 
 
-   // [MenuItem("Tools/设置面板raycastTarget = false")]
+    // [MenuItem("Tools/设置面板raycastTarget = false")]
     public static void SetRayTask()
     {
         Graphic[] graphics = Selection.activeTransform.GetComponentsInChildren<Graphic>();
         foreach (Graphic g in graphics)
         {
             Selectable selectable = g.transform.GetComponent<Selectable>();
-            if(selectable == null)
+            if (selectable == null)
             {
                 g.raycastTarget = false;
                 Debug.Log(g.gameObject.transform);
             }
-            
+
         }
         Debug.Log(Selection.activeGameObject.name);
     }
@@ -122,7 +134,7 @@ public class EditorTools  {
         {
             if (Selection.activeTransform.GetComponentInParent<Canvas>())
             {
-                GameObject go = new GameObject("Button", typeof(Image),typeof(QY.UI.Button));
+                GameObject go = new GameObject("Button", typeof(Image), typeof(QY.UI.Button));
                 go.transform.SetParent(Selection.activeTransform);
                 go.transform.localScale = Vector3.one;
                 go.transform.localPosition = Vector3.zero;
@@ -134,6 +146,5 @@ public class EditorTools  {
             }
         }
     }
-
 
 }

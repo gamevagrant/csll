@@ -80,6 +80,26 @@ public class UIDungeonGetMailRewardWindow : UIWindowBase {
             if (res.isOK)
             {
                 EventDispatcher.instance.DispatchEvent(new BaseEvent(EventEnum.UPDATE_MAIL_DATA,res.data));
+                foreach(RewardData rd in res.data.user_rewards)
+                {
+                    switch (rd.type)
+                    {
+                        case "money":
+                        case "gold":
+                            EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Money, 0));
+                            break;
+                        case "energy":
+                            EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.Energy, 0));
+                            break;
+                        case "vip":
+                            EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.vip, 0));
+                            break;
+                        case "wanted":
+                            EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.wanted, 0));
+                            break;
+
+                    }
+                }
                 OnClickClose();
             }
         });

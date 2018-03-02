@@ -82,7 +82,7 @@ public class UIGetRewardWindow : UIWindowBase {
                     image.sprite = sprites[2];
                     text.text = "vip" + reward.num.ToString();
                     break;
-                case "props":
+                case "wanted":
                     image.sprite = sprites[3];
                     text.text = "通缉令 x" + reward.num.ToString();
                     break;
@@ -130,7 +130,7 @@ public class UIGetRewardWindow : UIWindowBase {
             case "vip":
                 EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.vip, 0));
                 break;
-            case "props":
+            case "wanted":
                 EventDispatcher.instance.DispatchEvent(new UpdateBaseDataEvent(UpdateBaseDataEvent.UpdateType.wanted, 0));
                 break;
            
